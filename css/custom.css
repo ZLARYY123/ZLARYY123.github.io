@@ -1,0 +1,7 @@
+/* 引入霞鹜文楷字体 */
+@import url('https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css');
+
+/* 强制应用到全站 */
+body, h1, h2, h3, h4, h5, h6, p, a, span, li, div {
+    font-family: "LXGW WenKai Screen", sans-serif !important;
+}
