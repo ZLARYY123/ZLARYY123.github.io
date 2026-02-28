@@ -11,7 +11,8 @@ body, h1, h2, h3, h4, h5, h6, p, a, span, li, div {
 #article-container img,
 .markdown-body img {
     display: block !important;
+    width: auto !important;  /* 👉 新增这句绝杀：强行无视 HTML 里的 width="46" 属性，恢复图片原生宽度！ */
     max-width: 100% !important;
-    height: auto !important; /* 这句最关键，强行让高度自适应 */
+    height: auto !important;
     margin: 0 auto !important;
 }
