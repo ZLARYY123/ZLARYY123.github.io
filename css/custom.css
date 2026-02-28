@@ -5,3 +5,13 @@
 body, h1, h2, h3, h4, h5, h6, p, a, span, li, div {
     font-family: "LXGW WenKai Screen", sans-serif !important;
 }
+/* 强行解除文章内部所有图片的高度和宽度封印 */
+.post-content img,
+.article-entry img,
+#article-container img,
+.markdown-body img {
+    display: block !important;
+    max-width: 100% !important;
+    height: auto !important; /* 这句最关键，强行让高度自适应 */
+    margin: 0 auto !important;
+}
