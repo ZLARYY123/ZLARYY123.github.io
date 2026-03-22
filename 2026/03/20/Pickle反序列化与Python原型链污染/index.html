@@ -7,7 +7,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://zlaryy123.github.io/img/avertar.png">
 <meta property="article:published_time" content="2026-03-20T10:03:00.000Z">
-<meta property="article:modified_time" content="2026-03-22T11:45:33.650Z">
+<meta property="article:modified_time" content="2026-03-22T11:47:57.586Z">
 <meta property="article:author" content="ZLARYY">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://zlaryy123.github.io/img/avertar.png"><script type="application/ld+json">{
@@ -17,7 +17,7 @@
   "url": "https://zlaryy123.github.io/2026/03/20/Pickle%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8EPython%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/",
   "image": "https://zlaryy123.github.io/img/avertar.png",
   "datePublished": "2026-03-20T10:03:00.000Z",
-  "dateModified": "2026-03-22T11:45:33.650Z",
+  "dateModified": "2026-03-22T11:47:57.586Z",
   "author": [
     {
       "@type": "Person",
@@ -158,7 +158,7 @@
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><meta name="referrer" content="no-referrer-when-downgrade"><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ZLARYY</span></a><a class="nav-page-title" href="/"><span class="site-name">Pickle反序列化与Python原型链污染</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Pickle反序列化与Python原型链污染</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-03-20T10:03:00.000Z" title="Created 2026-03-20 18:03:00">2026-03-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-03-22T11:45:33.650Z" title="Updated 2026-03-22 19:45:33">2026-03-22</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Pickle反序列化"><a href="#Pickle反序列化" class="headerlink" title="Pickle反序列化"></a>Pickle反序列化</h1><p>本文参考这两篇：<a target="_blank" rel="noopener" href="https://goodapple.top/archives/1069">https://goodapple.top/archives/1069</a></p>
+}</script><meta name="referrer" content="no-referrer-when-downgrade"><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ZLARYY</span></a><a class="nav-page-title" href="/"><span class="site-name">Pickle反序列化与Python原型链污染</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Pickle反序列化与Python原型链污染</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-03-20T10:03:00.000Z" title="Created 2026-03-20 18:03:00">2026-03-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-03-22T11:47:57.586Z" title="Updated 2026-03-22 19:47:57">2026-03-22</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Pickle反序列化"><a href="#Pickle反序列化" class="headerlink" title="Pickle反序列化"></a>Pickle反序列化</h1><p>本文参考这两篇：<a target="_blank" rel="noopener" href="https://goodapple.top/archives/1069">https://goodapple.top/archives/1069</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_73512445/article/details/135156437">https://blog.csdn.net/m0_73512445/article/details/135156437</a></p>
 <h1 id="Pickle"><a href="#Pickle" class="headerlink" title="Pickle"></a>Pickle</h1><p>在学习pickle反序列化之前先了解一下什么是pickle：</p>
 <p>pickle是Python中一个能够序列化和反序列化对象的模块。和其他语言类似，Python也提供了序列化和反序列化这一功能，其中一个实现模块就是pickle。在Python中，“Pickling” 是将 Python 对象及其所拥有的层次结构转化为一个<strong>二进制字节流</strong>的过程，也就是我们常说的序列化，而 “unpickling” 是相反的操作，会将字节流转化回一个对象层次结构。</p>
@@ -356,7 +356,7 @@
 <p><code>(</code>：<code>MARK</code>，在栈上做一个标记，表示接下来压入栈的数据都属于这个字典的键值对</p>
 <p>接下来我们忽略掉用来暂存的q指令（只出现在键后面）</p>
 <p><code>X\x03\x00\x00\x00age</code>：表示第一个键值对的键<code>age</code>，其中<code>X</code>是一个opcode，官方代号叫做<code>BINUNICODE</code>，当PVM读到<code>X</code>就表示接下来要读取一个Unicode格式的字符串，不过由于PVM过于死板，光告诉他要读取字符串是不够的，还需要精确地告诉他字符串有几个字节，否则就会一直读下去，而查看具体有多少个字节就是靠<code>\x03\x00\x00\x00</code>，Pickle协议规定，为了能支持很长的字符串，跟在<code>X</code>指令后面的长度信息必须固定占据四个字节（32位整数）的空间，<code>\x00</code>就是用来占位的0，<code>\x03</code>表示长度为3，至于这里为什么<code>\x03</code>排在前面是由于利用的<strong>小端序</strong>，在现代计算机底层，为了处理速度更快，内存存储数字是倒过来的，所以258个字节长度的字符串会表示为<code>\x02\x01\x00\x00</code></p>
-<p><code>K\x12</code>：表示第一个键值对的值，<code>\x12</code>为十六进制的整数18，<code>K</code>表示<code>BININT1</code>，读取范围为0-255的正整数，除此之外还有**<code>M(BININT2)</code><strong>表示读取两个字节的无符号整数(0~65535)，</strong><code>J(BININT)</code><strong>表示读取四个字节的有符号整数，能表示很大的正数或负数，</strong><code>I(INT)</code>**表示直接用纯文本存数字，以换行符<code>\n</code>结尾：<code>I18\n</code></p>
+<p><code>K\x12</code>：表示第一个键值对的值，<code>\x12</code>为十六进制的整数18，<code>K</code>表示<code>BININT1</code>，读取范围为0-255的正整数，除此之外还有<code>M(BININT2)</code>表示读取两个字节的无符号整数(0~65535)，<code>J(BININT)</code>表示读取四个字节的有符号整数，能表示很大的正数或负数，<code>I(INT)</code>表示直接用纯文本存数字，以换行符<code>\n</code>结尾：<code>I18\n</code></p>
 <p>同样的可以类比接下来的<code>X\x04\x00\x00\x00flag</code>和<code>X\x0e\x00\x00\x00ZLARYY&#123;2L47yY&#125;</code></p>
 <p><code>u</code>：<code>SETITEMS</code>，遇到这个指令，PVM开始找<code>(</code>标记，把这期间所有的键值塞进之前创建的字典里，此时字典变成了：<code>&#123;&#39;age&#39;: 18, &#39;flag&#39;: &#39;ZLARYY&#123;2L47yY&#125;&#39;, &#39;friends&#39;: &#39;Chesmond and Arache&#39;&#125;</code></p>
 <p><strong>这些内容全部用来构建属性字典</strong></p>
