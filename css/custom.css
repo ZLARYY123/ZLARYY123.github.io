@@ -16,3 +16,16 @@ body, h1, h2, h3, h4, h5, h6, p, a, span, li, div {
     height: auto !important;
     margin: 0 auto !important;
 }
+.footer-beian {
+    display: block;
+    margin-top: 8px;
+}
+
+.footer-beian a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer-beian a:hover {
+    text-decoration: underline;
+}
