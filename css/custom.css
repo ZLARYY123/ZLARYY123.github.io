@@ -1,31 +1,235 @@
 /* 引入霞鹜文楷字体 */
 @import url('https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css');
 
-/* 强制应用到全站 */
-body, h1, h2, h3, h4, h5, h6, p, a, span, li, div {
-    font-family: "LXGW WenKai Screen", sans-serif !important;
+/* 全站字体：排除代码块，避免代码也变成手写体 */
+body,
+html,
+#container,
+#header,
+#footer,
+#main,
+.article,
+.post,
+.body,
+.md,
+.body.md,
+p,
+li,
+table,
+a,
+span,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "LXGW WenKai Screen", "Microsoft YaHei", "PingFang SC", sans-serif !important;
 }
-/* 强行解除文章内部所有图片的高度和宽度封印 */
+
+/* 代码字体单独保留等宽字体 */
+code,
+pre,
+kbd,
+samp,
+pre code,
+.shiki,
+.shiki code {
+  font-family: Consolas, Monaco, "JetBrains Mono", "Fira Code", "Courier New", monospace !important;
+}
+
+/* ShokaX 文章正文 */
+.body.md {
+  font-size: 16px;
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+}
+
+/* 文章图片修复：ShokaX 文章实际结构是 .body.md */
+.body.md img,
+.post img,
+.article img,
+article img,
 .post-content img,
 .article-entry img,
 #article-container img,
 .markdown-body img {
-    display: block !important;
-    width: auto !important;  /* 👉 新增这句绝杀：强行无视 HTML 里的 width="46" 属性，恢复图片原生宽度！ */
-    max-width: 100% !important;
-    height: auto !important;
-    margin: 0 auto !important;
+  display: block !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 1em auto !important;
 }
+
+/* 行内代码 */
+:not(pre) > code {
+  font-size: 0.92em;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+}
+
+/* 备案信息 */
 .footer-beian {
-    display: block;
-    margin-top: 8px;
+  display: block;
+  margin-top: 8px;
 }
 
 .footer-beian a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 .footer-beian a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
+}
+
+/* Sidebar avatar */
+.overview .author .image {
+  width: 10rem !important;
+  height: 10rem !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+
+.footer-beian {
+  display: block;
+  margin-top: 8px;
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.footer-beian a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-beian a:hover {
+  text-decoration: underline;
+}
+/* ===== 点赞区 ===== */
+/* ===== 自定义点赞计数区 ===== */
+
+/* 只隐藏二维码，不隐藏整个赞赏区域 */
+/* ===== 友链卡片：紧凑版，放在 custom.css 最底部 ===== */
+
+.friend-links {
+  width: 100% !important;
+  max-width: 560px !important;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 16px !important;
+  margin-top: 24px !important;
+}
+
+.friend-card {
+  width: 500px !important;
+  max-width: 100% !important;
+  min-height: 96px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+  padding: 16px 22px !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+}
+
+/* 头像缩小 */
+.friend-card img {
+  width: 76px !important;
+  height: 76px !important;
+  min-width: 76px !important;
+  max-width: 76px !important;
+  max-height: 76px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  margin: 0 !important;
+}
+
+/* 文字区域 */
+.friend-card div {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+/* 标题 */
+.friend-card strong {
+  display: block !important;
+  font-size: 20px !important;
+  line-height: 1.35 !important;
+  color: #e58aa3 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* 简介 */
+.friend-card p {
+  margin: 6px 0 0 !important;
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+  color: #d98ca0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.post-stats-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 32px auto 24px;
+  text-align: center;
+}
+
+.post-view-count,
+.post-like-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(229, 138, 163, 0.42);
+  background: rgba(229, 138, 163, 0.12);
+  color: #e58aa3;
+  font-size: 15px;
+  line-height: 1;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.post-view-count,
+.post-view-count:disabled {
+  cursor: default;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.post-like-btn {
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(216, 107, 139, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.post-like-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(229, 138, 163, 0.18);
+  box-shadow: 0 10px 24px rgba(216, 107, 139, 0.24);
+}
+
+.post-like-btn.liked {
+  border-color: rgba(216, 107, 139, 0.68);
+  background: linear-gradient(90deg, rgba(216, 107, 139, 0.42), rgba(224, 154, 130, 0.34));
+  color: #f08aa8;
+}
+
+.local-view-count,
+.local-like-count {
+  margin-left: 4px;
 }
