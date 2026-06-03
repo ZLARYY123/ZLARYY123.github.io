@@ -112,38 +112,39 @@ article img,
 /* ===== 自定义点赞计数区 ===== */
 
 /* 只隐藏二维码，不隐藏整个赞赏区域 */
-/* ===== 友链卡片：紧凑版，放在 custom.css 最底部 ===== */
+/* ===== 友链卡片：电脑端两列，手机端单列 ===== */
 
 .friend-links {
   width: 100% !important;
-  max-width: 560px !important;
+  max-width: 1080px !important;
   display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 16px !important;
-  margin-top: 24px !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+  margin-top: 28px !important;
 }
 
+/* 卡片自动适配两列 */
 .friend-card {
-  width: 500px !important;
-  max-width: 100% !important;
-  min-height: 96px !important;
+  width: auto !important;
+  max-width: none !important;
+  min-height: 120px !important;
   display: flex !important;
   align-items: center !important;
   gap: 18px !important;
-  padding: 16px 22px !important;
-  border-radius: 14px !important;
+  padding: 18px 22px !important;
+  border-radius: 16px !important;
   background: rgba(255, 255, 255, 0.06) !important;
   text-decoration: none !important;
   box-sizing: border-box !important;
 }
 
-/* 头像缩小 */
+/* 头像 */
 .friend-card img {
-  width: 76px !important;
-  height: 76px !important;
-  min-width: 76px !important;
-  max-width: 76px !important;
-  max-height: 76px !important;
+  width: 82px !important;
+  height: 82px !important;
+  min-width: 82px !important;
+  max-width: 82px !important;
+  max-height: 82px !important;
   border-radius: 50% !important;
   object-fit: cover !important;
   margin: 0 !important;
@@ -155,7 +156,7 @@ article img,
   min-width: 0 !important;
 }
 
-/* 标题 */
+/* 标题：单行显示，太长才省略 */
 .friend-card strong {
   display: block !important;
   font-size: 20px !important;
@@ -166,15 +167,29 @@ article img,
   text-overflow: ellipsis !important;
 }
 
-/* 简介 */
+/* 简介：允许换行，完整显示 */
 .friend-card p {
   margin: 6px 0 0 !important;
   font-size: 15px !important;
-  line-height: 1.5 !important;
+  line-height: 1.6 !important;
   color: #d98ca0 !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: break-word !important;
+  max-height: none !important;
+}
+
+/* 手机端变回单列 */
+@media screen and (max-width: 768px) {
+  .friend-links {
+    grid-template-columns: 1fr !important;
+    max-width: 100% !important;
+  }
+
+  .friend-card {
+    width: 100% !important;
+  }
 }
 
 .post-stats-box {
