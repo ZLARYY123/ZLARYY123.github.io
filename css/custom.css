@@ -252,14 +252,14 @@ article img,
 /* ===== Essay 随笔列表 ===== */
 
 .essay-posts {
-  margin-top: 2rem;
+  margin-top: 2rem !important;
 }
 
 .essay-posts .essay-item {
-  margin-bottom: 2rem;
+  margin-bottom: 2rem !important;
 }
 
 .essay-posts .excerpt {
-  line-height: 1.8;
-  opacity: 0.9;
+  line-height: 1.8 !important;
+  opacity: 0.9 !important;
 }
