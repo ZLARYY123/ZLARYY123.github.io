@@ -248,3 +248,18 @@ article img,
 .local-like-count {
   margin-left: 4px;
 }
+
+/* ===== Essay 随笔列表 ===== */
+
+.essay-posts {
+  margin-top: 2rem;
+}
+
+.essay-posts .essay-item {
+  margin-bottom: 2rem;
+}
+
+.essay-posts .excerpt {
+  line-height: 1.8;
+  opacity: 0.9;
+}
