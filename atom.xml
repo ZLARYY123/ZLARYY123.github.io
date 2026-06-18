@@ -505,7 +505,7 @@
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;# 释放OLE对象，清理资源&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;EXEC sp_OADestroy @exec;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;EXEC sp_OADestroy @shell;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/06/18/SQL%E6%8F%90%E6%9D%83/2.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/06/18/SQL%E6%8F%90%E6%9D%83/27.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;这一串payload实现了&lt;code&gt;sp_OACreate&lt;/code&gt;创建&lt;code&gt;WScript.Shell&lt;/code&gt;，&lt;code&gt;SP_OAMethod&lt;/code&gt;调用EXEC方法然后执行&lt;code&gt;cmd /c whoami&lt;/code&gt;，读取&lt;code&gt;StdOut.ReadAll&lt;/code&gt;，最后&lt;code&gt;select&lt;/code&gt;输出结果&lt;/p&gt;
 </content>
         <updated>2026-06-18T12:10:00.000Z</updated>
