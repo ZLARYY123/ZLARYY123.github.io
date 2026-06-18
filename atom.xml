@@ -3,10 +3,10 @@
     <id>https://zlaryy.top</id>
     <title>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</title>
     <link href="https://zlaryy.top" />
-    <updated>2026-06-18T12:04:56.162Z</updated>
+    <updated>2026-06-18T12:10:00.000Z</updated>
     <entry>
         <id>https://zlaryy.top/2026/06/18/SQL%E6%8F%90%E6%9D%83/</id>
-        <title></title>
+        <title>SQL提权</title>
         <link rel="alternate" href="https://zlaryy.top/2026/06/18/SQL%E6%8F%90%E6%9D%83/"/>
         <content type="html">&lt;h1 id=&#34;sql提权&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#sql提权&#34;&gt;#&lt;/a&gt; SQL提权&lt;/h1&gt;
 &lt;p&gt;学完了各种数据库的注入手法，接下来这篇文章我们一起学习一下什么是SQL提权&lt;/p&gt;
@@ -508,7 +508,7 @@
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/06/18/SQL%E6%8F%90%E6%9D%83/2.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;这一串payload实现了&lt;code&gt;sp_OACreate&lt;/code&gt;创建&lt;code&gt;WScript.Shell&lt;/code&gt;，&lt;code&gt;SP_OAMethod&lt;/code&gt;调用EXEC方法然后执行&lt;code&gt;cmd /c whoami&lt;/code&gt;，读取&lt;code&gt;StdOut.ReadAll&lt;/code&gt;，最后&lt;code&gt;select&lt;/code&gt;输出结果&lt;/p&gt;
 </content>
-        <updated>2026-06-18T12:04:56.162Z</updated>
+        <updated>2026-06-18T12:10:00.000Z</updated>
     </entry>
     <entry>
         <id>https://zlaryy.top/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/</id>

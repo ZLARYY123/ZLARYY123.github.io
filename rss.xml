@@ -5,13 +5,13 @@
         <link>https://zlaryy.top</link>
         <description>Web安全 / CTF / 个人学习笔记</description>
         <language>zh-CN</language>
-        <pubDate>Thu, 18 Jun 2026 20:04:56 +0800</pubDate>
-        <lastBuildDate>Thu, 18 Jun 2026 20:04:56 +0800</lastBuildDate>
+        <pubDate>Thu, 18 Jun 2026 20:10:00 +0800</pubDate>
+        <lastBuildDate>Thu, 18 Jun 2026 20:10:00 +0800</lastBuildDate>
         <item>
             <guid isPermalink="true">https://zlaryy.top/2026/06/18/SQL%E6%8F%90%E6%9D%83/</guid>
-            <title></title>
+            <title>SQL提权</title>
             <link>https://zlaryy.top/2026/06/18/SQL%E6%8F%90%E6%9D%83/</link>
-            <pubDate>Thu, 18 Jun 2026 20:04:56 +0800</pubDate>
+            <pubDate>Thu, 18 Jun 2026 20:10:00 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;sql提权&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#sql提权&#34;&gt;#&lt;/a&gt; SQL提权&lt;/h1&gt;
 &lt;p&gt;学完了各种数据库的注入手法，接下来这篇文章我们一起学习一下什么是SQL提权&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;垂直提权&lt;/strong&gt;：指从低权限身份到高权限身份，比如从普通用户到管理员&lt;/p&gt;
