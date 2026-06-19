@@ -108,6 +108,21 @@ article img,
 .footer-beian a:hover {
   text-decoration: underline;
 }
+
+.payload-code {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+  overflow-wrap: anywhere !important;
+  overflow-x: auto !important;
+}
+
+.payload-code code {
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+  overflow-wrap: anywhere !important;
+}
 /* ===== 点赞区 ===== */
 /* ===== 自定义点赞计数区 ===== */
 
