@@ -3,10 +3,10 @@
     <id>https://zlaryy.top</id>
     <title>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</title>
     <link href="https://zlaryy.top" />
-    <updated>2026-06-19T14:07:59.726Z</updated>
+    <updated>2026-06-19T14:10:00.000Z</updated>
     <entry>
         <id>https://zlaryy.top/2026/06/19/Linux%E6%8F%90%E6%9D%83/</id>
-        <title></title>
+        <title>Linux提权</title>
         <link rel="alternate" href="https://zlaryy.top/2026/06/19/Linux%E6%8F%90%E6%9D%83/"/>
         <content type="html">&lt;h1 id=&#34;linux提权持续更新中&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#linux提权持续更新中&#34;&gt;#&lt;/a&gt; Linux提权（持续更新中......）&lt;/h1&gt;
 &lt;p&gt;参考文章：&lt;a href=&#34;https://blog.csdn.net/uuzeray/article/details/136098183&#34;&gt;【Web】超级详细的Linux权限提升一站式笔记-CSDN博客&lt;/a&gt;&lt;/p&gt;
@@ -337,7 +337,7 @@
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;/usr/local/bin/read_backup &#39;test.txt; /bin/bash -p&#39;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/06/19/Linux%E6%8F%90%E6%9D%83/29.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 </content>
-        <updated>2026-06-19T14:07:59.726Z</updated>
+        <updated>2026-06-19T14:10:00.000Z</updated>
     </entry>
     <entry>
         <id>https://zlaryy.top/2026/06/18/SQL%E6%8F%90%E6%9D%83/</id>
