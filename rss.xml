@@ -270,7 +270,7 @@
 &lt;p&gt;接下来我们需要修改PATH：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;export PATH=/tmp/suid_test:$PATH&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/06/19/Linux%E6%8F%90%E6%9D%83/25.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;之后我们只需要执行&lt;code&gt;/usr/local/bin/baskup_suid&lt;/code&gt;就可以实现提权了：&lt;/p&gt;
+&lt;p&gt;之后我们只需要执行&lt;code&gt;/usr/local/bin/backup_suid&lt;/code&gt;就可以实现提权了：&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/06/19/Linux%E6%8F%90%E6%9D%83/26.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;那么为什么修改PATH就可以实现将&lt;code&gt;backup_suid&lt;/code&gt;文件里面的backup文件路径转移到&lt;code&gt;/tmp/suid_test&lt;/code&gt;呢？&lt;/p&gt;
 &lt;p&gt;修改PATH的目的是让SUID程序在执行某个命令时，优先执行我们伪造的同名命令&lt;/p&gt;
