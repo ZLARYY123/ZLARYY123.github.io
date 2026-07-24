@@ -1,0 +1,483 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/atom+xml"><link rel="alternate" type="application/json" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture6.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture6.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title></title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline"></h1><div class="meta"><span class="item" title="创建时间：2026-07-24 14:46:40"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-07-24T14:46:40+08:00">2026-07-24</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>4.6k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>4 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture6.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture6.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~"/></span><div class="body md" itemprop="articleBody"><h1 id="nodejs原型链污染"><a class="anchor" href="#nodejs原型链污染">#</a> Node.js原型链污染</h1>
+<h1 id="javascript原型链"><a class="anchor" href="#javascript原型链">#</a> JavaScript原型链</h1>
+<p>JavaScript对象查找属性时，先看自身是否存在，如果自己没有就去让它“原型对象”里找，原型对象也没有就继续往上找直到<code>null</code></p>
+<p>每一个普通对象都有一个隐藏的引用，指向另一个对象，这个被指向的对象就叫它的原型对象，可以通过以下代码段查看<code>&#123;&#125;</code>的原型：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>const user = &#123;&#125;;</span></span>
+<span class="line"><span>console.log(Object.getPrototypeOf(user));</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/1.png" class=""></p>
+<p>普通对象<code>&#123;&#125;</code>的原型通常是<code>Object.prototype</code>，<code>Object.prototype</code>上有一些通用方法，例如：<code>toString</code>，<code>hasOwnProperty</code>，<code>valuerOf</code>，所以对象可以调用这些方法</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>const user = &#123;&#125;;</span></span>
+<span class="line"><span>console.log(Object.getPrototypeOf(user)===Object.prototype);</span></span>
+<span class="line"><span>console.log(Object.getPrototypeOf(Object.prototype));</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/2.png" class=""></p>
+<p>所以普通对象的原型链大概是：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>user->Object.prototype->null</span></span></code></pre>
+<h2 id="__proto__"><a class="anchor" href="#__proto__">#</a> __proto__</h2>
+<p><code>__proto__</code>是<code>Object.prototype</code>上的一个访问器属性，用来暴露一个对象内部的<code>[[Prototype]]</code>，他可以读取对象的原型也可以尝试修改对象的原型。普通对象之所以能访问<code>obj.__proto__</code>，是因为他从<code>Object.prototype</code>继承了访问器属性</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>const user = &#123;&#125;;</span></span>
+<span class="line"><span>console.log(user.hasOwnProperty("__proto__"));</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/3.png" class=""></p>
+<p>但是：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>const user = &#123;&#125;;</span></span>
+<span class="line"><span>console.log(Object.prototype.hasOwnProperty("__proto__"));</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/4.png" class=""></p>
+<p><code>__proto__</code>是<code>Object.prototype</code>上由getter和setter组成的访问器属性，并且他不总是可靠存在，<code>null</code>原型对象不会继承它</p>
+<p>并且<code>Object.getPrototypeOf() === obj.__proto__</code></p>
+<p><code>prototype</code>：函数才有的属性，用来给它创建出来的实例当原型：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>function ZLARYY()&#123;&#125;</span></span>
+<span class="line"><span>const Zl47yY=new ZLARYY();</span></span>
+<span class="line"><span>console.log(Zl47yY.__proto__===ZLARYY.prototype);</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/5.png" class=""></p>
+<p>即<code>Zl47yY.__proto__指向ZLARYY.prototype</code>，<code>ZLARYY.prototype是ZLARYY函数的原型</code></p>
+<h1 id="原型链污染"><a class="anchor" href="#原型链污染">#</a> 原型链污染</h1>
+<p>原型链污染指的是通过对象的某些特殊属性可以将属性写到公共原型对象上，导致很多普通对象被污染。</p>
+<p>现有一段代码：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>const ZLARYY = &#123;&#125;;</span></span>
+<span class="line"><span>console.log(ZLARYY.isAdmin);</span></span>
+<span class="line"><span>Object.prototype.isAdmin = true;</span></span>
+<span class="line"><span>console.log(ZLARYY.isAdmin);</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/6.png" class=""></p>
+<p>原本ZLARYY并不具有isAdmin属性，但是在给<code>Object.prototype</code>添加上isAdmin属性之后可以发现ZLARYY也具备访问isAdmin属性的能力，而ZLARYY只是一个普通对象</p>
+<h2 id="merge"><a class="anchor" href="#merge">#</a> merge()</h2>
+<p>之前我们提到过python原型链污染里面的<code>merge</code>函数，在nodejs原型链污染中也具有这样的<code>merge</code>函数：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>function merge(target, source) &#123;</span></span>
+<span class="line"><span>  for (let key in source) &#123;</span></span>
+<span class="line"><span>    if (typeof source[key] === "object") &#123;</span></span>
+<span class="line"><span>      if (!target[key]) &#123;</span></span>
+<span class="line"><span>        target[key] = &#123;&#125;;</span></span>
+<span class="line"><span>      &#125;</span></span>
+<span class="line"><span>      merge(target[key], source[key]);</span></span>
+<span class="line"><span>    &#125; else &#123;</span></span>
+<span class="line"><span>      target[key] = source[key];</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span>  &#125;</span></span>
+<span class="line"><span>&#125;</span></span></code></pre>
+<p>在该段代码中，如果<code>source</code>的是一个对象并且<code>target[key]</code>为空，那么就执行<code>target[key]=&#123;&#125;</code>之后再进行一次<code>merge(target[key],source[key]</code>，否则直接进行赋值<code>target[key]=source[key]</code></p>
+<p>其存在原型链污染的原理是<strong>递归合并对象的逻辑</strong>，正常情况下是希望把一个对象里的属性合并到另一个属性里</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>function merge(target, source) &#123;</span></span>
+<span class="line"><span>  for (let key in source) &#123;</span></span>
+<span class="line"><span>    if (typeof source[key] === "object") &#123;</span></span>
+<span class="line"><span>      if (!target[key]) &#123;</span></span>
+<span class="line"><span>        target[key] = &#123;&#125;;</span></span>
+<span class="line"><span>      &#125;</span></span>
+<span class="line"><span>      merge(target[key], source[key]);</span></span>
+<span class="line"><span>    &#125; else &#123;</span></span>
+<span class="line"><span>      target[key] = source[key];</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span>  &#125;</span></span>
+<span class="line"><span>&#125;</span></span>
+<span class="line"><span>const ZLARYY=&#123;</span></span>
+<span class="line"><span>    age:18</span></span>
+<span class="line"><span>&#125;;</span></span>
+<span class="line"><span>const source=&#123;</span></span>
+<span class="line"><span>    sex:"man"</span></span>
+<span class="line"><span>&#125;;</span></span>
+<span class="line"><span>merge(ZLARYY,source);</span></span>
+<span class="line"><span>console.log(ZLARYY);</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/7.png" class=""></p>
+<p>同样，该函数也能对已有属性进行修改：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>function merge(target, source) &#123;</span></span>
+<span class="line"><span>  for (let key in source) &#123;</span></span>
+<span class="line"><span>    if (typeof source[key] === "object") &#123;</span></span>
+<span class="line"><span>      if (!target[key]) &#123;</span></span>
+<span class="line"><span>        target[key] = &#123;&#125;;</span></span>
+<span class="line"><span>      &#125;</span></span>
+<span class="line"><span>      merge(target[key], source[key]);</span></span>
+<span class="line"><span>    &#125; else &#123;</span></span>
+<span class="line"><span>      target[key] = source[key];</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span>  &#125;</span></span>
+<span class="line"><span>&#125;</span></span>
+<span class="line"><span>const ZLARYY=&#123;</span></span>
+<span class="line"><span>    age:18</span></span>
+<span class="line"><span>&#125;;</span></span>
+<span class="line"><span>const source=&#123;</span></span>
+<span class="line"><span>    age:19</span></span>
+<span class="line"><span>&#125;;</span></span>
+<span class="line"><span>merge(ZLARYY,source);</span></span>
+<span class="line"><span>console.log(ZLARYY);</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/8.png" class=""></p>
+<p>不过我们的merge逻辑是深度合并，所以我们能发现可以实现对象内部对象的合并：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>function merge(target, source) &#123;</span></span>
+<span class="line"><span>  for (let key in source) &#123;</span></span>
+<span class="line"><span>    if (typeof source[key] === "object") &#123;</span></span>
+<span class="line"><span>      if (!target[key]) &#123;</span></span>
+<span class="line"><span>        target[key] = &#123;&#125;;</span></span>
+<span class="line"><span>      &#125;</span></span>
+<span class="line"><span>      merge(target[key], source[key]);</span></span>
+<span class="line"><span>    &#125; else &#123;</span></span>
+<span class="line"><span>      target[key] = source[key];</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span>  &#125;</span></span>
+<span class="line"><span>&#125;</span></span>
+<span class="line"><span>const ZLARYY=&#123;</span></span>
+<span class="line"><span>    age:18,</span></span>
+<span class="line"><span>    friends:&#123;</span></span>
+<span class="line"><span>        Arache:28,</span></span>
+<span class="line"><span>        Chesmond:29</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span>&#125;;</span></span>
+<span class="line"><span>const source=&#123;</span></span>
+<span class="line"><span>    sex:"man",</span></span>
+<span class="line"><span>    friends:&#123;</span></span>
+<span class="line"><span>        SusU:"best"</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span>&#125;;</span></span>
+<span class="line"><span>merge(ZLARYY,source);</span></span>
+<span class="line"><span>console.log(ZLARYY);</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/9.png" class=""></p>
+<p>可以发现最后得到的结果不是</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>&#123;</span></span>
+<span class="line"><span>  age: 18,</span></span>
+<span class="line"><span>  friends: &#123; SusU: 'best' &#125;,</span></span>
+<span class="line"><span>  sex: 'man'</span></span>
+<span class="line"><span>&#125;</span></span></code></pre>
+<p>如果我们的source是恶意数据：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>'&#123;"__proto__":&#123;"isAdmin":true&#125;&#125;'</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/10.png" class=""></p>
+<p>这和我们的python原型链污染是一样的</p>
+<h2 id="setvalue"><a class="anchor" href="#setvalue">#</a> setvalue()</h2>
+<p>很多后端存在路径赋值的场景，比如<code>setvalue()</code>函数，其正常使用就是将path里面的属性给修改为参数中的value：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>function setValue(obj, path, value) &#123;</span></span>
+<span class="line"><span>  const keys = path.split(".");</span></span>
+<span class="line"><span>  let current = obj;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  for (let i = 0; i &#x3C; keys.length - 1; i++) &#123;</span></span>
+<span class="line"><span>    const key = keys[i];</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    if (!current[key]) &#123;</span></span>
+<span class="line"><span>      current[key] = &#123;&#125;;</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    current = current[key];</span></span>
+<span class="line"><span>  &#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  current[keys[keys.length - 1]] = value;</span></span>
+<span class="line"><span>&#125;</span></span></code></pre>
+<p>当我们执行<code>setValue(obj,&quot;__proto__.isAdmin&quot;,true)</code>，也能实现和merge函数一样的功能</p>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/11.png" class=""></p>
+<h2 id="constructorprototype污染"><a class="anchor" href="#constructorprototype污染">#</a> constructor.prototype污染</h2>
+<p>除了<code>__proto__</code>还有一种常见方式是<code>constructor.prototype</code>，因为普通对象的<code>constructor.prototype</code>通常指向<code>Object</code>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>const ZLARYY=&#123;</span></span>
+<span class="line"><span>    age:18,</span></span>
+<span class="line"><span>    friends:&#123;</span></span>
+<span class="line"><span>        Arache:28,</span></span>
+<span class="line"><span>        Chesmond:29,</span></span>
+<span class="line"><span>        SusU:"best"</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span>&#125;;</span></span>
+<span class="line"><span>ZLARYY.constructor.prototype.isAdmin=true;</span></span>
+<span class="line"><span>console.log(ZLARYY.isAdmin);</span></span></code></pre>
+<p><img loading="lazy" src="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/12.png" class=""></p>
+<p>其实<code>ZLARYY.constructor.prototype.isAdmin=true;</code>就等价于<code>Object.prototype.isAdmin=true;</code></p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-07-24 14:48:30" itemprop="dateModified" datetime="2026-07-24T14:48:30+08:00">2026-07-24</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" title="">https://zlaryy.top/2026/07/24/Nodejs原型链污染/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/06/19/Linux%E6%8F%90%E6%9D%83/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture1.webp" title="Linux提权"><span class="type">上一篇</span><h3>Linux提权</h3></a></div><div class="item right"></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93"><span class="toc-number">1.</span> <span class="toc-text"> Node.js原型链污染</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#javascript%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="toc-number">2.</span> <span class="toc-text"> JavaScript原型链</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#__proto__"><span class="toc-number">2.1.</span> <span class="toc-text"> __proto__</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93"><span class="toc-number">3.</span> <span class="toc-text"> 原型链污染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#merge"><span class="toc-number">3.1.</span> <span class="toc-text"> merge()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#setvalue"><span class="toc-number">3.2.</span> <span class="toc-text"> setvalue()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#constructorprototype%E6%B1%A1%E6%9F%93"><span class="toc-number">3.3.</span> <span class="toc-text"> constructor.prototype污染</span></a></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">17</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/06/19/Linux%E6%8F%90%E6%9D%83/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/22/SQL/">SQL</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/27/%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/">沙箱逃逸</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/19/Linux%E6%8F%90%E6%9D%83/">Linux提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">信息搜集</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">未命名</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/">低版本php下信息泄露的CVE漏洞与反弹shell</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/28/RCE/">RCE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9/">常规外网打点</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/">其他系统库类型下的SQL注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">php反序列化</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">389k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">5:54</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+    ispost: true,
+    path: `2026/07/24/Nodejs原型链污染/`,
+    favicon: {
+        show: `ZLARYY`,
+        hide: `ZLARYY`
+    },
+    search: {
+        placeholder: "文章搜索",
+        empty: "关于 「 ${query} 」，什么也没搜到",
+        stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    nocopy: "false",
+    copyright: `复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。`,
+    copy_tex: false,
+    katex: false,
+    mermaid: false,
+    audio: undefined,
+    nocopy: false,
+    outime: true,
+    template: `<div class="note warning"><p><span class="label warning">文章时效性提示</span><br>这是一篇发布于 {{publish}} 天前，最后一次更新在 {{updated}} 天前的文章，部分信息可能已经发生改变，请注意甄别。</p></div>`,
+    quiz: {
+        choice: `单选题`,
+        multiple: `多选题`,
+        true_false: `判断题`,
+        essay: `问答题`,
+        gap_fill: `填空题`,
+        mistake: `错题备注`
+    }
+};
+</script><script src="/js/siteInit.js?v=0.5.4" type="module" fetchpriority="high" defer></script><!-- hexo injector body_end start -->
+<script id="post-stats">
+(function () {
+  var API_NAME = 'ZLARYYPostStats';
+  var BOX_SELECTOR = '.post-stats-box';
+  var COUNT_LIMIT = 9999;
+
+  if (window[API_NAME] && typeof window[API_NAME].run === 'function') {
+    window[API_NAME].run();
+    return;
+  }
+
+  function isPostPage() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function storageKey(prefix) {
+    return prefix + window.location.pathname;
+  }
+
+  function getStorageValue(storage, key) {
+    try {
+      return storage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function setStorageValue(storage, key, value) {
+    try {
+      storage.setItem(key, value);
+    } catch (error) {}
+  }
+
+  function removeStorageValue(storage, key) {
+    try {
+      storage.removeItem(key);
+    } catch (error) {}
+  }
+
+  function readCount(key) {
+    var raw = getStorageValue(window.localStorage, key);
+    var value = raw === null || raw === '' ? 0 : Number(raw);
+
+    if (!Number.isInteger(value) || value < 0 || value > COUNT_LIMIT) {
+      value = 0;
+      setStorageValue(window.localStorage, key, '0');
+    }
+
+    return value;
+  }
+
+  function writeCount(key, value) {
+    setStorageValue(window.localStorage, key, String(value));
+  }
+
+  function bumpViewCount() {
+    var countKey = storageKey('zlaryy_view_count_');
+    var sessionKey = storageKey('zlaryy_viewed_session_');
+    var count = readCount(countKey);
+
+    if (getStorageValue(window.sessionStorage, sessionKey) !== '1') {
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      writeCount(countKey, count);
+      setStorageValue(window.sessionStorage, sessionKey, '1');
+    }
+
+    return count;
+  }
+
+  function readLikeCount() {
+    return readCount(storageKey('zlaryy_like_count_'));
+  }
+
+  function hasLiked() {
+    return getStorageValue(window.localStorage, storageKey('zlaryy_liked_')) === '1';
+  }
+
+  function saveLikeState(count, liked) {
+    writeCount(storageKey('zlaryy_like_count_'), count);
+    if (liked) {
+      setStorageValue(window.localStorage, storageKey('zlaryy_liked_'), '1');
+    } else {
+      removeStorageValue(window.localStorage, storageKey('zlaryy_liked_'));
+    }
+  }
+
+  function clearRewardNodes() {
+    document.querySelectorAll('.reward').forEach(function (reward) {
+      reward.innerHTML = '';
+      reward.classList.add('post-stats-host');
+      reward.removeAttribute('style');
+      reward.setAttribute('aria-label', 'post stats');
+    });
+  }
+
+  function findInsertTarget() {
+    var reward = document.querySelector('article.post .reward, .reward');
+    if (reward) return { parent: reward, before: null };
+
+    var footer = document.querySelector('article.post > footer');
+    if (footer && footer.parentNode) return { parent: footer.parentNode, before: footer };
+
+    var article = document.querySelector('article.post');
+    if (article) return { parent: article, before: null };
+
+    return null;
+  }
+
+  function createStatsBox(viewCount, likeCount, liked) {
+    var box = document.createElement('div');
+    box.className = 'post-stats-box';
+    box.innerHTML = [
+      '<button class="post-view-count" type="button" disabled aria-disabled="true">',
+      '&#128065; &#x770b;&#x8fc7; <span class="local-view-count">' + viewCount + '</span> &#x6b21;',
+      '</button>',
+      '<button class="post-like-btn' + (liked ? ' liked' : '') + '" type="button" aria-pressed="' + (liked ? 'true' : 'false') + '">',
+      '<span class="post-like-label">' + (liked ? '&#x5df2;&#x70b9;&#x8d5e;' : '&#x70b9;&#x8d5e;') + '</span> ',
+      '<span class="local-like-count">' + likeCount + '</span>',
+      '</button>'
+    ].join('');
+
+    return box;
+  }
+
+  function updateLikeButton(button, count, liked) {
+    var labelNode = button.querySelector('.post-like-label');
+    var countNode = button.querySelector('.local-like-count');
+
+    if (labelNode) labelNode.textContent = liked ? '\u5df2\u70b9\u8d5e' : '\u70b9\u8d5e';
+    if (countNode) countNode.textContent = String(count);
+
+    button.classList.toggle('liked', liked);
+    button.setAttribute('aria-pressed', liked ? 'true' : 'false');
+  }
+
+  function bindLikeButton(box) {
+    var button = box.querySelector('.post-like-btn');
+    if (!button || button.dataset.bound === 'true') return;
+
+    updateLikeButton(button, readLikeCount(), hasLiked());
+
+    button.dataset.bound = 'true';
+    button.addEventListener('click', function () {
+      var count = readLikeCount();
+
+      if (hasLiked()) {
+        count = Math.max(0, count - 1);
+        saveLikeState(count, false);
+        updateLikeButton(button, count, false);
+        return;
+      }
+
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      saveLikeState(count, true);
+      updateLikeButton(button, count, true);
+    });
+  }
+
+  function renderStats() {
+    if (!isPostPage()) return;
+
+    clearRewardNodes();
+
+    var viewCount = bumpViewCount();
+    var likeCount = readLikeCount();
+    var liked = hasLiked();
+    var box = document.querySelector(BOX_SELECTOR);
+
+    if (!box) {
+      var target = findInsertTarget();
+      if (!target) return;
+
+      box = createStatsBox(viewCount, likeCount, liked);
+      target.parent.insertBefore(box, target.before);
+    }
+
+    var viewNode = box.querySelector('.local-view-count');
+    var likeNode = box.querySelector('.local-like-count');
+    var likeButton = box.querySelector('.post-like-btn');
+
+    if (viewNode) viewNode.textContent = String(viewCount);
+    if (likeNode) likeNode.textContent = String(likeCount);
+    if (likeButton) {
+      updateLikeButton(likeButton, likeCount, liked);
+    }
+
+    bindLikeButton(box);
+  }
+
+  function runPostStats() {
+    window.setTimeout(renderStats, 0);
+  }
+
+  window[API_NAME] = {
+    run: runPostStats
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runPostStats);
+  } else {
+    runPostStats();
+  }
+
+  document.addEventListener('pjax:complete', runPostStats);
+})();
+</script>
+  
+<script>
+(function () {
+  function addBeian() {
+    const footerStatus = document.querySelector('#footer .status');
+    if (!footerStatus) return;
+
+    if (document.querySelector('.footer-beian')) return;
+
+    const beian = document.createElement('div');
+    beian.className = 'footer-beian';
+    beian.innerHTML = '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2026016552号-1</a>';
+
+    footerStatus.appendChild(beian);
+  }
+
+  addBeian();
+  document.addEventListener('pjax:complete', addBeian);
+})();
+</script>
+  <script>
+(function () {
+  function fixText(text) {
+    if (!text) return text;
+    text = text.replace(/\([`´]?Д[`´]?\)大変だ!/g, "ZLARYY");
+    text = text.replace(/大変だ!/g, "ZLARYY");
+    return text;
+  }
+
+  function replaceText(root) {
+    root = root || document.body;
+    if (!root) return;
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+
+    while ((node = walker.nextNode())) {
+      var oldText = node.nodeValue;
+      var newText = fixText(oldText);
+      if (newText !== oldText) node.nodeValue = newText;
+    }
+  }
+
+  function init() {
+    replaceText(document.body);
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            replaceText(node);
+          } else if (node.nodeType === 3) {
+            node.nodeValue = fixText(node.nodeValue);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script><!-- hexo injector body_end end --></body></html>
