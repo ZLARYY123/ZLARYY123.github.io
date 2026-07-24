@@ -5,13 +5,13 @@
         <link>https://zlaryy.top</link>
         <description>Web安全 / CTF / 个人学习笔记</description>
         <language>zh-CN</language>
-        <pubDate>Fri, 24 Jul 2026 14:46:40 +0800</pubDate>
-        <lastBuildDate>Fri, 24 Jul 2026 14:46:40 +0800</lastBuildDate>
+        <pubDate>Fri, 24 Jul 2026 15:38:00 +0800</pubDate>
+        <lastBuildDate>Fri, 24 Jul 2026 15:38:00 +0800</lastBuildDate>
         <item>
             <guid isPermalink="true">https://zlaryy.top/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/</guid>
-            <title></title>
+            <title>Node.js原型链污染</title>
             <link>https://zlaryy.top/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/</link>
-            <pubDate>Fri, 24 Jul 2026 14:46:40 +0800</pubDate>
+            <pubDate>Fri, 24 Jul 2026 15:38:00 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;nodejs原型链污染&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#nodejs原型链污染&#34;&gt;#&lt;/a&gt; Node.js原型链污染&lt;/h1&gt;
 &lt;h1 id=&#34;javascript原型链&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#javascript原型链&#34;&gt;#&lt;/a&gt; JavaScript原型链&lt;/h1&gt;
 &lt;p&gt;JavaScript对象查找属性时，先看自身是否存在，如果自己没有就去让它“原型对象”里找，原型对象也没有就继续往上找直到&lt;code&gt;null&lt;/code&gt;&lt;/p&gt;

@@ -3,10 +3,10 @@
     <id>https://zlaryy.top</id>
     <title>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</title>
     <link href="https://zlaryy.top" />
-    <updated>2026-07-24T06:46:40.364Z</updated>
+    <updated>2026-07-24T07:38:00.000Z</updated>
     <entry>
         <id>https://zlaryy.top/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/</id>
-        <title></title>
+        <title>Node.js原型链污染</title>
         <link rel="alternate" href="https://zlaryy.top/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/"/>
         <content type="html">&lt;h1 id=&#34;nodejs原型链污染&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#nodejs原型链污染&#34;&gt;#&lt;/a&gt; Node.js原型链污染&lt;/h1&gt;
 &lt;h1 id=&#34;javascript原型链&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#javascript原型链&#34;&gt;#&lt;/a&gt; JavaScript原型链&lt;/h1&gt;
@@ -181,7 +181,7 @@
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/12.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;其实&lt;code&gt;ZLARYY.constructor.prototype.isAdmin=true;&lt;/code&gt;就等价于&lt;code&gt;Object.prototype.isAdmin=true;&lt;/code&gt;&lt;/p&gt;
 </content>
-        <updated>2026-07-24T06:46:40.364Z</updated>
+        <updated>2026-07-24T07:38:00.000Z</updated>
     </entry>
     <entry>
         <id>https://zlaryy.top/2026/06/19/Linux%E6%8F%90%E6%9D%83/</id>
