@@ -494,6 +494,22 @@
 &lt;p&gt;&lt;code&gt;/&lt;/code&gt;的URL编码为&lt;code&gt;%2f&lt;/code&gt;，&lt;code&gt;%&lt;/code&gt;的URL编码为&lt;code&gt;%25&lt;/code&gt;，因此对&lt;code&gt;%2f&lt;/code&gt;二次编码可得到类似&lt;code&gt;%252f&lt;/code&gt;，其等价写法为&lt;code&gt;%25%32%66&lt;/code&gt;，第一次解码为&lt;code&gt;%2f&lt;/code&gt;，第二次解码为&lt;code&gt;/&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;假设请求&lt;code&gt;/hello/zla%25%32%66ryy&lt;/code&gt;，Servlet容器进行一次解码后，Spring得到的路径参数类似&lt;code&gt;/hello/zla%2fryy&lt;/code&gt;，对于Spring来说，&lt;code&gt;%2f&lt;/code&gt;仍可能作为&lt;code&gt;&amp;#123;name&amp;#125;&lt;/code&gt;中的内容存在，因此仍能进入&lt;code&gt;@GetMapping(&amp;quot;/hello/&amp;#123;name&amp;#125;&amp;quot;)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;而Shiro 1.5.2又调用&lt;code&gt;decodeRequestString()&lt;/code&gt;进行二次解码得到&lt;code&gt;/hello/zla/ryy&lt;/code&gt;，这与配置中的&lt;code&gt;/hello/*&lt;/code&gt;不符，所以可能没有执行authc&lt;/p&gt;
+&lt;h2 id=&#34;cve-2020-13933&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#cve-2020-13933&#34;&gt;#&lt;/a&gt; CVE-2020-13933&lt;/h2&gt;
+&lt;p&gt;1.6.0之前的Apache Shiro，当使用Apache Shiro时，特制的HTTP请求可能导致认证绕过，Shiro &amp;lt; 1.6.0&lt;/p&gt;
+&lt;p&gt;该漏洞还是利用SpringWeb和Shiro处理方式的差异绕过&lt;/p&gt;
+&lt;p&gt;在Shiro中，先解码后处理分号再标准化路径，在SpringWeb中先处理分号再解码再标准化路径&lt;/p&gt;
+&lt;p&gt;我们将&lt;code&gt;;&lt;/code&gt;编码为&lt;code&gt;%3b&lt;/code&gt;，在Shiro中他会先解码为分号然后截取分号前的内容，在SpringWeb中，首先它找不到分号，因为被编码了，相当于它不会处理分红啊然后才将分号解码，所以我们可以使用&lt;code&gt;;&lt;/code&gt;去绕过一些需要认证的路径，只要它截取的分号前内容设置了anon就行&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/admin/*&lt;/code&gt;需要认证才能访问，我们就可以通过&lt;code&gt;/admin/%3bxx&lt;/code&gt;绕过，在Shiro中会先解码然后截取分号前dee内容，即&lt;code&gt;/admin/&lt;/code&gt;，这里就绕过了Shiro的过滤器，在后续的SpringWeb处理中就会被处理为&lt;code&gt;/admin/;xx&lt;/code&gt;成功访问到Controller&lt;/p&gt;
+&lt;h2 id=&#34;cve-2020-17510&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#cve-2020-17510&#34;&gt;#&lt;/a&gt; CVE-2020-17510&lt;/h2&gt;
+&lt;p&gt;适用范围为Shiro &amp;lt; 1.7.0&lt;/p&gt;
+&lt;p&gt;该漏洞同样是SpringWeb和Shiro的处理差异造成的，这一次是因为&lt;code&gt;.&lt;/code&gt;造成的绕过，其编码为&lt;code&gt;%2e&lt;/code&gt;，在Shiro中，它会先解码成&lt;code&gt;.&lt;/code&gt;，不需要处理分号然后标准化路径将&lt;code&gt;/.&lt;/code&gt;规范化为&lt;code&gt;/&lt;/code&gt;，在Spring Web中，首先无需处理分号，然后将&lt;code&gt;%2e&lt;/code&gt;解码为&lt;code&gt;.&lt;/code&gt;，&lt;code&gt;getSanitizedPath&lt;/code&gt;不执行&lt;code&gt;dot-segment&lt;/code&gt;规范化，所以保留&lt;code&gt;.&lt;/code&gt;，&lt;code&gt;getSanitizedPath&lt;/code&gt;主要用于处理一些路径格式问题，比如连续斜杠，路径格式清理和某些重复分隔符&lt;/p&gt;
+&lt;p&gt;假设Shiro配置&lt;code&gt;map.put(&amp;quot;/hello/*&amp;quot;,&amp;quot;authc&amp;quot;);&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Spring Controller：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;@GetMapping(&#34;/hello/&amp;#123;name&amp;#125;&#34;)&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;public String hello(@PathVariable String name)&amp;#123;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;    return &#34;hello&#34;;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;请求&lt;code&gt;/hello/%2e&lt;/code&gt;，在Shiro中处理成&lt;code&gt;/hello/&lt;/code&gt;，在Spring中，处理成&lt;code&gt;/hello/.&lt;/code&gt;，成功匹配到了&lt;code&gt;/hello/&amp;#123;name&amp;#125;&lt;/code&gt;&lt;/p&gt;
 </content>
         <updated>2026-08-03T16:10:00.000Z</updated>
     </entry>
