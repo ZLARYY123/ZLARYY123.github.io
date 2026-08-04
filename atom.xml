@@ -510,6 +510,34 @@
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;    return &#34;hello&#34;;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;请求&lt;code&gt;/hello/%2e&lt;/code&gt;，在Shiro中处理成&lt;code&gt;/hello/&lt;/code&gt;，在Spring中，处理成&lt;code&gt;/hello/.&lt;/code&gt;，成功匹配到了&lt;code&gt;/hello/&amp;#123;name&amp;#125;&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;cve-2020-17523&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#cve-2020-17523&#34;&gt;#&lt;/a&gt; CVE-2020-17523&lt;/h2&gt;
+&lt;p&gt;适用范围为Shiro &amp;lt; 1.7.1&lt;/p&gt;
+&lt;p&gt;这一次是通过空格编码进行的绕过&lt;/p&gt;
+&lt;p&gt;假设Shiro配置：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;Map&amp;#x3C;String, String&gt; map = new LinkedHashMap&amp;#x3C;&gt;();&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;map.put(&#34;/login&#34;, &#34;anon&#34;);&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;map.put(&#34;/hello/*&#34;, &#34;authc&#34;);&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;map.put(&#34;/**&#34;, &#34;anon&#34;);&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Spring Controller：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;@GetMapping(&#34;/hello/&amp;#123;name&amp;#125;&#34;)&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;public String hello(@PathVariable String name) &amp;#123;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;    return &#34;hello, name=[&#34; + name + &#34;]&#34;;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我们请求&lt;code&gt;/hello/%20&lt;/code&gt;，其中&lt;code&gt;%20&lt;/code&gt;为空格的URL编码&lt;/p&gt;
+&lt;p&gt;在Shiro的处理中，&lt;code&gt;/hello/%20&lt;/code&gt;会变成&lt;code&gt;/hello/ &lt;/code&gt;，然后末尾的空格符会被trim掉，最终Shiro认为路径只有&lt;code&gt;/hello&lt;/code&gt;，所以匹配规则为&lt;code&gt;/** = anon&lt;/code&gt;，而Spring Controller不会对空格符trim去空，而是将其视作一个真实路径段，所以他最后处理路径为&lt;code&gt;/hello/ &lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;cve-2021-41303&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#cve-2021-41303&#34;&gt;#&lt;/a&gt; CVE-2021-41303&lt;/h2&gt;
+&lt;p&gt;CVE-2021-41303，或称Shiro-825，影响范围为Shiro &amp;lt; 1.8.0&lt;/p&gt;
+&lt;p&gt;假设Shiro配置如下：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;filterChainDefinitionMap.put(&#34;/admin/*&#34;, &#34;authc&#34;);&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;filterChainDefinitionMap.put(&#34;/admin/list&#34;, &#34;anon&#34;);&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Shiro的过滤器链通常是按照配置顺序，第一个匹配到的规则生效，所以正常情况下&lt;code&gt;/admin/list&lt;/code&gt;应该优先匹配&lt;code&gt;/admin/*&lt;/code&gt;要求authc，需要认证&lt;/p&gt;
+&lt;p&gt;请求&lt;code&gt;/admin/list/&lt;/code&gt;，在第一轮请求中，Shiro先用原始URI&lt;code&gt;/admin/list/&lt;/code&gt;去匹配规则&lt;code&gt;/admin/*&lt;/code&gt;没有匹配成功，于是Shiro的兼容逻辑会判断：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;if (requestURI.endsWith(&#34;/&#34;)) &amp;#123;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;    requestURI = requestURI.substring(0, requestURI.length() - 1);&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;所以&lt;code&gt;/admin/list/&lt;/code&gt;会被处理成&lt;code&gt;/admin/list&lt;/code&gt;然后重新使用&lt;code&gt;/admin/*&lt;/code&gt;进行匹配，但是，这一轮重新匹配成功国际欧，Shiro传给&lt;code&gt;FilterChainManager.proxy()&lt;/code&gt;的参数错误，本来应该传入&lt;code&gt;pathPattern&lt;/code&gt;也就是&lt;code&gt;/admin/*&lt;/code&gt;，但是实际上成功传入的是&lt;code&gt;requestURI&lt;/code&gt;，也就是&lt;code&gt;/admin/list&lt;/code&gt;，而在Shiro配置中，正好存在&lt;code&gt;/admin/list = anon&lt;/code&gt;，所以&lt;code&gt;FilterChainManager&lt;/code&gt;使用&lt;code&gt;/admin/list&lt;/code&gt;作为&lt;code&gt;chainName&lt;/code&gt;查找过滤器链时会找到anon，而不是本应执行的authc从而绕过认证&lt;/p&gt;
+&lt;p&gt;即该漏洞，当请求URI以&lt;code&gt;/&lt;/code&gt;结尾时，Shiro会先使用原始URI与过滤器链规则进行匹配，如果匹配失败，则移除末尾斜杠后再次匹配，但第二次匹配成功之后，Shiro错误地将去掉尾斜杠后的请求URI作为过滤器链名称传给&lt;code&gt;FilterChainManager.proxy()&lt;/code&gt;，而不是传入真正匹配到的规则&lt;code&gt;pathPattern&lt;/code&gt;&lt;/p&gt;
 </content>
         <updated>2026-08-03T16:10:00.000Z</updated>
     </entry>
