@@ -862,6 +862,20 @@
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;第二次反序列化&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;但Listener不能随便返回任意字节，必须返回格式正确的JRMP响应和合法的Java序列化数据，否则目标只会把它视作协议错误&lt;/p&gt;
 &lt;p&gt;分成两个阶段可以绕过Cookie大小限制，适合盲环境，避免在Cookie中直接放完整链&lt;/p&gt;
+&lt;h2 id=&#34;绕过waf的打法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#绕过waf的打法&#34;&gt;#&lt;/a&gt; 绕过WAF的打法&lt;/h2&gt;
+&lt;p&gt;参考文章：&lt;a href=&#34;https://cloud.tencent.com/developer/article/2413540&#34;&gt;第91篇：shiro反序列化漏洞绕waf防护的方法总结（上篇）-腾讯云开发者社区-腾讯云&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;HTTP请求方法随机&lt;/strong&gt;：将HTTP请求头变为随机字符串，例如将GET请求方法变成xxxxT方法，这个方法与Web应用所处的中间件有关，在部分中间件下不适用&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HTTP请求方法置空&lt;/strong&gt;：对于tomcat，将HTTP请求方法置空也是可以正常发包并返回命令执行结果，这种畸形数据包在经过waf设备会被放行，同样与中间件有关，在Weblogic中间件下不适用&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Shiro数据包中添加脏数据&lt;/strong&gt;：rememberMe=后面的数据包添加一些特殊字符仍然可以正常发包，原因是Shiro组件在处理点号、反引号等特殊字符会替换为空&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Shiro字段中添加空白字符&lt;/strong&gt;：rememberMe关键词附近添加Tab等空白字符可以正常执行命令&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hst头域名变IP地址&lt;/strong&gt;：很多公司对于目标网站可能只对xxx.com域名进行了waf防护，这时候将host头的名替为域名解析出来的IP就可以绕过waf了，比如将www.xxx.com替换为192.168.237.128&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;利用工具&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#利用工具&#34;&gt;#&lt;/a&gt; 利用工具&lt;/h2&gt;
+&lt;p&gt;参考文章：&lt;a href=&#34;https://blog.csdn.net/jijisaq/article/details/138071272&#34;&gt;攻防打点｜Shiro漏洞利用大全【附工具】_shiro利用工具-CSDN博客&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Shiro_Attack2：&lt;a href=&#34;https://github.com/SummerSec/ShiroAttack2&#34;&gt;GitHub - SummerSec/ShiroAttack2: shiro反序列化漏洞综合利用（仅限授权测试使用） · GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;TscanPlus：&lt;a href=&#34;https://github.com/TideSec/TscanPlus&#34;&gt;GitHub - TideSec/TscanPlus: 一款综合性网络安全检测和运维工具，旨在快速资产发现、识别、检测，构建基础资产信息库，协助甲方安全团队或者安全运维人员有效侦察和检索资产，发现存在的薄弱点和攻击面。 · GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;ehole指纹工具识别：&lt;a href=&#34;https://github.com/EdgeSecurityTeam/EHole&#34;&gt;GitHub - EdgeSecurityTeam/EHole: EHole(棱洞)3.0 重构版-红队重点攻击系统指纹探测工具 · GitHub&lt;/a&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
