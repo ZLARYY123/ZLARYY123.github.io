@@ -663,6 +663,23 @@
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;正常情况下访问&lt;code&gt;/admin/list&lt;/code&gt;，Shiro使用Ant风格规则&lt;code&gt;/admin/*&lt;/code&gt;匹配执行authc导致未登录用户被拦截，Spring的&lt;code&gt;@GetMapping(&amp;quot;/admin/&amp;#123;*path&amp;#125;&amp;quot;)&lt;/code&gt;同样可以匹配，于是请求在到达Controller之前被Shiro拦截没有任何问题&lt;/p&gt;
 &lt;p&gt;但通过构造请求&lt;code&gt;GET /admin/reports/2023&lt;/code&gt;，Shiro规则&lt;code&gt;/admin/*&lt;/code&gt;无法匹配多段路径，所以不会执行authc，匹配上了&lt;code&gt;/** = anon&lt;/code&gt;允许匿名访问，但Spring Boot 2.6+中&lt;code&gt;/admin/reports/2023&lt;/code&gt;可以匹配&lt;code&gt;/admin/&amp;#123;*path&amp;#125;&lt;/code&gt;，此时&lt;code&gt;path = /reports/2023&lt;/code&gt;，最终未登录用户成功访问后台接口得到&lt;code&gt;admin secret: /reports/2023&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这里引用一下参考文章中的总结：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CVE-2010-3863因为getRequestUri未标准化路径，可以使用&lt;code&gt;/./&lt;/code&gt;进行绕过&lt;/li&gt;
+&lt;li&gt;CVE-2014-0074/Shiro-460由于LDAP服务器开启匿名登录或未授权登录，导致可以使用空用户名搭配空密码或空用户名搭配任意密码&lt;/li&gt;
+&lt;li&gt;CVE-2016-4437/Shiro-550就是著名的反序列化漏洞了&lt;/li&gt;
+&lt;li&gt;CVE-2016-6802因为getContextPath未标准化路径，可以使用&lt;code&gt;/../&lt;/code&gt;进行绕过&lt;/li&gt;
+&lt;li&gt;CVE-2019-12422/Shiro-721是对rememberMe功能加密方式的攻击&lt;/li&gt;
+&lt;li&gt;CVE-2020-1957/Shiro-682是由于SpringWeb和Shiro处理方式不同，导致可以使用加路径末尾加斜杆或路径中加分号进行绕过&lt;/li&gt;
+&lt;li&gt;CVE-2020-11989/Shiro-782是由于SpringWeb和Shiro处理方式不同，导致可以使用斜杆双编码或加分号进行绕过&lt;/li&gt;
+&lt;li&gt;CVE-2020-13933是由于SpringWeb和Shiro处理方式不同，导致可以使用分号编码进行绕过&lt;/li&gt;
+&lt;li&gt;CVE-2020-17510是由于SpringWeb和Shiro处理方式不同，导致可以使用点号编码进行绕过&lt;/li&gt;
+&lt;li&gt;CVE-2020-17523是由于SpringWeb和Shiro处理方式不同，导致可以使用空格编码进行绕过&lt;/li&gt;
+&lt;li&gt;CVE-2021-41303/Shiro-825是由于新增逻辑的错误，导致可以绕过第一个需要认证的路径而访问第二个匿名路径&lt;/li&gt;
+&lt;li&gt;CVE-2022-32532是由于Shiro正则代表路径，且路径中含有&lt;code&gt;.&lt;/code&gt;号，导致可以使用&lt;code&gt;%0d&lt;/code&gt;或&lt;code&gt;%0a&lt;/code&gt;进行绕过&lt;/li&gt;
+&lt;li&gt;CVE-2022-40664是由于Shiro在进行请求转发或包含时未进行鉴权导致绕过&lt;/li&gt;
+&lt;li&gt;CVE-2023-22602是由于SpringWeb和Shiro使用的路径处理模式不同，导致可以使用&lt;code&gt;/..&lt;/code&gt;进行绕过&lt;/li&gt;
+&lt;/ul&gt;
 </content>
         <updated>2026-08-03T16:10:00.000Z</updated>
     </entry>
