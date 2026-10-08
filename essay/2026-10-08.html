@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="欢迎来到ZLARYY的博客，或许里面有什么好玩的东西~" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="欢迎来到ZLARYY的博客，或许里面有什么好玩的东西~" type="application/atom+xml"><link rel="alternate" type="application/json" title="欢迎来到ZLARYY的博客，或许里面有什么好玩的东西~" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / AI安全 / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/essay/2026-10-08"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title></title><!-- hexo injector head_end start --><style>.zlaryy-view-item{white-space:nowrap}.zlaryy-pageview-count{margin-inline-start:4px}.segments article.item>.info>.meta{display:flex;flex-wrap:wrap;column-gap:.65rem;row-gap:.2rem}.segments article.item>.info>.meta>.item{margin:0}</style><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline"></h1></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="page wrap"><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/essay/2026-10-08.html"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / AI安全 / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="欢迎来到ZLARYY的博客，或许里面有什么好玩的东西~"/></span><div class="body md" itemprop="articleBody"><h1 id="寻记"><a class="anchor" href="#寻记">#</a> 寻·记</h1>
+<p>“我”在找足以承载一生的一笔</p>
+<p>我很清楚我身体上的变化，现在的我不管多重要的事，可能刚说完下一秒就会忘，也没了从前的紧张感，更多的是“忘了就忘了吧”，比起从前，虽然很抗拒但是依然扛着把事情给一件件做完，现在只能说是在尽力维持自己的生命体征都很累了，绝大多数时候都在双目无神的放空中。</p>
+<p>大学让我习惯了一个人，甚至一个人还会更轻松些，可以尽可能避免与别人交流。但高中的朋友让我觉得一群人好像也没那么糟......</p>
+<p>这次去到兰州，依旧是没有来到一个新地方的新鲜感和陌生感，就好像一汪平静得不能泛起涟漪的湖泊。我尝试找回曾经的“我”，那个对于任何事物有丰富感受的个体，13个小时的硬座绿皮火车变成挤在过道的“包间”，风从门缝中渗进，带走了我的燥热，留下安心的困意。</p>
+<p>10月2日晚，咱五个在凌晨兰州街头带着些许微醺，迎面而来的凉风让我感到适宜，在没什么人的街道上，能这样一起散步已是这个时代恰能打动我的浪漫</p>
+<p>10月3日，我们来到了计划已久的兰山公园，整个城市的夜景都在我们的跟前，让夜晚兰州的点点星火作为我们的背景，提醒我们当下的美好，留下一张接一张的底片</p>
+<p>10月4日，在兰州中心的路上，就在某一个街巷，komorebi这个词，连同穿过楼层从柳叶中推搡出来的阳光，让我的每个细胞感受到了熟悉的温暖。我想，我找到了过去那些年里对于生活的感受，这是出现问题这么久以来，头一次吧。</p>
+<p>晚上，酒店里面和闹鬼了一样开始cos鸵鸟，王八和人鱼，如果这样做有失成熟的稳重，那我宁愿让时间永远停止在这一刻</p>
+<p>10月5日，来到甘肃省博物馆，闻名各地的马踏飞燕就这么展示在了我面前，这里，我找到了“欣赏”</p>
+<p>10月6日，到了最不想记录的一天，凌晨12点，我们送别其中一位踏上返回四川的火车，六点、十二点......最后只剩下同一班车的我俩，《倒流时间》里说“原来世界最远不是距离而是昨天”，但也有站内和站外被闸机分隔开的我们。</p>
+<p>实话说，我习惯把自己放在痛苦中一遍遍去经历直至再也不会对这个痛苦产生任何实感。但同一件事中不同导向所带来的温暖反倒让我愣神。原来这些浪漫的话也是能说给我听的，原来这些幸福的行为也是我可以体会到的。</p>
+<p><strong>梧桐虽立其心已空待发于春实葬于冬</strong>。在这个承诺总是流于表面的时代，经历过很多次承受言而无信痛苦的我，还是期待着我们之间，不同于外人的“下次见”。</p>
+<p>或许没有人能真正找到自己，但是“我”就是要找一笔由多种色彩共同组成的“撇”。ZLARYY，我相信你还会再次想到komorebi的</p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-10-08 17:58:26" itemprop="dateModified" datetime="2026-10-08T17:58:26+08:00">2026-10-08</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>欢迎来到ZLARYY的博客，或许里面有什么好玩的东西~</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/essay/2026-10-08.html" title="">https://zlaryy.top/essay/2026-10-08.html</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%BB%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text"> 寻·记</span></a></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / AI安全 / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">23</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/">常规外网打点-PART2</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/19/Linux%E6%8F%90%E6%9D%83/">Linux提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/">其他系统库类型下的SQL注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/23/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">信息搜集</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/24/AI%20Security%E5%9F%BA%E7%A1%80/">AI Security基础</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/22/SQL/">SQL</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/27/PKWCTF%20AI%E6%96%B9%E5%90%91WP/">PKWCTF AI方向WP</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/">SSTI模板注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/27/%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/">沙箱逃逸</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/05/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART4/">常规外网打点-PART4</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">623k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">9:26</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+    ispost: false,
+    path: `essay/2026-10-08`,
+    favicon: {
+        show: `ZLARYY`,
+        hide: `ZLARYY`
+    },
+    search: {
+        placeholder: "文章搜索",
+        empty: "关于 「 ${query} 」，什么也没搜到",
+        stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    nocopy: "false",
+    copyright: `复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。`,
+    copy_tex: false,
+    katex: false,
+    mermaid: false,
+    audio: undefined,
+    nocopy: false,
+    outime: true,
+    template: `<div class="note warning"><p><span class="label warning">文章时效性提示</span><br>这是一篇发布于 {{publish}} 天前，最后一次更新在 {{updated}} 天前的文章，部分信息可能已经发生改变，请注意甄别。</p></div>`,
+    quiz: {
+        choice: `单选题`,
+        multiple: `多选题`,
+        true_false: `判断题`,
+        essay: `问答题`,
+        gap_fill: `填空题`,
+        mistake: `错题备注`
+    }
+};
+</script><script src="/js/siteInit.js?v=0.5.4" type="module" fetchpriority="high" defer></script><!-- hexo injector body_end start --><script id="zlaryy-article-views">(function articleViewsClient(options) {
+  if (window.ZLARYYArticleViews) {
+    window.ZLARYYArticleViews.refresh();
+    return;
+  }
+
+  var counts = new Map();
+  var recordedPath = null;
+  var requestId = 0;
+  var activeController = null;
+  var pendingPath = null;
+  var serverURL = (options.serverURL || '').replace(/\/+$/, '');
+
+  function normalPath(value) {
+    var url;
+    try {
+      url = new URL(value, window.location.href);
+      var siteOrigin = new URL(options.siteURL).origin;
+      if (url.origin !== window.location.origin && url.origin !== siteOrigin) return null;
+      return url.pathname.replace(/\/index\.html$/, '/').split('/').map(function (part) {
+        try {
+          return encodeURIComponent(decodeURIComponent(part).normalize('NFC'));
+        } catch (error) {
+          return part;
+        }
+      }).join('/');
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function currentPath() {
+    var canonical = document.querySelector('link[rel="canonical"]');
+    return normalPath(canonical ? canonical.href : window.location.href);
+  }
+
+  function isPost() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function addCounter(meta, path, full) {
+    if (!meta || !path || meta.querySelector('.zlaryy-view-item')) return;
+    var item = document.createElement('span');
+    item.className = 'item zlaryy-view-item';
+    item.title = '累计浏览次数';
+    item.innerHTML =
+      '<span class="icon"><i class="ic i-eye"></i></span>' +
+      (full ? '<span class="text">浏览量</span>' : '') +
+      '<span class="zlaryy-pageview-count">—</span>' +
+      '<span class="text">次</span>';
+    item.querySelector('.zlaryy-pageview-count').dataset.path = path;
+    meta.appendChild(item);
+  }
+
+  function collectCounters() {
+    document.querySelectorAll('.segments article.item').forEach(function (card) {
+      var link = card.querySelector('.info h3 a[href]');
+      if (link) addCounter(card.querySelector('.info > .meta'), normalPath(link.href), false);
+    });
+    if (isPost()) {
+      var path = currentPath();
+      addCounter(document.querySelector('#header #brand .meta'), path, true);
+      document.querySelectorAll('article.post .post-view-count .zlaryy-pageview-count')
+        .forEach(function (element) { element.dataset.path = path; });
+    }
+    return Array.from(document.querySelectorAll('.zlaryy-pageview-count[data-path]'));
+  }
+
+  function render() {
+    collectCounters().forEach(function (element) {
+      var count = counts.get(element.dataset.path);
+      element.textContent = typeof count === 'number' ? String(count) : '—';
+      element.title = typeof count === 'number' ? '累计浏览次数' : '浏览量暂不可用';
+    });
+  }
+
+  async function counterRequest(query, body, signal) {
+    var url = new URL(serverURL + '/api/article');
+    url.searchParams.set('lang', 'zh-CN');
+    if (query) {
+      url.searchParams.set('path', query.join(','));
+      url.searchParams.set('type', 'time');
+    }
+    var response = await fetch(url.href, {
+      method: body ? 'POST' : 'GET',
+      headers: body ? { 'Content-Type': 'application/json' } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+      credentials: 'omit',
+      cache: 'no-store',
+      signal: signal
+    });
+    if (!response.ok) throw new Error('Counter HTTP ' + response.status);
+    var result = await response.json();
+    if (result.errno || !Array.isArray(result.data)) throw new Error('Invalid counter response');
+    return result.data;
+  }
+
+  function validCount(row) {
+    if (!row || !Number.isSafeInteger(row.time) || row.time < 0) {
+      throw new Error('Invalid pageview count');
+    }
+    return row.time;
+  }
+
+  async function refresh() {
+    var elements = collectCounters();
+    var path = currentPath();
+    var post = isPost();
+    render();
+    if (!post) recordedPath = null;
+    if (!serverURL || !elements.length || !path) return;
+    if (pendingPath === path) return;
+    pendingPath = path;
+
+    // Local previews only read totals; they must not increase the live counter.
+    var siteHost = new URL(options.siteURL).hostname;
+    var countVisit = post && (window.location.hostname === siteHost || options.countPreview);
+    var increment = countVisit && recordedPath !== path;
+    if (increment) recordedPath = path;
+
+    var paths = Array.from(new Set(elements.map(function (element) {
+      return element.dataset.path;
+    }))).filter(function (item) { return !increment || item !== path; });
+
+    var id = ++requestId;
+    if (activeController) activeController.abort();
+    var controller = new AbortController();
+    activeController = controller;
+    var timeout = window.setTimeout(function () { controller.abort(); }, 10000);
+    var jobs = [];
+
+    if (increment) {
+      jobs.push(counterRequest(null, { path: path, type: 'time', action: 'inc' }, controller.signal)
+        .then(function (rows) {
+          var count = validCount(rows[0]);
+          if (id === requestId) { counts.set(path, count); render(); }
+        }));
+    }
+    if (paths.length) {
+      jobs.push(counterRequest(paths, null, controller.signal).then(function (rows) {
+        if (rows.length !== paths.length) throw new Error('Incomplete counter response');
+        var values = rows.map(validCount);
+        if (id === requestId) {
+          paths.forEach(function (item, index) { counts.set(item, values[index]); });
+          render();
+        }
+      }));
+    }
+    try {
+      var results = await Promise.allSettled(jobs);
+      if (id === requestId && results.some(function (result) { return result.status === 'rejected'; })) {
+        console.warn('文章浏览量暂不可用。');
+      }
+    } finally {
+      window.clearTimeout(timeout);
+      if (id === requestId) { pendingPath = null; activeController = null; }
+    }
+  }
+
+  window.ZLARYYArticleViews = { refresh: refresh, render: render };
+  // The existing like button script creates its stats area after DOMContentLoaded.
+  document.addEventListener('zlaryy:stats-ready', render);
+  document.addEventListener('pjax:complete', function () { window.setTimeout(refresh, 0); });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', refresh, { once: true });
+  } else {
+    refresh();
+  }
+})({"enable":true,"serverURL":"https://zlaryy-waline.vercel.app","siteURL":"https://zlaryy.top","countPreview":false});</script>
+<script>
+(function () {
+  function addBeian() {
+    const footerStatus = document.querySelector('#footer .status');
+    if (!footerStatus) return;
+
+    if (document.querySelector('.footer-beian')) return;
+
+    const beian = document.createElement('div');
+    beian.className = 'footer-beian';
+    beian.innerHTML = '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2026016552号-1</a>';
+
+    footerStatus.appendChild(beian);
+  }
+
+  addBeian();
+  document.addEventListener('pjax:complete', addBeian);
+})();
+</script>
+  <script>
+(function () {
+  function fixText(text) {
+    if (!text) return text;
+    text = text.replace(/\([`´]?Д[`´]?\)大変だ!/g, "ZLARYY");
+    text = text.replace(/大変だ!/g, "ZLARYY");
+    return text;
+  }
+
+  function replaceText(root) {
+    root = root || document.body;
+    if (!root) return;
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+
+    while ((node = walker.nextNode())) {
+      var oldText = node.nodeValue;
+      var newText = fixText(oldText);
+      if (newText !== oldText) node.nodeValue = newText;
+    }
+  }
+
+  function init() {
+    replaceText(document.body);
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            replaceText(node);
+          } else if (node.nodeType === 3) {
+            node.nodeValue = fixText(node.nodeValue);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script><!-- hexo injector body_end end --></body></html>
