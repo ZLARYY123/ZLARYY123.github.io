@@ -28,7 +28,7 @@
 &lt;h1 id=&#34;信息搜集&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#信息搜集&#34;&gt;#&lt;/a&gt; 信息搜集&lt;/h1&gt;
 &lt;p&gt;我们尝试直接访问这个IP地址，发现页面会显示无法访问，且输入的IP变成了&lt;code&gt;dc-2/&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/3.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;这是后我们需要更改&lt;code&gt;/etc/hosts&lt;/code&gt;文件添加一个IP域名指向：&lt;/p&gt;
+&lt;p&gt;这时候我们需要更改&lt;code&gt;/etc/hosts&lt;/code&gt;文件添加一个IP域名指向：&lt;/p&gt;
 &lt;pre class=&#34;shiki shiki-themes vitesse-light vitesse-dark&#34; style=&#34;background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee&#34; tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span&gt;vim /etc/hosts&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/4.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;如果我们想在Windows物理机上面实现成功访问的话还需要修改这个文件的文件内容：&lt;/p&gt;
