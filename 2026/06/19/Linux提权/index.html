@@ -1,5 +1,5 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="梧桐虽立，其心以空，待发于春，实葬于冬" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="梧桐虽立，其心以空，待发于春，实葬于冬" type="application/atom+xml"><link rel="alternate" type="application/json" title="梧桐虽立，其心以空，待发于春，实葬于冬" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture3.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / AI安全 / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/06/19/Linux%E6%8F%90%E6%9D%83/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>Linux提权</title><!-- hexo injector head_end start --><style>.zlaryy-view-item{white-space:nowrap}.zlaryy-pageview-count{margin-inline-start:4px}.segments article.item>.info>.meta{display:flex;flex-wrap:wrap;column-gap:.65rem;row-gap:.2rem}.segments article.item>.info>.meta>.item{margin:0}</style><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
-<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">Linux提权</h1><div class="meta"><span class="item" title="创建时间：2026-06-19 22:10:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-06-19T22:10:00+08:00">2026-06-19</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>18k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>16 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture3.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/06/19/Linux%E6%8F%90%E6%9D%83/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / AI安全 / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="梧桐虽立，其心以空，待发于春，实葬于冬"/></span><div class="body md" itemprop="articleBody"><h1 id="linux提权持续更新中"><a class="anchor" href="#linux提权持续更新中">#</a> Linux提权（持续更新中......）</h1>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/assets/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="梧桐虽立，其心以空，待发于春，实葬于冬" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="梧桐虽立，其心以空，待发于春，实葬于冬" type="application/atom+xml"><link rel="alternate" type="application/json" title="梧桐虽立，其心以空，待发于春，实葬于冬" href="https://zlaryy.top/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="modulepreload" href="/js/nyx-player-HIXTN7KD.js"></link><link rel="modulepreload" href="/js/copy-tex-4AIDXWNJ.js"></link><link rel="modulepreload" href="/js/post-MYXPIC3N.js"></link><link rel="modulepreload" href="/js/chunk-T54OBHW4.js"></link><link rel="modulepreload" href="/js/index.esm-22UB7CNZ.js"></link><link rel="modulepreload" href="/js/chunk-HJSTZ4VX.js"></link><link rel="modulepreload" href="/js/chunk-ALXQBZTY.js"></link><link rel="stylesheet" href="/css/siteInit.css" media="none" onload="this.media&#x3D;&#39;all&#39;"></link><link rel="preload" href="/assets/picture5.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture1.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture4.webp" as="image" fetchpriority="high"><link rel="preload" href="/assets/picture6.webp" as="image" fetchpriority="high"><meta name="keywords" content="Web安全"/><meta name="description" content="Web安全 / CTF / AI安全 / 个人学习笔记"/><link rel="canonical" href="https://zlaryy.top/2026/06/19/Linux%E6%8F%90%E6%9D%83/"><link rel="stylesheet" href="/css/post.css?v=0.5.4"><link rel="stylesheet" href="/css/mermaid.css?v=0.5.4"><!-- 临时处理--><link rel="stylesheet" media="none" onload="this.media='all'" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><title>Linux提权</title><!-- hexo injector head_end start --><style>.zlaryy-view-item{white-space:nowrap}.zlaryy-pageview-count{margin-inline-start:4px}.segments article.item>.info>.meta{display:flex;flex-wrap:wrap;column-gap:.65rem;row-gap:.2rem}.segments article.item>.info>.meta>.item{margin:0}</style><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css">
+<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="pagefind_mount"></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">Linux提权</h1><div class="meta"><span class="item" title="创建时间：2026-06-19 22:10:00"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2026-06-19T22:10:00+08:00">2026-06-19</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>26k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>24 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">ZLARYY</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;/assets/picture5.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture1.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture4.webp&quot;);"></li><li class="item" style="background-image: url(&quot;/assets/picture6.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" data-pagefind-body="data-pagefind-body" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://zlaryy.top/2026/06/19/Linux%E6%8F%90%E6%9D%83/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/assets/avertar.png"/><meta itemprop="name" content="ZLARYY"/><meta itemprop="description" content=", Web安全 / CTF / AI安全 / 个人学习笔记"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="梧桐虽立，其心以空，待发于春，实葬于冬"/></span><div class="body md" itemprop="articleBody"><h1 id="linux提权持续更新中"><a class="anchor" href="#linux提权持续更新中">#</a> Linux提权（持续更新中......）</h1>
 <p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/uuzeray/article/details/136098183">【Web】超级详细的Linux权限提升一站式笔记-CSDN博客</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/530954889">Linux权限模型详解 - 知乎</a></p>
 <h2 id="linux权限模型"><a class="anchor" href="#linux权限模型">#</a> Linux权限模型</h2>
@@ -567,7 +567,304 @@
 <p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/49.png" class=""></p>
 <p>接下来我们就可以执行<code>/tmp/rootbash -p</code>实现提权了</p>
 <p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/50.png" class=""></p>
-</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-07-20 21:24:13" itemprop="dateModified" datetime="2026-07-20T21:24:13+08:00">2026-07-20</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>梧桐虽立，其心以空，待发于春，实葬于冬</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/06/19/Linux%E6%8F%90%E6%9D%83/" title="Linux提权">https://zlaryy.top/2026/06/19/Linux提权/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture6.webp" title="SQL提权"><span class="type">上一篇</span><h3>SQL提权</h3></a></div><div class="item right"><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" rel="next" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture4.webp" title="Node.js原型链污染"><span class="type">下一篇</span><h3>Node.js原型链污染</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E6%8F%90%E6%9D%83%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD"><span class="toc-number">1.</span> <span class="toc-text"> Linux提权（持续更新中......）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#linux%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text"> Linux权限模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#etcpasswd"><span class="toc-number">1.1.1.</span> <span class="toc-text"> &#x2F;etc&#x2F;passwd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E4%BD%8D"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 权限位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 用户组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#suid-sgid-sticky-bit"><span class="toc-number">1.1.4.</span> <span class="toc-text"> SUID、SGID、Sticky Bit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%9D%83%E9%99%90"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 进程权限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#suid%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.</span> <span class="toc-text"> SUID提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 本地靶场搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bash%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.2.</span> <span class="toc-text"> bash提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.3.</span> <span class="toc-text"> find提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vim%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.4.</span> <span class="toc-text"> vim提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.5.</span> <span class="toc-text"> python提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#path%E8%B7%AF%E5%BE%84%E5%8A%AB%E6%8C%81"><span class="toc-number">1.2.6.</span> <span class="toc-text"> PATH路径劫持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.7.</span> <span class="toc-text"> 命令注入提权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sudo%E6%8F%90%E6%9D%83"><span class="toc-number">1.3.</span> <span class="toc-text"> SUDO提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%B5%8B%E8%AF%95vim"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 本地靶场测试(vim)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 提权流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%B5%8B%E8%AF%95find"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 本地靶场测试(find)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B-2"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 提权流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BApython3"><span class="toc-number">1.3.5.</span> <span class="toc-text"> 本地靶场搭建(python3)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B-3"><span class="toc-number">1.3.6.</span> <span class="toc-text"> 提权流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E6%8F%90%E6%9D%83"><span class="toc-number">1.4.</span> <span class="toc-text"> 计划任务提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA-2"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 本地靶场搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B-4"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 提权流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E9%80%9A%E9%85%8D%E7%AC%A6%E8%BF%9B%E8%A1%8C%E6%8F%90%E6%9D%83"><span class="toc-number">1.5.</span> <span class="toc-text"> 利用通配符进行提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA-3"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 本地靶场搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B-5"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 提权流程</span></a></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / AI安全 / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">26</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/05/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART4/">常规外网打点-PART4</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">php反序列化</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/10/17/CRYPTO/">CRYPTO-PART1</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/">SQL提权</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/05/29/%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F%E5%BA%93%E7%B1%BB%E5%9E%8B%E4%B8%8B%E7%9A%84SQL%E6%B3%A8%E5%85%A5/">其他系统库类型下的SQL注入</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/08/17/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART3/">常规外网打点-PART3</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/27/%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/">沙箱逃逸</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/11/03/DC-2%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/">DC-2靶场日记</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/10/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/24/AI%20Security%E5%9F%BA%E7%A1%80/">AI Security基础</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">660k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">10:01</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+<h2 id="linux内核提权"><a class="anchor" href="#linux内核提权">#</a> Linux内核提权</h2>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/yuy0ung/articles/18326546">Linux提权-内核提权 - Yuy0ung - 博客园</a></p>
+<h3 id="linux内核"><a class="anchor" href="#linux内核">#</a> Linux内核</h3>
+<p>Linux系统可以分为两层：<code>User Space</code>用户态和<code>Kernel Space</code>内核态</p>
+<p>Linux内核是整个系统的核心，是位于最底层、负责管理硬件和系统资源的核心程序，它主要负责：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>进程管理</span></span>
+<span class="line"><span>内存管理</span></span>
+<span class="line"><span>文件系统管理</span></span>
+<span class="line"><span>权限管理</span></span>
+<span class="line"><span>网络管理</span></span>
+<span class="line"><span>设备驱动管理</span></span>
+<span class="line"><span>系统调用接口</span></span></code></pre>
+<p>我们平时所执行的<code>ls、cat、vim</code>等都属于用户态程序，但这些程序要访问文件，创建进程，申请内存，发网络包都必须通过内核。用户态程序是普通程序运行的地方，这些程序不能直接操作硬件也不能直接修改系统权限</p>
+<p>内核权限非常高，他可以：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>创建和销毁进程</span></span>
+<span class="line"><span>决定进程权限</span></span>
+<span class="line"><span>管理内存</span></span>
+<span class="line"><span>读写磁盘</span></span>
+<span class="line"><span>控制文件权限</span></span>
+<span class="line"><span>处理网络数据包</span></span>
+<span class="line"><span>加载驱动</span></span>
+<span class="line"><span>调用硬件设备</span></span></code></pre>
+<p>系统调用：普通程序不能直接操作内核资源，所以需要系统调用，我们可以通过<code>strace</code>前缀命令查看：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>strace cat /etc/passwd</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/51.png" class=""></p>
+<p>可以看到使用了很多系统调用：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>openat()</span></span>
+<span class="line"><span>read()</span></span>
+<span class="line"><span>write()</span></span>
+<span class="line"><span>close()</span></span>
+<span class="line"><span>......</span></span></code></pre>
+<p>而受权限影响能否执行这条命令是由内核判断的：对于<code>cat /etc/shadow</code>这条命令，内核会查看<code>cat</code>的<code>euid和egid</code>，发现不是root也不在shadow组之后拒绝该条命令执行</p>
+<p>所以内核漏洞提权就是让内核错误地赋予普通进程更高权限</p>
+<ul>
+<li>
+<p><code>capabilities</code>：Linux不只有root和普通用户，root的能力可以被拆解成小权限叫做<code>capabilities</code>，比如</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 允许修改UID</span></span>
+<span class="line"><span>CAP_SETUID</span></span>
+<span class="line"><span># 允许创建原始套接字</span></span>
+<span class="line"><span>CAP_NET_RAW</span></span>
+<span class="line"><span># 饶过文件读权限检查</span></span>
+<span class="line"><span>CAP_DAC_READ_SEARCH</span></span>
+<span class="line"><span># 非常强大的系统管理权限</span></span>
+<span class="line"><span>CAP_SYS_ADMIN</span></span></code></pre>
+<p>查看文件<code>capabilities</code>：<code>getcap -r / 2&gt;/dev/null</code></p>
+<p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/52.png" class=""></p>
+<p>如果看到<code>/usr/bin/python3 cap_setuid+ep</code>就可能存在<code>capabilities</code>提权</p>
+</li>
+<li>
+<p><code>namespace</code>：namespace是Linux用来做隔离的机制，容器大量依赖</p>
+<p>常见namespace：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 隔离进程号</span></span>
+<span class="line"><span>pif namespace</span></span>
+<span class="line"><span># 隔离挂载点</span></span>
+<span class="line"><span>mount namespace</span></span>
+<span class="line"><span># 隔离网络</span></span>
+<span class="line"><span>net namespace</span></span>
+<span class="line"><span># 隔离用户ID</span></span>
+<span class="line"><span>user namespace</span></span>
+<span class="line"><span># 隔离hostname</span></span>
+<span class="line"><span>uts namespace</span></span>
+<span class="line"><span># 隔离进程通信</span></span>
+<span class="line"><span>ipc namespace</span></span></code></pre>
+</li>
+<li>
+<p><code>cgroups</code>：用于限制和统计资源，例如限制<code>CPU、内存、磁盘IO、进程数量</code></p>
+</li>
+<li>
+<p><code>/proc</code>文件系统：<code>/proc</code>是一个虚拟文件系统，存在于内存中，它里面装满了当前操作系统正在运行的所有进程的信息，如果查看<code>/proc/1234</code>就能看到进程号（PID）为1234的程序的所有运行状态</p>
+<p><strong>在这里一起把之前复现极客大挑战的题一起说了吧</strong></p>
+<p><code>self</code>是一个魔法单词，当一个程序（比如正在处理你网页请求的 PHP 进程）去访问 <code>/proc/self/</code> 时，Linux内核会自动把它重定向到<strong>这个进程自己的信息目录</strong>。</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>/proc/self/cmdline 显示当前进程是如何启动的</span></span>
+<span class="line"><span># 可能会看到python3 app.py或者php -fpm</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>/proc/self/environ 这个文件里面存储着当前进程的所有环境变量，其中包括HTTP请求中的UA</span></span>
+<span class="line"><span># 文件包含这个文件可能会看到环境变量</span></span></code></pre>
+</li>
+<li>
+<p><code>/sys</code>文件系统：<code>/sys</code>也是内核暴露信息系统和设备新信息的地方，它常用于查看设备、驱动、内核模块等信息</p>
+</li>
+</ul>
+<h3 id="系统调用syscall"><a class="anchor" href="#系统调用syscall">#</a> 系统调用syscall</h3>
+<p>系统调用syscall是用户态程序向Linux内核请求服务的入口</p>
+<p>举个例子：<code>cat /etc/passwd</code></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>实际上，cat不能直接读磁盘文件，真正读取文件的是内核，大概流程如下：</span></span>
+<span class="line"><span>cat程序运行在用户态->cat请求内核打开/etc/passwd->内核检查权限->权限允许，内核打开文件->cat请求内核读取文件内容->内核把内容返回给cat->cat输出到标准输出</span></span></code></pre>
+<p>在上述流程中，请求内核就是系统调用<code>syscall</code></p>
+<p>普通程序运行在用户态，比如：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>bash</span></span>
+<span class="line"><span>cat</span></span>
+<span class="line"><span>ls</span></span>
+<span class="line"><span>vim</span></span>
+<span class="line"><span>python</span></span>
+<span class="line"><span>nginx</span></span>
+<span class="line"><span>mysql</span></span></code></pre>
+<p>内核运行在内核态，负责管理文件、进程、内存、权限、网络、设备、驱动</p>
+<p>普通程序权限有限，不能直接读写磁盘、直接修改自己的UID、直接操作网卡、直接访问内核内存、直接创建进程，所以它必须通过<code>syscall</code>进入内核请求内核完成操作</p>
+<p>常见系统调用内核如下：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 打开文件</span></span>
+<span class="line"><span>open/openat</span></span>
+<span class="line"><span># 读取文件或输入</span></span>
+<span class="line"><span>read</span></span>
+<span class="line"><span># 写入文件或输出</span></span>
+<span class="line"><span>write</span></span>
+<span class="line"><span># 关闭文件</span></span>
+<span class="line"><span>close</span></span>
+<span class="line"><span># 执行新程序</span></span>
+<span class="line"><span>execve</span></span>
+<span class="line"><span># 创建新进程</span></span>
+<span class="line"><span>fork/clone</span></span>
+<span class="line"><span># 等待子进程结束</span></span>
+<span class="line"><span>wait</span></span>
+<span class="line"><span># 获取文件信息</span></span>
+<span class="line"><span>stat</span></span>
+<span class="line"><span># 修改文件权限</span></span>
+<span class="line"><span>chmod</span></span>
+<span class="line"><span># 修改文件所有者</span></span>
+<span class="line"><span>chown</span></span>
+<span class="line"><span># 修改进程UID</span></span>
+<span class="line"><span>setuid</span></span>
+<span class="line"><span># 创建网络socket</span></span>
+<span class="line"><span>socket</span></span>
+<span class="line"><span># 连接远程主机</span></span>
+<span class="line"><span>connect</span></span>
+<span class="line"><span># 绑定端口</span></span>
+<span class="line"><span>bind</span></span>
+<span class="line"><span># 挂载文件系统</span></span>
+<span class="line"><span>mount</span></span></code></pre>
+<p>用strace观察系统调用之前已经提到过了，接下来学习学习什么叫做文件描述符</p>
+<h3 id="文件描述符"><a class="anchor" href="#文件描述符">#</a> 文件描述符</h3>
+<p>系统调用经常会出现数字，比如<code>0,1,2,3</code>，这些叫做文件描述符<code>fd</code></p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 标准输入stdin</span></span>
+<span class="line"><span>0</span></span>
+<span class="line"><span># 标准输出stdout</span></span>
+<span class="line"><span>1</span></span>
+<span class="line"><span># 标准错误stderr</span></span>
+<span class="line"><span>2</span></span></code></pre>
+<p>比如<code>write(1,&quot;ZLARYY&quot;,5)</code>表示往标准输出上写入ZLARYY</p>
+<p>当程序打开一个新文件时<code>openat(...) = 3</code>后续程序就用<code>3</code>来代表这个文件</p>
+<h3 id="back"><a class="anchor" href="#back">#</a> Back</h3>
+<p>回到Linux内核提权，一般包含三个环节：</p>
+<ul>
+<li>对目标系统信息搜集，获取到系统内核信息以及版本信息</li>
+<li>根据内核版本获取其对应的漏洞以及exp</li>
+<li>使用找到的exp对目标系统发起攻击完成提权操作</li>
+</ul>
+<h4 id="信息搜集"><a class="anchor" href="#信息搜集">#</a> 信息搜集</h4>
+<p>首先需要对Linux发行版本、内核版本进行信息搜集（这里以DC-3靶场为例）：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 查看系统全部信息</span></span>
+<span class="line"><span>uname -a</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 查看Linux系统的版本信息</span></span>
+<span class="line"><span>cat /etc/issue</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/53.png" class=""></p>
+<p>这里面出现了一些占位符：</p>
+<ul>
+<li><code>\s</code>：表示系统的名称，在许多Linux的发行版中，这通常会被替换为具体的发行版名称（例如<code>Kali Linux</code>）</li>
+<li><code>\r</code>：这一部分通常表示系统的版本号，这是内核的版本信息</li>
+<li><code>\m</code>：这表示机器的硬件架构，例如，它可能返回<code>x86_64</code>表示64位系统，或<code>i686</code>表示32位系统</li>
+</ul>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 查看Linux系统的详细版本信息</span></span>
+<span class="line"><span>cat /etc/*-release</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 获取系统的详细信息，但系统不一定有lsb_release</span></span>
+<span class="line"><span>lsb_release -a</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 查看Linux内核的版本信息以及相关的编译信息</span></span>
+<span class="line"><span>cat /proc/version</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/54.png" class=""></p>
+<h4 id="查找exp"><a class="anchor" href="#查找exp">#</a> 查找EXP</h4>
+<p>使用kali自带的searchsploit即可查找，例如在这里，我们需要查找<code>Ubuntu 16.04</code>的漏洞：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>searchsploit Ubuntu 16.04</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/55.png" class=""></p>
+<p>这里按照DC-3的话我们应该去找<code>Path</code>为<code>linux/local/39772.txt</code>的exp，不过我们也看到还有些Path后缀为<code>.c</code></p>
+<p>假设我们这里要查找的exp为<code>linux/local/40054.c</code>：</p>
+<ul>
+<li>
+<p>查看exp：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>searchsploit -x linux/local/40054.c</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/56.png" class=""></p>
+<p>需要注意看的是<strong>源码注释</strong>和<strong>源码内容</strong>，前者为了解源码的编译方式，后者为了解工作流程便于优化和修改，且避免存在恶意后门</p>
+</li>
+<li>
+<p>复制exp到当前目录：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>searchsploit -m linux/local/40054.c</span></span></code></pre>
+<p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/57.png" class=""></p>
+</li>
+</ul>
+<p><strong>使用EXP</strong>：通常使用wget等方法将exp上传到受害主机上，并按照exp的使用方法进行提权，通常来说：</p>
+<ul>
+<li>如果是sh脚本文件，赋予权限执行即可</li>
+<li>如果是c文件，通常需要gcc编译，再给编译后的文件赋予权限，最后执行</li>
+</ul>
+<h3 id="cve-2016-5195dirty-cow"><a class="anchor" href="#cve-2016-5195dirty-cow">#</a> CVE-2016-5195（Dirty Cow）</h3>
+<p><code>Dirty Cow</code>脏牛提权的利用方式不同于其他的内核溢出提权</p>
+<blockquote>
+<p>内核溢出：漏洞的原理更偏向于pwn，指在操作系统内核空间发生的缓冲区溢出漏洞，即程序没有正确验证输入数据的大小时，多出的数据会覆盖相邻的内存，导致安全问题</p>
+</blockquote>
+<p>脏牛是一个经典的内核提权漏洞，存在Linux内核中长达9年时间，在2007年发布的Linux内核版本中就已经存在此漏洞，在2016年10月18后得以修复</p>
+<p>影响范围为：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>Centos7/RHEL7     3.10.0-327.36.3.el7</span></span>
+<span class="line"><span>Cetnos6/RHEL6     2.6.32-642.6.2.el6</span></span>
+<span class="line"><span>Ubuntu 16.10      4.8.0-26.28</span></span>
+<span class="line"><span>Ubuntu 16.04      4.4.0-45.66</span></span>
+<span class="line"><span>Ubuntu 14.04      3.13.0-100.147</span></span>
+<span class="line"><span>Debian 8          3.16.36-1+deb8u2</span></span>
+<span class="line"><span>Debian 7          3.2.82-1</span></span></code></pre>
+<h5 id="漏洞成因"><a class="anchor" href="#漏洞成因">#</a> 漏洞成因</h5>
+<p>Linux内核的内存子系统在处理私有映射时的<strong>写时复制（Copy on write，cow）<strong>的中断方式里创建了</strong>条件竞争</strong>，该条件竞争可能运行非特权用户获得对只读内存映射的写入权限</p>
+<blockquote>
+<p>写时复制是一种内存管理的优化技术，用于在多个进程共享同一个内存页的情况下避免内存冲突，当一个进程试图修改一个内存页时，操作系统会自动复制这个内存页，而不会被受到当前进程修改的影响</p>
+</blockquote>
+<h5 id="利用方式"><a class="anchor" href="#利用方式">#</a> 利用方式</h5>
+<p>默认情况下，低权限会话无法修改高权限文件，比如<code>/etc/passwd</code>、<code>/etc/shadow</code>、<code>/etc/group</code>等，脏牛漏洞的利用方式是：首先使用<code>mmap</code>函数申请虚拟内存，在虚拟内存上找到一个页面创建私有映射（以<code>/etc/group</code>为例），由于此映射是私有的，因此可以随意对文件写入修改而不会影响原文件，然后向私有映射文件中写入内容，将当前用户添加至<code>sudo</code>组，但不是直接向<code>mmap</code>申请的虚拟映射中写入内容，而是向Linux中的一个特殊文件<code>/proc/self/mem</code>中写入</p>
+<ul>
+<li><code>mem</code>函数是用来创建内存映射的函数，通过内存映射，可以将一段文件或其他对象映射到进程的空间地址，从而可以直接访问该对象</li>
+<li><code>/proc/self/mem</code>文件是Linux的一个特殊文件，它允许程序直接访问当前进程的虚拟内存空间，通过读写<code>/proc/self/mem</code>文件，可以直接在虚拟内存中修改指定内存位置的数据</li>
+</ul>
+<p>写入<code>/proc/self/mem</code>完成后，内核需要再物理内存上寻找写入的位置，此时还未开始写入，并行运行两个线程，第一个线程功能是写入物理内存，它包括两个操作，分别是定位到物理内存和写入物理内存，在定位物理内存位置时，内核发现物理内存中已经有了一个<code>/etc/group</code>文件，这时触发写时复制，内核准备在物理内存中找到为止创建私有映射的副本，然后写入。在写入之前，运行第二个线程，其功能是调用<code>madvise</code>函数，通知内核不再需要（MADV_DONTNEED）私有映射，这样内核就有可能会被欺骗，认为程序写入的是原始文件。通过无限循环这两个线程就有可能完成条件竞争成功写入原始文件</p>
+<p>这段描述中涉及几个Linux内存管理中几个比较抽象的概念：<strong>虚拟内存</strong>、<strong>物理内存</strong>、<strong>内存映射</strong>、<strong>写时复制（COW）</strong>、<strong><code>/proc/self/mem</code></strong>、<strong><code>madvise()</code><strong>和</strong>条件竞争（Race Condition）</strong></p>
+<p>我们先理解什么是写时复制（COW）：假设存在一个文件<code>/etc/group</code>，内容是：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>root:x:0:</span></span>
+<span class="line"><span>sudo:x:27:alice</span></span></code></pre>
+<p>现在有两个角色：<strong>原始文件</strong>和<strong>私有映射</strong>，前者不能随意修改，后者是你想对原始文件进行修改时给自己复制的一份</p>
+<p>当我们使用<code>mmap()</code>创建私有映射的时候，Linux不会立即把整个文件给复制一遍，而是先让私有映射和文件共享相应的物理内存页</p>
+<p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/58.png" class=""></p>
+<p>​									<em>该图片由ChatGPT生成</em></p>
+<p>假设进程想修改映射中的内容，正常情况下，Linux会进行以下操作：</p>
+<ol>
+<li>检测到进程准备写入一个私有映射的页面</li>
+<li>发现页面不能直接被修改</li>
+<li>创建一份新的私有物理页，并赋值原来的数据</li>
+<li>将进程的映射指向新页面</li>
+<li>在新页面上完成修改</li>
+</ol>
+<p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/59.png" class=""></p>
+<p>所以私有映射不是从一开始就复制，而是在写入时才复制。即使普通用户能够读取和私有映射<code>/etc/group</code>，正常情况下也不应该通过私有映射影响原始文件</p>
+<p><code>mmap()</code>函数的作用是将文件内容映射到进程的虚拟地址空间，而不是用来绕过文件权限</p>
+<p>例如：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-c"><span class="line"><span style="color:#AB5959;--shiki-dark:#CB7676">void</span><span style="color:#AB5959;--shiki-dark:#CB7676"> *</span><span style="color:#393A34;--shiki-dark:#DBD7CAEE">map </span><span style="color:#999999;--shiki-dark:#666666">=</span><span style="color:#59873A;--shiki-dark:#80A665"> mmap</span><span style="color:#2993a3;--shiki-dark:#5eaab5">(</span></span>
+<span class="line"><span style="color:#1E754F;--shiki-dark:#4D9375">    NULL</span><span style="color:#999999;--shiki-dark:#666666">,</span></span>
+<span class="line"><span style="color:#393A34;--shiki-dark:#DBD7CAEE">    length</span><span style="color:#999999;--shiki-dark:#666666">,</span></span>
+<span class="line"><span style="color:#393A34;--shiki-dark:#DBD7CAEE">    PROT_READ</span><span style="color:#999999;--shiki-dark:#666666">,</span></span>
+<span class="line"><span style="color:#393A34;--shiki-dark:#DBD7CAEE">    MAP_PRIVATE</span><span style="color:#999999;--shiki-dark:#666666">,</span></span>
+<span class="line"><span style="color:#393A34;--shiki-dark:#DBD7CAEE">    fd</span><span style="color:#999999;--shiki-dark:#666666">,</span></span>
+<span class="line"><span style="color:#2F798A;--shiki-dark:#4C9A91">    0</span></span>
+<span class="line"><span style="color:#2993a3;--shiki-dark:#5eaab5">)</span><span style="color:#999999;--shiki-dark:#666666">;</span></span></code></pre>
+<p>这里有两个重要参数：</p>
+<ul>
+<li><code>PORT_READ</code>：映射区域允许读取</li>
+<li><code>MAP_PRIVATE</code>：创建私有映射，修改不会写回原始文件</li>
+</ul>
+<p>对于命令<code>ls -l /etc/group</code>，可能得输出为：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>-rw-r--r-- 1 root root ... /etc/group</span></span></code></pre>
+<p>这表示普通用户可以读取<code>/etc/group</code>，但不能直接修改它，因此普通用户可以打开该文件进行只读映射。值得注意的是<code>/etc/shadow</code>通常不允许普通用户读取，因此不能简单认为所有高权限文件都可以被普通用户映射</p>
+<p>那么为什么要通过<code>/proc/self/mem</code>写入呢？</p>
+<p><code>/proc/self/mem</code>并不是函数，而是Linux提供的一个特殊伪文件，这在之前提到过：</p>
+<ul>
+<li><code>/proc</code>是内核提供的虚拟文件系统</li>
+<li><code>self</code>表示当前进程</li>
+<li><code>mem</code>提供访问当前进程虚拟地址空间的接口</li>
+</ul>
+<p>假设进程将<code>/etc/group</code>的一部分映射到了虚拟地址<code>0x10000000</code>，正常写入和通过<code>/proc/self/mem</code>写入之间存在区别：</p>
+<ul>
+<li>普通写入：进程尝试修改<code>0x10000000</code>，CPU检查页面的写入权限，发现页面只读发生保护异常</li>
+<li>通过<code>/proc/self/mem</code>写入：进程向<code>/proc/self/mem</code>写入，Linux内核处理写入请求，内核尝试获取目标虚拟地址对应的物理页，最后涉及<code>get_user_pages()</code>和COW处理</li>
+</ul>
+<p>这里的<code>get_users_pages()</code>，它是Linux内核中用于获取用户空间内存页的一类接口，历史上<code>/proc/self/mem</code>的某些写入路径可以通过特殊的强制访问机制处理只读映射，但正确的内核实现仍然必须保证<strong>不能把数据写入原始只读文件对应的共享页面</strong>，Dirty Cow正是利用了这一处理路径中的缺陷</p>
+<p>接下来说一下<code>madvise()</code>，它是一个系统调用，用于告诉Linux内核应该如何管理某一段内存，其中：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span>madvise(addr,length,MADV_DONTNEED)</span></span></code></pre>
+<p><code>MAV_DONTNEED</code>的意思是告诉内核暂时不需要这段内存中现有的内容，可以丢弃相应的私有页面</p>
+<p>对于私有文件映射，后续再次访问被丢弃的页面时，内核可以重新从底层映射文件对应的页缓存中取得内容，若要正常写入仍需重新执行COW</p>
+<p>所以<code>madvise()</code>并不会主动告诉内核修改原始文件和欺骗内核，它只是改变了当前进程的内存映射状态</p>
+<p><strong>问题在于</strong>，此时如果另一个线程正在进行COW写入，那么这两个操作可能发生冲突</p>
+<p>到这里，我们开始分析<strong>条件竞争（Race Condition）</strong></p>
+<p>在存在CVE-2016-5195的旧版内核中，写入线程和内存丢弃线程之间可能出现一种特殊的执行顺序，假设：</p>
+<ul>
+<li>线程A：尝试通过<code>/proc/self/mem</code>写入</li>
+<li>线程B：不断执行<code>madvise(MADV_DONTNEED)</code></li>
+</ul>
+<p>如果两个线程恰好交错执行，就可能出现以下情况：</p>
+<p><img loading="lazy" src="/2026/06/19/Linux%E6%8F%90%E6%9D%83/60.png" class=""></p>
+<p>所以漏洞的关键在于旧版内核的<code>get_user_pages()</code>在处理COW和重新获取页面时可能错误地放宽写入检查，它以为获取到的是已经完成COW的私有页面，实际上是原始文件的共享页缓存页面，这样原本应该写在副本上的数据就被写到了与原文件关联的页面，内核之后可能将被修改的文件页缓存同步到磁盘导致原始文件被改变</p>
+<p>该漏洞可以导致在没有足够权限的情况下修改只读文件比如<code>/etc/passwd</code>，导致权限提升</p>
+<p>EXP地址：<a target="_blank" rel="noopener" href="https://github.com/gbonacini/CVE-2016-5195">https://github.com/gbonacini/CVE-2016-5195</a></p>
+<p>具体的漏洞复现就先暂时搁置一下，这里只给出命令：</p>
+<pre class="shiki shiki-themes vitesse-light vitesse-dark" style="background-color:#ffffff;--shiki-dark-bg:#121212;color:#393a34;--shiki-dark:#dbd7caee" tabindex="0"><code class="language-text"><span class="line"><span># 下载EXP</span></span>
+<span class="line"><span>git clone https://github.com/gbonacini/CVE-2016-5195.git</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 进入目录make生成可执行文件</span></span>
+<span class="line"><span>cd CVE-2016-5195</span></span>
+<span class="line"><span>make</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 执行make好的文件，即可自动完成利用并提权</span></span>
+<span class="line"><span>./dcow -s</span></span></code></pre>
+<p><strong>注：本机上需要有gcc，且执行make后的gcc版本要较高版本</strong></p>
+<p>或者可以参考一下参考文章理解Metasploit的利用</p>
+</div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于 </span><time title="修改时间：2026-11-06 16:44:16" itemprop="dateModified" datetime="2026-11-06T16:44:16+08:00">2026-11-06</time></span></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>ZLARYY<i class="ic i-at"><em>@</em></i>梧桐虽立，其心以空，待发于春，实葬于冬</li><li class="link"><strong>本文链接：</strong><a href="https://zlaryy.top/2026/06/19/Linux%E6%8F%90%E6%9D%83/" title="Linux提权">https://zlaryy.top/2026/06/19/Linux提权/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/" rel="prev" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture6.webp" title="SQL提权"><span class="type">上一篇</span><h3>SQL提权</h3></a></div><div class="item right"><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" rel="next" itemprop="url" data-background-image="&#x2F;assets&#x2F;picture1.webp" title="Node.js原型链污染"><span class="type">下一篇</span><h3>Node.js原型链污染</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E6%8F%90%E6%9D%83%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD"><span class="toc-number">1.</span> <span class="toc-text"> Linux提权（持续更新中......）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#linux%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text"> Linux权限模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#etcpasswd"><span class="toc-number">1.1.1.</span> <span class="toc-text"> &#x2F;etc&#x2F;passwd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E4%BD%8D"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 权限位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 用户组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#suid-sgid-sticky-bit"><span class="toc-number">1.1.4.</span> <span class="toc-text"> SUID、SGID、Sticky Bit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%9D%83%E9%99%90"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 进程权限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#suid%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.</span> <span class="toc-text"> SUID提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 本地靶场搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bash%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.2.</span> <span class="toc-text"> bash提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.3.</span> <span class="toc-text"> find提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vim%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.4.</span> <span class="toc-text"> vim提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.5.</span> <span class="toc-text"> python提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#path%E8%B7%AF%E5%BE%84%E5%8A%AB%E6%8C%81"><span class="toc-number">1.2.6.</span> <span class="toc-text"> PATH路径劫持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%8F%90%E6%9D%83"><span class="toc-number">1.2.7.</span> <span class="toc-text"> 命令注入提权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sudo%E6%8F%90%E6%9D%83"><span class="toc-number">1.3.</span> <span class="toc-text"> SUDO提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%B5%8B%E8%AF%95vim"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 本地靶场测试(vim)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 提权流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%B5%8B%E8%AF%95find"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 本地靶场测试(find)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B-2"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 提权流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BApython3"><span class="toc-number">1.3.5.</span> <span class="toc-text"> 本地靶场搭建(python3)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B-3"><span class="toc-number">1.3.6.</span> <span class="toc-text"> 提权流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E6%8F%90%E6%9D%83"><span class="toc-number">1.4.</span> <span class="toc-text"> 计划任务提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA-2"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 本地靶场搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B-4"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 提权流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E9%80%9A%E9%85%8D%E7%AC%A6%E8%BF%9B%E8%A1%8C%E6%8F%90%E6%9D%83"><span class="toc-number">1.5.</span> <span class="toc-text"> 利用通配符进行提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA-3"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 本地靶场搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E6%B5%81%E7%A8%8B-5"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 提权流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux%E5%86%85%E6%A0%B8%E6%8F%90%E6%9D%83"><span class="toc-number">1.6.</span> <span class="toc-text"> Linux内核提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#linux%E5%86%85%E6%A0%B8"><span class="toc-number">1.6.1.</span> <span class="toc-text"> Linux内核</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8syscall"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 系统调用syscall</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 文件描述符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#back"><span class="toc-number">1.6.4.</span> <span class="toc-text"> Back</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">1.6.4.1.</span> <span class="toc-text"> 信息搜集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E6%89%BEexp"><span class="toc-number">1.6.4.2.</span> <span class="toc-text"> 查找EXP</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cve-2016-5195dirty-cow"><span class="toc-number">1.6.5.</span> <span class="toc-text"> CVE-2016-5195（Dirty Cow）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%88%90%E5%9B%A0"><span class="toc-number">1.6.5.0.1.</span> <span class="toc-text"> 漏洞成因</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.6.5.0.2.</span> <span class="toc-text"> 利用方式</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="ZLARYY" src="/assets/avertar.png"/><p class="name" itemprop="name">ZLARYY</p><div class="description" itemprop="description">Web安全 / CTF / AI安全 / 个人学习笔记</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">26</span><span class="name">文章</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/ZLARYY123" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;ZLARYY123"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友链</a></li><li class="item"><a href="/essay/" rel="section"><i class="ic i-calendar"></i>essay</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2026/07/24/Nodejs%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2026/06/18/SQL%E6%8F%90%E6%9D%83/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div><div id="player"></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/22/SQL/">SQL</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/10/17/CRYPTO/">CRYPTO-PART1</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/22/Java-%E5%8F%8D%E5%B0%84/">Java-反射</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/12/SSRF/">SSRF</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/12/%E4%BD%8E%E7%89%88%E6%9C%ACphp%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E7%9A%84CVE%E6%BC%8F%E6%B4%9E/">低版本php下信息泄露的CVE漏洞与反弹shell</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/10/14/DC-1%E9%9D%B6%E5%9C%BA%E6%97%A5%E8%AE%B0/">DC-1靶场日记</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/09/05/%E5%B8%B8%E8%A7%84%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9-PART4/">常规外网打点-PART4</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/02/28/RCE/">RCE</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/10/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2026/03/20/Pickle%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8EPython%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">Pickle反序列化与Python原型链污染</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2026</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">ZLARYY @ ZLARYY</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">668k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">10:07</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
     ispost: true,
     path: `2026/06/19/Linux提权/`,
     favicon: {
